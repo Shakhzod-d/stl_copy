@@ -1,0 +1,50 @@
+* {
+     margin: 0;
+     padding: 0;
+     box-sizing: border-box;
+}
+
+body {
+     font-family: "Roboto", sans-serif;
+     font-style: normal;
+     a,
+     p,
+     h1,
+     h2,
+     h3,
+     h4,
+     h5,
+     h6 {
+          color: $black;
+          transition: $theme;
+          margin: 0;
+     }
+}
+
+body.dark {
+     .ant-layout {
+          background-color: $dark1;
+     }
+     a,
+     p,
+     h1,
+     h2,
+     h3,
+     h4,
+     h5,
+     h6 {
+          color: $white;
+     }
+}
+
+.app {
+     position: relative;
+     height: 100vh;
+}
+
+.ant-layout-content {
+     margin: 0 !important;
+     overflow-y: auto;
+     scroll-behavior: smooth;
+     position: relative;
+}

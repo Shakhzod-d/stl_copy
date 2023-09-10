@@ -1,0 +1,30 @@
+.drivers-reports {
+     .drivers-reports-header {
+          .form {
+               display: flex;
+               top: 0;
+               .selection-wrapper {
+                    width: 400px;
+                    padding: 10px;
+               }
+               .date-picker-wrapper {
+                    width: 400px;
+                    padding: 10px;
+               }
+               .download-btn {
+                    padding: 10px;
+               }
+          }
+          .daily-logs {
+               .daily-log {
+                    border: 15px white solid;
+                    .report-container {
+                         .report-title {
+                              font-size: 25px;
+                              font-weight: bold;
+                         }
+                    }
+               }
+          }
+     }
+}

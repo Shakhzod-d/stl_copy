@@ -1,0 +1,122 @@
+import { TFuelTypes } from "@/types";
+import { SELECT_PAGE_LIMIT } from "./general.const";
+
+const role_names = [
+    {
+        name: "Super admin",
+        value: "superAdmin",
+        forService: false,
+        forCompany: false,
+    },
+    {
+        name: "Service admin",
+        value: "serviceAdmin",
+        forService: true,
+        forCompany: false,
+    },
+    {
+        name: "Second service admin",
+        value: "secondServiceAdmin",
+        forService: true,
+        forCompany: false,
+    },
+    {
+        name: "Company admin",
+        value: "companyAdmin",
+        forService: true,
+        forCompany: true,
+    },
+    {
+        name: "Logger",
+        value: "logger",
+        forService: true,
+        forCompany: true,
+    },
+];
+
+const select_paging = { page: 1, limit: SELECT_PAGE_LIMIT };
+
+const fuiel_types: TFuelTypes[] = [
+    "Diesel",
+    "Gasoline",
+    "Propane",
+    "Liquid Natural Gas",
+    "Compressed Natural Gas",
+    "Ethanol",
+    "Methanol",
+    "E-85",
+    "M-85",
+    "A55",
+    "Biodiesel",
+    "Other",
+];
+
+const issue_stats = [
+    { label: "Eastern Time", value: "America/New_York" },
+    { label: "Central Time", value: "America/Chicago" },
+    { label: "Mountain Time", value: "America/Denver" },
+    { label: "Pacific Time", value: "America/Los_Angeles" },
+    { label: "Alaska Time", value: "America/Anchorage" },
+    { label: "Hawaii-Aleutian Time", value: "America/Pacific/Honolulu" },
+];
+
+const state_names = [
+    "Alaska",
+    "Alabama",
+    "Arkansas",
+    "American Samoa",
+    "Arizona",
+    "California",
+    "Colorado",
+    "Connecticut",
+    "District ",
+    "of Columbia",
+    "Delaware",
+    "Florida",
+    "Georgia",
+    "Guam",
+    "Hawaii",
+    "Iowa",
+    "Idaho",
+    "Illinois",
+    "Indiana",
+    "Kansas",
+    "Kentucky",
+    "Louisiana",
+    "Massachusetts",
+    "Maryland",
+    "Maine",
+    "Michigan",
+    "Minnesota",
+    "Missouri",
+    "Mississippi",
+    "Montana",
+    "North Carolina",
+    "North Dakota",
+    "Nebraska",
+    "New Hampshire",
+    "New Jersey",
+    "New Mexico",
+    "Nevada",
+    "New York",
+    "Ohio",
+    "Oklahoma",
+    "Oregon",
+    "Pennsylvania",
+    "Puerto Rico",
+    "Rhode Island",
+    "South Carolina",
+    "South Dakota",
+    "Tennessee",
+    "Texas",
+    "Utah",
+    "Virginia",
+    "Virgin Islands",
+    "Vermont",
+    "Washington",
+    "Wisconsin",
+    "West Virginia",
+    "Wyoming",
+];
+
+export { issue_stats, fuiel_types, state_names, role_names, select_paging };

@@ -1,0 +1,41 @@
+.dark{
+     .site-loader,
+     .app-loader {
+          background-color: $dark1;
+     }
+}
+
+.site-loader {
+     position: fixed;
+     top: 0;
+     left: 0;
+     width: 100%;
+     height: 100vh;
+     background-color: white;
+     z-index: 111;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     .anticon-loading {
+          font-size: 48px;
+          color: $primary;
+     }
+}
+
+.app-loader {
+     position: absolute;
+     top: 0;
+     left: 0;
+     width: 100%;
+     height: 100%;
+     max-height: calc(100vh - 60px);
+     background-color: white;
+     z-index: 111;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     .anticon-loading {
+          font-size: 46px;
+          color: $primary;
+     }
+}

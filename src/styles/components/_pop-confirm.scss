@@ -1,0 +1,29 @@
+.dark {
+     .table-delete-confirm {
+     }
+}
+
+.table-delete-confirm {
+     .anticon {
+          color: $red;
+     }
+     .ant-popover-buttons {
+          display: flex;
+          button {
+               padding: 8px 22px;
+               height: 30px;
+               font-size: 12px;
+               &.ant-btn-primary {
+                    background-color: $red;
+                    border-color: $red;
+               }
+               &.ant-btn-default {
+                    border-color: $gray5 !important;
+                    background-color: transparent !important;
+                    span {
+                         color: $gray1 !important;
+                    }
+               }
+          }
+     }
+}

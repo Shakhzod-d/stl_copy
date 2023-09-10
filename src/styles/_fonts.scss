@@ -1,0 +1,197 @@
+//Font Family
+%bold-28 {
+     //styleName: Roboto Bold 28;
+     font-family: Roboto;
+     font-size: 28px;
+     font-style: normal;
+     font-weight: 700;
+     line-height: 32px;
+     letter-spacing: 0px;
+}
+
+%bold-24 {
+     //styleName: Roboto Bold 24;
+     font-family: Roboto;
+     font-size: 24px;
+     font-style: normal;
+     font-weight: 700;
+     line-height: 32px;
+     letter-spacing: 0px;
+}
+
+%bold-14 {
+     //styleName: Roboto Bold 14;
+     font-family: Roboto;
+     font-size: 14px;
+     font-style: normal;
+     font-weight: 700;
+     line-height: 16px;
+     letter-spacing: 0.5px;
+}
+
+%bold-12 {
+     //styleName: Roboto Bold 12;
+     font-family: Roboto;
+     font-size: 12px;
+     font-style: normal;
+     font-weight: 700;
+     line-height: 16px;
+     letter-spacing: 0.5px;
+}
+
+%medium-20 {
+     //styleName: Roboto Medium 20;
+     font-family: Roboto;
+     font-size: 20px;
+     font-style: normal;
+     font-weight: 500;
+     line-height: 24px;
+     letter-spacing: 0em;
+}
+
+%medium-18 {
+     //styleName: Roboto Medium 18;
+     font-family: Roboto;
+     font-size: 18px;
+     font-style: normal;
+     font-weight: 500;
+     line-height: 28px;
+     letter-spacing: 0px;
+}
+
+%medium-16 {
+     //styleName: Roboto Medium 16;
+     font-family: Roboto;
+     font-size: 16px;
+     font-style: normal;
+     font-weight: 500;
+     line-height: 24px;
+     letter-spacing: 0px;
+}
+
+%medium-14 {
+     //styleName: Roboto Medium 14;
+     font-family: "Roboto", sans-serif;
+     font-size: 14px;
+     font-style: normal;
+     font-weight: 500;
+     line-height: 20px;
+     letter-spacing: 0px;
+}
+
+%medium-12 {
+     //styleName: Roboto Medium 12;
+     font-family: Roboto;
+     font-size: 12px;
+     font-style: normal;
+     font-weight: 500;
+     line-height: 16px;
+     letter-spacing: 0px;
+}
+
+%medium-10 {
+     //styleName: Roboto Medium 10;
+     font-family: Roboto;
+     font-size: 10px;
+     font-style: normal;
+     font-weight: 500;
+     line-height: 12px;
+     letter-spacing: 0px;
+}
+
+%regular-18 {
+     //styleName: Roboto Regular 18;
+     font-family: Roboto;
+     font-size: 18px;
+     font-style: normal;
+     font-weight: 400;
+     line-height: 22px;
+     letter-spacing: 0px;
+}
+
+%regular-16 {
+     //styleName: Roboto Regular 16;
+     font-family: Roboto;
+     font-size: 16px;
+     font-style: normal;
+     font-weight: 400;
+     line-height: 24px;
+     letter-spacing: 0px;
+}
+
+%regular-14 {
+     //styleName: Roboto Regular 14;
+     font-family: Roboto;
+     font-size: 14px;
+     font-style: normal;
+     font-weight: 400;
+     line-height: 20px;
+     letter-spacing: 0px;
+}
+
+%regular-12 {
+     //styleName: Roboto Regular 10;
+     font-family: Roboto;
+     font-size: 12px;
+     font-style: normal;
+     font-weight: 400;
+     line-height: 16px;
+     letter-spacing: 0px;
+}
+
+%regular-10 {
+     //styleName: Roboto Regular 10;
+     font-family: Roboto;
+     font-size: 10px;
+     font-style: normal;
+     font-weight: 400;
+     line-height: 12px;
+     letter-spacing: 0px;
+}
+.color-main {
+     color: $primary;
+}
+
+.bold-28 {
+     @extend %bold-28;
+}
+.bold-24 {
+     @extend %bold-24;
+}
+
+.bold-12 {
+     @extend %bold-12;
+}
+.medium-20 {
+     @extend %medium-20;
+}
+.medium-18 {
+     @extend %medium-18;
+}
+.medium-16 {
+     @extend %medium-16;
+}
+.medium-14 {
+     @extend %medium-14;
+}
+.medium-12 {
+     @extend %medium-12;
+}
+.medium-10 {
+     @extend %medium-10;
+}
+.regular-18 {
+     @extend %regular-18;
+}
+.regular-16 {
+     @extend %regular-16;
+}
+.regular-14 {
+     @extend %regular-14;
+}
+.regular-12 {
+     @extend %regular-12;
+}
+.regular-10 {
+     @extend %regular-10;
+}

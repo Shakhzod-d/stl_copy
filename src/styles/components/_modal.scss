@@ -1,0 +1,70 @@
+.dark {
+     .ant-modal {
+          &-content,
+          &-header {
+               background-color: $dark2;
+          }
+          &-header,
+          &-footer {
+               border-color: $dark-gray;
+          }
+          &-close {
+               &-x {
+                    border-color: $dark-gray;
+                    .icomoon-icon {
+                         color: white;
+                    }
+               }
+          }
+          &-title {
+               color: $white;
+          }
+     }
+}
+
+.ant-modal {
+     &-content {
+          border-radius: 8px;
+          overflow: hidden;
+     }
+     &-close {
+          height: 60px;
+          margin-right: 16px;
+          &-x {
+               height: 32px;
+               width: 32px;
+               display: flex;
+               align-items: center;
+               justify-content: center;
+               border: 1px solid $gray6;
+               border-radius: 50%;
+               .icomoon-icon {
+                    height: 16px;
+                    width: 16px;
+               }
+          }
+     }
+     &-title {
+          @extend %medium-14;
+          color: $gray1;
+     }
+     &-header {
+          background-color: $gray7;
+          padding: 20px 24px;
+     }
+     &-body {
+          padding: 0;
+          main {
+               transition: $theme;
+               padding: 32px;
+          }
+     }
+     &-footer {
+          display: flex;
+          justify-content: space-between;
+          padding: 16px;
+          button {
+               min-width: 112px;
+          }
+     }
+}

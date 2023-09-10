@@ -1,0 +1,26 @@
+.logs-by-driver {
+     &-head {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          &-left {
+               display: flex;
+               align-items: center;
+               gap: 16px;
+               .date-picker-wrapper {
+                    width: 300px;
+               }
+               .selection-wrapper {
+                    width: 250px;
+               }
+          }
+          &-right {
+               display: flex;
+               align-items: center;
+               gap: 16px;
+               .selection-wrapper {
+                    width: 250px;
+               }
+          }
+     }
+}

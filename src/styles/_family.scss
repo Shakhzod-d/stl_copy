@@ -1,0 +1,29 @@
+%label {
+     @extend %medium-12;
+     margin-bottom: 4px;
+     color: $black;
+     transition: $theme;
+}
+
+%input {
+     @extend %regular-14;
+     height: 40px;
+     width: 100%;
+     border-radius: 20px;
+     border-color: $gray5;
+     padding: 0 16px;
+     outline: none;
+     background-color: $white;
+     transition: $theme;
+     color: $black;
+     &::placeholder {
+          color: $gray3;
+     }
+}
+
+%input-error {
+     color: $red;
+     &::placeholder {
+          color: $red;
+     }
+}

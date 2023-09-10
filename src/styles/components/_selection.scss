@@ -1,0 +1,159 @@
+.dark {
+     .selection-wrapper {
+          label {
+               color: white;
+          }
+          .ant-select {
+               &-selector {
+                    border: 1px solid $dark-gray;
+                    background-color: $dark3 !important;
+
+                    span {
+                         color: $white;
+                    }
+                    .ant-select-selection-placeholder {
+                         color: $gray3;
+                    }
+               }
+               &-open {
+                    .ant-select-selector {
+                         span {
+                              color: $gray3;
+                         }
+                    }
+               }
+               &-clear {
+                    background-color: $dark3;
+               }
+          }
+     }
+
+     .ant-select-dropdown {
+          border-color: $dark-gray;
+          box-shadow: 0px 1px 4px rgba(33, 33, 52, 0.1);
+          background-color: #303040;
+          .rc-virtual-list {
+               .rc-virtual-list-holder-inner {
+                    .ant-select-item-option {
+                         color: $gray4;
+                         &-active {
+                              color: $gray4;
+                              background-color: rgba($color: $gray5, $alpha: 0.2);
+                         }
+                    }
+               }
+          }
+          .ant-select-item-empty {
+               .ant-empty-description {
+                    color: white !important;
+               }
+          }
+     }
+}
+
+.selection-wrapper {
+     display: flex;
+     flex-direction: column;
+     label {
+          color: $black;
+          @extend %medium-12;
+          margin-bottom: 4px;
+          transition: $theme;
+     }
+     .ant-select {
+          &-selector {
+               height: 40px !important;
+               border-radius: 20px !important;
+               padding-left: 16px !important;
+               border: 1px solid $gray5;
+               transition: $theme !important;
+               span {
+                    @extend %regular-14;
+                    width: 100%;
+                    background-color: transparent;
+                    color: $black;
+               }
+               .ant-select-selection-search {
+                    input {
+                         height: 100% !important;
+                         padding-left: 5px !important;
+                    }
+               }
+               .ant-select-selection-placeholder {
+                    display: flex;
+                    align-items: center;
+                    color: $gray3;
+               }
+               .ant-select-selection-item {
+                    display: flex;
+                    align-items: center;
+               }
+          }
+          &-arrow {
+               height: 24px !important;
+               width: 24px !important;
+               margin: 0 !important;
+               transform: translateY(-50%);
+               right: 16px;
+               color: $gray3;
+          }
+          &-clear {
+               color: $gray3;
+               right: 24px;
+               font-size: 16px;
+               top: 45%;
+          }
+     }
+     &.error {
+          label {
+               color: $red;
+          }
+          .ant-select {
+               &-selector {
+                    border-color: $red;
+                    &:hover {
+                         border-color: $red;
+                    }
+               }
+          }
+          .ant-select-focused {
+               .ant-select-selector {
+                    border-color: $red !important;
+                    box-shadow: 0 0 0 2px rgba($color: $red, $alpha: 0.2) !important;
+               }
+          }
+     }
+}
+
+.ant-select-dropdown {
+     padding: 4px;
+     border: 0.5px solid #ebebeb;
+     box-shadow: 0px 1px 4px rgba(33, 33, 52, 0.1);
+     border-radius: 20px;
+     .rc-virtual-list {
+          .rc-virtual-list-holder-inner {
+               .ant-select-item-option {
+                    border-radius: 20px;
+                    color: $gray1;
+                    padding: 8px 16px;
+                    transition: $theme;
+                    &-content {
+                         @extend %regular-14;
+                         color: inherit;
+                    }
+                    // &:hover,
+                    // &-active {
+                    //      background-color: rgba($color: $gray5, $alpha: 0.2);
+                    //      color: $gray1;
+                    // }
+                    &-selected {
+                         background-color: rgba($color: $primary, $alpha: 0.2) !important;
+                         color: $primary !important;
+                    }
+                    &:not(:frist-child) {
+                         margin-top: 2px;
+                    }
+               }
+          }
+     }
+}

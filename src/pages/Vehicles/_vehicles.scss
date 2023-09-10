@@ -1,0 +1,40 @@
+.vehicles {
+     &-header {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          .right {
+               display: flex;
+               align-items: center;
+          }
+     }
+     &-checkbox {
+          padding-top: 18px;
+          .ant-checkbox-wrapper {
+               padding: 8px;
+               width: 100%;
+               border-radius: 4px;
+               transition: $theme;
+               span {
+                    &:last-child {
+                         color: $black;
+                         @extend %regular-14;
+                         transition: $theme;
+                    }
+               }
+               &:hover,
+               &.active {
+                    background: rgba(255, 187, 0, 0.1);
+                    user-select: none;
+                    p {
+                         color: $primary;
+                    }
+               }
+          }
+     }
+     .form-grid {
+          display: grid;
+          grid-gap: 40px;
+          grid-template-columns: 1fr 240px;
+     }
+}

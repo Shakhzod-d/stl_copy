@@ -1,0 +1,46 @@
+@import "./colors";
+@import "./mixins";
+@import "./utils";
+@import "./fonts";
+@import "./family";
+@import "./general";
+@import "./base";
+@import "./pages";
+
+// components
+@import "./components/table";
+@import "./components/alerts";
+@import "./components/buttons";
+@import "./components/dropdowns";
+@import "./components/text-field";
+@import "./components/password-field";
+@import "./components/phone-field";
+@import "./components/loaders";
+@import "./components/tabs";
+@import "./components/modal";
+@import "./components/selection";
+@import "./components/drop-menu";
+@import "./components/pop-confirm";
+@import "./components/accordion";
+@import "./components/date-picker";
+
+@import "./classes";
+
+// layout
+@import "../layouts/AppLayout/layout";
+@import "../layouts/AdminLayout/admin-layout";
+@import "../layouts/MainLayout/main-layout";
+// pages
+@import "../pages/Login/login";
+@import "../pages/Profile/profile";
+@import "../pages/Drivers/drivers";
+@import "../pages/Vehicles/vehicles";
+@import "../pages/Dashboard/dashboard";
+@import "../pages/Logs/logs";
+@import "../pages/Logs/components/LogActions/actions";
+@import "../pages/Logs/components/LogCorrection/logsCorrection";
+@import "../pages/LogsByDriver/logs-by-driver";
+@import "../pages/Trackings/trackings";
+@import "../pages/Users/users";
+@import "../pages/IftaReports/ifta-reports";
+@import "../pages/Reports/DriverReports/driver-reports";

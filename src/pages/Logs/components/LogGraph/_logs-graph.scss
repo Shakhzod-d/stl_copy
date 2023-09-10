@@ -1,0 +1,373 @@
+.logs-graph {
+     .ant-table {
+          &-content {
+               max-height: 530px;
+          }
+     }
+}
+
+.graph-container {
+     margin-bottom: 24px;
+     width: 100%;
+     .graph-content {
+          display: flex;
+          .graph-body {
+               // border: 1px solid gray;
+               width: 100%;
+               display: flex;
+               align-items: flex-end;
+               position: relative;
+               .graph-image {
+                    width: 100%;
+               }
+               .status-wrapper {
+                    height: 71.5%;
+                    width: 100%;
+                    position: absolute;
+                    left: 0;
+                    width: 96%;
+                    left: 3.3%;
+                    .status-inner {
+                         width: 100%;
+                         height: 100%;
+                         position: relative;
+
+                         .box-wrapper {
+                              height: 100%;
+                              display: inline-block;
+                              position: absolute;
+                              z-index: 1;
+                              &:first-child {
+                                   .box-content {
+                                        span.start {
+                                             transform: translate(calc(-100% + 30px), calc(-100% - 2px));
+                                        }
+                                   }
+                              }
+                              &:last-child {
+                                   .box-content {
+                                        span.end {
+                                             transform: translate(calc(-100% + 30px), calc(-100% - 2px));
+                                        }
+                                   }
+                              }
+                              .vertical-line {
+                                   display: inline-block;
+                                   width: 100%;
+                                   height: 2px;
+                                   position: absolute;
+                                   &.off,
+                                   &.off_pc {
+                                        background-color: $gray3;
+                                   }
+                                   &.dr {
+                                        background-color: $green;
+                                   }
+                                   &.sb {
+                                        background-color: $primary;
+                                   }
+                                   &.on,
+                                   &.on_ym {
+                                        background-color: $blue;
+                                   }
+                              }
+
+                              .horizontal-line {
+                                   display: inline-block;
+                                   width: 2px;
+                                   // background-color: $gray3;
+                                   // border-left: $gray3 solid 2px;
+                                   position: absolute;
+                                   &.off,
+                                   &.off_pc {
+                                        background-color: $gray3;
+                                   }
+                                   &.on,
+                                   &.on_ym {
+                                        background-color: $blue;
+                                   }
+                                   &.dr {
+                                        background-color: $green;
+                                   }
+                                   &.sb {
+                                        background-color: $primary;
+                                   }
+                              }
+
+                              .box-content {
+                                   width: 100%;
+                                   height: 100%;
+                                   span {
+                                        display: none;
+                                        @extend %medium-12;
+                                        box-shadow: 0px 1px 4px rgba(26, 26, 67, 0.07);
+                                        border-radius: 4px;
+                                        background-color: white;
+                                        color: #0c75af;
+                                        padding: 4px 16px;
+                                        width: fit-content;
+                                        position: absolute;
+                                        z-index: 11;
+                                        white-space: nowrap;
+                                        &.start {
+                                             left: -2px;
+                                             top: -2px;
+                                             transform: translate(calc(-100% - 2px), calc(-100% - 2px));
+                                        }
+                                        &.end {
+                                             right: -2px;
+                                             top: -2px;
+                                             transform: translate(100%, -100%);
+                                        }
+                                        &.duration {
+                                             left: 50%;
+                                             bottom: -2px;
+                                             transform: translate(-50%, 100%);
+                                        }
+                                   }
+                              }
+                              &:hover,
+                              &.hovered {
+                                   .box-content {
+                                        background-color: rgba(102, 183, 241, 0.2);
+                                        span {
+                                             display: block;
+                                        }
+                                        cursor: pointer;
+                                   }
+                              }
+                              &.readonly {
+                                   .box-content {
+                                        background-color: rgba(255, 123, 102, 0.4) !important;
+                                        span {
+                                             // display: block;
+                                        }
+                                        cursor: default;
+                                   }
+                              }
+                              .flag-content {
+                                   background-color: green;
+                                   position: absolute;
+                                   opacity: 0.5;
+                                   .flag-box {
+                                        color: white;
+                                        font-weight: 800;
+                                        font-size: larger;
+                                        border-radius: 5px;
+                                        padding: 10px;
+                                        width: 32px;
+                                        height: 32px;
+                                        background-color: green;
+                                        position: absolute;
+                                        display: flex;
+                                        justify-content: center;
+                                        align-items: center;
+                                   }
+                              }
+                         }
+                         .intermediate {
+                              position: absolute;
+                              transform: translateY(-1.5px);
+                              display: flex;
+                              z-index: 2;
+                              .circle {
+                                   display: inline-block;
+                                   height: 6px;
+                                   width: 6px;
+                                   border-radius: 50%;
+                                   background-color: $green;
+                                   transition: all 0.2s ease;
+                                   cursor: pointer;
+                                   &:hover,
+                                   &.hovered {
+                                        transform: scale(3);
+                                        & + span {
+                                             opacity: 1;
+                                             transform: translate(-50%, -38px) scale(1);
+                                             display: block;
+                                        }
+                                   }
+                              }
+                              .time {
+                                   display: inline-block;
+                                   opacity: 0;
+                                   display: none;
+                                   transition: all 0.2s ease;
+                                   @extend %bold-14;
+                                   transform: translate(-50%, -38px) scale(0);
+                                   padding: 4px 10px;
+                                   background: white;
+                                   border-radius: 4px;
+                                   border: 1px solid $green;
+                                   color: $green;
+                              }
+                         }
+                         .login-png {
+                              position: absolute;
+                              transform: translateX(-20px);
+                              // &::after {
+                              //      background-color: blue;
+                              //      width: 20px;
+                              //      height: 20px;
+                              //      position: absolute;
+                              // }
+                         }
+                    }
+
+                    .range-wrapper {
+                         display: none;
+                         position: absolute;
+                         width: 100%;
+                         height: 100%;
+                         flex-direction: column;
+                         justify-content: flex-end;
+                         .range-content {
+                              position: absolute;
+                              height: 100%;
+                              z-index: 3;
+                              svg {
+                                   width: 42px;
+                                   position: absolute;
+                                   color: inherit;
+                              }
+                              .range-left {
+                                   bottom: 0;
+                                   left: 0;
+                                   transform: translate(-100%, 100%);
+                              }
+                              .range-right {
+                                   bottom: 0;
+                                   right: 0;
+                                   transform: translate(100%, 100%);
+                              }
+                              .duration {
+                                   bottom: 0;
+                                   position: absolute;
+                                   left: 50%;
+                                   transform: translate(-50%, 50px);
+                                   padding: 4px 16px;
+                                   @extend %medium-12;
+                                   background-color: white;
+                                   box-shadow: 0px 1px 4px rgba(26, 26, 67, 0.2);
+                                   border-radius: 4px;
+                              }
+                              .time {
+                                   position: absolute;
+                                   top: -2px;
+                                   display: inline-block;
+                                   padding: 4px 8px;
+                                   @extend %medium-12;
+                                   border-radius: 4px;
+                                   color: white;
+                                   &-left {
+                                        left: -2px;
+                                        transform: translate(-100%, -100%);
+                                   }
+                                   &-right {
+                                        right: -2px;
+                                        transform: translate(100%, -100%);
+                                   }
+                              }
+                              &.sb {
+                                   background-color: rgba($color: $primary, $alpha: 0.4);
+                                   color: $primary;
+                                   .time {
+                                        background-color: $primary;
+                                   }
+                              }
+                              &.dr {
+                                   background-color: rgba($color: $green, $alpha: 0.4);
+                                   color: $green;
+                                   .time {
+                                        background-color: $green;
+                                   }
+                              }
+                              &.off {
+                                   background-color: rgba($color: $gray3, $alpha: 0.4);
+                                   color: $gray3;
+                                   .time {
+                                        background-color: $gray3;
+                                   }
+                              }
+                              &.on {
+                                   background-color: rgba($color: $blue, $alpha: 0.4);
+                                   color: $blue;
+                                   .time {
+                                        background-color: $blue;
+                                   }
+                              }
+                              &.off_pc {
+                                   background-color: rgba($color: $gray3, $alpha: 0.4);
+                                   color: $gray3;
+                                   .time {
+                                        background-color: $gray3;
+                                   }
+                              }
+                              &.on_ym {
+                                   background-color: rgba($color: $blue, $alpha: 0.4);
+                                   color: $blue;
+                                   .time {
+                                        background-color: $blue;
+                                   }
+                              }
+                         }
+                         &.active {
+                              display: flex;
+                         }
+                         .rc-slider {
+                              transform: translateY(20px);
+                              z-index: 4;
+                              .rc-slider-rail {
+                                   display: none;
+                              }
+                              .rc-slider-track {
+                                   display: none;
+                              }
+                              .rc-slider-handle {
+                                   width: 82px;
+                                   height: 62px;
+                                   border-radius: 0px;
+                                   border: none;
+                                   background-color: transparent;
+                                   box-shadow: none;
+                                   &-1 {
+                                        transform: translate(calc(-50% - 20px), -6px) !important;
+                                   }
+                                   &-2 {
+                                        transform: translate(calc(-50% + 20px), -6px) !important;
+                                   }
+                              }
+                         }
+                    }
+               }
+          }
+          .graph-duration {
+               display: flex;
+               align-items: flex-end;
+               max-width: 30px;
+               .duration-wrapper {
+                    height: 71.5%;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-around;
+                    align-items: flex-end;
+                    span {
+                         @extend %regular-14;
+                         color: #686868;
+                    }
+               }
+          }
+     }
+     .graph-total {
+          width: 100%;
+          margin-top: 8px;
+          text-align: end;
+          span {
+               font-family: Roboto;
+               font-size: 18px;
+               font-weight: 700;
+               line-height: 28px;
+               color: #686868;
+          }
+     }
+}

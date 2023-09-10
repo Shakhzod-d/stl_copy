@@ -1,0 +1,207 @@
+.error-text {
+     @extend %medium-12;
+     margin-top: 4px;
+     color: $red !important;
+}
+
+.icomoon-icon {
+     fill: currentColor;
+}
+
+.dark .page-line {
+     background-color: $dark-gray;
+}
+.page-line {
+     width: calc(100% + 48px);
+     height: 1px;
+     background-color: $gray7;
+     margin: 24px 0;
+     margin-left: -24px;
+     transition: $theme;
+}
+
+.dark .box {
+     background-color: $dark2;
+}
+.box {
+     background-color: $white;
+     border-radius: 8px;
+     padding: 24px;
+     transition: $theme;
+}
+
+.display-input {
+     display: flex;
+     height: 40px;
+     padding: 0 16px;
+     @extend %bold-14;
+     border-radius: 20px;
+     color: $black;
+     border: 1px solid $gray4;
+     width: fit-content;
+     align-items: center;
+     &.medium {
+          height: 36px;
+          @extend %bold-12;
+     }
+}
+
+.device-info {
+     &-item {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 12px 0px;
+          &-icon {
+               display: flex;
+               align-items: center;
+               color: $black;
+               @extend %medium-14;
+               svg {
+                    color: $blue;
+                    margin-right: 16px;
+               }
+          }
+          &-btn {
+               padding: 4px 12px;
+               @extend %bold-12;
+               border-radius: 44px;
+               min-width: 46px;
+               text-align: center;
+               background-color: $green;
+               &.off {
+                    background-color: $red;
+               }
+               &.on {
+                    background-color: $green;
+               }
+               color: $white;
+               text-transform: uppercase;
+          }
+          &-time {
+               @extend %regular-14;
+               color: $gray1;
+          }
+     }
+}
+
+.driver-condition {
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+     &-title {
+          font-size: 14px;
+          font-weight: 700;
+          line-height: 20px;
+          margin-bottom: 4px;
+     }
+     &-bar {
+          width: 56px;
+          height: 6px;
+          border-radius: 30px;
+          overflow: hidden;
+          position: relative;
+     }
+     &-dots {
+          display: flex;
+          align-items: center;
+          height: 100%;
+          justify-content: space-between;
+          padding: 0 2px;
+          .dot {
+               display: inline-block;
+               height: 2px;
+               width: 2px;
+               border-radius: 50%;
+          }
+     }
+     &-progress {
+          position: absolute;
+          width: 50%;
+          border-radius: 30px;
+          height: 100%;
+          &::after {
+               position: absolute;
+               content: "";
+               top: 50%;
+               width: 1px;
+               height: 2px;
+               border-radius: 20px;
+               background-color: white;
+               transform: translateY(-50%);
+               right: 2px;
+          }
+     }
+     &.break {
+          .driver-condition-title {
+               color: $primary;
+          }
+          .driver-condition-bar {
+               background-color: rgba($color: $primary, $alpha: 0.1);
+          }
+          .driver-condition-progress {
+               background-color: $primary;
+          }
+          .dot {
+               background-color: rgba($color: $primary, $alpha: 0.4);
+          }
+     }
+     &.drive {
+          .driver-condition-title {
+               color: $green;
+          }
+          .driver-condition-bar {
+               background-color: rgba($color: $green, $alpha: 0.1);
+          }
+          .driver-condition-progress {
+               background-color: $green;
+          }
+          .dot {
+               background-color: rgba($color: $green, $alpha: 0.4);
+          }
+     }
+     &.shift {
+          .driver-condition-title {
+               color: $blue;
+          }
+          .driver-condition-bar {
+               background-color: rgba($color: $blue, $alpha: 0.1);
+          }
+          .driver-condition-progress {
+               background-color: $blue;
+          }
+          .dot {
+               background-color: rgba($color: $blue, $alpha: 0.4);
+          }
+     }
+     &.cycle {
+          .driver-condition-title {
+               color: $red;
+          }
+          .driver-condition-bar {
+               background-color: rgba($color: $red, $alpha: 0.1);
+          }
+          .driver-condition-progress {
+               background-color: $red;
+          }
+          .dot {
+               background-color: rgba($color: $red, $alpha: 0.4);
+          }
+     }
+}
+
+.gm-style-iw {
+     button {
+          outline: none;
+     }
+}
+td {
+     padding-left: 5px;
+}
+th {
+     padding-left: 5px;
+}
+
+.bg-main-color {
+     background-color: $primary !important;
+}
