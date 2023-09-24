@@ -185,11 +185,11 @@ const LogsInner: React.FC = () => {
 
   const onTimeChange = (range: [any, any]) => {
     // const startDayOclock = moment("00:00:00", "HH:mm:ss").unix();
-    setRangeVal([range[0].unix() - time, range[1].unix() - time]);
+    setRangeVal([range[0].unix() - time / 1000, range[1].unix() - time / 1000]);
     // @ts-ignore
     setCurrentLog({
       ...currentLog,
-      rangeVal: [range[0].unix() - time, range[1].unix() - time],
+      rangeVal: [range[0].unix() - time / 1000, range[1].unix() - time / 1000],
     });
   };
 
@@ -246,8 +246,8 @@ const LogsInner: React.FC = () => {
         historyLog: {
           user: userData?.firstName + " " + userData?.lastName,
           driverId: fetchLogParams.driverId,
-          afterLogs: [] /* mapDataBeforeSend(logs, [0, 0], false) */,
-          beforeLogs: [] /* mapDataBeforeSend(initialLogs, [0, 0], false) */,
+          afterLogs: mapDataBeforeSend(logs, [0, 0], false, driverData!.data),
+          beforeLogs: mapDataBeforeSend(initialLogs, [0, 0], false, driverData!.data),
         },
       };
       console.log("🔥payload: ", payload);
@@ -345,6 +345,7 @@ const LogsInner: React.FC = () => {
           initialTime={time}
           onCancel={onCancel}
           onTimeChange={onTimeChange}
+          setLogs={setLogs}
         />
       ),
       correction_point_log: (

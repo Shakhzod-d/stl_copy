@@ -252,7 +252,7 @@ export const getNewLog = (
         odometer: 0,
         engineHours: 0,
         distance: 0,
-        companyId: "",
+        companyId: localStorage.getItem("companyId") || '',
         serviceId: "",
         coDriverId: "",
         driverId: fetchLogParams.driverId,

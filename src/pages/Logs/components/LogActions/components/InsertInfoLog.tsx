@@ -14,6 +14,7 @@ import {
      getTodaysSeconds,
 } from "../../correction_algorithms";
 import { ILog } from "@/types/log.type";
+import { Moment } from 'moment';
 
 const statusOptions = [
      {
@@ -81,7 +82,7 @@ const truckOptions = [
      },
 ];
 export interface IInsertInfoLogFormData {
-     time: number;
+     time:  any;
      signature: string;
      lat: string;
      lng: string;
@@ -93,6 +94,7 @@ export interface IInsertInfoLogFormData {
      truck: string;
      lock: string;
 }
+// export interface IInsertInfoLogFormData {}
 const insertInfoLogFormData = {
      time: "time",
      signature: "signature",
@@ -113,8 +115,12 @@ export interface IInsertInfoLog {
 }
 
 const InsertInfoLog: FC<IInsertInfoLog> = ({ formData, onInsert }) => {
-     const { control, handleSubmit, setValue, getValues, reset } =
-          useForm<IInsertInfoLogFormData>();
+     const { control, handleSubmit, setValue, getValues, reset, watch } =
+          useForm<IInsertInfoLogFormData>({
+               defaultValues: {
+                    time: moment("12:00:00", "HH:mm:ss")
+               }
+          });
      const [status, setStatus] = useState<TItemStatus>("login");
      const submit = (formData: IInsertInfoLogFormData) => {
           // @ts-ignore
@@ -145,6 +151,10 @@ const InsertInfoLog: FC<IInsertInfoLog> = ({ formData, onInsert }) => {
                setStatus("login");
           }
      }, []);
+
+
+     console.log(watch("time"));
+     
 
      return (
           <form id="insert-info-log" onSubmit={handleSubmit(submit)}>

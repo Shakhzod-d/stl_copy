@@ -92,8 +92,8 @@ const Action = () => {
                                    control={control}
                                    required
                                    validation={{
-                                        minLength: 17,
-                                        maxLength: 17
+                                        minLength: 14,
+                                        maxLength: 14
                                    }}
                                    suffix={`${watch("vin")?.length || 0}/14`}
                               />

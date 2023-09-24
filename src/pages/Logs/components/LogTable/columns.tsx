@@ -32,7 +32,7 @@ const useMainColumns = () => {
           },
           {
                title: "Status",
-               dataIndex: "currentStatus",
+               dataIndex: "status",
                render: DriverStatus,
           },
           {

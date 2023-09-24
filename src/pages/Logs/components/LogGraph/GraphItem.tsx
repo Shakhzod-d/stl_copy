@@ -87,7 +87,7 @@ const GraphItem: React.FC<IGraphItem> = ({
      }, [currentLog]);
 
      useEffect(() => {
-          console.log(currentLog, rangeVal);
+          // console.log(currentLog, rangeVal);
      }, [currentLog, rangeVal])
 
      const getStatusDuration = (start: any, end: any) => {
