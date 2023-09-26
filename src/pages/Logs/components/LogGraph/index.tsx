@@ -13,7 +13,7 @@ export interface IGraph {
   setHoveredId?: ISetState<string | null>;
   hoveredId?: string | null;
   currentLog?: ILog | null;
-  setCurrentLog?: ISetState<ILog | null>;
+  onLogClick?: (log: ILog | null) => void;
   afterRangeChange?: (val: any, item: any) => void;
   initialTime?: number;
   logStatus?: boolean;
@@ -24,7 +24,7 @@ const Graph: React.FC<IGraph> = ({
   setHoveredId,
   hoveredId,
   currentLog,
-  setCurrentLog,
+  onLogClick,
   afterRangeChange,
   logStatus,
   initialTime = 0,
@@ -95,7 +95,7 @@ const Graph: React.FC<IGraph> = ({
                     graphWidth={graphWidth || 0}
                     graphHeight={graphHeight}
                     currentLog={currentLog}
-                    setCurrentLog={setCurrentLog}
+                    onLogClick={onLogClick}
                     setHoveredId={setHoveredId}
                     hoveredId={hoveredId}
                     initialTime={initialTime || 0}

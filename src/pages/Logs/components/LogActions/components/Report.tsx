@@ -174,7 +174,7 @@ const Report: React.FC<IProps> = ({
       <LogGraph
         data={logs}
         setHoveredId={setHoveredId}
-        initialTime={momentZone(initialTime).unix() * 1000}
+        initialTime={initialTime}
         hoveredId={hoveredId}
         logStatus={false}
       />

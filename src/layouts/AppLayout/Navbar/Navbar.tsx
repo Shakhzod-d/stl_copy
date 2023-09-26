@@ -23,7 +23,7 @@ const Navbar: React.FC = () => {
           "count",
           {},
           {
-               // refetchInterval: 5000,
+               refetchInterval: 5000,
           }
      );
 
