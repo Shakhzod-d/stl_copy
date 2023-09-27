@@ -14,7 +14,7 @@ import { ILogsByDriver, useColumnsLogsByDriver } from "./LogsByDriver.columns";
 const LogsByDriver: React.FC = () => {
   const momentZone = useMomentZone();
 
-  const { data: driversData, isLoading: driversDataIsLoading } = useApi<
+  const { data: driversData } = useApi<
     IPageData<ILogsByDriver[]>
   >("/drivers", { page: 1, limit: 100 });
 

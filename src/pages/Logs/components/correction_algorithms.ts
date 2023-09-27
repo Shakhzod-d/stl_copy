@@ -229,7 +229,7 @@ export const mapDataBeforeSend = (
     }
     return sendData;
 };
-export const    getNewLog = (
+export const getNewLog = (
     logs: any,
     initialTime: any,
     val: any,

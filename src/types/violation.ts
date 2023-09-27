@@ -35,9 +35,15 @@ export interface IViolation {
     _id: string;
     driverId: string;
     date: number;
-    violation: string;
+    violation: TViolation;
     logId: string;
     status: string;
     createdAt: string;
   };
 }
+export type TViolation =
+  | "No Signature!"
+  | "Cycle time limit"
+  | "Shift time limit"
+  | "Driver time limit"
+  | "Break time limit";

@@ -12,7 +12,6 @@ import Report from "../../Logs/components/LogActions/components/Report";
 import useApi from "@/hooks/useApi";
 import { IDriverData } from "@/types/driver.type";
 import { ILog, IReport } from "@/types/log.type";
-import useTimeZone from "@/hooks/useMomentZone";
 
 interface IQueryParams {
   driverId: number;
@@ -27,7 +26,6 @@ interface IDriverReportPDF extends IDriverReport {
   initialTime: number;
 }
 const DriverReports = () => {
-  const momentZone = useTimeZone();
   const [selectedDriver, setSelectedDriver] = useState<number>();
   const [date, setDate] = useState<[any, any]>();
   const [queryParams, setQueryParams] = useState<IQueryParams>();
@@ -41,10 +39,7 @@ const DriverReports = () => {
       const driverReportPdfs: IDriverReportPDF[] = data.data.map(
         (driverReport) => {
           if (driverReport?.log) {
-            const initialTime = getStartDay(
-              momentZone(moment.unix(driverReport?.log?.[0]?.start)).unix()
-            );
-            debugger;
+            const initialTime = getStartDay(driverReport?.log?.[0]?.start);
             // const { croppedLogs, croppedTime } =
             //      cropOneDayLogs(
             //           driverReport?.log,
@@ -148,7 +143,7 @@ const DriverReports = () => {
               forcePageBreak=".page-break"
               ref={pdfExportComponent}
               fileName={getReportFileName()}
-              author="PTI ELD"
+              author="TMK ELD"
             >
               {driverReport.map((report, i) => {
                 return (

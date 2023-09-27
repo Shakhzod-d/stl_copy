@@ -104,7 +104,7 @@ const LogsHead: React.FC<ILogsHead> = ({
                               Worked hours: <b>{getShiftTotalTime().time}</b>
                          </span>
                          <span>
-                              Violations: <b>No</b>
+                              Violations: <b>{driverData.violations?.length || "No"}</b>
                          </span>
                     </div>
                     <div className="driver-progress-bar">
@@ -113,7 +113,7 @@ const LogsHead: React.FC<ILogsHead> = ({
                                    (cycle.break / BREAK_TIME_LIMIT) * 100
                               }
                               title="break"
-                              color="#f0324c"
+                              color="#ffbb00"
                               time={moment
                                    .utc(cycle.break * 1000)
                                    .format("HH:mm")}

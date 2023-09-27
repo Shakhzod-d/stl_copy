@@ -1,31 +1,35 @@
-import React from "react";
-import MainLayout from "@/layouts/MainLayout";
-import DoubleButton from "@/components/elements/DoubleButton";
 import DatePicker from "@/components/elements/DatePicker";
+import DoubleButton from "@/components/elements/DoubleButton";
 import Select from "@/components/elements/Select";
-import { Table, Button } from "antd";
-import { historyPush } from "@/utils";
 import Icon from "@/components/icon/Icon";
-import { fakeData, useMainColumns } from "../Logs/components/LogTable/columns";
-import { useQueryParams } from "@/hooks/useQueryParams";
 import useApi from "@/hooks/useApi";
-import { IViolation } from "@/types/violation";
 import useMomentZone from "@/hooks/useMomentZone";
-import { NumberParam, useQueryParam, withDefault } from "use-query-params";
+import { useQueryParams } from "@/hooks/useQueryParams";
+import MainLayout from "@/layouts/MainLayout";
+import { IViolation, TViolation } from "@/types/violation";
+import { Button, Table } from "antd";
 import { Moment } from "moment";
+import React from "react";
+import { NumberParam, useQueryParam, withDefault } from "use-query-params";
+import { useLogErrorColumns } from "./LogErrors.columns";
+import { Violations } from "@/constants/violations";
+import { IDriverData } from "@/types/driver.type";
+import { ILogsByDriver } from "../LogsByDriver/LogsByDriver.columns";
+import { IPageData } from "@/types";
 
 const LogErrors: React.FC = () => {
   const momentZone = useMomentZone();
   // Query params states
-  const [drivers, setDrivers] = useQueryParams("driver", null);
-  const [warnings, setWarnings] = useQueryParams("warnings", null);
+  // const [drivers, setDrivers] = useQueryParams("driver", null);
+  const [violation, setViolation] = useQueryParams("warnings", null);
 
-  const columns = useMainColumns();
+  const columns = useLogErrorColumns();
 
   const [time, setTime] = useQueryParam(
     "time",
     withDefault(NumberParam, momentZone().startOf("day").valueOf())
   );
+  const [driver, setDriver] = useQueryParam("driver");
   const onDateChange = (value: Moment) => {
     setTime(momentZone(value).valueOf());
   };
@@ -36,9 +40,22 @@ const LogErrors: React.FC = () => {
     setTime(momentZone(time).add(1, "day").valueOf());
   };
 
-  const { data } = useApi<IViolation[]>("violations", {
-    date: time / 1000,
+  const { data, isFetching, isLoading, refetch } = useApi<IViolation[]>(
+    "violations",
+    {
+      date: time / 1000,
+      driverId: driver,
+    }
+  );
+  const { data: DriversData } = useApi<IPageData<ILogsByDriver[]>>("drivers", {
+    page: 1,
+    limit: 200,
   });
+
+  const dataViolations = data?.data?.map(
+    (violation) => violation.Violations.violation
+  );
+
   return (
     <MainLayout>
       <div className="logs page">
@@ -53,18 +70,22 @@ const LogErrors: React.FC = () => {
           </div>
           <div className="logs-head-right">
             <Select
-              data={[]}
-              value={drivers}
-              setValue={setDrivers}
-              placeholder="Drivers"
+              data={DriversData?.data.data}
+              placeholder="Driver"
+              setValue={setDriver}
+              value={driver}
+              labelProp="firstName"
+              labelProp2="lastName"
             />
             <Select
-              data={[]}
-              value={warnings}
-              setValue={setWarnings}
-              placeholder="Warnings"
+              data={Violations.filter((option) =>
+                dataViolations?.includes(option._id as TViolation)
+              )}
+              value={violation}
+              setValue={setViolation}
+              placeholder="Violations"
             />
-            <Button type="primary">
+            <Button type="primary" onClick={() => refetch()}>
               <Icon icon="refresh" />
               Refresh
             </Button>
@@ -74,7 +95,10 @@ const LogErrors: React.FC = () => {
           <Table
             className="pointer"
             columns={columns}
-            dataSource={data?.data}
+            dataSource={data?.data.filter((item) =>
+              violation ? item.Violations.violation === violation : true
+            )}
+            loading={isFetching || isLoading}
             pagination={false}
             /* onRow={({ id }) => {
                                    return {

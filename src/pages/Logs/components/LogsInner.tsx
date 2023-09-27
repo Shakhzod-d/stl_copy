@@ -58,7 +58,7 @@ const LogsInner: React.FC = () => {
 
   const { mutate, status: transferStatus } = useApiMutation<ILogData>("logs");
 
-  const { editLogsMutation } = useEditDailyLog((props) => {
+  const { editLogsMutation, editLogsLoading } = useEditDailyLog((props) => {
     setIsLogsEdited(false);
     setLogStatus("table");
     setInitialLogs(logs);
@@ -73,6 +73,7 @@ const LogsInner: React.FC = () => {
   const [isLogsEdited, setIsLogsEdited] = useState(false);
   const [rangeVal, setRangeVal] = useState<any>();
 
+  const [log, setLog] = useState<ILog | null>(null);
   const [logs, setLogs] = useState<ILog[]>([]);
   const [initialLogs, setInitialLogs] = useState<ILog[]>([]);
   const [hoveredId, setHoveredId] = useState<string | null>(null);
@@ -96,7 +97,6 @@ const LogsInner: React.FC = () => {
   }, [data]);
 
   let totalTime = useMemo(() => {
-    console.log(logs);
     const rangeLogs = logs.filter(
       (log) => !POINT_STATUSES.includes(log.status)
     );
@@ -295,10 +295,8 @@ const LogsInner: React.FC = () => {
         // ]);
         setLogs(fixedStatusLogs);
       } else if (!currentLog?.isNewLog) {
-        debugger;
-        const getRidOfNewLog = logs.filter((log) => !log.isNewLog);
         const timeCorrectedLogs = correctLogsTime(
-          getRidOfNewLog,
+          logs,
           // @ts-ignore
           currentLog,
           rangeVal
@@ -332,15 +330,6 @@ const LogsInner: React.FC = () => {
     setRangeVal(val);
     setLogs([...logs, newLog]);
     setCurrentLog(newLog);
-  };
-  const onLogClick = (log: ILog | null) => {
-    /* 
-    setLogs((prev) => prev.filter((log) => !log.isNewLog));*/
-    setRangeVal(undefined);
-    if (currentLog?.isNewLog) {
-      setLogs((prev) => prev.filter((log) => !log.isNewLog));
-    }
-    setCurrentLog(log);
   };
 
   const renderInner = () =>
@@ -393,7 +382,7 @@ const LogsInner: React.FC = () => {
           initialTime={time}
           setTime={setTime}
           currentLog={currentLog}
-          setCurrentLog={setCurrentLog}
+          setCurrentLog={setLog}
           refetch={refetch}
           logStatus={isFetching}
           driverData={driverData?.data}
@@ -420,7 +409,7 @@ const LogsInner: React.FC = () => {
           setHoveredId={setHoveredId}
           hoveredId={hoveredId}
           currentLog={currentLog}
-          onLogClick={onLogClick}
+          setCurrentLog={setCurrentLog}
           afterRangeChange={afterRangeChange}
           logStatus={isFetching}
           initialTime={momentZone(time).unix()}

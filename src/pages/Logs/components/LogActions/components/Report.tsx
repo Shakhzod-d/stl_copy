@@ -1,12 +1,11 @@
+import { DriverStatus } from "@/components/elements/TableElements";
+import useMomentZone from "@/hooks/useMomentZone";
+import { ILog, IReport } from "@/types/log.type";
 import { Table } from "antd";
 import { ColumnsType } from "antd/lib/table";
 import moment from "moment-timezone";
-import React, { useState, useMemo } from "react";
-import { DriverStatus } from "@/components/elements/TableElements";
+import React, { useState } from "react";
 import LogGraph from "../../LogGraph";
-import { POINT_STATUSES } from "./../../constants";
-import { ILog, IReport } from "@/types/log.type";
-import useMomentZone from "@/hooks/useMomentZone";
 
 interface IProps {
   logs: ILog[];
@@ -32,6 +31,10 @@ const Report: React.FC<IProps> = ({
   console.log("initialTime", initialTime);
 
   // console.log(momentZone(initialTime).unix());
+
+  const initTime = momentZone(initialTime).unix();
+
+  console.log(initTime);
 
   return (
     <div
@@ -90,7 +93,7 @@ const Report: React.FC<IProps> = ({
           </tr>
           <tr>
             <td>ELD Provider </td>
-            <td>PTI ELD</td>
+            <td>TMK ELD</td>
             <td>24 Period Starting Time </td>
             <td>----Midnight----</td>
           </tr>
@@ -174,7 +177,7 @@ const Report: React.FC<IProps> = ({
       <LogGraph
         data={logs}
         setHoveredId={setHoveredId}
-        initialTime={initialTime}
+        initialTime={initTime}
         hoveredId={hoveredId}
         logStatus={false}
       />
