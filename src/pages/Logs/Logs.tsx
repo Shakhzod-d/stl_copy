@@ -21,6 +21,7 @@ import {
 import useMomentZone from "@/hooks/useMomentZone";
 import { Moment } from "moment-timezone";
 import { useDriversData } from "./services/useDriversData";
+import { IViolation } from "@/types/violation";
 
 const Logs: React.FC = () => {
   const momentZone = useMomentZone();
@@ -69,6 +70,10 @@ const Logs: React.FC = () => {
     setTime(momentZone(value).valueOf());
   };
 
+  const { data } = useApi<IViolation[]>("violations", {
+    date: time / 1000,
+  });
+
   return (
     <MainLayout>
       <div className="logs page">
@@ -95,16 +100,16 @@ const Logs: React.FC = () => {
               setQuery={setLocation}
             />
             <Select
-              data={[]}
+              data={data?.data.map(item => ({...item}))}
               value={violations}
               setValue={setViolations}
-              placeholder="Violations 0"
+              placeholder="Violations"
             />
             <Select
               data={[]}
               value={warnings}
               setValue={setWarnings}
-              placeholder="Warnings 0"
+              placeholder="Warnings"
             />
           </div>
         </div>
