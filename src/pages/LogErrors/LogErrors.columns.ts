@@ -1,7 +1,3 @@
-export const useLogErrors = (): COlumns => {
-  return [
-    {
-
-    }
-  ]
-}
+export const useLogErrors = (): any => {
+  return [];
+};

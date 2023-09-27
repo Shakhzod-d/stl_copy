@@ -54,13 +54,13 @@ const Login: React.FC = () => {
                <form
                     className="form"
                     onSubmit={handleSubmit(submitFunc)}
-                    id="tmk-login-forum"
+                    id="PTI-login-forum"
                >
                     {/* <img
                          src={`/assets/icons/logisoft.png`}
                          alt="logo"
                     /> */}
-                    <img
+                    {/* <img
                          className="logo-icon"
                          src="/assets/icons/logo-icon.svg"
                          alt=""
@@ -69,7 +69,7 @@ const Login: React.FC = () => {
                          className="logo-title"
                          src="/assets/icons/logo-title.svg"
                          alt=""
-                    />
+                    /> */}
                     <TextField
                          placeholder={"kaidoe@gmail.com"}
                          label={"Email"}
@@ -101,7 +101,7 @@ const Login: React.FC = () => {
                     {/* <Checkbox>Remember me</Checkbox> */}
                     <Button
                          htmlType="submit"
-                         form="tmk-login-forum"
+                         form="PTI-login-forum"
                          type="primary"
                          loading={loginMutation.isLoading}
                          className="w-100"

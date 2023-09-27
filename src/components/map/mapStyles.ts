@@ -114,7 +114,7 @@ const mapStyles = [
           "elementType": "geometry.fill",
           "stylers": [
                {
-                    "color": "#ffbb00"
+                    "color": "#f0324c"
                },
                {
                     "lightness": 17
