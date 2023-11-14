@@ -1,17 +1,19 @@
-import { DownloadOutlined } from "@ant-design/icons";
-import { PDFExport, PDFMargin } from "@progress/kendo-react-pdf";
-import { Button } from "antd";
-import moment from "moment-timezone";
-import { useEffect, useRef, useState } from "react";
 import RangePicker from "@/components/elements/RangePicker";
 import Select from "@/components/elements/Select";
 import TruckLoader from "@/components/loaders/TruckLoader";
-import { mapDriverLogs } from "@/utils";
-import { getStartDay } from "../../Logs/components/correction_algorithms";
-import Report from "../../Logs/components/LogActions/components/Report";
 import useApi from "@/hooks/useApi";
+import useMomentZone from "@/hooks/useMomentZone";
 import { IDriverData } from "@/types/driver.type";
 import { ILog, IReport } from "@/types/log.type";
+import { mapDriverLogs } from "@/utils";
+import { DownloadOutlined } from "@ant-design/icons";
+import { PDFExport } from "@progress/kendo-react-pdf";
+import { Button } from "antd";
+import moment from "moment";
+import momentTZ from "moment-timezone";
+import { useEffect, useRef, useState } from "react";
+import Report from "../../Logs/components/LogActions/components/Report";
+import { getStartDay } from "../../Logs/components/correction_algorithms";
 
 interface IQueryParams {
   driverId: number;
@@ -26,6 +28,7 @@ interface IDriverReportPDF extends IDriverReport {
   initialTime: number;
 }
 const DriverReports = () => {
+  const momentZone = useMomentZone();
   const [selectedDriver, setSelectedDriver] = useState<number>();
   const [date, setDate] = useState<[any, any]>();
   const [queryParams, setQueryParams] = useState<IQueryParams>();
@@ -81,8 +84,8 @@ const DriverReports = () => {
     setQueryParams((prev) => ({
       ...prev,
       driverId: selectedDriver,
-      from: getStartDay(date?.[0].unix()),
-      to: getStartDay(date?.[1].unix()),
+      from: getStartDay(moment(date?.[0]).unix()) - 60 * 60 * 10,
+      to: getStartDay(moment(date?.[1]).unix()) - 60 * 60 * 10,
     }));
   }, [date, selectedDriver]);
 
@@ -94,8 +97,6 @@ const DriverReports = () => {
       moment.unix(queryParams?.to || moment().unix()).format("YYYY-MM-DD")
     );
   };
-
-  console.log(date);
 
   return (
     <div className="drivers-reports page">
@@ -115,7 +116,7 @@ const DriverReports = () => {
             labelProp="fullName"
             valueProp="_id"
           />
-          <RangePicker onChange={setDate} value={date} />
+          <RangePicker onChange={setDate} value={date} disabledFuture />
 
           {driverReport.length > 0 && (
             <div className="download-btn">
@@ -146,6 +147,19 @@ const DriverReports = () => {
               author="TMK ELD"
             >
               {driverReport.map((report, i) => {
+                // Convert Unix timestamp to Moment object in New York time
+                const newYorkMoment = momentTZ
+                  .unix(report.initialTime)
+                  .tz("America/New_York");
+
+                // Get the current timezone dynamically
+                const currentTimezone = momentTZ.tz.guess();
+
+                // Convert New York time to your local time
+                const newYorkInLocalTimezone = newYorkMoment
+                  .clone()
+                  .tz(currentTimezone)
+                  .unix();
                 return (
                   report?.log && (
                     <>
@@ -155,7 +169,7 @@ const DriverReports = () => {
                       >
                         <Report
                           logs={report?.log}
-                          initialTime={report?.initialTime}
+                          initialTime={report.initialTime * 1000}
                           reportData={report?.data}
                           isPrinting={true}
                           // onDownload={}

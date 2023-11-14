@@ -3,7 +3,7 @@ import useMomentZone from "@/hooks/useMomentZone";
 import { ILog, IReport } from "@/types/log.type";
 import { Table } from "antd";
 import { ColumnsType } from "antd/lib/table";
-import moment from "moment-timezone";
+import moment from "moment";
 import React, { useState } from "react";
 import LogGraph from "../../LogGraph";
 
@@ -28,14 +28,7 @@ const Report: React.FC<IProps> = ({
 
   const [hoveredId, setHoveredId] = useState<any | null>(null);
 
-  console.log("initialTime", initialTime);
-
-  // console.log(momentZone(initialTime).unix());
-
   const initTime = momentZone(initialTime).unix();
-
-  console.log(initTime);
-
   return (
     <div
       className="report-container"
@@ -49,7 +42,7 @@ const Report: React.FC<IProps> = ({
         <p>USA Property 70 hour / 8 day</p>
         <div className="text-center">
           <h1 className="report-title">Drivers daily log</h1>
-          <p>{moment(initialTime).format("YYYY-MM-DD")}</p>
+          <p>{moment.unix(initTime).format("YYYY-MM-DD")}</p>
         </div>
         {isPrinting ? (
           <>

@@ -412,7 +412,7 @@ const LogsInner: React.FC = () => {
           setCurrentLog={setCurrentLog}
           afterRangeChange={afterRangeChange}
           logStatus={isFetching}
-          initialTime={momentZone(time).unix()}
+          initialTime={time / 1000}
         />
 
         {isFetching && <TruckLoader />}
