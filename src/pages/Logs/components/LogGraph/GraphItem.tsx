@@ -5,7 +5,7 @@ import Icon from "@/components/icon/Icon";
 import { ISetState, TItemStatus } from "@/types";
 import { getDurationDate, parseUnix } from "@/utils";
 import { ILog } from "@/types/log.type";
-import useMomentZone from "@/hooks/useMomentZone";
+import moment from "moment";
 
 const statusPosition = {
      off: 1,
@@ -54,7 +54,6 @@ const GraphItem: React.FC<IGraphItem> = ({
      // isNextLogDisabled,
 }) => {
 
-     const momentZone = useMomentZone()
      const [rangeVal, setRangeVal] = useState<any>(initialItem.rangeVal || []);
 
      const item = initialItem;
@@ -120,7 +119,7 @@ const GraphItem: React.FC<IGraphItem> = ({
                               onMouseLeave={() => setHoveredId?.("")}
                          />
                          <span className="time">
-                              {momentZone(parseUnix(start)).format("HH:mm:ss")}
+                              {moment(parseUnix(start)).format("HH:mm:ss")}
                          </span>
                     </div>
                ) : !initialItem.isNewLog ? (
@@ -145,11 +144,11 @@ const GraphItem: React.FC<IGraphItem> = ({
                               {!currentLog && (
                                    <React.Fragment>
                                         <span className="start">
-                                             {momentZone(parseUnix(start))
+                                             {moment(parseUnix(start))
                                                   .format("HH:mm:ss")}
                                         </span>
                                         <span className="end">
-                                             {momentZone(parseUnix(end))
+                                             {moment(parseUnix(end))
                                                   .format("HH:mm:ss")}
                                         </span>
                                         {/* <span className="duration">
@@ -208,11 +207,11 @@ const GraphItem: React.FC<IGraphItem> = ({
                          <Icon icon="range-left" className="range-left" />
                          <Icon icon="range-right" className="range-right" />
                          <span className="time time-left">
-                              {momentZone(parseUnix(initialTime + rangeVal[0]))
+                              {moment(parseUnix(initialTime + rangeVal[0]))
                                    .format("HH:mm:ss")}
                          </span>
                          <span className="time time-right">
-                              {momentZone(parseUnix(initialTime + rangeVal[1]))
+                              {moment(parseUnix(initialTime + rangeVal[1]))
                                    .format("HH:mm:ss")}
                          </span>
                          {getStatusDuration(start, end)}

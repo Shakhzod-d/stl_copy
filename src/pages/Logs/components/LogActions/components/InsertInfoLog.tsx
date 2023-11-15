@@ -159,7 +159,7 @@ const InsertInfoLog: FC<IInsertInfoLog> = ({ formData, onInsert }) => {
      return (
           <form id="insert-info-log" onSubmit={handleSubmit(submit)}>
                <p className="color-main">
-                    TMK ELD Inc, as your service provider, is not responsible
+                    STL ELD Inc, as your service provider, is not responsible
                     for any financial or legal repercussions resulting from
                     facilitating your request. It is the sole responsibility of
                     the user to maintain legal compliance while using ELD.

@@ -20,6 +20,7 @@ import { MutationStatus } from "react-query";
 import FormModal from "@/components/elements/FormModal";
 import HistoryTable from "./components/HistoryTable";
 import TransferLogs from "./components/TransferLogs";
+import moment from "moment";
 
 interface ILogActions {
   logs: ILog[] | undefined;
@@ -91,9 +92,8 @@ const LogActions: React.FC<ILogActions> = ({
   // }, [transferStatus]);
 
   const onDateChange = (type: "prev" | "next") => {
-    if (type === "next")
-      setTime(momentZone(initialTime).add(1, "day").valueOf());
-    else setTime(momentZone(initialTime).add(-1, "day").valueOf());
+    if (type === "next") setTime(moment(initialTime).add(1, "day").valueOf());
+    else setTime(moment(initialTime).add(-1, "day").valueOf());
   };
 
   return (
@@ -101,8 +101,8 @@ const LogActions: React.FC<ILogActions> = ({
       <div className="log-left-actions">
         <div style={{ width: 150 }}>
           <DatePicker
-            onChange={(val) => setTime(momentZone(val).valueOf())}
-            value={momentZone(initialTime)}
+            onChange={(val) => setTime(moment(val).valueOf())}
+            value={moment(initialTime)}
           />
         </div>
         <DoubleButton

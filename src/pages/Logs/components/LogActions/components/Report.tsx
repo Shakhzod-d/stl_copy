@@ -86,7 +86,7 @@ const Report: React.FC<IProps> = ({
           </tr>
           <tr>
             <td>ELD Provider </td>
-            <td>TMK ELD</td>
+            <td>STL ELD</td>
             <td>24 Period Starting Time </td>
             <td>----Midnight----</td>
           </tr>

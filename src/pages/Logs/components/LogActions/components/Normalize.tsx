@@ -19,7 +19,7 @@ const Normalize: React.FC<{ onNormalize: (props: any) => void }> = ({
      return (
           <div>
                <p className="color-main medium-20">
-                    TMK ELD Inc, as your service provider, is not responsible for
+                    STL ELD Inc, as your service provider, is not responsible for
                     any financial or legal repercussions resulting from
                     facilitating your request. It is the sole responsibility of
                     the user to maintain legal compliance while using ELD.

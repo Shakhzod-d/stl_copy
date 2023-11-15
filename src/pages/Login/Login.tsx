@@ -52,11 +52,12 @@ const Login: React.FC = () => {
       <form
         className="form"
         onSubmit={handleSubmit(submitFunc)}
-        id="TMK-login-forum"
+        id="STL-login-forum"
       >
         {/* <img src={`/assets/icons/logisoft.png`} alt="logo" /> */}
-        <img className="logo-icon" src="/assets/icons/logo-icon.svg" alt="" />
-        <img className="logo-title" src="/assets/icons/logo-title.svg" alt="" />
+        {/* <img className="logo-icon" src="/assets/icons/logo-icon.svg" alt="" /> */}
+        {/* <img className="logo-title" src="/assets/icons/logo-title.svg" alt="" /> */}
+        <img className="logo-title" src="/assets/images/stl.jpg" alt="" />
         <TextField
           placeholder={"example@gmail.com"}
           label={"Email"}
@@ -88,7 +89,7 @@ const Login: React.FC = () => {
         {/* <Checkbox>Remember me</Checkbox> */}
         <Button
           htmlType="submit"
-          form="TMK-login-forum"
+          form="STL-login-forum"
           type="primary"
           loading={loginMutation.isLoading}
           className="w-100"

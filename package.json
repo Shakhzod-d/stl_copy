@@ -59,7 +59,7 @@
           "rewrite": "scp -r build root@5.161.134.59:/var/www/TMK.arava.app/",
           "deploy": "yarn build && yarn rewrite && rm -rf build",
           "deploy-dev": "scp -r build root@5.161.229.41:/var/www/TMK.roundedteam.uz",
-          "deploy-ok": "scp -i deqwbnfRFVTsXcaWJUMk -r build root@5.161.229.41:/var/www/TMK.roundedteam.uz"
+          "deploy-ok": "scp -i deqwbnfRFVTsXcaWJUMk -r build root@5.161.229.41:/var/www/pteld.roundedteam.uz"
      },
      "eslintConfig": {
           "extends": [

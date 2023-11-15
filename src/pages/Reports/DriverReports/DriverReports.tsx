@@ -84,8 +84,8 @@ const DriverReports = () => {
     setQueryParams((prev) => ({
       ...prev,
       driverId: selectedDriver,
-      from: getStartDay(moment(date?.[0]).unix()) - 60 * 60 * 10,
-      to: getStartDay(moment(date?.[1]).unix()) - 60 * 60 * 10,
+      from: getStartDay(moment(date?.[0]).unix()),
+      to: getStartDay(moment(date?.[1]).unix()),
     }));
   }, [date, selectedDriver]);
 
@@ -96,6 +96,10 @@ const DriverReports = () => {
       "to" +
       moment.unix(queryParams?.to || moment().unix()).format("YYYY-MM-DD")
     );
+  };
+
+  const onRangePickerChange = (props: any) => {
+    setDate([momentZone(props[0]), momentZone(props[1])]);
   };
 
   return (
@@ -116,7 +120,11 @@ const DriverReports = () => {
             labelProp="fullName"
             valueProp="_id"
           />
-          <RangePicker onChange={setDate} value={date} disabledFuture />
+          <RangePicker
+            onChange={onRangePickerChange}
+            value={date}
+            disabledFuture
+          />
 
           {driverReport.length > 0 && (
             <div className="download-btn">
@@ -144,22 +152,9 @@ const DriverReports = () => {
               forcePageBreak=".page-break"
               ref={pdfExportComponent}
               fileName={getReportFileName()}
-              author="TMK ELD"
+              author="STL ELD"
             >
               {driverReport.map((report, i) => {
-                // Convert Unix timestamp to Moment object in New York time
-                const newYorkMoment = momentTZ
-                  .unix(report.initialTime)
-                  .tz("America/New_York");
-
-                // Get the current timezone dynamically
-                const currentTimezone = momentTZ.tz.guess();
-
-                // Convert New York time to your local time
-                const newYorkInLocalTimezone = newYorkMoment
-                  .clone()
-                  .tz(currentTimezone)
-                  .unix();
                 return (
                   report?.log && (
                     <>

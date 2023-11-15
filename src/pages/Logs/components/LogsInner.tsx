@@ -33,6 +33,7 @@ import { useEditDailyLog } from "@/api/mutations/logsMutation";
 import { getLocalStorage, mapDriverLogs } from "@/utils";
 import { notification } from "antd";
 import useAppSelector from "@/hooks/useAppSelector";
+import moment from "moment";
 
 const LogsInner: React.FC = () => {
   const momentZone = useMomentZone();
@@ -47,7 +48,7 @@ const LogsInner: React.FC = () => {
 
   const { data, refetch, isFetching } = useApi<ILogData>(
     "/logs",
-    { date: momentZone(time).unix(), driverId: id },
+    { date: time / 1000, driverId: id },
     { suspense: true }
   );
   const { data: driverData } = useApi<IDriverData>(

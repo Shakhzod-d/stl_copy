@@ -45,7 +45,7 @@ const Sidebar: React.FC<Props> = ({ collapsed, setCollapsed }) => {
                          alt=""
                          width={50}
                     /> */}
-                    <img
+                    {/* <img
                          className="logo-icon"
                          src="/assets/icons/logo-icon.svg"
                          alt=""
@@ -54,7 +54,12 @@ const Sidebar: React.FC<Props> = ({ collapsed, setCollapsed }) => {
                          className="logo-title"
                          src="/assets/icons/logo-title.svg"
                          alt=""
-                    />
+                    /> */}
+                    <img 
+                         width={50}
+                         height={50}
+                         className="logo-title" src="/assets/images/stl.jpg" alt="" />
+                    
                </div>
                <div className="sidebar-scroll">
                     <Menu
