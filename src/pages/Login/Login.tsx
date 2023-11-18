@@ -57,7 +57,7 @@ const Login: React.FC = () => {
         {/* <img src={`/assets/icons/logisoft.png`} alt="logo" /> */}
         {/* <img className="logo-icon" src="/assets/icons/logo-icon.svg" alt="" /> */}
         {/* <img className="logo-title" src="/assets/icons/logo-title.svg" alt="" /> */}
-        <img className="logo-title" src="/assets/images/stl.jpg" alt="" />
+        <img className="logo-title" src="/assets/images/STL.png" alt="" />
         <TextField
           placeholder={"example@gmail.com"}
           label={"Email"}

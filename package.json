@@ -54,12 +54,15 @@
      "scripts": {
           "start": "craco start",
           "build": "craco build",
+          "build-stl": "env-cmd -f envs/stl.env craco build",
+          "build-tmk": "env-cmd -f envs/tmk.env craco build",
           "test": "craco test",
           "eject": "craco eject",
           "rewrite": "scp -r build root@5.161.134.59:/var/www/TMK.arava.app/",
           "deploy": "yarn build && yarn rewrite && rm -rf build",
           "deploy-dev": "scp -r build root@5.161.229.41:/var/www/TMK.roundedteam.uz",
-          "deploy-ok": "scp -i deqwbnfRFVTsXcaWJUMk -r build root@5.161.229.41:/var/www/pteld.roundedteam.uz"
+          "deploy-tmk": "scp -i deqwbnfRFVTsXcaWJUMk -r build root@5.161.229.41:/var/www/tmkeld.roundedteam.uz",
+          "deploy-stl": "scp -i deqwbnfRFVTsXcaWJUMk -r build root@5.161.229.41:/var/www/pteld.roundedteam.uz"
      },
      "eslintConfig": {
           "extends": [

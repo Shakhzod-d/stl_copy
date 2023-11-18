@@ -12,7 +12,7 @@ module.exports = {
       options: {
         lessLoaderOptions: {
           lessOptions: {
-            modifyVars: { "@primary-color": "#f0324c" },
+            modifyVars: { "@primary-color": "#F0324C" },
             javascriptEnabled: true,
           },
         },
@@ -21,4 +21,4 @@ module.exports = {
   ],
 };
 
-// This useful to change ant design styles #f0324c | #f0324c
+// This useful to change ant design styles #F FBB00 | #F 0324C

@@ -113,7 +113,7 @@ const LogsHead: React.FC<ILogsHead> = ({
                                    (cycle.break / BREAK_TIME_LIMIT) * 100
                               }
                               title="break"
-                              color="#f0324c"
+                              color="#F0324C"
                               time={moment
                                    .utc(cycle.break * 1000)
                                    .format("HH:mm")}

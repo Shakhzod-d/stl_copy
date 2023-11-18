@@ -58,7 +58,7 @@ const Sidebar: React.FC<Props> = ({ collapsed, setCollapsed }) => {
                     <img 
                          width={50}
                          height={50}
-                         className="logo-title" src="/assets/images/stl.jpg" alt="" />
+                         className="logo-title" src="/assets/images/STL.png" alt="" />
                     
                </div>
                <div className="sidebar-scroll">
