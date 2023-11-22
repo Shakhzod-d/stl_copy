@@ -8,6 +8,7 @@ import { IDriverData } from "@/types/driver.type";
 import { select_paging } from "@/constants";
 import { mapDrivers } from "@/utils";
 import Select from "@/components/elements/Select";
+import { useLogsInnerContext } from "../LogsInner.context";
 
 interface ILogTable {
      columns: any;
@@ -36,7 +37,7 @@ const LogTable: React.FC<ILogTable> = ({
                _id: string;
           }[];
      }>("logs/switch");
-     const { data: driverData, isLoading: driverLoad } = useApi<{
+     const { data: drivers, isLoading: driverLoad } = useApi<{
           data: IDriverData[];
      }>("/drivers", select_paging, { suspense: true });
      const [selectedRowKeys, setSelectedRowKeys] = useState<Key[]>();
@@ -45,7 +46,6 @@ const LogTable: React.FC<ILogTable> = ({
           setSelectedRowKeys(newSelectedRowKeys);
      };
      const [switchingDriverId, setSwitchingDriverId] = useState();
-     console.log(switchingDriverId);
 
      return (
           <div>
@@ -60,7 +60,8 @@ const LogTable: React.FC<ILogTable> = ({
                     }}
                     onRow={(record: ILog, rowIndex) => {
                          return {
-                              onMouseEnter: () => setHoveredId(record._id), // mouse enter row
+                              onMouseEnter: () =>
+                                   setHoveredId(record._id || null), // mouse enter row
                               onMouseLeave: () => setHoveredId(null), // mouse leave row
                          };
                     }}
@@ -80,7 +81,7 @@ const LogTable: React.FC<ILogTable> = ({
                                    // name="coDriverId"
                                    // control={control}
                                    data={mapDrivers(
-                                        driverData?.data?.data?.filter(
+                                        drivers?.data?.data?.filter(
                                              (d) => d._id !== driver?._id
                                         ) || []
                                    ).filter(
@@ -95,7 +96,16 @@ const LogTable: React.FC<ILogTable> = ({
                          ) : null}
                     </div>
                     {switchingDriverId && selectedRowKeys?.length ? (
-                         <Button onClick={() => {}}>SWITCH</Button>
+                         <Button
+                              onClick={() =>
+                                   mutate({
+                                        coDriverId: switchingDriverId,
+                                        logs: [],
+                                   })
+                              }
+                         >
+                              SWITCH
+                         </Button>
                     ) : null}
                </div>
                {/* <div className="d-flex">

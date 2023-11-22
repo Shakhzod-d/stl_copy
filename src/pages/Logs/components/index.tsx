@@ -1,7 +1,12 @@
+import LogsInner from "./LogsInner";
 import { LogsInnerProvider } from "./LogsInner.context";
 
 const index = () => {
-     return <LogsInnerProvider>index</LogsInnerProvider>;
+     return (
+          <LogsInnerProvider>
+               <LogsInner />
+          </LogsInnerProvider>
+     );
 };
 
 export default index;

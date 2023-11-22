@@ -21,62 +21,40 @@ import FormModal from "@/components/elements/FormModal";
 import HistoryTable from "./components/HistoryTable";
 import TransferLogs from "./components/TransferLogs";
 import moment from "moment";
+import { useLogsInnerContext } from "../LogsInner.context";
 
-interface ILogActions {
-     logs: ILog[] | undefined;
-     logStatus: boolean;
-     currentLog: ILog | null;
-     historyLogs?: IHistoryLog[];
-     initialTime: number;
-     driverData?: IDriverData;
-     reportData?: IReport;
-     setTime: (time: number) => void;
-     setCurrentLog: ISetState<ILog | null>;
-     refetch: IVoid;
-     onInsertDutyStatus: (logData: any) => void;
-     onInsertInfoLog: (infoLog: IInsertInfoLogFormData) => void;
-     onNormalize: (props: any) => void;
-     onTransfer: (duration: number, log: ILog) => void;
-     onRevert: (revertLogs: ILog[]) => void;
-     onCancel: () => any;
-     onSend: () => void;
-     onOk: () => void;
+interface ILogActions {}
 
-     isLogsEdited: boolean;
-     infoLogFormData?: ILog | undefined;
-     isVisibleInsertInfoLog: boolean;
-     croppedTime: [number, number] | undefined;
-     transferStatus: MutationStatus;
-     setInfoLogFormData: ISetState<ILog | undefined>;
-     setIsVisibleInsertInfoLog: ISetState<boolean>;
-}
-
-const LogActions: React.FC<ILogActions> = ({
-     logs = [],
-     setTime,
-     refetch,
-     setCurrentLog,
-     driverData,
-     currentLog,
-     initialTime,
-     logStatus,
-     historyLogs,
-     onOk,
-     onSend,
-     onRevert,
-     onCancel,
-     onTransfer,
-     onNormalize,
-     onInsertInfoLog,
-     onInsertDutyStatus,
-     setIsVisibleInsertInfoLog,
-     transferStatus,
-     isLogsEdited,
-     infoLogFormData,
-     isVisibleInsertInfoLog,
-     croppedTime,
-     reportData,
-}) => {
+const LogActions: React.FC<ILogActions> = ({}) => {
+     const {
+          state: {
+               logs = [],
+               driverData,
+               currentLog,
+               time: initialTime,
+               isFetching,
+               transferStatus,
+               isLogsEdited,
+               infoLogFormData,
+               isVisibleInsertInfoLog,
+               historyLogs,
+               reportData,
+          },
+          actions: {
+               setTime,
+               refetch,
+               setCurrentLog,
+               onOk,
+               onSend,
+               onRevert,
+               onCancel,
+               onTransfer,
+               onNormalize,
+               onInsertInfoLog,
+               onInsertDutyStatus,
+               setIsVisibleInsertInfoLog,
+          },
+     } = useLogsInnerContext();
      const momentZone = useMomentZone();
 
      const [isVisibleHistoryLog, setIsVisibleHistoryLog] = useState(false);
@@ -85,7 +63,7 @@ const LogActions: React.FC<ILogActions> = ({
      const [isVisibleNormalize, setIsVisibleNormalize] = useState(false);
      const [isVisibleTransfer, setIsVisibleTransfer] = useState(false);
      let componentRef = useRef() as React.MutableRefObject<HTMLInputElement>;
-     const whenSomethingIsLoading = !!logStatus;
+     const whenSomethingIsLoading = !!isFetching;
 
      // useEffect(() => {
      //      setIsVisibleTransfer(false);
@@ -125,7 +103,7 @@ const LogActions: React.FC<ILogActions> = ({
                                    onClick={() =>
                                         historyPush(
                                              `/main/trackings/inner/${
-                                                  driverData?._id
+                                                  driverData?.data?._id
                                              }?time=${momentZone(
                                                   initialTime
                                              ).unix()}` // there is to be added ID
@@ -211,7 +189,7 @@ const LogActions: React.FC<ILogActions> = ({
                                    currentLog.status
                               ) &&
                                    !currentLog.isNewLog &&
-                                   driverData?.currentStatus !== "dr" && (
+                                   driverData?.data?.currentStatus !== "dr" && (
                                         <Button
                                              disabled={whenSomethingIsLoading}
                                              className="log-btn"

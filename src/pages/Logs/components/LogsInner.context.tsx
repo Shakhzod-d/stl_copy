@@ -1,23 +1,21 @@
-import { createContext, useContext } from "react";
-import { useEffect, useMemo, useState } from "react";
-import { useParams } from "react-router-dom";
-import MainLayout from "@/layouts/MainLayout";
-import LogActions from "./LogActions";
-import LogForm from "./LogForm";
-import LogGraph from "./LogGraph";
-import LogHead from "./LogHead";
-import TripPlanner from "./TripPlanner";
+import { useEditDailyLog } from "@/api/mutations/logsMutation";
 import useApi from "@/hooks/useApi";
-import { useQueryParam, withDefault, NumberParam } from "use-query-params";
+import useApiMutation from "@/hooks/useApiMutation";
+import useAppSelector from "@/hooks/useAppSelector";
+import useMomentZone from "@/hooks/useMomentZone";
+import { TItemStatus } from "@/types";
 import { IDriverData } from "@/types/driver.type";
 import { ILog, ILogData } from "@/types/log.type";
-import useMomentZone from "@/hooks/useMomentZone";
-import TruckLoader from "@/components/loaders/TruckLoader";
-import { NOT_DRAW_STATUSES, POINT_STATUSES } from "./constants";
-import LogTable from "./LogTable";
-import LogCorrection from "./LogCorrection";
+import { mapDriverLogs } from "@/utils";
+import { notification } from "antd";
+import moment from "moment";
+import { createContext, useContext, useEffect, useMemo, useState } from "react";
+import { useParams } from "react-router-dom";
+import { NumberParam, useQueryParam, withDefault } from "use-query-params";
+import { v4 as uuidV4 } from "uuid";
+import { IInsertInfoLogFormData } from "./LogActions/components/InsertInfoLog";
 import { useGraphColumns } from "./LogTable/columns";
-import { TItemStatus } from "@/types";
+import { NOT_DRAW_STATUSES, POINT_STATUSES } from "./constants";
 import {
      addNewLog,
      correctLogsTime,
@@ -27,14 +25,6 @@ import {
      getTodaysInitialTime,
      mapDataBeforeSend,
 } from "./correction_algorithms";
-import { IInsertInfoLogFormData } from "./LogActions/components/InsertInfoLog";
-import { v4 as uuidV4 } from "uuid";
-import useApiMutation from "@/hooks/useApiMutation";
-import { useEditDailyLog } from "@/api/mutations/logsMutation";
-import { getLocalStorage, mapDriverLogs } from "@/utils";
-import { notification } from "antd";
-import useAppSelector from "@/hooks/useAppSelector";
-import moment from "moment";
 
 const useLogsInner = () => {
      const momentZone = useMomentZone();
@@ -56,6 +46,10 @@ const useLogsInner = () => {
           `driver/${id}`,
           {},
           { suspense: true }
+     );
+     console.log(
+          "🚀 ~ file: LogsInner.context.tsx:46 ~ useLogsInner ~ driverData:",
+          driverData
      );
 
      const { mutate, status: transferStatus } =
@@ -360,8 +354,55 @@ const useLogsInner = () => {
      };
 
      return {
-          state: {},
-          actions: {},
+          state: {
+               disableActions,
+               // ... (other state variables)
+               // Include other variables here
+               logStatus,
+               currentLog,
+               isVisibleInsertInfoLog,
+               isLogsEdited,
+               rangeVal,
+               hoveredId,
+               isFetching,
+               transferStatus,
+               editLogsLoading,
+               infoLogFormData,
+               log,
+               columns,
+               logData,
+               logs,
+               time,
+               driverData,
+               croppedTime,
+               historyLogs: logData?.history,
+               reportData: logData?.report,
+               // ... (include other variables here)
+          },
+          actions: {
+               onInsertInfoLogWithFormData,
+               afterRangeChange,
+               onCancel,
+               onChangeStatus,
+               onTimeChange,
+               onInsertInfoLog,
+               onNormalize,
+               onTransfer,
+               onRevert,
+               onSend,
+               onOk,
+               onInsertDutyStatus,
+               setCroppedTime,
+               setTime,
+               setLog,
+               setHoveredId,
+               filterDrawStatus,
+               refetch,
+               setCurrentLog,
+               setInfoLogFormData,
+               setIsVisibleInsertInfoLog,
+               setLogs,
+          },
      };
 };
 type IUseLogsInner = ReturnType<typeof useLogsInner>;
