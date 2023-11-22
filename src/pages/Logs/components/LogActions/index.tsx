@@ -14,7 +14,7 @@ import { IDriverData } from "@/types/driver.type";
 import { IHistoryLog, ILog, IReport } from "@/types/log.type";
 import useMomentZone from "@/hooks/useMomentZone";
 import InsertInfoLog, {
-  IInsertInfoLogFormData,
+     IInsertInfoLogFormData,
 } from "./components/InsertInfoLog";
 import { MutationStatus } from "react-query";
 import FormModal from "@/components/elements/FormModal";
@@ -23,335 +23,358 @@ import TransferLogs from "./components/TransferLogs";
 import moment from "moment";
 
 interface ILogActions {
-  logs: ILog[] | undefined;
-  logStatus: boolean;
-  currentLog: ILog | null;
-  historyLogs?: IHistoryLog[];
-  initialTime: number;
-  driverData?: IDriverData;
-  reportData?: IReport;
-  setTime: (time: number) => void;
-  setCurrentLog: ISetState<ILog | null>;
-  refetch: IVoid;
-  onInsertDutyStatus: (logData: any) => void;
-  onInsertInfoLog: (infoLog: IInsertInfoLogFormData) => void;
-  onNormalize: (props: any) => void;
-  onTransfer: (duration: number, log: ILog) => void;
-  onRevert: (revertLogs: ILog[]) => void;
-  onCancel: () => any;
-  onSend: () => void;
-  onOk: () => void;
+     logs: ILog[] | undefined;
+     logStatus: boolean;
+     currentLog: ILog | null;
+     historyLogs?: IHistoryLog[];
+     initialTime: number;
+     driverData?: IDriverData;
+     reportData?: IReport;
+     setTime: (time: number) => void;
+     setCurrentLog: ISetState<ILog | null>;
+     refetch: IVoid;
+     onInsertDutyStatus: (logData: any) => void;
+     onInsertInfoLog: (infoLog: IInsertInfoLogFormData) => void;
+     onNormalize: (props: any) => void;
+     onTransfer: (duration: number, log: ILog) => void;
+     onRevert: (revertLogs: ILog[]) => void;
+     onCancel: () => any;
+     onSend: () => void;
+     onOk: () => void;
 
-  isLogsEdited: boolean;
-  infoLogFormData?: ILog | undefined;
-  isVisibleInsertInfoLog: boolean;
-  croppedTime: [number, number] | undefined;
-  transferStatus: MutationStatus;
-  setInfoLogFormData: ISetState<ILog | undefined>;
-  setIsVisibleInsertInfoLog: ISetState<boolean>;
+     isLogsEdited: boolean;
+     infoLogFormData?: ILog | undefined;
+     isVisibleInsertInfoLog: boolean;
+     croppedTime: [number, number] | undefined;
+     transferStatus: MutationStatus;
+     setInfoLogFormData: ISetState<ILog | undefined>;
+     setIsVisibleInsertInfoLog: ISetState<boolean>;
 }
 
 const LogActions: React.FC<ILogActions> = ({
-  logs = [],
-  setTime,
-  refetch,
-  setCurrentLog,
-  driverData,
-  currentLog,
-  initialTime,
-  logStatus,
-  historyLogs,
-  onOk,
-  onSend,
-  onRevert,
-  onCancel,
-  onTransfer,
-  onNormalize,
-  onInsertInfoLog,
-  onInsertDutyStatus,
-  setIsVisibleInsertInfoLog,
-  transferStatus,
-  isLogsEdited,
-  infoLogFormData,
-  isVisibleInsertInfoLog,
-  croppedTime,
-  reportData,
+     logs = [],
+     setTime,
+     refetch,
+     setCurrentLog,
+     driverData,
+     currentLog,
+     initialTime,
+     logStatus,
+     historyLogs,
+     onOk,
+     onSend,
+     onRevert,
+     onCancel,
+     onTransfer,
+     onNormalize,
+     onInsertInfoLog,
+     onInsertDutyStatus,
+     setIsVisibleInsertInfoLog,
+     transferStatus,
+     isLogsEdited,
+     infoLogFormData,
+     isVisibleInsertInfoLog,
+     croppedTime,
+     reportData,
 }) => {
-  const momentZone = useMomentZone();
+     const momentZone = useMomentZone();
 
-  const [isVisibleHistoryLog, setIsVisibleHistoryLog] = useState(false);
-  const [isVisibleOriginalLogs, setIsVisibleOriginalLogs] = useState(false);
-  const [isVisibleReport, setIsVisibleReport] = useState(false);
-  const [isVisibleNormalize, setIsVisibleNormalize] = useState(false);
-  const [isVisibleTransfer, setIsVisibleTransfer] = useState(false);
-  let componentRef = useRef() as React.MutableRefObject<HTMLInputElement>;
-  const whenSomethingIsLoading = !!logStatus;
+     const [isVisibleHistoryLog, setIsVisibleHistoryLog] = useState(false);
+     const [isVisibleOriginalLogs, setIsVisibleOriginalLogs] = useState(false);
+     const [isVisibleReport, setIsVisibleReport] = useState(false);
+     const [isVisibleNormalize, setIsVisibleNormalize] = useState(false);
+     const [isVisibleTransfer, setIsVisibleTransfer] = useState(false);
+     let componentRef = useRef() as React.MutableRefObject<HTMLInputElement>;
+     const whenSomethingIsLoading = !!logStatus;
 
-  // useEffect(() => {
-  //      setIsVisibleTransfer(false);
-  // }, [transferStatus]);
+     // useEffect(() => {
+     //      setIsVisibleTransfer(false);
+     // }, [transferStatus]);
 
-  const onDateChange = (type: "prev" | "next") => {
-    if (type === "next") setTime(moment(initialTime).add(1, "day").valueOf());
-    else setTime(moment(initialTime).add(-1, "day").valueOf());
-  };
+     const onDateChange = (type: "prev" | "next") => {
+          if (type === "next")
+               setTime(moment(initialTime).add(1, "day").valueOf());
+          else setTime(moment(initialTime).add(-1, "day").valueOf());
+     };
 
-  return (
-    <div className="log-actions">
-      <div className="log-left-actions">
-        <div style={{ width: 150 }}>
-          <DatePicker
-            onChange={(val) => setTime(moment(val).valueOf())}
-            value={moment(initialTime)}
-          />
-        </div>
-        <DoubleButton
-          disableLeft={whenSomethingIsLoading}
-          disableRight={whenSomethingIsLoading}
-          onLeft={() => onDateChange("prev")}
-          onRight={() => onDateChange("next")}
-        />
-      </div>
-      <div className="log-right-actions">
-        {!currentLog ? (
-          <>
-            <Button
-              className="log-btn"
-              disabled={whenSomethingIsLoading}
-              onClick={() =>
-                historyPush(
-                  `/main/trackings/inner/${driverData?._id}?time=${momentZone(
-                    initialTime
-                  ).unix()}` // there is to be added ID
-                )
-              }
-            >
-              Tracking
-            </Button>
-            <Button
-              disabled={whenSomethingIsLoading}
-              onClick={() => setIsVisibleHistoryLog(true)}
-              className="log-btn"
-            >
-              History
-            </Button>
-            <Button
-              disabled={whenSomethingIsLoading}
-              onClick={() => setIsVisibleReport(true)}
-              className="log-btn"
-            >
-              Report
-            </Button>
-            <Button
-              disabled={whenSomethingIsLoading}
-              onClick={() => setIsVisibleOriginalLogs(true)}
-              className="log-btn"
-            >
-              Original Logs
-            </Button>
-            <Button
-              disabled={whenSomethingIsLoading}
-              className="log-btn"
-              onClick={() => setIsVisibleInsertInfoLog(true)}
-            >
-              Insert info log
-            </Button>
-            <Button
-              disabled={whenSomethingIsLoading}
-              className="log-btn"
-              onClick={() => setCurrentLog(logs[0])}
-            >
-              correction
-            </Button>
-            <Button className="log-btn" onClick={() => refetch()}>
-              <ReloadOutlined />
-            </Button>
-          </>
-        ) : (
-          <>
-            <Button
-              disabled={whenSomethingIsLoading}
-              className="log-btn"
-              onClick={() => setIsVisibleHistoryLog(true)}
-            >
-              History
-            </Button>
-            {currentLog.status === "dr" && (
-              <Button
-                disabled={whenSomethingIsLoading}
-                className="log-btn"
-                onClick={() => setIsVisibleNormalize(true)}
-              >
-                Normalize
-              </Button>
-            )}
-            <Button
-              disabled={whenSomethingIsLoading}
-              className="log-btn"
-              onClick={onInsertDutyStatus}
-            >
-              Insert Duty Status
-            </Button>
-            {["off", "off_pc", "sb", "on", "on_ym"].includes(
-              currentLog.status
-            ) &&
-              !currentLog.isNewLog &&
-              driverData?.currentStatus !== "dr" && (
-                <Button
-                  disabled={whenSomethingIsLoading}
-                  className="log-btn"
-                  onClick={() => setIsVisibleTransfer(true)}
-                >
-                  Transfer
-                </Button>
-              )}
-            <Button
-              disabled={whenSomethingIsLoading}
-              onClick={() => onCancel()}
-              className="log-btn"
-            >
-              cancel
-            </Button>
-            {isLogsEdited ? (
-              <Button
-                disabled={whenSomethingIsLoading}
-                className="log-btn"
-                type="primary"
-                onClick={() => onSend()}
-              >
-                Send
-              </Button>
-            ) : (
-              // <Button
-              //      className="log-btn"
-              //      onClick={() => onOk()}
-              // >
-              //      Ok
-              // </Button>
-              <Button
-                disabled={whenSomethingIsLoading}
-                className="log-btn"
-                onClick={() => onOk()}
-              >
-                Ok
-              </Button>
-            )}
-            <Button
-              disabled={whenSomethingIsLoading}
-              className="log-btn"
-              onClick={() => refetch()}
-            >
-              <ReloadOutlined />
-            </Button>
-          </>
-        )}
-      </div>
-      <FormModal
-        modalTitle="Insert info log"
-        onCancel={() => setIsVisibleInsertInfoLog(false)}
-        onOk={() => setIsVisibleInsertInfoLog(false)}
-        visible={isVisibleInsertInfoLog}
-        formId={"insert-info-log"}
-        closable
-        okText="Add info log"
-        width="700px"
-        bodyStyle={{
-          overflowY: "auto",
-          maxHeight: "calc(100vh - 200px)",
-        }}
-      >
-        <InsertInfoLog formData={infoLogFormData} onInsert={onInsertInfoLog} />
-      </FormModal>
-      <Modal
-        title="History"
-        onCancel={() => setIsVisibleHistoryLog(false)}
-        visible={isVisibleHistoryLog}
-        zIndex={1004}
-        width="1200px"
-      >
-        <HistoryTable
-          historyLogs={historyLogs}
-          logs={logs}
-          setIsHistoryLogVisible={setIsVisibleHistoryLog}
-          onRevert={onRevert}
-        />
-      </Modal>
-      <Modal
-        title="Original logs"
-        onCancel={() => setIsVisibleOriginalLogs(false)}
-        visible={isVisibleOriginalLogs}
-        width="1100px"
-        bodyStyle={{
-          padding: 20,
-        }}
-      >
-        <OriginalLogs logs={logs} />
-      </Modal>
-      <Modal
-        title="Original logs"
-        onCancel={() => setIsVisibleNormalize(false)}
-        visible={isVisibleNormalize}
-        width="900px"
-        bodyStyle={{
-          padding: 40,
-        }}
-      >
-        <Normalize onNormalize={onNormalize} />
-      </Modal>
-      <Modal
-        title="Transfer log"
-        onCancel={() => setIsVisibleTransfer(false)}
-        visible={isVisibleTransfer}
-        width="900px"
-        bodyStyle={{
-          padding: 40,
-        }}
-      >
-        {/* @ts-ignore */}
-        <TransferLogs
-          transferStatus={transferStatus}
-          isVisibleTransfer={isVisibleTransfer}
-          currentLog={currentLog}
-          initialTime={initialTime}
-          onTransfer={onTransfer}
-        />
-      </Modal>
-      <Modal
-        title={
-          <div style={{ width: "100%" }}>
-            <ReactToPrint
-              // @ts-ignore
-              content={() => componentRef}
-              trigger={() => (
-                <Button type="primary" onClick={() => {}}>
-                  <DownloadOutlined />
-                  Download PDF
-                </Button>
-              )}
-            />
+     return (
+          <div className="log-actions">
+               <div className="log-left-actions">
+                    <div style={{ width: 150 }}>
+                         <DatePicker
+                              onChange={(val) => {
+                                   setTime(moment(val).valueOf());
+                                   debugger;
+                              }}
+                              value={moment(initialTime)}
+                         />
+                    </div>
+                    <DoubleButton
+                         disableLeft={whenSomethingIsLoading}
+                         disableRight={whenSomethingIsLoading}
+                         onLeft={() => onDateChange("prev")}
+                         onRight={() => onDateChange("next")}
+                    />
+               </div>
+               <div className="log-right-actions">
+                    {!currentLog ? (
+                         <>
+                              <Button
+                                   className="log-btn"
+                                   disabled={whenSomethingIsLoading}
+                                   onClick={() =>
+                                        historyPush(
+                                             `/main/trackings/inner/${
+                                                  driverData?._id
+                                             }?time=${momentZone(
+                                                  initialTime
+                                             ).unix()}` // there is to be added ID
+                                        )
+                                   }
+                              >
+                                   Tracking
+                              </Button>
+                              <Button
+                                   disabled={whenSomethingIsLoading}
+                                   onClick={() => setIsVisibleHistoryLog(true)}
+                                   className="log-btn"
+                              >
+                                   History
+                              </Button>
+                              <Button
+                                   disabled={whenSomethingIsLoading}
+                                   onClick={() => setIsVisibleReport(true)}
+                                   className="log-btn"
+                              >
+                                   Report
+                              </Button>
+                              <Button
+                                   disabled={whenSomethingIsLoading}
+                                   onClick={() =>
+                                        setIsVisibleOriginalLogs(true)
+                                   }
+                                   className="log-btn"
+                              >
+                                   Original Logs
+                              </Button>
+                              <Button
+                                   disabled={whenSomethingIsLoading}
+                                   className="log-btn"
+                                   onClick={() =>
+                                        setIsVisibleInsertInfoLog(true)
+                                   }
+                              >
+                                   Insert info log
+                              </Button>
+                              <Button
+                                   disabled={whenSomethingIsLoading}
+                                   className="log-btn"
+                                   onClick={() => setCurrentLog(logs[0])}
+                              >
+                                   correction
+                              </Button>
+                              <Button
+                                   className="log-btn"
+                                   onClick={() => refetch()}
+                              >
+                                   <ReloadOutlined />
+                              </Button>
+                         </>
+                    ) : (
+                         <>
+                              <Button
+                                   disabled={whenSomethingIsLoading}
+                                   className="log-btn"
+                                   onClick={() => setIsVisibleHistoryLog(true)}
+                              >
+                                   History
+                              </Button>
+                              {currentLog.status === "dr" && (
+                                   <Button
+                                        disabled={whenSomethingIsLoading}
+                                        className="log-btn"
+                                        onClick={() =>
+                                             setIsVisibleNormalize(true)
+                                        }
+                                   >
+                                        Normalize
+                                   </Button>
+                              )}
+                              <Button
+                                   disabled={whenSomethingIsLoading}
+                                   className="log-btn"
+                                   onClick={onInsertDutyStatus}
+                              >
+                                   Insert Duty Status
+                              </Button>
+                              {["off", "off_pc", "sb", "on", "on_ym"].includes(
+                                   currentLog.status
+                              ) &&
+                                   !currentLog.isNewLog &&
+                                   driverData?.currentStatus !== "dr" && (
+                                        <Button
+                                             disabled={whenSomethingIsLoading}
+                                             className="log-btn"
+                                             onClick={() =>
+                                                  setIsVisibleTransfer(true)
+                                             }
+                                        >
+                                             Transfer
+                                        </Button>
+                                   )}
+                              <Button
+                                   disabled={whenSomethingIsLoading}
+                                   onClick={() => onCancel()}
+                                   className="log-btn"
+                              >
+                                   cancel
+                              </Button>
+                              {isLogsEdited ? (
+                                   <Button
+                                        disabled={whenSomethingIsLoading}
+                                        className="log-btn"
+                                        type="primary"
+                                        onClick={() => onSend()}
+                                   >
+                                        Send
+                                   </Button>
+                              ) : (
+                                   // <Button
+                                   //      className="log-btn"
+                                   //      onClick={() => onOk()}
+                                   // >
+                                   //      Ok
+                                   // </Button>
+                                   <Button
+                                        disabled={whenSomethingIsLoading}
+                                        className="log-btn"
+                                        onClick={() => onOk()}
+                                   >
+                                        Ok
+                                   </Button>
+                              )}
+                              <Button
+                                   disabled={whenSomethingIsLoading}
+                                   className="log-btn"
+                                   onClick={() => refetch()}
+                              >
+                                   <ReloadOutlined />
+                              </Button>
+                         </>
+                    )}
+               </div>
+               <FormModal
+                    modalTitle="Insert info log"
+                    onCancel={() => setIsVisibleInsertInfoLog(false)}
+                    onOk={() => setIsVisibleInsertInfoLog(false)}
+                    visible={isVisibleInsertInfoLog}
+                    formId={"insert-info-log"}
+                    closable
+                    okText="Add info log"
+                    width="700px"
+                    bodyStyle={{
+                         overflowY: "auto",
+                         maxHeight: "calc(100vh - 200px)",
+                    }}
+               >
+                    <InsertInfoLog
+                         formData={infoLogFormData}
+                         onInsert={onInsertInfoLog}
+                    />
+               </FormModal>
+               <Modal
+                    title="History"
+                    onCancel={() => setIsVisibleHistoryLog(false)}
+                    visible={isVisibleHistoryLog}
+                    zIndex={1004}
+                    width="1200px"
+               >
+                    <HistoryTable
+                         historyLogs={historyLogs}
+                         logs={logs}
+                         setIsHistoryLogVisible={setIsVisibleHistoryLog}
+                         onRevert={onRevert}
+                    />
+               </Modal>
+               <Modal
+                    title="Original logs"
+                    onCancel={() => setIsVisibleOriginalLogs(false)}
+                    visible={isVisibleOriginalLogs}
+                    width="1100px"
+                    bodyStyle={{
+                         padding: 20,
+                    }}
+               >
+                    <OriginalLogs logs={logs} />
+               </Modal>
+               <Modal
+                    title="Original logs"
+                    onCancel={() => setIsVisibleNormalize(false)}
+                    visible={isVisibleNormalize}
+                    width="900px"
+                    bodyStyle={{
+                         padding: 40,
+                    }}
+               >
+                    <Normalize onNormalize={onNormalize} />
+               </Modal>
+               <Modal
+                    title="Transfer log"
+                    onCancel={() => setIsVisibleTransfer(false)}
+                    visible={isVisibleTransfer}
+                    width="900px"
+                    bodyStyle={{
+                         padding: 40,
+                    }}
+               >
+                    {/* @ts-ignore */}
+                    <TransferLogs
+                         transferStatus={transferStatus}
+                         isVisibleTransfer={isVisibleTransfer}
+                         currentLog={currentLog}
+                         initialTime={initialTime}
+                         onTransfer={onTransfer}
+                    />
+               </Modal>
+               <Modal
+                    title={
+                         <div style={{ width: "100%" }}>
+                              <ReactToPrint
+                                   // @ts-ignore
+                                   content={() => componentRef}
+                                   trigger={() => (
+                                        <Button
+                                             type="primary"
+                                             onClick={() => {}}
+                                        >
+                                             <DownloadOutlined />
+                                             Download PDF
+                                        </Button>
+                                   )}
+                              />
+                         </div>
+                    }
+                    onCancel={() => setIsVisibleReport(false)}
+                    visible={isVisibleReport}
+                    width="900px"
+                    okText="ok"
+                    okButtonProps={{
+                         children: <h1>Download</h1>,
+                         title: "download",
+                    }}
+               >
+                    {/* @ts-ignore */}
+                    <div ref={(el) => (componentRef = el)}>
+                         <Report
+                              isPrinting={true}
+                              logs={logs}
+                              initialTime={initialTime}
+                              reportData={reportData}
+                         />
+                    </div>
+               </Modal>
           </div>
-        }
-        onCancel={() => setIsVisibleReport(false)}
-        visible={isVisibleReport}
-        width="900px"
-        okText="ok"
-        okButtonProps={{
-          children: <h1>Download</h1>,
-          title: "download",
-        }}
-      >
-        {/* @ts-ignore */}
-        <div ref={(el) => (componentRef = el)}>
-          <Report
-            isPrinting={true}
-            logs={logs}
-            initialTime={initialTime}
-            reportData={reportData}
-          />
-        </div>
-      </Modal>
-    </div>
-  );
+     );
 };
 
 export default LogActions;

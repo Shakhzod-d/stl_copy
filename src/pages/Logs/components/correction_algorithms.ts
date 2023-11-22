@@ -210,8 +210,6 @@ export const mapDataBeforeSend = (
     doCrop: boolean = true,
     driver?: IDriverData,
 ): any => {
-    console.log(logs);
-
     const sendData = [
         ...logs
             .map((log, index: number) => {

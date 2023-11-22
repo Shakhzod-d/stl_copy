@@ -5,6 +5,21 @@ import {
 } from "@/components/elements/TableElements";
 import { IDashboardMap } from "@/types/dashbord.type";
 
+/**
+ * 
+ * @returns 
+    "_id": "655b4cba472d9efccd5958d7",
+    "time": 1700456400,
+    "vehicleId": "6516df9602d0aec7dc7c15bb",
+    "battery": 35,
+    "bluetooth": true,
+    "eldConnection": false,
+    "gpsPermission": true,
+    "location": true,
+    "systemTime": 1700482230
+
+ */
+
 const useColumns = () => {
      return [
           {
@@ -18,7 +33,8 @@ const useColumns = () => {
           },
           {
                title: "Driver",
-               render: (order: IDashboardMap) => `${order.firstName} ${order.lastName}`
+               render: (order: IDashboardMap) =>
+                    `${order.firstName} ${order.lastName}`,
           },
           {
                title: "Truck Unit",
@@ -26,7 +42,8 @@ const useColumns = () => {
           },
           {
                title: "Last ST. Position",
-               render: (order: IDashboardMap) => order.device ? order.device.state : "-"
+               render: (order: IDashboardMap) =>
+                    order.device ? order.device.state : "-",
           },
           {
                title: "Location",
@@ -35,7 +52,8 @@ const useColumns = () => {
           },
           {
                title: "Current SPD",
-               render: (order: IDashboardMap) => order.device ? `${order.device.speed} mph` : "-"
+               render: (order: IDashboardMap) =>
+                    order.device ? `${order.device.speed} mph` : "-",
           },
           {
                title: "Device Info",

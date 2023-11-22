@@ -1,10 +1,7 @@
 import React from "react";
 import { Progress } from "antd";
 import { hexToRgba } from "@/utils";
-import {
-     ICycle,
-     TItemStatus,
-} from "@/types";
+import { ICycle, TItemStatus } from "@/types";
 import moment from "moment-timezone";
 import { AndroidFilled } from "@ant-design/icons";
 import {
@@ -43,7 +40,6 @@ const LogsHead: React.FC<ILogsHead> = ({
           shift: 0,
      },
 }) => {
-
      const getStatusTotalTime = (statusType: TItemStatus) => {
           const totalSum = () =>
                logs.reduce(
@@ -97,6 +93,79 @@ const LogsHead: React.FC<ILogsHead> = ({
                     <p className="driver-info-desc">
                          Mongo ID: {driverData._id}
                     </p>
+                    <p className="driver-info-desc">
+                         Time-zone: {driverData.driverLicenseIssuingState}
+                    </p>
+               </div>
+
+               <div className="driver-progress-bar">
+                    <CircleProgress
+                         value={(cycle.break / BREAK_TIME_LIMIT) * 100}
+                         title="break"
+                         color="#F0324C"
+                         time={moment.utc(cycle.break * 1000).format("HH:mm")}
+                         // time={getStatusTotalTime("sb").time}
+                    />
+                    <CircleProgress
+                         value={(cycle.drive / DRIVE_TIME_LIMIT) * 100}
+                         title="drive"
+                         color="#5CB176"
+                         // color={
+                         //      (getStatusTotalTime("dr").val /
+                         //           DRIVE_TIME_LIMIT) *
+                         //           100 <
+                         //      DRIVE_TIME_LIMIT
+                         //           ? "#5CB176"
+                         //           : "#FF0000"
+                         // }
+                         time={
+                              cycle.drive > 0 ? (
+                                   moment
+                                        .utc(cycle.drive * 1000)
+                                        .format("HH:mm")
+                              ) : (
+                                   <span className="error-text">
+                                        limit reached
+                                   </span>
+                              )
+                         }
+                         // time={getStatusTotalTime("dr").time}
+                    />
+                    <CircleProgress
+                         value={(cycle.shift / SHIFT_TIME_LIMIT) * 100}
+                         title="shift"
+                         color="#66B7F1"
+                         time={
+                              cycle.shift > 0 ? (
+                                   moment
+                                        .utc(cycle.shift * 1000)
+                                        .format("HH:mm")
+                              ) : (
+                                   <span className="error-text">
+                                        limit reached
+                                   </span>
+                              )
+                         }
+                    />
+                    <CircleProgress
+                         value={(cycle.cycle / CYCLE_TIME_LIMIT) * 100}
+                         title="cycle"
+                         color="#EE5E52"
+                         time={
+                              getSumDuration(cycle.cycle).hours > 0 ? (
+                                   <>
+                                        {getSumDuration(cycle.cycle).hours +
+                                             ":" +
+                                             getSumDuration(cycle.cycle)
+                                                  .minutes}
+                                   </>
+                              ) : (
+                                   <span className="error-text">
+                                        limit reached
+                                   </span>
+                              )
+                         }
+                    />
                </div>
                <div className="driver-progress">
                     <div className="driver-progress-info">
@@ -104,90 +173,13 @@ const LogsHead: React.FC<ILogsHead> = ({
                               Worked hours: <b>{getShiftTotalTime().time}</b>
                          </span>
                          <span>
-                              Violations: <b>{driverData.violations?.length || "No"}</b>
+                              Violations:{" "}
+                              <b>{driverData.violations?.length || "No"}</b>
                          </span>
-                    </div>
-                    <div className="driver-progress-bar">
-                         <CircleProgress
-                              value={
-                                   (cycle.break / BREAK_TIME_LIMIT) * 100
-                              }
-                              title="break"
-                              color="#F0324C"
-                              time={moment
-                                   .utc(cycle.break * 1000)
-                                   .format("HH:mm")}
-                         // time={getStatusTotalTime("sb").time}
-                         />
-                         <CircleProgress
-                              value={
-                                   (cycle.drive / DRIVE_TIME_LIMIT) * 100
-                              }
-                              title="drive"
-                              color="#5CB176"
-                              // color={
-                              //      (getStatusTotalTime("dr").val /
-                              //           DRIVE_TIME_LIMIT) *
-                              //           100 <
-                              //      DRIVE_TIME_LIMIT
-                              //           ? "#5CB176"
-                              //           : "#FF0000"
-                              // }
-                              time={
-                                   cycle.drive > 0 ? (
-                                        moment
-                                             .utc(cycle.drive * 1000)
-                                             .format("HH:mm")
-                                   ) : (
-                                        <span className="error-text">
-                                             limit reached
-                                        </span>
-                                   )
-                              }
-                         // time={getStatusTotalTime("dr").time}
-                         />
-                         <CircleProgress
-                              value={
-                                   (cycle.shift / SHIFT_TIME_LIMIT) * 100
-                              }
-                              title="shift"
-                              color="#66B7F1"
-                              time={
-                                   cycle.shift > 0 ? (
-                                        moment
-                                             .utc(cycle.shift * 1000)
-                                             .format("HH:mm")
-                                   ) : (
-                                        <span className="error-text">
-                                             limit reached
-                                        </span>
-                                   )
-                              }
-                         />
-                         <CircleProgress
-                              value={
-                                   (cycle.cycle / CYCLE_TIME_LIMIT) * 100
-                              }
-                              title="cycle"
-                              color="#EE5E52"
-                              time={
-                                   getSumDuration(cycle.cycle).hours >
-                                        0 ? (
-                                        <>
-                                             {getSumDuration(cycle.cycle)
-                                                  .hours +
-                                                  ":" +
-                                                  getSumDuration(
-                                                       cycle.cycle
-                                                  ).minutes}
-                                        </>
-                                   ) : (
-                                        <span className="error-text">
-                                             limit reached
-                                        </span>
-                                   )
-                              }
-                         />
+                         <span>
+                              Signature:{" "}
+                              <b>{driverData.violations?.length || "No"}</b>
+                         </span>
                     </div>
                     {/* ) : (
                     <div style={{ height: 124 }}></div> */}
@@ -210,8 +202,9 @@ const CircleProgress: React.FC<Props> = ({ title, value, time, color }) => {
                          <div
                               className="circle"
                               style={{
-                                   transform: `translate(-50%, -50%) rotate(${3.6 * value - 6
-                                        }deg)`,
+                                   transform: `translate(-50%, -50%) rotate(${
+                                        3.6 * value - 6
+                                   }deg)`,
                               }}
                          />
                          <div className="border">

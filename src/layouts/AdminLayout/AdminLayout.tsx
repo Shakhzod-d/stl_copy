@@ -28,7 +28,7 @@ const AdminLayout: React.FC<Props> = ({ children }) => {
                     <div className="tabs-wrapper">
                          <Tabs activeKey={activePath}>
                               <TabPane tab={<Link to={`${parentPath}/services`}>Services</Link>} key="services" />
-                              <TabPane tab={<Link to={`${parentPath}/only-companies`}>Only companies</Link>} key="only-companies" />
+                              {/* <TabPane tab={<Link to={`${parentPath}/only-companies`}>Only companies</Link>} key="only-companies" /> */}
                               <TabPane tab={<Link to={`${parentPath}/all-companies`}>All companies</Link>} key="all-companies" />
                               <TabPane tab={<Link to={`${parentPath}/drivers`}>All drivers</Link>} key="drivers" />
                               <TabPane tab={<Link to={`${parentPath}/users`}>All users</Link>} key="users" />

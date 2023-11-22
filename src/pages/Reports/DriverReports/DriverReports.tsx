@@ -17,7 +17,7 @@ import { getStartDay } from "../../Logs/components/correction_algorithms";
 import { NOT_DRAW_STATUSES } from "@/pages/Logs/components/constants";
 
 interface IQueryParams {
-     driverId: number;
+     driverId?: number;
      from: number;
      to: number;
 }
@@ -30,8 +30,14 @@ interface IDriverReportPDF extends IDriverReport {
 }
 const DriverReports = () => {
      const momentZone = useMomentZone();
+
      const [selectedDriver, setSelectedDriver] = useState<number>();
-     const [date, setDate] = useState<[any, any]>();
+     const [date, setDate] = useState<[any, any]>([
+          momentZone().subtract(1, "day").startOf("day"),
+          momentZone().startOf("day"),
+     ]);
+     console.log(momentZone().startOf("day"));
+
      const [queryParams, setQueryParams] = useState<IQueryParams>();
      const [driverReport, setDriverReport] = useState<IDriverReportPDF[]>([]);
      const pdfExportComponent = useRef(null) as React.MutableRefObject<null>;
@@ -48,9 +54,8 @@ const DriverReports = () => {
                     const driverReportPdfs: IDriverReportPDF[] = data.data.map(
                          (driverReport) => {
                               if (driverReport?.log) {
-                                   const initialTime = getStartDay(
-                                        driverReport?.log?.[0]?.start
-                                   );
+                                   const initialTime =
+                                        driverReport?.log?.[0]?.start;
                                    // const { croppedLogs, croppedTime } =
                                    //      cropOneDayLogs(
                                    //           driverReport?.log,
@@ -91,12 +96,15 @@ const DriverReports = () => {
      );
 
      useEffect(() => {
+          console.log(moment(date?.[0]).unix());
+          console.log(moment(date?.[1]).unix());
+
           // @ts-ignore
           setQueryParams((prev) => ({
                ...prev,
                driverId: selectedDriver,
-               from: getStartDay(moment(date?.[0]).unix()),
-               to: getStartDay(moment(date?.[1]).unix()),
+               from: moment(date?.[0]).unix(),
+               to: moment(date?.[1]).unix(),
           }));
      }, [date, selectedDriver]);
 
@@ -170,27 +178,8 @@ const DriverReports = () => {
                                    author="STL ELD"
                               >
                                    {driverReport.map((report, i) => {
-                                        const startDay = momentZone(
-                                             report.initialTime * 1000
-                                        )
-                                             .startOf("day")
-                                             .unix();
-                                        const endDay = momentZone(
-                                             report.initialTime * 1000
-                                        )
-                                             .endOf("day")
-                                             .unix();
-                                        const logs = report?.log
-                                             ? report?.log.map((log) => ({
-                                                    ...log,
-                                                    start: momentZone(
-                                                         log.start * 1000
-                                                    ).unix(),
-                                                    end: momentZone(
-                                                         log.end * 1000
-                                                    ).unix(),
-                                               }))
-                                             : [];
+                                        console.log(report.initialTime);
+
                                         return (
                                              report?.log && (
                                                   <div
@@ -202,12 +191,7 @@ const DriverReports = () => {
                                                        key={report.data._id}
                                                   >
                                                        <Report
-                                                            logs={logs.filter(
-                                                                 (el) =>
-                                                                      !NOT_DRAW_STATUSES.includes(
-                                                                           el.status
-                                                                      )
-                                                            )}
+                                                            logs={report.log}
                                                             initialTime={
                                                                  report.initialTime
                                                             }

@@ -1,7 +1,15 @@
 import React from "react";
 import "./truck-loader.css";
+import { Spin } from "antd";
 const TruckLoader: React.FC = () => {
      return (
+          <div className="loader-wrapper">
+               <Spin size="large" />
+          </div>
+     );
+
+     {
+          /* return (
           //  <div className="loader-wrapper">
           //     <div className="truck-wrapper">...</div>
           //  </div>
@@ -20,7 +28,8 @@ const TruckLoader: React.FC = () => {
                     <div className="smoke"></div>
                </div>
           </div>
-     );
+     ); */
+     }
 };
 
 export default TruckLoader;

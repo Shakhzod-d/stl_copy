@@ -156,18 +156,14 @@ const Report: React.FC<IProps> = ({
                          </tr>
                     </thead>
                     <tbody>
-                         <tr>
-                              <td>7</td>
-                              <td>6497</td>
-                              <td>6562</td>
-                              <td>65 mi</td>
-                         </tr>
-                         <tr>
-                              <td>7</td>
-                              <td>6562</td>
-                              <td>6603</td>
-                              <td>41 mi</td>
-                         </tr>
+                         {logs.map((log) => (
+                              <tr>
+                                   <th>{log.vehicleUnit}</th>
+                                   <th>{log.startOdometer}</th>
+                                   <th>{log.endOdometer}</th>
+                                   <th>{log.distance}</th>
+                              </tr>
+                         ))}
                     </tbody>
                </table>
                <LogGraph

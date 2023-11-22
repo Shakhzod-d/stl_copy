@@ -55,7 +55,6 @@ const Logs: React.FC = () => {
                time,
           });
 
-     console.log(location);
 
      const columns = useMainColumns();
 
