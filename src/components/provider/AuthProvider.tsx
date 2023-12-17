@@ -3,18 +3,18 @@ import SiteLoader from "../loaders/SiteLoader";
 import useIsAuth from "@/hooks/useAuth";
 
 type Props = {
-     children: React.ReactNode;
+   children: any;
 };
 
 const AuthProvider: React.FC<Props> = ({ children }) => {
-     const isIdentified = useIsAuth();
+   const isIdentified = useIsAuth();
 
-     if (!isIdentified) {
-          //! here to disable loader
-          return <SiteLoader />;
-     }
+   if (!isIdentified) {
+      //! here to disable loader
+      return <SiteLoader />;
+   }
 
-     return <div className="app">{children}</div>;
+   return children;
 };
 
 export default AuthProvider;

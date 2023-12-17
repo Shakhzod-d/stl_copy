@@ -69,7 +69,7 @@ const ActionModal: React.FC<Props> = ({ toggle }) => {
                                    required
                                    labelProp="vehicleId"
                                    valueProp="vehicleId"
-                                   data={data?.data?.data || []}
+                                   data={data?.data?.data.data || []}
                               />
                          </Col>
                          <Col span={24}>

@@ -1,0 +1,25 @@
+.multi-day-graph-container {
+   position: relative;
+   .graph-container {
+      width: 100%;
+      overflow-x: scroll;
+      overflow-y: hidden;
+      padding-bottom: 1.5rem;
+      .graph-content {
+         display: flex;
+         width: max-content;
+         height: max-content;
+         .graph-body {
+            width: 400px !important;
+            &:not(:last-child) {
+               margin-right: -14px;
+            }
+         }
+      }
+   }
+   code {
+      position: absolute;
+      left: 0;
+      bottom: -20px;
+   }
+}

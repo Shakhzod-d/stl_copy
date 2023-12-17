@@ -4,17 +4,14 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
 import TextField from "@/components/form/TextField";
-import { ISetState, TItemStatus } from "../../../../types";
 
 import TimePicker from "@/components/elements/TimePicker";
 import useMomentZone from "@/hooks/useMomentZone";
-import { ILog } from "@/types/log.type";
-import { correctLogsTime, fixLogsStatus } from "../correction_algorithms";
+import { useLogsInnerContext } from "../LogsInner.context";
 import DriveWheel from "./assets/DriveWheel";
 import MoonIcon from "./assets/MoonIcon";
 import OffIcon from "./assets/OffIcon";
 import TruckIcon from "./assets/TruckIcon";
-import { useLogsInnerContext } from "../LogsInner.context";
 
 type TFormConnection = {
      fromTo: any;
@@ -52,7 +49,7 @@ interface ILogCorrection {
 
 const LogCorrection: React.FC<ILogCorrection> = ({}) => {
      const {
-          state: { currentLog, time: initialTime },
+          state: { currentLog },
           actions: {
                onChangeStatus,
 

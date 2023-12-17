@@ -1,97 +1,86 @@
 import TruckLoader from "@/components/loaders/TruckLoader";
 import MainLayout from "@/layouts/MainLayout";
+import { Badge } from "antd";
 import LogActions from "./LogActions";
 import LogCorrection from "./LogCorrection";
-import LogForm from "./LogForm";
 import LogGraph from "./LogGraph";
 import LogHead from "./LogHead";
 import LogTable from "./LogTable";
 import { useLogsInnerContext } from "./LogsInner.context";
 import TripPlanner from "./TripPlanner";
+import MultiDayGraph from "./MultiDayGraph/container/MultiDayGraph";
 
 const LogsInner: React.FC = () => {
-     const {
-          state: {
-               disableActions,
-               // ... (other state variables)
-               // Include other variables here
-               logStatus,
-               currentLog,
-               hoveredId,
-               isFetching,
-               logData,
-               logs,
-               time,
-               driverData,
-               columns,
-               // ... (include other variables here)
-          },
-          actions: {
-               afterRangeChange,
-               setHoveredId,
-               filterDrawStatus,
-               setCurrentLog,
-          },
-     } = useLogsInnerContext();
+   const {
+      state: {
+         disableActions,
+         // ... (other state variables)
+         // Include other variables here
+         currentLog,
+         hoveredId,
+         isFetching,
+         logData,
+         logs,
+         time,
+         driverData,
+         columns,
+         // ... (include other variables here)
+      },
+      actions: {
+         afterRangeChange,
+         setHoveredId,
+         filterDrawStatus,
+         setCurrentLog,
+      },
+   } = useLogsInnerContext();
 
-     const renderInner = () =>
-          ({
-               table: (
-                    <LogTable
-                         data={logs}
-                         columns={columns}
-                         setHoveredId={setHoveredId}
-                         hoveredId={hoveredId}
-                         // rowSelection={rowSelection} these are must to be same
-                    />
-               ),
-               correction: <LogCorrection />,
-               correction_point_log: (
-                    <>
-                         <LogTable
-                              data={logs}
-                              columns={columns}
-                              setHoveredId={setHoveredId}
-                              hoveredId={hoveredId}
-                              // rowSelection={rowSelection} these are must to be same
-                         />
-                    </>
-               ),
-          }[logStatus]);
-
-     return (
-          <MainLayout>
-               <div
-                    className="logs-inner page"
-                    style={{ pointerEvents: disableActions ? "none" : "all" }}
-               >
-                    {driverData && (
-                         <LogHead
-                              driverData={driverData?.data}
-                              initialTime={time}
-                              cycle={logData?.cycle}
-                              logs={logs}
-                         />
-                    )}
-                    <LogActions />
-                    <LogGraph
-                         data={filterDrawStatus(logs)}
-                         setHoveredId={setHoveredId}
-                         hoveredId={hoveredId}
-                         currentLog={currentLog}
-                         setCurrentLog={setCurrentLog}
-                         afterRangeChange={afterRangeChange}
-                         logStatus={isFetching}
-                         initialTime={time / 1000}
-                    />
-
-                    {(isFetching || disableActions) && <TruckLoader />}
-                    {renderInner()}
-               </div>
-               <LogForm />
-               <TripPlanner />
-          </MainLayout>
-     );
+   return (
+      <MainLayout>
+         <div
+            className="logs-inner page"
+            style={{ pointerEvents: disableActions ? "none" : "all" }}
+         >
+            {driverData && (
+               <LogHead
+                  driverData={driverData?.data}
+                  initialTime={time}
+                  cycle={logData?.cycle}
+                  logs={logs}
+               />
+            )}
+            <LogActions />
+            {logData?.violation.map((violation) => (
+               <Badge count={violation.violation} />
+            ))}
+            <LogGraph
+               data={filterDrawStatus(logs)}
+               setHoveredId={setHoveredId}
+               hoveredId={hoveredId}
+               currentLog={currentLog}
+               setCurrentLog={setCurrentLog}
+               afterRangeChange={afterRangeChange}
+               isFetching={isFetching}
+               initialTime={time / 1000}
+            />
+            <MultiDayGraph />
+            {(isFetching || disableActions) && <TruckLoader />}
+            {currentLog ? (
+               <LogCorrection />
+            ) : (
+               <LogTable
+                  data={logs}
+                  columns={columns}
+                  setHoveredId={setHoveredId}
+                  hoveredId={hoveredId}
+                  driver={driverData?.data}
+                  // rowSelection={rowSelection} these are must to be same
+               />
+            )}
+         </div>
+         {/* <LogForm /> */}
+         <TripPlanner />
+      </MainLayout>
+   );
 };
 
 export default LogsInner;

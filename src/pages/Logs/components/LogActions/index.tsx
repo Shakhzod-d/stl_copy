@@ -82,7 +82,6 @@ const LogActions: React.FC<ILogActions> = ({}) => {
                          <DatePicker
                               onChange={(val) => {
                                    setTime(moment(val).valueOf());
-                                   debugger;
                               }}
                               value={moment(initialTime)}
                          />
@@ -126,7 +125,7 @@ const LogActions: React.FC<ILogActions> = ({}) => {
                               >
                                    Report
                               </Button>
-                              <Button
+                              {/* <Button
                                    disabled={whenSomethingIsLoading}
                                    onClick={() =>
                                         setIsVisibleOriginalLogs(true)
@@ -134,7 +133,7 @@ const LogActions: React.FC<ILogActions> = ({}) => {
                                    className="log-btn"
                               >
                                    Original Logs
-                              </Button>
+                              </Button> */}
                               <Button
                                    disabled={whenSomethingIsLoading}
                                    className="log-btn"
@@ -274,7 +273,7 @@ const LogActions: React.FC<ILogActions> = ({}) => {
                          onRevert={onRevert}
                     />
                </Modal>
-               <Modal
+               {/* <Modal
                     title="Original logs"
                     onCancel={() => setIsVisibleOriginalLogs(false)}
                     visible={isVisibleOriginalLogs}
@@ -284,9 +283,9 @@ const LogActions: React.FC<ILogActions> = ({}) => {
                     }}
                >
                     <OriginalLogs logs={logs} />
-               </Modal>
+               </Modal> */}
                <Modal
-                    title="Original logs"
+                    title="Normalize logs"
                     onCancel={() => setIsVisibleNormalize(false)}
                     visible={isVisibleNormalize}
                     width="900px"
@@ -346,7 +345,7 @@ const LogActions: React.FC<ILogActions> = ({}) => {
                          <Report
                               isPrinting={true}
                               logs={logs}
-                              initialTime={initialTime}
+                              initialTime={initialTime / 1000}
                               reportData={reportData}
                          />
                     </div>

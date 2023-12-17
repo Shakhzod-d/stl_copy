@@ -74,8 +74,8 @@
                     }
                }
                &.off {
-                    color: $gray3;
-                    border-color: $gray3;
+                    color: $gray3 !important;
+                    border-color: $gray3 !important;
                     // border-right-color: $gray3 !important;
                     svg {
                          path {

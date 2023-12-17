@@ -8,9 +8,8 @@ import { ILog } from "@/types/log.type";
 
 const OriginalLogs: FC<{ logs: ILog[] }> = ({ logs }) => {
      const [hoveredId, setHoveredId] = useState<string | null>(null);
-     const [currentLog, setCurrentLog] = useState();
      const columns = useGraphColumns(() => { });
-     return (
+     return (  
           <div className="original-logs-modal">
                <LogGraph
                     data={logs}

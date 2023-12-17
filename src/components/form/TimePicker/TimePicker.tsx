@@ -1,10 +1,17 @@
 import React from "react";
-import { Controller, RegisterOptions, FieldValues, Control, Path } from "react-hook-form";
+import {
+     Controller,
+     RegisterOptions,
+     FieldValues,
+     Control,
+     Path,
+} from "react-hook-form";
 import { TimePicker as AntdTimePicker, TimePickerProps } from "antd";
 
-export interface ITimePicker<T extends FieldValues = any> extends TimePickerProps {
+export interface ITimePicker<T extends FieldValues = any>
+     extends TimePickerProps {
      control: Control<T>;
-     name: Path<T>
+     name: Path<T>;
      required?: boolean;
      validation?: RegisterOptions;
      label: string;
@@ -32,13 +39,14 @@ function TimePicker<T extends FieldValues>({
      return (
           <Controller
                render={({
-                    field: { onChange, /* onBlur, */ value, name, /* ref */ },
+                    field: { onChange, /* onBlur, */ value, name /* ref */ },
                     fieldState: { error },
                }) => {
                     return (
                          <div
-                              className={`text-field-wrapper ${error ? "error" : ""
-                                   } ${className}`}
+                              className={`text-field-wrapper ${
+                                   error ? "error" : ""
+                              } ${className}`}
                          >
                               {label && <label>{label}</label>}
                               {range ? (
@@ -86,6 +94,6 @@ function TimePicker<T extends FieldValues>({
                rules={{ required: required, ...validation }}
           />
      );
-};
+}
 
 export default TimePicker;

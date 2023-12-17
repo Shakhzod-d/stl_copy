@@ -1,4 +1,7 @@
 .dark {
+     .ant-picker-range {
+          background-color: transparent !important;
+     }
      .date-picker-wrapper {
           .ant-picker {
                border-color: $dark-gray;
