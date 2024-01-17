@@ -15,6 +15,7 @@ export interface IDriverForm {
   coDriverId: string; // ! number
   notes: string;
   organization: string;
+  fullName: string;
 }
 
 export interface IDriverData extends IDriverForm {

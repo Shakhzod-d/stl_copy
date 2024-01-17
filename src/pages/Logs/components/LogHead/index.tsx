@@ -96,7 +96,7 @@ const LogsHead: React.FC<ILogsHead> = ({
             <CircleProgress
                value={(cycle.break / BREAK_TIME_LIMIT) * 100}
                title="break"
-               color="#F0324C"
+               color="#FFBB00"
                time={moment.utc(cycle.break * 1000).format("HH:mm")}
                // time={getStatusTotalTime("sb").time}
             />
