@@ -55,17 +55,25 @@ const Sidebar: React.FC<Props> = ({ collapsed, setCollapsed }) => {
                          src="/assets/icons/logo-title.svg"
                          alt=""
                     /> */}
-        <img
+        {/* <img
           width={50}
           height={50}
           className="logo-title"
           src="/assets/images/STL.png"
           alt=""
+        /> */}
+        <img
+          width={50}
+          height={50}
+          className="logo-title"
+          style={{ background: "#FFF", borderRadius: "10px" }}
+          src="/assets/icons/Logo_STL_dashbord_page_vector.svg"
+          alt=""
         />
       </div>
       <div className="sidebar-scroll">
         <Menu
-          theme="dark"
+          theme="light"
           mode="inline"
           openKeys={openKeys}
           onOpenChange={setOpenKeys}

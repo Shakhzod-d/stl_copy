@@ -1,101 +1,101 @@
 .log-correction {
-     .ant-picker,
-     .ant-picker-range {
-          border-radius: 24px;
-     }
-     &-statuses {
-          display: flex;
-          justify-content: center;
+  .ant-picker,
+  .ant-picker-range {
+    border-radius: 24px;
+  }
+  &-statuses {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 25px;
+    margin: 20px 0;
+    label {
+      outline: none;
+      border: 1px solid #aaa;
+      background: transparent;
+      border-radius: 18px !important;
+      padding: 7px 12px;
+      font-weight: 500;
+      width: max-content;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100px;
+      span:nth-child(2) {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+        span {
+          width: 20px;
+          display: inline-flex;
           align-items: center;
-          gap: 25px;
-          margin: 20px 0;
-          label {
-               outline: none;
-               border: 1px solid #aaa;
-               background: transparent;
-               border-radius: 18px !important;
-               padding: 7px 12px;
-               font-weight: 500;
-               width: max-content;
-               text-transform: uppercase;
-               display: flex;
-               align-items: center;
-               justify-content: center;
-               width: 100px;
-               span:nth-child(2) {
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    gap: 5px;
-                    span {
-                         width: 20px;
-                         display: inline-flex;
-                         align-items: center;
-                         justify-content: space-between;
-                         path {
-                              width: 20px;
-                         }
-                    }
-               }
-               // &.log-send {
-               //      background-color: #3A36DB;
-               //      color: white;
-               // }
+          justify-content: space-between;
+          path {
+            width: 20px;
+          }
+        }
+      }
+      // &.log-send {
+      //      background-color: #3A36DB;
+      //      color: white;
+      // }
 
-               &::before {
-                    content: none !important;
-                    display: none !important;
-               }
-               &.on {
-                    color: $blue;
-                    border-color: $blue;
-                    svg {
-                         path {
-                              fill: $blue;
-                         }
-                    }
-               }
-               &.sb {
-                    color: $primary;
-                    border-color: $primary;
-                    svg {
-                         path {
-                              fill: $primary;
-                         }
-                    }
-               }
-               &.dr {
-                    color: $green;
-                    border-color: $green;
-                    svg {
-                         path {
-                              fill: $green;
-                         }
-                    }
-               }
-               &.off {
-                    color: $gray3 !important;
-                    border-color: $gray3 !important;
-                    // border-right-color: $gray3 !important;
-                    svg {
-                         path {
-                              fill: $gray3;
-                         }
-                    }
-               }
-               /* &:hover {
+      &::before {
+        content: none !important;
+        display: none !important;
+      }
+      &.on {
+        color: $blue;
+        border-color: $blue;
+        svg {
+          path {
+            fill: $blue;
+          }
+        }
+      }
+      &.sb {
+        color: $primary;
+        border-color: $primary;
+        svg {
+          path {
+            fill: $primary;
+          }
+        }
+      }
+      &.dr {
+        color: $green;
+        border-color: $green;
+        svg {
+          path {
+            fill: $green;
+          }
+        }
+      }
+      &.off {
+        color: $gray3 !important;
+        border-color: $gray3 !important;
+        // border-right-color: $gray3 !important;
+        svg {
+          path {
+            fill: $gray3;
+          }
+        }
+      }
+      /* &:hover {
                     color: initial;
                } */
-          }
-     }
-     &-form {
-          display: flex;
-          justify-content: center;
-     }
-     &-form > div {
-          width: 80%;
-     }
-     &-form > div > div {
-          margin-bottom: 15px;
-     }
+    }
+  }
+  &-form {
+    display: flex;
+    justify-content: center;
+  }
+  &-form > div {
+    width: 80%;
+  }
+  &-form > div > div {
+    margin-bottom: 15px;
+  }
 }

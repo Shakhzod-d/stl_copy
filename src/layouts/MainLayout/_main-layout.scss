@@ -1,43 +1,43 @@
 .dark {
-     .custom-tabs {
-          &-item {
-               color: $white;
-          }
-     }
+  .custom-tabs {
+    &-item {
+      color: $white;
+    }
+  }
 }
 
 .custom-tabs {
-     display: flex;
-     align-items: center;
-     gap: 8px;
-     margin-bottom: 24px;
-     &-item {
-          @extend %bold-12;
-          list-style: none;
-          padding: 8px 16px;
-          text-transform: uppercase;
-          color: $gray2;
-          position: relative;
-          transition: $theme;
-          &:hover {
-               color: $primary;
-          }
-          &::after {
-               content: "";
-               position: absolute;
-               height: 2px;
-               width: 100%;
-               left: 0;
-               bottom: 0;
-               background-color: $primary;
-               opacity: 0;
-               transition: $theme;
-          }
-          &.active {
-               color: $primary;
-               &::after {
-                    opacity: 1;
-               }
-          }
-     }
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 24px;
+  &-item {
+    @extend %bold-12;
+    list-style: none;
+    padding: 8px 16px;
+    text-transform: uppercase;
+    color: $gray2;
+    position: relative;
+    transition: $theme;
+    &:hover {
+      color: $dark-red;
+    }
+    &::after {
+      content: "";
+      position: absolute;
+      height: 2px;
+      width: 100%;
+      left: 0;
+      bottom: 0;
+      background-color: $dark-red;
+      opacity: 0;
+      transition: $theme;
+    }
+    &.active {
+      color: $dark-red;
+      &::after {
+        opacity: 1;
+      }
+    }
+  }
 }
