@@ -283,7 +283,7 @@ const LogCorrection: React.FC<ILogCorrection> = ({ handleCloseEditing }) => {
             {/* </Row> */}
             {/* <Row gutter={[40, 15]}> */}
             {/* <Col span={20}> */}
-            <div style={{ border: "1px solid red !important" }}>
+            <div style={{}}>
               <TextField
                 label={"Eng H"}
                 placeholder={"Eng H"}
@@ -293,7 +293,7 @@ const LogCorrection: React.FC<ILogCorrection> = ({ handleCloseEditing }) => {
                 style={{
                   width: "70px",
                   height: "28px",
-                  border: "1px solid red !important",
+                  // border: "1px solid red !important",
                 }}
               />
             </div>

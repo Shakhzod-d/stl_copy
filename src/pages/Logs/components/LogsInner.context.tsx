@@ -80,7 +80,7 @@ const useLogsInner = () => {
     newData.splice(rowIndex + 1, 0, log);
     setLogs(newData);
   };
-  console.log(`logs`, logs);
+  // console.log(`logs`, logs);
 
   const fetchLogParams = {
     driverId: id,
