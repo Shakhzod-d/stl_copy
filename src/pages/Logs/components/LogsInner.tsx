@@ -34,7 +34,7 @@ const LogsInner: React.FC = () => {
     },
   } = useLogsInnerContext();
 
-  console.log(`currentLog`, currentLog);
+  // console.log(`currentLog`, currentLog);
 
   return (
     <MainLayout>
@@ -67,9 +67,11 @@ const LogsInner: React.FC = () => {
         <MultiDayGraph />
         {(isFetching || disableActions) && <TruckLoader />}
         <div>
-          {currentLog && (
-            <LogCorrection handleCloseEditing={() => setCurrentLog(null)} />
-          )}
+          <div id="box">
+            {currentLog && (
+              <LogCorrection handleCloseEditing={() => setCurrentLog(null)} />
+            )}
+          </div>
 
           <LogTable
             data={logs}

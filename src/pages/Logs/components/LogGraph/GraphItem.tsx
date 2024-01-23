@@ -6,6 +6,7 @@ import { getDurationDate, parseUnix } from "@/utils";
 import { ILog } from "@/types/log.type";
 import moment from "moment";
 import { useLogsInnerContext } from "../LogsInner.context";
+import { getCurrentTimeInSeconds } from "./helper";
 
 const statusPosition = {
   off: 1,
@@ -66,7 +67,7 @@ const GraphItem: React.FC<IGraphItem> = ({
   const start = initialItem.start;
   const end = initialItem.end;
   const status = item.status;
-  const ONE_DAY_SECONDS = 24 * 60 * 60 - 1; // 24 hours
+  const ONE_DAY_SECONDS = 24 * 60 * 60; // 24 hours
   const duration = item.end - item.start;
 
   const itemPosition =
@@ -88,39 +89,6 @@ const GraphItem: React.FC<IGraphItem> = ({
     const second = Number(end - initialTime);
     setRangeVal(currentLog?.rangeVal || [first, second]);
   }, [currentLog]);
-
-  // ****************************************************
-  const targetTimeZone = "America/New_York";
-  const now = new Date();
-  const formatter = new Intl.DateTimeFormat("en-US", {
-    timeZone: targetTimeZone,
-    hour: "numeric",
-    minute: "numeric",
-    second: "numeric",
-    hour12: false, // Use 24-hour format
-  });
-  const timeString = formatter.format(now);
-
-  const [hours, minutes, seconds] = timeString.split(":").map(Number);
-  const currentTotalSecondsBasedOnTimeZone =
-    hours * 3600 + minutes * 60 + seconds;
-  // const totalMinutes = hours * 60 + minutes; // have total minutes
-
-  // calc total width
-  const totalWidth = 1075.1875;
-  const totalSeconds = 86399;
-
-  const oneSecondWidth = totalWidth / totalSeconds; // 0.012444443801432887
-  const temp = oneSecondWidth * currentTotalSecondsBasedOnTimeZone;
-  // const newWidth = totalWidth + rateOfChange * totalSeconds;
-  // const rateOfChange = (newWidth - totalWidth) / totalSeconds;
-  // const rateOfChange = 5.5;
-
-  // console.log(`temp`, temp);
-
-  console.log(`rangeWidth`, rangeWidth, "temp", temp);
-  // console.log(`rangeWidth`, rangeWidth, `initialItem`, initialItem);
-  // useEffect(() => {}, [currentLog, rangeVal]);
 
   const getStatusDuration = (start: any, end: any) => {
     const { days, hours, minutes, seconds } = getDurationDate(
@@ -150,14 +118,32 @@ const GraphItem: React.FC<IGraphItem> = ({
 
   const dateFromTimestamp = new Date(time);
 
-  // Check if the date from the timestamp is the same as the current date
   const isToday =
     dateFromTimestamp.getDate() === currentDate.getDate() &&
     dateFromTimestamp.getMonth() === currentDate.getMonth() &&
     dateFromTimestamp.getFullYear() === currentDate.getFullYear();
-  console.log(`datePickerTime`, time, isToday);
+  // const isFutureTime = value[1] > getCurrentTimeInSeconds();
+
+  // console.log(`rangeVal`, rangeVal); // rangeVal[1] = o'ng slider topdim shu ekan
+  // o'ng slider
+  const timeZone = "America/New_York";
+
+  const currentDate_2 = new Date().toLocaleString("en-US", {
+    timeZone: timeZone,
+  });
+
+  const h = new Date(currentDate_2).getHours();
+  const m = new Date(currentDate_2).getMinutes();
+  const s = new Date(currentDate_2).getSeconds();
+
+  // Calculate the total seconds elapsed in the current day
+  const ts = h * 3600 + m * 60 + s; // ts = total seconds based on time zone
+
+  // console.log("graphWidth", graphWidth, rangeWidth);//rangeVal[1] > ts
+  // console.log("graphWidth", rangeVal[1], "ts", ts); //rangeVal[1] > ts
+
   return (
-    <>
+    <div>
       {status === "intermediate" ? (
         <div
           className={`${status}`}
@@ -273,12 +259,12 @@ const GraphItem: React.FC<IGraphItem> = ({
 
         <Slider
           allowCross={false}
-          min={0}
-          max={ONE_DAY_SECONDS} // temp
-          // max={currentTotalSecondsBasedOnTimeZone} // temp
+          min={1}
+          max={ONE_DAY_SECONDS}
           value={rangeVal}
           range
-          disabled={isToday && rangeWidth > temp}
+          disabled={isToday && rangeVal[1] > ts}
+          // defaultValue={time}
           onAfterChange={(value: any) => {
             // const val = [
             //      value[0] - (value[0] % 1000),
@@ -286,21 +272,35 @@ const GraphItem: React.FC<IGraphItem> = ({
             // ];
             afterRangeChange?.(value, item);
           }}
-          // disabled={rangeVal >= maxAllowedValue}
           onChange={(value: any) => {
-            if (isToday === true && rangeWidth > temp) {
-              // Only allow changes if the slider is not disabled
-              console.log(`value`, rangeWidth, temp);
+            const isWithinRange = value[0] >= 0 && value[1] <= ONE_DAY_SECONDS;
+
+            if (isToday && rangeVal[1] > ts) {
               return;
             }
-            console.log(`isToday`, isToday);
 
-            const isWithinRange = value[0] >= 0 && value[1] <= ONE_DAY_SECONDS;
+            // console.log(`value`, value);
+            // if (isToday === true && rangeWidth > temp) {
+            //   // Only allow changes if the slider is not disabled
+            //   return;
+            // }
+
+            // if (isWithinRange && !isFutureTime) {
+            //   // Update the state only if within the allowed range and not in the future
+            //   setRangeVal(value);
+            // }
+
+            // ***********************************
+
+            // console.log(`isToday`, isToday);
+
+            // const isWithinRange = value[0] >= 0 && value[1] <= ONE_DAY_SECONDS;
 
             if (isWithinRange) {
               // Update the state only if within the allowed range
               setRangeVal(value);
             }
+            // ******************************
             // if (
             //   //. !isPrevLogDisabled &&
             //   (!isFirstLog ||
@@ -318,7 +318,7 @@ const GraphItem: React.FC<IGraphItem> = ({
           }}
         />
       </div>
-    </>
+    </div>
   );
 };
 

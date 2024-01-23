@@ -21,7 +21,7 @@ import { formatWithOptions } from "date-fns/fp";
 interface Props {
   title: string;
   value: number;
-  time: React.ReactNode | number | string;
+  time: React.ReactNode | number | string | JSX.Element;
   color: string;
 }
 
@@ -175,7 +175,7 @@ const LogsHead: React.FC<ILogsHead> = ({
 };
 
 const CircleProgress: React.FC<Props> = ({ title, value, time = 0, color }) => {
-  // console.log(`value`, value, `time`, time, `color`, color);
+  // console.log(`time`, time);
 
   if (typeof time === "number" && !isNaN(time)) {
     // Calculate off-duty time

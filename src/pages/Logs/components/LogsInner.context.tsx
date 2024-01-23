@@ -73,7 +73,7 @@ const useLogsInner = () => {
   const handleEditClick = (log: any) => {
     const rowIndex = logs.findIndex((item) => item._id === log._id);
     setCurrentLog(log);
-    console.log(`currentLog`, logs, log);
+    // console.log(`currentLog`, logs, log);
     // @ts-ignore
 
     const newData = [...logs];

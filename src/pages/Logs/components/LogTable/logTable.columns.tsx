@@ -12,6 +12,7 @@ import { useForm } from "react-hook-form";
 import { LogStatusOptions, POINT_STATUSES, RANGE_STATUSES } from "../constants";
 import { v4 as uuidV4 } from "uuid";
 import { useLogsInnerContext } from "../LogsInner.context";
+import { useEffect } from "react";
 
 type TFormConnection = {
   fromTo: any;
@@ -48,7 +49,14 @@ const useGraphColumns = (
 ) => {
   // const state = useLogsInnerContext();
 
-  // console.log(`state`, state);
+  const editItem = (log: any) => {
+    document
+      ?.querySelector("#box")
+      ?.scrollIntoView({ behavior: "smooth", block: "start" });
+    setCurrentLog(log);
+    // document.documentElement.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+    // window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+  };
 
   return [
     {
@@ -118,7 +126,7 @@ const useGraphColumns = (
         // @ts-ignore
         RANGE_STATUSES.includes(log.status) ? (
           <div className="action-table">
-            <div onClick={() => setCurrentLog(log)}>
+            <div onClick={() => editItem(log)}>
               <Icon icon="pencil" className="pencil" />
             </div>
           </div>
