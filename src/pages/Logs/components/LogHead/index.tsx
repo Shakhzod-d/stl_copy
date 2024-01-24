@@ -70,6 +70,7 @@ const LogsHead: React.FC<ILogsHead> = ({
       time: moment.utc(TOTAL_STATUS_SUM * 1000).format("HH:mm"),
     };
   };
+  console.log(`driverData`, driverData);
 
   // const isToday = initialTime === getTodaysInitialTime();
 

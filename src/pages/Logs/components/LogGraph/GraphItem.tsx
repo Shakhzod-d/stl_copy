@@ -7,6 +7,8 @@ import { ILog } from "@/types/log.type";
 import moment from "moment";
 import { useLogsInnerContext } from "../LogsInner.context";
 import { getCurrentTimeInSeconds } from "./helper";
+import { useSelector } from "react-redux";
+import useTimezoneConverter from "./useTimezoneConverter";
 
 const statusPosition = {
   off: 1,
@@ -42,6 +44,15 @@ export interface IGraphItem {
   };
 }
 
+const myMap = new Map([
+  ["Eastern Time", "America/New_York"],
+  ["Central Time", "America/Chicago"],
+  ["Mountain Time", "America/Denver"],
+  ["Pacific Time", "America/Los_Angeles"],
+  ["Alaska Time", "America/Anchorage"],
+  ["Hawaii-Aleutian Time", "America/Pacific/Honolulu"],
+]);
+
 const GraphItem: React.FC<IGraphItem> = ({
   item: initialItem,
   lastStatus,
@@ -62,6 +73,8 @@ const GraphItem: React.FC<IGraphItem> = ({
   // isNextLogDisabled,
 }) => {
   const [rangeVal, setRangeVal] = useState<any>(initialItem.rangeVal || []);
+  const state = useSelector((state: any) => state?.auth);
+  // console.log(`state`, state.companies);
 
   const item = initialItem;
   const start = initialItem.start;
@@ -111,17 +124,21 @@ const GraphItem: React.FC<IGraphItem> = ({
     );
   };
 
+  // "Eastern Time"
+  const timeZones = {
+    "Eastern Time": "America/New_York",
+    "Central Time": "America/Chicago",
+    "Mountain Time": "America/Denver",
+    "Pacific Time": "America/Los_Angeles",
+    "Alaska Time": "America/Anchorage",
+    "Hawaii-Aleutian Time": "America/Pacific/Honolulu",
+  };
+
   const {
-    state: { time },
+    state: { time, driverData = { data: { companyTimeZone: "Eastern Time" } } },
   } = useLogsInnerContext();
-  const currentDate = new Date();
+  // const currentDate = new Date();
 
-  const dateFromTimestamp = new Date(time);
-
-  const isToday =
-    dateFromTimestamp.getDate() === currentDate.getDate() &&
-    dateFromTimestamp.getMonth() === currentDate.getMonth() &&
-    dateFromTimestamp.getFullYear() === currentDate.getFullYear();
   // const isFutureTime = value[1] > getCurrentTimeInSeconds();
 
   // console.log(`rangeVal`, rangeVal); // rangeVal[1] = o'ng slider topdim shu ekan
@@ -129,17 +146,85 @@ const GraphItem: React.FC<IGraphItem> = ({
   const timeZone = "America/New_York";
 
   const currentDate_2 = new Date().toLocaleString("en-US", {
-    timeZone: timeZone,
+    timeZone:
+      timeZones[driverData?.data?.companyTimeZone as keyof typeof timeZones],
   });
-
   const h = new Date(currentDate_2).getHours();
   const m = new Date(currentDate_2).getMinutes();
   const s = new Date(currentDate_2).getSeconds();
-
-  // Calculate the total seconds elapsed in the current day
   const ts = h * 3600 + m * 60 + s; // ts = total seconds based on time zone
 
-  // console.log("graphWidth", graphWidth, rangeWidth);//rangeVal[1] > ts
+  const dateFromTimestamp = new Date(time);
+  const currentDateET = new Date().toLocaleString("en-US", {
+    timeZone:
+      timeZones[driverData?.data?.companyTimeZone as keyof typeof timeZones],
+  });
+  const currentDate = new Date(currentDateET);
+
+  const isToday =
+    dateFromTimestamp.getDate() === currentDate.getDate() &&
+    dateFromTimestamp.getMonth() === currentDate.getMonth() &&
+    dateFromTimestamp.getFullYear() === currentDate.getFullYear();
+
+  const [formattedDateTime, setFormattedDateTime] = useState<string | null>(
+    null
+  );
+
+  // ******************************************* hook
+  const formattedStartTime = useTimezoneConverter({
+    unixTimestamp: start,
+    timezone:
+      timeZones[driverData?.data?.companyTimeZone as keyof typeof timeZones] ||
+      "America/New_York",
+  });
+
+  const formattedEndTime = useTimezoneConverter({
+    unixTimestamp: end,
+    timezone:
+      timeZones[driverData?.data?.companyTimeZone as keyof typeof timeZones] ||
+      "America/New_York",
+  });
+
+  const formattedLeftTime = useTimezoneConverter({
+    unixTimestamp: initialTime + rangeVal[0],
+    timezone:
+      timeZones[driverData?.data?.companyTimeZone as keyof typeof timeZones] ||
+      "America/New_York",
+  });
+
+  const formattedRightTime = useTimezoneConverter({
+    unixTimestamp: initialTime + rangeVal[1],
+    timezone:
+      timeZones[driverData?.data?.companyTimeZone as keyof typeof timeZones] ||
+      "America/New_York",
+  });
+
+  useEffect(() => {
+    // Create a new Date object using the provided Unix timestamp
+    const date = new Date((initialTime + rangeVal[0]) * 1000); // Multiply by 1000 to convert seconds to milliseconds
+
+    // Convert the date to Eastern Time (ET)
+    // const etDateTime = date.toLocaleString("en-US", {
+    //   timeZone: "America/New_York", // Eastern Time
+    // });
+    const etDateTime = moment(date)
+      .tz(
+        timeZones[driverData?.data?.companyTimeZone as keyof typeof timeZones]
+      )
+      .format("HH:mm:ss");
+
+    // Set the formatted date and time to state
+    setFormattedDateTime(etDateTime);
+  }, [initialTime]);
+
+  console.log(
+    `formattedStartTime`,
+    formattedRightTime,
+    moment(parseUnix(initialTime + rangeVal[1])).format("HH:mm:ss")
+    // moment(parseUnix(initialTime + rangeVal[1])).format("HH:mm:ss")
+  );
+
+  // console.log("graphWidth", `ts`, ts - 44, rangeVal[1] - 100); //rangeVal[1] > ts
   // console.log("graphWidth", rangeVal[1], "ts", ts); //rangeVal[1] > ts
 
   return (
@@ -159,7 +244,8 @@ const GraphItem: React.FC<IGraphItem> = ({
             onMouseLeave={() => setHoveredId?.("")}
           />
           <span className="time">
-            {moment(parseUnix(start)).format("HH:mm:ss")}
+            {/* {moment(parseUnix(start)).format("HH:mm:ss")} */}
+            {formattedStartTime}
           </span>
         </div>
       ) : !initialItem.isNewLog ? (
@@ -183,10 +269,12 @@ const GraphItem: React.FC<IGraphItem> = ({
             {!currentLog && (
               <>
                 <span className="start">
-                  {moment(parseUnix(start)).format("HH:mm:ss")}
+                  {/* {moment(parseUnix(start)).format("HH:mm:ss")} */}
+                  {formattedStartTime}
                 </span>
                 <span className="end">
-                  {moment(parseUnix(end)).format("HH:mm:ss")}
+                  {/* {moment(parseUnix(end)).format("HH:mm:ss")} */}
+                  {formattedEndTime}
                 </span>
                 {/* <span className="duration">
                                moment.duration(duration).seconds()
@@ -249,10 +337,12 @@ const GraphItem: React.FC<IGraphItem> = ({
           <Icon icon="range-left" className="range-left" />
           <Icon icon="range-right" className="range-right" />
           <span className="time time-left">
-            {moment(parseUnix(initialTime + rangeVal[0])).format("HH:mm:ss")}
+            {/* {moment(parseUnix(initialTime + rangeVal[0])).format("HH:mm:ss")}{" "} */}
+            {formattedLeftTime}
           </span>
           <span className="time time-right">
-            {moment(parseUnix(initialTime + rangeVal[1])).format("HH:mm:ss")}
+            {/* {moment(parseUnix(initialTime + rangeVal[1])).format("HH:mm:ss")} */}
+            {formattedRightTime}
           </span>
           {getStatusDuration(start, end)}
         </div>
@@ -263,7 +353,7 @@ const GraphItem: React.FC<IGraphItem> = ({
           max={ONE_DAY_SECONDS}
           value={rangeVal}
           range
-          disabled={isToday && rangeVal[1] > ts}
+          disabled={isToday && rangeVal[1] - 100 > ts - 44}
           // defaultValue={time}
           onAfterChange={(value: any) => {
             // const val = [
@@ -275,7 +365,7 @@ const GraphItem: React.FC<IGraphItem> = ({
           onChange={(value: any) => {
             const isWithinRange = value[0] >= 0 && value[1] <= ONE_DAY_SECONDS;
 
-            if (isToday && rangeVal[1] > ts) {
+            if (isToday && rangeVal[1] - 100 > ts - 44) {
               return;
             }
 
