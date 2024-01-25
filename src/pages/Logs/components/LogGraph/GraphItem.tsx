@@ -217,12 +217,12 @@ const GraphItem: React.FC<IGraphItem> = ({
     setFormattedDateTime(etDateTime);
   }, [initialTime]);
 
-  console.log(
-    `formattedStartTime`,
-    formattedRightTime,
-    moment(parseUnix(initialTime + rangeVal[1])).format("HH:mm:ss")
-    // moment(parseUnix(initialTime + rangeVal[1])).format("HH:mm:ss")
-  );
+  // console.log(
+  //   `formattedStartTime`,
+  //   formattedRightTime,
+  //   moment(parseUnix(initialTime + rangeVal[1])).format("HH:mm:ss")
+  //   // moment(parseUnix(initialTime + rangeVal[1])).format("HH:mm:ss")
+  // );
 
   // console.log("graphWidth", `ts`, ts - 44, rangeVal[1] - 100); //rangeVal[1] > ts
   // console.log("graphWidth", rangeVal[1], "ts", ts); //rangeVal[1] > ts
