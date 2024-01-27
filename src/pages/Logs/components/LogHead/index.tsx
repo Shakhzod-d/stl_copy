@@ -91,7 +91,7 @@ const LogsHead: React.FC<ILogsHead> = ({
         </p>
         <p className="driver-info-desc">Mongo ID: {driverData._id}</p>
         <p className="driver-info-desc">
-          Time-zone: {driverData.driverLicenseIssuingState}
+          Time-zone: {driverData.companyTimeZone}
         </p>
       </div>
 

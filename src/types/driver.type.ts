@@ -36,4 +36,5 @@ export interface IDriverData extends IDriverForm {
   coDriverUserName: string;
   violations: IViolation["Violations"][];
   companyTimeZone: string;
+  data: any;
 }

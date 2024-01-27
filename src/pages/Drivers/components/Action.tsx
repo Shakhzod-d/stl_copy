@@ -30,11 +30,14 @@ const Action = () => {
     data: IVehicleData[];
     total: number;
   }>("/vehicles", select_paging, { suspense: true });
+
   const { data } = useApi<IDriverData>(
     `/driver/${id}`,
     {},
     { enabled: Boolean(id), suspense: true }
   );
+
+  // console.log(`drivers`, drivers);
 
   // Action mutation
   const { mutate: createMutation, isLoading: createLoading } =
@@ -66,8 +69,6 @@ const Action = () => {
       });
     }
   }, [data]);
-
-  console.log(`drivers?.data?.data`, drivers?.data?.data);
 
   const submit = (data: IDriverForm) => {
     if (!id) createMutation(data, { onSuccess: historyGoBack });
@@ -210,7 +211,9 @@ const Action = () => {
               placeholder={"Co-Driver"}
               name="fullName"
               control={control}
-              data={mapDrivers(drivers?.data?.data || [])}
+              data={mapDrivers(drivers?.data?.data || []).filter(
+                (item) => item._id !== id
+              )}
               labelProp="fullName"
               valueProp="fullName"
               loading={driverLoad}

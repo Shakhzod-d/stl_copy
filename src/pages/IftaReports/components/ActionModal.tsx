@@ -10,6 +10,9 @@ import { state_names } from "@/constants";
 import useApi from "@/hooks/useApi";
 import { IVehicleData } from "@/types/vehicle.type";
 import moment from "moment";
+import { useDispatch } from "react-redux";
+import { filterReport } from "@/store/slices/reportSlice";
+import { AppDispatch } from "@/store";
 
 interface Props {
   toggle: () => void;
@@ -18,6 +21,8 @@ interface Props {
 const ActionModal: React.FC<Props> = ({ toggle }) => {
   const { handleSubmit, control, reset } = useForm<IIftaCreateForm>();
   const [fromTo, setFromTo] = useState<[any, any]>([0, 0]);
+  const dispatch = useDispatch<AppDispatch>();
+
   const { data, status } = useApi<{
     data: { total: number; data: IVehicleData[] };
   }>("vehicles", {
@@ -26,18 +31,14 @@ const ActionModal: React.FC<Props> = ({ toggle }) => {
   });
 
   const submitFunc = (formData: IIftaCreateForm) => {
-    const body: IIftaCreateBody = {
-      from: fromTo[0].unix(),
-      to: fromTo[1].unix(),
-      name: "",
-      recipient: getLocalStorage("email") || "",
-      status: "done",
-      vehicleId: +formData.vehicleId,
-      type: "IFTA by vehicle",
-    };
-  };
+    const url = `5.161.229.41:5404/ifta/data?from=${fromTo[0].unix()}&to=${fromTo[1].unix()}`;
 
-  console.log(moment(fromTo[0]).valueOf(), status);
+    const allObj = {
+      url,
+      body: formData,
+    };
+    dispatch(filterReport(allObj));
+  };
 
   return (
     <FormModal
@@ -62,24 +63,28 @@ const ActionModal: React.FC<Props> = ({ toggle }) => {
           </Col>
           <Col span={24}>
             <Select
+              mode="multiple"
               label={"Vehicle"}
               placeholder={"Vehicle"}
               name="vehicleId"
               control={control}
               required
-              labelProp="vehicleId"
-              valueProp="vehicleId"
+              labelProp="unit"
+              valueProp="_id"
               // @ts-ignore
-              data={data?.data?.data.data || []}
+              data={data?.data?.data || []}
             />
           </Col>
           <Col span={24}>
             <Select
+              mode="multiple"
               label={"States"}
               placeholder={"Select"}
-              name="states"
+              name="state"
               control={control}
               required
+              labelProp={"label"}
+              valueProp={"value"}
               data={state_names}
             />
           </Col>
