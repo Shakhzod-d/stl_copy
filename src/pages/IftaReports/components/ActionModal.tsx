@@ -1,4 +1,4 @@
-import { Col, DatePicker, Row } from "antd";
+import { Col, DatePicker, Row, message } from "antd";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import FormModal from "@/components/elements/FormModal";
@@ -13,13 +13,15 @@ import moment from "moment";
 import { useDispatch } from "react-redux";
 import { filterReport } from "@/store/slices/reportSlice";
 import { AppDispatch } from "@/store";
+import useApiMutation from "@/hooks/useApiMutation";
 
 interface Props {
   toggle: () => void;
 }
 
 const ActionModal: React.FC<Props> = ({ toggle }) => {
-  const { handleSubmit, control, reset } = useForm<IIftaCreateForm>();
+  const { handleSubmit, control, reset, setValue, formState } =
+    useForm<IIftaCreateForm>();
   const [fromTo, setFromTo] = useState<[any, any]>([0, 0]);
   const dispatch = useDispatch<AppDispatch>();
 
@@ -31,13 +33,39 @@ const ActionModal: React.FC<Props> = ({ toggle }) => {
   });
 
   const submitFunc = (formData: IIftaCreateForm) => {
-    const url = `5.161.229.41:5404/ifta/data?from=${fromTo[0].unix()}&to=${fromTo[1].unix()}`;
+    const isValidDateRange =
+      moment.isMoment(fromTo[0]) && moment.isMoment(fromTo[1]);
 
-    const allObj = {
-      url,
-      body: formData,
-    };
-    dispatch(filterReport(allObj));
+    if (isValidDateRange) {
+      const url = `/ifta/data?from=${fromTo[0]?.unix()}&to=${fromTo[1]?.unix()}`;
+      const allObj = {
+        url,
+        body: {
+          vehicleId: formData.vehicleId === undefined ? [] : formData.vehicleId,
+          state: formData.state === undefined ? [] : formData.state,
+        },
+        toggle,
+      };
+
+      dispatch(filterReport(allObj));
+    } else {
+      message.error("Please select a valid date range.");
+    }
+    // const url = `/ifta/data?from=${fromTo[0].unix()}&to=${fromTo[1].unix()}`;
+
+    // const allObj = {
+    //   url,
+    //   body: formData,
+    //   toggle,
+    // };
+
+    // if (!fromTo[0] || !fromTo[1]) {
+    //   // Display an error message or handle validation as needed
+    //   // @ts-ignore
+    //   setValue("fromTo", null);
+    //   return;
+    // }
+    // dispatch(filterReport(allObj));
   };
 
   return (
@@ -57,9 +85,15 @@ const ActionModal: React.FC<Props> = ({ toggle }) => {
             <DatePicker.RangePicker
               onChange={(val: any) => {
                 setFromTo(val);
+                // @ts-ignore
+                setValue("fromTo", val);
               }}
               allowClear={false}
             />
+            {/*  @ts-ignore */}
+            {formState.errors.fromTo && (
+              <span style={{ color: "red" }}>Please select a date range.</span>
+            )}
           </Col>
           <Col span={24}>
             <Select
@@ -68,9 +102,10 @@ const ActionModal: React.FC<Props> = ({ toggle }) => {
               placeholder={"Vehicle"}
               name="vehicleId"
               control={control}
-              required
+              // required
               labelProp="unit"
               valueProp="_id"
+              renderValidation={false}
               // @ts-ignore
               data={data?.data?.data || []}
             />
@@ -82,8 +117,9 @@ const ActionModal: React.FC<Props> = ({ toggle }) => {
               placeholder={"Select"}
               name="state"
               control={control}
-              required
+              // required
               labelProp={"label"}
+              renderValidation={false}
               valueProp={"value"}
               data={state_names}
             />
