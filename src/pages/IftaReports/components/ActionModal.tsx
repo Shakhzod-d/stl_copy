@@ -22,6 +22,7 @@ interface Props {
 const ActionModal: React.FC<Props> = ({ toggle }) => {
   const { handleSubmit, control, reset, setValue, formState } =
     useForm<IIftaCreateForm>();
+
   const [fromTo, setFromTo] = useState<[any, any]>([0, 0]);
   const dispatch = useDispatch<AppDispatch>();
 
@@ -37,7 +38,7 @@ const ActionModal: React.FC<Props> = ({ toggle }) => {
       moment.isMoment(fromTo[0]) && moment.isMoment(fromTo[1]);
 
     if (isValidDateRange) {
-      const url = `/ifta/data?from=${fromTo[0]?.unix()}&to=${fromTo[1]?.unix()}`;
+      const url = `/ifta/generate?from=${fromTo[0]?.unix()}&to=${fromTo[1]?.unix()}`;
       const allObj = {
         url,
         body: {

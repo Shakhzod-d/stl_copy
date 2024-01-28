@@ -20,10 +20,6 @@ const useColumns = () => {
       dataIndex: "miles",
     },
     {
-      title: "SystemTime",
-      dataIndex: "systemTime",
-    },
-    {
       title: "Time",
       dataIndex: "time",
     },
