@@ -293,6 +293,7 @@ const LogActions: React.FC<ILogActions> = ({}) => {
       >
         {/* @ts-ignore */}
         <TransferLogs
+          onCancel={() => setIsVisibleTransfer(false)}
           transferStatus={transferStatus}
           isVisibleTransfer={isVisibleTransfer}
           currentLog={currentLog}

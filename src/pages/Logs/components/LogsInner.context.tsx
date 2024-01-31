@@ -69,6 +69,11 @@ const useLogsInner = () => {
   const [initialLogs, setInitialLogs] = useState<ILog[]>([]);
   const [hoveredId, setHoveredId] = useState<string | null>(null);
   const [croppedTime, setCroppedTime] = useState<[number, number]>();
+  const [ids, setIds] = useState<{ _id1: string; _id2: string; time: number }>({
+    _id1: "",
+    _id2: "",
+    time: 0,
+  });
 
   const handleEditClick = (log: any) => {
     const rowIndex = logs.findIndex((item) => item._id === log._id);
@@ -365,6 +370,7 @@ const useLogsInner = () => {
       croppedTime,
       historyLogs: logData?.history,
       reportData: logData?.report,
+      ids,
       // ... (include other variables here)
     },
     actions: {
@@ -390,6 +396,7 @@ const useLogsInner = () => {
       setInfoLogFormData,
       setIsVisibleInsertInfoLog,
       setLogs,
+      setIds,
     },
   };
 };

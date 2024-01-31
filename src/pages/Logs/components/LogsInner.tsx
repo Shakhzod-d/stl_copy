@@ -1,6 +1,6 @@
 import TruckLoader from "@/components/loaders/TruckLoader";
 import MainLayout from "@/layouts/MainLayout";
-import { Badge } from "antd";
+import { Badge, Checkbox } from "antd";
 import LogActions from "./LogActions";
 import LogCorrection from "./LogCorrection";
 import LogGraph from "./LogGraph";
@@ -9,6 +9,8 @@ import LogTable from "./LogTable";
 import { useLogsInnerContext } from "./LogsInner.context";
 import TripPlanner from "./TripPlanner";
 import MultiDayGraph from "./MultiDayGraph/container/MultiDayGraph";
+import { useEffect, useState } from "react";
+import { CheckboxChangeEvent } from "antd/lib/checkbox";
 
 const LogsInner: React.FC = () => {
   const {
@@ -24,6 +26,7 @@ const LogsInner: React.FC = () => {
       time,
       driverData,
       columns,
+      ids,
       // ... (include other variables here)
     },
     actions: {
@@ -31,10 +34,38 @@ const LogsInner: React.FC = () => {
       setHoveredId,
       filterDrawStatus,
       setCurrentLog,
+      setIds,
     },
   } = useLogsInnerContext();
+  const [checkbox1, setCheckbox1] = useState(false);
+  const [checkbox1Active, setCheckbox1Active] = useState(false);
+  const [checkbox2, setCheckbox2] = useState(false);
+  const [checkbox2Active, setCheckbox2Active] = useState(false);
+
+  const handleCheckbox1Change = (e: CheckboxChangeEvent) => {
+    setCheckbox1(e.target.checked);
+    setCheckbox1Active(e.target.checked);
+  };
+
+  const handleCheckbox2Change = (e: CheckboxChangeEvent) => {
+    setCheckbox2(e.target.checked);
+    setCheckbox2Active(e.target.checked);
+  };
+
+  useEffect(() => {
+    if (checkbox1 && checkbox1Active) {
+      setIds((pre) => ({ ...pre, _id1: currentLog?._id as string }));
+      setCheckbox1Active(false);
+    }
+
+    if (checkbox2 && checkbox2Active) {
+      setIds((pre) => ({ ...pre, _id2: currentLog?._id as string }));
+      setCheckbox2Active(false);
+    }
+  }, [checkbox1, checkbox2]);
 
   // console.log(`currentLog`, currentLog);
+  console.log(`ids`, ids);
 
   return (
     <MainLayout>
@@ -51,6 +82,30 @@ const LogsInner: React.FC = () => {
           />
         )}
         <LogActions />
+        <div
+          style={{
+            // border: "1px solid red",
+            display: "flex",
+            justifyContent: "center",
+            // alignItems: "center",
+          }}
+        >
+          <Checkbox
+            disabled={!currentLog?.hasOwnProperty("_id")}
+            onChange={handleCheckbox1Change}
+            checked={checkbox1}
+          >
+            Log 1
+          </Checkbox>
+          <Checkbox
+            disabled={!currentLog?.hasOwnProperty("_id")}
+            onChange={handleCheckbox2Change}
+            checked={checkbox2}
+          >
+            Log 2
+          </Checkbox>
+        </div>
+        <br />
         {logData?.violation.map((violation) => (
           <Badge count={violation.violation} />
         ))}
