@@ -278,6 +278,20 @@ const useLogsInner = () => {
       });
     }
   };
+  // console.log(
+  //   rangeVal,
+  //   hoveredId,
+  //   isFetching,
+  //   transferStatus,
+  //   editLogsLoading,
+  //   infoLogFormData,
+  //   log,
+  //   // columns,
+  //   logData,
+  //   logs,
+  //   time,
+  //   driverData
+  // );
 
   const onOk = () => {
     setIsLogsEdited(true);

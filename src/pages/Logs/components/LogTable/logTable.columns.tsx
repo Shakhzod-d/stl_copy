@@ -13,6 +13,12 @@ import { LogStatusOptions, POINT_STATUSES, RANGE_STATUSES } from "../constants";
 import { v4 as uuidV4 } from "uuid";
 import { useLogsInnerContext } from "../LogsInner.context";
 import { useEffect } from "react";
+// import copyIcon from "../../../../../public/assets/icons/copied-icon.svg";
+// import copyIcon from "../../../../assets/"
+import { CopyOutlined } from "@ant-design/icons";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store";
+import { timeZones } from "./helper";
 
 type TFormConnection = {
   fromTo: any;
@@ -48,6 +54,10 @@ const useGraphColumns = (
   onInsertInfoLogWithFormData: (formData: ILog) => void
 ) => {
   // const state = useLogsInnerContext();
+  const state = useLogsInnerContext();
+  const companyTimeZone = useSelector<RootState>((s) => s.log.companyTimeZone);
+  console.log("s", companyTimeZone);
+  // console.log(`state`, state);
 
   const editItem = (log: any) => {
     document
@@ -57,6 +67,15 @@ const useGraphColumns = (
     // document.documentElement.scrollTo({ top: 0, left: 0, behavior: "smooth" });
     // window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
   };
+  const copy = (text: string) => navigator.clipboard.writeText(text);
+
+  // console.log(`currentLog`, currentLog);
+  // const formattedTime = moment
+  //   .unix(timestamp)
+  //   .tz(companyTimeZone as string)
+  //   .format("HH:mm:ss"); // based on time zone
+  // @ts-ignore
+  console.log(timeZones[companyTimeZone]);
 
   return [
     {
@@ -74,7 +93,16 @@ const useGraphColumns = (
       title: "Start",
       dataIndex: "start",
       render: (start: any) => {
-        return <span>{moment(start * 1000).format("HH:mm:ss")}</span>;
+        return (
+          <span>
+            {/* {moment(start * 1000).format("HH:mm:ss")} */}
+            {/* {JSON.stringify(start)} */}
+            {moment
+              .unix(start) //@ts-ignore
+              .tz(timeZones[companyTimeZone])
+              .format("h:mm A")}
+          </span>
+        );
       },
     },
     {
@@ -91,7 +119,23 @@ const useGraphColumns = (
       title: "location",
       dataIndex: "location",
       render(value: any) {
-        return value?.name;
+        // console.log(`value`, `${value.lat}, ${value.lng}`);
+        // return value?.name;
+        return (
+          <span>
+            {value?.name}{" "}
+            <CopyOutlined
+              onClick={() => copy(`${value.lat}, ${value.lng}`)}
+              style={{ cursor: "pointer" }}
+            />
+            {/* <img
+              src={copyIcon}
+              alt="copy icon"
+              onClick={() => copy("text")}
+              style={{ cursor: "pointer" }}
+            /> */}
+          </span>
+        );
       },
     },
     // {

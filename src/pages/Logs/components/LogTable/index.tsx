@@ -30,7 +30,7 @@ const LogTable: React.FC<ILogTable> = ({
   driver,
   //   rowSelection,
 }) => {
-  //   console.log(`columns`, columns, `data`, data);
+  // console.log(columns, `data`, data);
   const { mutate } = useApiMutation<{
     coDriverId: string;
     logs: {
@@ -44,12 +44,13 @@ const LogTable: React.FC<ILogTable> = ({
   const [selectedRowKeys, setSelectedRowKeys] = useState<Key[]>();
 
   const onSelectChange = (newSelectedRowKeys: any[]) => {
+    // console.log(newSelectedRowKeys);
     setSelectedRowKeys(newSelectedRowKeys);
   };
 
   //   console.log(`data`, data);
   const [switchingDriverId, setSwitchingDriverId] = useState();
-
+  // const copy = (tag) => navigator.clipboard.writeText(tag);
   return (
     <div>
       <Table

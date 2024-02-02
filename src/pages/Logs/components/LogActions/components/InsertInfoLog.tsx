@@ -88,9 +88,10 @@ export interface IInsertInfoLogFormData {
   lng: string;
   locationName: string;
   odometer: string;
-  hours: string;
-  document: string;
-  trailer: string;
+  // hours: string;
+  engineHours: any;
+  // document: string;
+  // trailer: string;
   truck: string;
   lock: string;
 }
@@ -103,8 +104,8 @@ const insertInfoLogFormData = {
   locationName: "locationName",
   odometer: "odometer",
   engineHours: "engineHours",
-  document: "document",
-  trailer: "trailer",
+  // document: "document",
+  // eng: "eng",
   truck: "truck",
   lock: "lock",
 };
@@ -135,12 +136,12 @@ const InsertInfoLog: FC<IInsertInfoLog> = ({ formData, onInsert }) => {
   useEffect(() => {
     if (formData) {
       reset({
-        [formNames.document]: formData?.document,
+        // [formNames.document]: formData?.document,
         [formNames.engineHours]: formData?.duration,
-        [formNames.lat]: formData?.location?.lat,
+        // [formNames.lat]: formData?.location?.lat,
         [formNames.lng]: formData?.location?.lng,
         // [formNames.locationName]: defaultFormData?.location.name,
-        [formNames.trailer]: formData?.trailer,
+        // [formNames.trailer]: formData?.trailer,
         [formNames.truck]: "",
         [formNames.time]: moment(
           moment(formData?.end * 1000).format("HH:mm:ss"),
@@ -152,12 +153,12 @@ const InsertInfoLog: FC<IInsertInfoLog> = ({ formData, onInsert }) => {
     }
   }, []);
 
-  console.log(watch("time"));
+  // console.log(watch("time"));
 
   return (
     <form id="insert-info-log" onSubmit={handleSubmit(submit)}>
       <p className="color-main">
-        STL ELD Inc, as your service provider, is not responsible for any
+        ELD ELD Inc, as your service provider, is not responsible for any
         financial or legal repercussions resulting from facilitating your
         request. It is the sole responsibility of the user to maintain legal
         compliance while using ELD.
@@ -193,16 +194,16 @@ const InsertInfoLog: FC<IInsertInfoLog> = ({ formData, onInsert }) => {
         <>
           <br />
           <Row gutter={[36, 0]}>
-            <Col span={9}>
+            <Col span={18}>
               <TextField
                 required
                 name="lat"
-                placeholder="lat"
+                placeholder="0, 0"
                 control={control}
-                label="Lat"
+                label="Lat, lng"
               />
             </Col>
-            <Col span={9}>
+            {/* <Col span={9}>
               <TextField
                 required
                 name="lng"
@@ -210,13 +211,13 @@ const InsertInfoLog: FC<IInsertInfoLog> = ({ formData, onInsert }) => {
                 control={control}
                 label="Lng"
               />
-            </Col>
+            </Col> */}
             <Col style={{ marginTop: "auto" }} span={3}>
               <Button type="primary">Get location </Button>
             </Col>
           </Row>
           <br />
-          <Row justify="space-between" gutter={[36, 0]}>
+          {/* <Row justify="space-between" gutter={[36, 0]}>
             <Col span={10}>
               <TextField
                 required
@@ -229,8 +230,8 @@ const InsertInfoLog: FC<IInsertInfoLog> = ({ formData, onInsert }) => {
             <Col style={{ marginTop: "auto" }} span={7.2}>
               <Button type="primary">Get coordinates</Button>
             </Col>
-          </Row>
-          <br />
+          </Row> */}
+          {/* <br /> */}
           <TextField
             required
             name="odometer"
@@ -240,30 +241,31 @@ const InsertInfoLog: FC<IInsertInfoLog> = ({ formData, onInsert }) => {
             label="Odometer"
           />
           <br />
-          {/* <TextField
-                              required
-                              name={formNames.engineHours}
-                              placeholder="Engine hours"
-                              type="number"
-                              control={control}
-                              label="Engine hours"
-                         /> */}
-          <br />
           <TextField
+            required
+            //@ts-ignore
+            name={formNames.engineHours} //engineHours
+            placeholder="Engine hours"
+            type="number"
+            control={control}
+            label="Engine hours"
+          />
+          {/* <br /> */}
+          {/* <TextField
             required
             name="document"
             placeholder="Shipping document"
             control={control}
             label="Shipping document"
-          />
-          <br />
-          <TextField
+          /> */}
+          {/* <br /> */}
+          {/* <TextField
             required
-            name="trailer"
-            placeholder="Trailer"
+            name="eng"
+            placeholder="ENG. H"
             control={control}
-            label="Trailer"
-          />
+            label="ENGIN Hours"
+          /> */}
         </>
       )}
       <br />
@@ -276,12 +278,12 @@ const InsertInfoLog: FC<IInsertInfoLog> = ({ formData, onInsert }) => {
         control={control}
       />
       <br />
-      <div className="d-flex">
-        <label htmlFor="lock" className="mr-32">
+      {/* <div className="d-flex"> */}
+        {/* <label htmlFor="lock" className="mr-32">
           Lock
-        </label>
+        </label> */}
         {/* <Checkbox required name={formNames.lock} id="lock" /> */}
-      </div>
+      {/* </div> */}
     </form>
   );
 };

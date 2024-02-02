@@ -8,12 +8,16 @@ type State = {
   IFTAReports: any[];
   status: string;
   error: null;
+  homeTerminalTimezone: string;
+  companyTimeZone: string;
 };
 
 const initialState: State = {
   IFTAReports: [],
   status: "idle",
   error: null,
+  homeTerminalTimezone: "",
+  companyTimeZone: "",
 };
 
 const apiUrl = "/logs/transfer";
@@ -36,7 +40,7 @@ export const updateLogsTransfer = createAsyncThunk(
       const response = await api.put(apiUrl, restObj);
 
       // Return the data from the response
-      console.log(`response`, response);
+      // console.log(`response`, response);
       // @ts-ignore
       if (response.message === "OK") {
         // close modal
@@ -55,9 +59,15 @@ const LogSlice = createSlice({
   name: "log",
   initialState: initialState,
   reducers: {
-    // setIsAuth: (state: State, action: any) => {
-    //   state.isAuth = action.payload;
-    // },
+    setHomeTerminalTimezone: (state: State, action: any) => {
+      state.homeTerminalTimezone = action.payload;
+    },
+    setCompanyTimeZone: (
+      state: State,
+      action: { type: string; payload: string }
+    ) => {
+      state.companyTimeZone = action.payload || "Eastern Time";
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(updateLogsTransfer.pending, (state) => {
@@ -86,5 +96,8 @@ const LogSlice = createSlice({
     // });
   },
 });
+
+//setCompanyTimeZone
+export const { setCompanyTimeZone } = LogSlice.actions;
 
 export default LogSlice;

@@ -52,16 +52,16 @@ const Login: React.FC = () => {
       <form
         className="form"
         onSubmit={handleSubmit(submitFunc)}
-        id="STL-login-forum"
+        id="ELD-login-forum"
       >
         {/* <img src={`/assets/icons/logisoft.png`} alt="logo" /> */}
         {/* <img className="logo-icon" src="/assets/icons/logo-icon.svg" alt="" /> */}
         {/* <img className="logo-title" src="/assets/icons/logo-title.svg" alt="" /> */}
-        {/* <img className="logo-title" src="/assets/images/STL.png" alt="" /> */}
+        {/* <img className="logo-title" src="/assets/images/ELD.png" alt="" /> */}
         <img
           style={{ width: 200 }}
           className="logo-title"
-          src="/assets/icons/Logo_STL1_vector.svg"
+          src="/assets/icons/Logo_ELD1_vector.svg"
           alt=""
         />
         <TextField
@@ -95,7 +95,7 @@ const Login: React.FC = () => {
         {/* <Checkbox>Remember me</Checkbox> */}
         <Button
           htmlType="submit"
-          form="STL-login-forum"
+          form="ELD-login-forum"
           type="primary"
           loading={loginMutation.isLoading}
           className="w-100"

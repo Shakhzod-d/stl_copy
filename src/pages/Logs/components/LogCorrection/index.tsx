@@ -15,7 +15,7 @@ import TruckIcon from "./assets/TruckIcon";
 
 type TFormConnection = {
   fromTo: any;
-  lat: any;
+  lat?: any;
   lng: any;
   location: any;
   hours: any;
@@ -53,7 +53,6 @@ const LogCorrection: React.FC<ILogCorrection> = ({ handleCloseEditing }) => {
     state: { currentLog },
     actions: {
       onChangeStatus,
-
       onCancel,
       onTimeChange,
       setLogs,
@@ -86,7 +85,7 @@ const LogCorrection: React.FC<ILogCorrection> = ({ handleCloseEditing }) => {
       //      ),ewfwefew
       // ],
       hours: currentLog?.engineHours || "",
-      lat: currentLog?.location?.lat || "",
+      // lat: currentLog?.location?.lat || "",
       lng: currentLog?.location?.lng || "",
       location: currentLog?.location?.name || "",
       odometer: currentLog?.odometer || "",
@@ -105,15 +104,15 @@ const LogCorrection: React.FC<ILogCorrection> = ({ handleCloseEditing }) => {
 
     //  console.log(initialTime! - moment(formData.fromTo[0]).valueOf());
     //  console.log(moment(formData.fromTo[1]).format("HH:mm:ss"));
-    setLogs((prevLogs) => {
-      return prevLogs.map((prevLog) =>
+    setLogs((prevLogs: any) => {
+      return prevLogs.map((prevLog: any) =>
         prevLog._id === currentLog?._id
           ? {
               ...currentLog!,
               ...formData,
               location: {
                 name: currentLog?.location.name!,
-                lat: +formData.lat,
+                // lat: +formData.lat,
                 lng: +formData.lng,
               },
               odometer: +formData.odometer,
@@ -226,7 +225,7 @@ const LogCorrection: React.FC<ILogCorrection> = ({ handleCloseEditing }) => {
             </Row> */}
             {/* <Row gutter={[90, 15]} align="stretch"> */}
             {/* <Col span={6} style={{}}> */}
-            <div>
+            {/* <div>
               <TextField
                 label={formNames.lat}
                 placeholder={formNames.lat}
@@ -235,13 +234,13 @@ const LogCorrection: React.FC<ILogCorrection> = ({ handleCloseEditing }) => {
                 required
                 style={{ width: "100px", height: "28px" }}
               />
-            </div>
+            </div> */}
             {/* </Col> */}
             {/* <Col span={8}> */}
             <div>
               <TextField
-                label={formNames.lng}
-                placeholder={formNames.lng}
+                label={`${formNames.lat} ${formNames.lng}`}
+                placeholder={"0, 0"}
                 name={formNames.lng}
                 control={control}
                 required

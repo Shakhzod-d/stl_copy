@@ -1,6 +1,7 @@
 import React from "react";
 import "./truck-loader.css";
 import { Spin } from "antd";
+
 const TruckLoader: React.FC = () => {
      return (
           <div className="loader-wrapper">

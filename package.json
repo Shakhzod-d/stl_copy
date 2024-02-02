@@ -57,15 +57,14 @@
   "scripts": {
     "start": "craco start",
     "build": "craco build",
-    "build-stl": "env-cmd -f envs/stl.env craco build",
-    "build-STL": "env-cmd -f envs/STL.env craco build",
+    "build-ELD": "env-cmd -f envs/ELD.env craco build",
     "test": "craco test",
     "eject": "craco eject",
-    "rewrite": "scp -r build root@5.161.134.59:/var/www/STL.arava.app/",
+    "rewrite": "scp -r build root@5.161.134.59:/var/www/ELD.arava.app/",
     "deploy": "yarn build && yarn rewrite && rm -rf build",
-    "deploy-dev": "scp -r build root@5.161.229.41:/var/www/STL.roundedteam.uz",
-    "deploy-STL": "scp -i deqwbnfRFVTsXcaWJUMk -r build root@5.161.229.41:/var/www/STLeld.roundedteam.uz",
-    "deploy-stl": "scp -i deqwbnfRFVTsXcaWJUMk -r build root@5.161.229.41:/var/www/pteld.roundedteam.uz"
+    "deploy-dev": "scp -r build root@5.161.229.41:/var/www/ELD.roundedteam.uz",
+    "deploy-ELD": "scp -i deqwbnfRFVTsXcaWJUMk -r build root@5.161.229.41:/var/www/ELDeld.roundedteam.uz",
+    "deploy-eld": "scp -i deqwbnfRFVTsXcaWJUMk -r build root@5.161.229.41:/var/www/eld.roundedteam.uz"
   },
   "eslintConfig": {
     "extends": [

@@ -11,6 +11,9 @@ import TripPlanner from "./TripPlanner";
 import MultiDayGraph from "./MultiDayGraph/container/MultiDayGraph";
 import { useEffect, useState } from "react";
 import { CheckboxChangeEvent } from "antd/lib/checkbox";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "@/store";
+import { setCompanyTimeZone } from "@/store/slices/logSlice";
 
 const LogsInner: React.FC = () => {
   const {
@@ -41,6 +44,9 @@ const LogsInner: React.FC = () => {
   const [checkbox1Active, setCheckbox1Active] = useState(false);
   const [checkbox2, setCheckbox2] = useState(false);
   const [checkbox2Active, setCheckbox2Active] = useState(false);
+  const s = useSelector<RootState>((s) => s.log);
+  const dispatch = useDispatch<AppDispatch>();
+  // console.log("s", s);
 
   const handleCheckbox1Change = (e: CheckboxChangeEvent) => {
     setCheckbox1(e.target.checked);
@@ -64,8 +70,14 @@ const LogsInner: React.FC = () => {
     }
   }, [checkbox1, checkbox2]);
 
-  // console.log(`currentLog`, currentLog);
-  console.log(`ids`, ids);
+  useEffect(() => {
+    if (!!driverData?.data?.companyTimeZone) {
+      dispatch(setCompanyTimeZone(driverData?.data?.companyTimeZone));
+    }
+  }, []);
+
+  // console.log(`driverData?.data`, driverData?.data?.companyTimeZone); //companyTimeZone
+  // console.log(`ids`, ids);
 
   return (
     <MainLayout>
