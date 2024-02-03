@@ -11,6 +11,7 @@ import { IDeviceInfo, TItemStatus } from "@/types";
 import DeviceInfo from "../DeviceInfo";
 import DeleteConfirm from "../PopConfirms/DeleteConfirm";
 import moment from "moment-timezone";
+import { secondsToHoursAndMinutes } from "@/pages/Logs/helper";
 
 export const ClipLocation = (position: { lat: number; lng: number }) => {
   return (
@@ -120,7 +121,8 @@ export const DriverCondition = () => {
         <span className="driver-condition-title">
           {status !== "cycle"
             ? moment.utc(statusTimeLeft * 1000).format("HH:mm")
-            : `${Math.trunc(statusTimeLeft / (60 * 60))}` ?? 0}
+            : secondsToHoursAndMinutes(statusTimeLeft)}
+          {/*  : `${Math.trunc(statusTimeLeft / (60 * 60))}` ?? 0} */}
         </span>
         <div className="driver-condition-bar">
           <div

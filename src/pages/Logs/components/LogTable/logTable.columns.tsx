@@ -100,7 +100,7 @@ const useGraphColumns = (
             {moment
               .unix(start) //@ts-ignore
               .tz(timeZones[companyTimeZone])
-              .format("h:mm A")}
+              .format("h:mm:ss A")}
           </span>
         );
       },

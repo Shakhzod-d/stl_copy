@@ -234,7 +234,7 @@ const LogActions: React.FC<ILogActions> = ({}) => {
         modalTitle="Insert info log"
         onCancel={() => setIsVisibleInsertInfoLog(false)}
         onOk={() => setIsVisibleInsertInfoLog(false)}
-        visible={isVisibleInsertInfoLog}
+        open={isVisibleInsertInfoLog}
         formId={"insert-info-log"}
         closable
         okText="Add info log"
@@ -249,7 +249,7 @@ const LogActions: React.FC<ILogActions> = ({}) => {
       <Modal
         title="History"
         onCancel={() => setIsVisibleHistoryLog(false)}
-        visible={isVisibleHistoryLog}
+        open={isVisibleHistoryLog}
         zIndex={1004}
         width="1200px"
       >
@@ -274,7 +274,7 @@ const LogActions: React.FC<ILogActions> = ({}) => {
       <Modal
         title="Normalize logs"
         onCancel={() => setIsVisibleNormalize(false)}
-        visible={isVisibleNormalize}
+        open={isVisibleNormalize}
         width="900px"
         bodyStyle={{
           padding: 40,
@@ -285,7 +285,7 @@ const LogActions: React.FC<ILogActions> = ({}) => {
       <Modal
         title="Transfer log"
         onCancel={() => setIsVisibleTransfer(false)}
-        visible={isVisibleTransfer}
+        open={isVisibleTransfer}
         width="900px"
         bodyStyle={{
           padding: 40,
@@ -317,7 +317,7 @@ const LogActions: React.FC<ILogActions> = ({}) => {
           </div>
         }
         onCancel={() => setIsVisibleReport(false)}
-        visible={isVisibleReport}
+        open={isVisibleReport}
         width="900px"
         okText="ok"
         okButtonProps={{

@@ -34,7 +34,7 @@ const logCorrectionFormNames = {
   odometer: "odometer",
   notes: "notes",
   vehicle: "vehicle",
-  document: "document",
+  document: "shipping docs",
   trailer: "trailer",
 };
 
@@ -51,12 +51,7 @@ interface ILogCorrection {
 const LogCorrection: React.FC<ILogCorrection> = ({ handleCloseEditing }) => {
   const {
     state: { currentLog },
-    actions: {
-      onChangeStatus,
-      onCancel,
-      onTimeChange,
-      setLogs,
-    },
+    actions: { onChangeStatus, onCancel, onTimeChange, setLogs },
   } = useLogsInnerContext();
   const { control, reset, handleSubmit } = useForm<TFormConnection>();
   const [fromTo, setFromTo] = useState<any[] | undefined>([]);

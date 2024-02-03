@@ -14,9 +14,10 @@ import { ILogsByDriver, useColumnsLogsByDriver } from "./LogsByDriver.columns";
 const LogsByDriver: React.FC = () => {
   const momentZone = useMomentZone();
 
-  const { data: driversData } = useApi<
-    IPageData<ILogsByDriver[]>
-  >("/drivers", { page: 1, limit: 100 });
+  const { data: driversData } = useApi<IPageData<ILogsByDriver[]>>("/drivers", {
+    page: 1,
+    limit: 100,
+  });
 
   const [driver, setDriver] = useQueryParams("driver_id", null);
   const [violations, setViolations] = useQueryParams("violations", null);
@@ -74,6 +75,8 @@ const LogsByDriver: React.FC = () => {
         </div>
         <div className="logs-by-driver-body mt-24">
           <Table
+            // style={{ border: "1px solid red" }}
+            style={{ height: "900px" }}
             className="pointer"
             columns={columns}
             // dataSource={fakeData}

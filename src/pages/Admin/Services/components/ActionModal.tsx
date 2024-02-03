@@ -58,7 +58,7 @@ const ActionModal: React.FC<Props> = ({ toggle, id, onSuccess }) => {
 
   return (
     <FormModal
-      visible={true}
+      open={true}
       onCancel={toggle}
       loading={createLoading || updateLoading}
       modalLoading={isLoading}

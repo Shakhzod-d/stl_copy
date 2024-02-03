@@ -7,117 +7,114 @@ import { IServiceData } from "@/types/service.type";
 import { ICompanyData } from "@/types/company.type";
 
 interface Props {
-     handleDelete: any;
-     updateStatus: any;
-     editFunc: any;
+  handleDelete: any;
+  updateStatus: any;
+  editFunc: any;
 }
 
 const useColumns = ({
-     handleDelete,
-     editFunc,
-     updateStatus,
+  handleDelete,
+  editFunc,
+  updateStatus,
 }: Props): ColumnsType<ICompanyData> => {
-     return [
-          {
-               title: "Name",
-               dataIndex: "companyName",
-          },
-          {
-               title: "phone number",
-               dataIndex: "phone",
-          },
-          {
-               title: "Service",
-               dataIndex: "serviceName"
-          },
-          {
-               title: "Dot Number",
-               dataIndex: "usdot",
-          },
-          {
-               title: "Home Terminal Timezone",
-               dataIndex: "homeTerminalTimezone",
-               filters: issue_stats.map((timezone) => ({
-                    text: timezone.label,
-                    value: timezone.label,
-               })),
-               // @ts-ignore
-               onFilter: (value: string, record) =>
-                    record.homeTerminalTimezone.indexOf(value) === 0,
-          },
-          {
-               title: "company Address",
-               dataIndex: "companyAddress",
-          },
-          {
-               title: "Status",
-               dataIndex: "isActive",
-               render: DriverIsActive,
-          },
-          {
-               title: "Action",
-               dataIndex: "_id",
-               render: (id: number, order: any) => (
-                    <div className="action-menu">
-                         <ActionMenu
-                              id={id}
-                              isActive={order?.isActive}
-                              deleteFunc={handleDelete}
-                              editFunc={() => editFunc(id)}
-                              updateStatus={updateStatus}
-                         />
-                    </div>
-               ),
-          },
-     ];
+  return [
+    {
+      title: "Name",
+      dataIndex: "companyName",
+    },
+    {
+      title: "phone number",
+      dataIndex: "phone",
+    },
+    {
+      title: "Service",
+      dataIndex: "serviceName",
+    },
+    {
+      title: "Dot Number",
+      dataIndex: "usdot",
+    },
+    {
+      title: "Home Terminal Timezone",
+      dataIndex: "homeTerminalTimezone",
+      filters: issue_stats.map((timezone) => ({
+        text: timezone.label,
+        value: timezone.label,
+      })),
+      // @ts-ignore
+      onFilter: (value: string, record) =>
+        record.homeTerminalTimezone.indexOf(value) === 0,
+    },
+    {
+      title: "company Address",
+      dataIndex: "companyAddress",
+    },
+    {
+      title: "Status",
+      dataIndex: "isActive",
+      render: DriverIsActive,
+    },
+    {
+      title: "Action",
+      dataIndex: "_id",
+      render: (id: number, order: any) => (
+        <div className="action-menu">
+          <ActionMenu
+            id={id}
+            isActive={order?.isActive}
+            deleteFunc={handleDelete}
+            editFunc={() => editFunc(id)}
+            updateStatus={updateStatus}
+          />
+        </div>
+      ),
+    },
+  ];
 };
 
 export { useColumns };
 const ActionMenu = ({
-     id,
-     deleteFunc,
-     updateStatus,
-     editFunc,
-     isActive,
+  id,
+  deleteFunc,
+  updateStatus,
+  editFunc,
+  isActive,
 }: any) => {
-     const actionMenu = (
-          <Menu
-               className="menu-drop-down"
-               items={[
-                    {
-                         key: 1,
-                         label: "Edit",
-                         onClick: editFunc,
-                    },
-                    {
-                         key: 2,
-                         label: isActive ? "Inactive" : "Active",
-                         onClick: () => updateStatus(id, !isActive),
-                    },
-                    {
-                         key: 4,
-                         label: "Delete",
-                         onClick: () => deleteFunc(id),
-                         danger: true,
-                    },
-               ]}
-          />
-     );
+  const actionMenu = (
+    <Menu
+      className="menu-drop-down"
+      items={[
+        {
+          key: 1,
+          label: "Edit",
+          onClick: editFunc,
+        },
+        {
+          key: 2,
+          label: isActive ? "Inactive" : "Active",
+          onClick: () => updateStatus(id, !isActive),
+        },
+        {
+          key: 4,
+          label: "Delete",
+          onClick: () => deleteFunc(id),
+          danger: true,
+        },
+      ]}
+    />
+  );
 
-     return (
-          <div
-               className="dropdown-wrapper"
-               onClick={(e) => e.stopPropagation()}
-          >
-               <Dropdown
-                    overlay={actionMenu}
-                    trigger={["click"]}
-                    placement="bottomRight"
-               >
-                    <div className="option-btn">
-                         <Icon icon="three-dots" className="three-dots" />
-                    </div>
-               </Dropdown>
-          </div>
-     );
+  return (
+    <div className="dropdown-wrapper" onClick={(e) => e.stopPropagation()}>
+      <Dropdown
+        overlay={actionMenu}
+        trigger={["click"]}
+        placement="bottomRight"
+      >
+        <div className="option-btn">
+          <Icon icon="three-dots" className="three-dots" />
+        </div>
+      </Dropdown>
+    </div>
+  );
 };
