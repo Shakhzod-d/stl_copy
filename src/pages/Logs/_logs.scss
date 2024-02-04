@@ -1,165 +1,165 @@
 @import "./components/LogGraph/logs-graph";
 
 .logs {
-   &-head {
+  &-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    &-left {
       display: flex;
       align-items: center;
+      gap: 16px;
+      .date-picker-wrapper {
+        width: 200px;
+      }
+    }
+    &-right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      .text-field-wrapper,
+      .selection-wrapper {
+        width: 200px;
+      }
+    }
+  }
+
+  .ant-table-row:hover {
+    .ant-table-cell {
+      cursor: pointer;
+      background-color: rgba($color: $primary, $alpha: 0.15) !important;
+      box-shadow: none;
+    }
+  }
+  &-inner {
+    &-head {
+      display: flex;
       justify-content: space-between;
-      &-left {
-         display: flex;
-         align-items: center;
-         gap: 16px;
-         .date-picker-wrapper {
-            width: 200px;
-         }
-      }
-      &-right {
-         display: flex;
-         align-items: center;
-         gap: 16px;
-         .text-field-wrapper,
-         .selection-wrapper {
-            width: 200px;
-         }
-      }
-   }
 
-   .ant-table-row:hover {
-      .ant-table-cell {
-         cursor: pointer;
-         background-color: rgba($color: $primary, $alpha: 0.15) !important;
-         box-shadow: none;
+      .driver-info {
+        &-top {
+          display: flex;
+          align-items: center;
+          margin-bottom: 8px;
+          .circle {
+            display: flex;
+            height: 16px;
+            width: 16px;
+            background-color: $green;
+            border-radius: 50%;
+            margin-right: 12px;
+          }
+          .name {
+            @extend %medium-16;
+            // color: $black;
+            margin-right: 16px;
+          }
+          .android-icon {
+            font-size: 25px;
+            color: green;
+            margin-left: 10px;
+          }
+        }
+        &-desc {
+          margin-bottom: 4px;
+          @extend %regular-14;
+          color: $gray2;
+        }
       }
-   }
-   &-inner {
-      &-head {
-         display: flex;
-         justify-content: space-between;
-
-         .driver-info {
-            &-top {
-               display: flex;
-               align-items: center;
-               margin-bottom: 8px;
-               .circle {
-                  display: flex;
-                  height: 16px;
-                  width: 16px;
-                  background-color: $green;
+      .driver-progress {
+        &-info {
+          display: flex;
+          flex-direction: column;
+          &-item {
+            display: flex;
+            justify-content: end;
+            align-items: center;
+            column-gap: 10px;
+          }
+          span {
+            @extend %regular-16;
+            color: $gray2;
+            b {
+              font-weight: 500;
+              color: $black;
+            }
+          }
+        }
+        &-bar {
+          // margin-top: 24px;
+          display: flex;
+          justify-content: flex-end;
+          align-items: center;
+          gap: 24px;
+          .ant-progress-text {
+            height: 100%;
+          }
+          .logs-progress {
+            &-content {
+              height: 100%;
+              position: relative;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              .circle {
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -50%) rotate(31deg);
+                width: 2px;
+                height: 100%;
+                &::after {
+                  content: "";
+                  position: absolute;
+                  height: 4px;
+                  width: 4px;
+                  background: #ffffff;
+                  box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.15);
+                  top: 3px;
+                  left: 50%;
+                  transform: translateX(-50%);
                   border-radius: 50%;
-                  margin-right: 12px;
-               }
-               .name {
-                  @extend %medium-16;
-                  // color: $black;
-                  margin-right: 16px;
-               }
-               .android-icon {
-                  font-size: 25px;
-                  color: green;
-                  margin-left: 10px;
-               }
-            }
-            &-desc {
-               margin-bottom: 4px;
-               @extend %regular-14;
-               color: $gray2;
-            }
-         }
-         .driver-progress {
-            &-info {
-               display: flex;
-               flex-direction: column;
-               &-item {
-                  display: flex;
-                  justify-content: end;
-                  align-items: center;
-                  column-gap: 10px;
-               }
-               span {
-                  @extend %regular-16;
-                  color: $gray2;
-                  b {
-                     font-weight: 500;
-                     color: $black;
-                  }
-               }
-            }
-            &-bar {
-               // margin-top: 24px;
-               display: flex;
-               justify-content: flex-end;
-               align-items: center;
-               gap: 24px;
-               .ant-progress-text {
+                  z-index: 11;
+                }
+              }
+              .border {
+                height: 76px;
+                width: 76px;
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -50%);
+                svg {
                   height: 100%;
-               }
-               .logs-progress {
-                  &-content {
-                     height: 100%;
-                     position: relative;
-                     display: flex;
-                     align-items: center;
-                     justify-content: center;
-                     .circle {
-                        position: absolute;
-                        left: 50%;
-                        top: 50%;
-                        transform: translate(-50%, -50%) rotate(31deg);
-                        width: 2px;
-                        height: 100%;
-                        &::after {
-                           content: "";
-                           position: absolute;
-                           height: 4px;
-                           width: 4px;
-                           background: #ffffff;
-                           box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.15);
-                           top: 3px;
-                           left: 50%;
-                           transform: translateX(-50%);
-                           border-radius: 50%;
-                           z-index: 11;
-                        }
-                     }
-                     .border {
-                        height: 76px;
-                        width: 76px;
-                        position: absolute;
-                        left: 50%;
-                        top: 50%;
-                        transform: translate(-50%, -50%);
-                        svg {
-                           height: 100%;
-                           width: 100%;
-                        }
-                     }
-                     .info {
-                        display: flex;
-                        flex-direction: column;
-                        justify-content: center;
-                        align-items: center;
-                        span {
-                           display: flex;
-                           // text-transform: uppercase;
-                           &:first-child {
-                              // @extend %bold-12;
-                              color: $black;
-                           }
-                           &:last-child {
-                              // @extend %medium-18;
-                           }
-                        }
-                     }
+                  width: 100%;
+                }
+              }
+              .info {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                span {
+                  display: flex;
+                  // text-transform: uppercase;
+                  &:first-child {
+                    // @extend %bold-12;
+                    color: $black;
                   }
-               }
+                  &:last-child {
+                    // @extend %medium-18;
+                  }
+                }
+              }
             }
-         }
-         .current-status {
-            padding: 0 1rem;
-            border-radius: 12px;
-            border: 1px solid $gray2;
-         }
+          }
+        }
       }
-   }
+      .current-status {
+        padding: 0 1rem;
+        border-radius: 12px;
+        border: 1px solid $gray2;
+      }
+    }
+  }
 }

@@ -158,10 +158,10 @@ const InsertInfoLog: FC<IInsertInfoLog> = ({ formData, onInsert }) => {
   return (
     <form id="insert-info-log" onSubmit={handleSubmit(submit)}>
       <p className="color-main">
-        ELD ELD Inc, as your service provider, is not responsible for any
+        STL STL Inc, as your service provider, is not responsible for any
         financial or legal repercussions resulting from facilitating your
         request. It is the sole responsibility of the user to maintain legal
-        compliance while using ELD.
+        compliance while using STL.
       </p>
       <br />
       <TimePicker label="Time" name="time" control={control} />
@@ -279,10 +279,10 @@ const InsertInfoLog: FC<IInsertInfoLog> = ({ formData, onInsert }) => {
       />
       <br />
       {/* <div className="d-flex"> */}
-        {/* <label htmlFor="lock" className="mr-32">
+      {/* <label htmlFor="lock" className="mr-32">
           Lock
         </label> */}
-        {/* <Checkbox required name={formNames.lock} id="lock" /> */}
+      {/* <Checkbox required name={formNames.lock} id="lock" /> */}
       {/* </div> */}
     </form>
   );

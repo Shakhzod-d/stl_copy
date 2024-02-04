@@ -59,7 +59,7 @@ const Sidebar: React.FC<Props> = ({ collapsed, setCollapsed }) => {
           width={50}
           height={50}
           className="logo-title"
-          src="/assets/images/ELD.png"
+          src="/assets/images/STL.png"
           alt=""
         /> */}
         <img
@@ -67,7 +67,7 @@ const Sidebar: React.FC<Props> = ({ collapsed, setCollapsed }) => {
           height={50}
           className="logo-title"
           style={{ background: "#FFF", borderRadius: "10px" }}
-          src="/assets/icons/Logo_ELD_dashbord_page_vector.svg"
+          src="/assets/icons/Logo_STL_dashbord_page_vector.svg"
           alt=""
         />
       </div>

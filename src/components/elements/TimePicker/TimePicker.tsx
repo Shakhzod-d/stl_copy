@@ -33,7 +33,6 @@ const TimePicker: React.FC<ITimePicker> = ({
   onChange,
   style = {},
 }) => {
-
   return (
     <div className={`text-field-wrapper`}>
       {label && <label>{label}</label>}

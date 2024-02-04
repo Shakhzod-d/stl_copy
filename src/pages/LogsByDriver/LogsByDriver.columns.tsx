@@ -44,7 +44,7 @@ export interface ILogsByDriver {
   createdAt: string;
   updatedAt: string;
   __v: number;
-  EldLocation: {
+  STLLocation: {
     lat: number;
     lng: number;
     name: string;
@@ -80,7 +80,7 @@ const useColumnsLogsByDriver = (): ColumnsType<ILogsByDriver> => {
     {
       title: "Last Know Location",
       dataIndex: "location",
-      render: (value, record) => record.EldLocation?.name || "-",
+      render: (value, record) => record.STLLocation?.name || "-",
     },
     // {
     //      title: "Errors & Violations",

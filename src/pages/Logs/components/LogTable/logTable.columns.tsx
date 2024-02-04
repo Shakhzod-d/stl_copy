@@ -56,7 +56,7 @@ const useGraphColumns = (
   // const state = useLogsInnerContext();
   const state = useLogsInnerContext();
   const companyTimeZone = useSelector<RootState>((s) => s.log.companyTimeZone);
-  console.log("s", companyTimeZone);
+  // console.log("s", companyTimeZone);
   // console.log(`state`, state);
 
   const editItem = (log: any) => {
@@ -75,7 +75,7 @@ const useGraphColumns = (
   //   .tz(companyTimeZone as string)
   //   .format("HH:mm:ss"); // based on time zone
   // @ts-ignore
-  console.log(timeZones[companyTimeZone]);
+  // console.log(timeZones[companyTimeZone]);
 
   return [
     {

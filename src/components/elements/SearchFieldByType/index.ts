@@ -1,3 +1,3 @@
 import SearchFieldByType from "./SearchFieldByType";
 
-export default SearchFieldByType
+export default SearchFieldByType;
