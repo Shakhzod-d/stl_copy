@@ -71,10 +71,6 @@ const LogsHead: React.FC<ILogsHead> = ({
     };
   };
 
-  // console.log(`driverData`, driverData);
-
-  // const isToday = initialTime === getTodaysInitialTime();
-
   return (
     <div className="logs-inner-head">
       <div className="driver-info">
@@ -101,7 +97,13 @@ const LogsHead: React.FC<ILogsHead> = ({
           value={(cycle.break / BREAK_TIME_LIMIT) * 100}
           title="break"
           color="#db1c4c"
-          time={moment.utc(cycle.break * 1000).format("HH:mm")}
+          time={
+            cycle.break > 0 ? (
+              moment.utc(cycle.break * 1000).format("HH:mm")
+            ) : (
+              <span className="error-text">limit reached</span>
+            )
+          }
           // time={getStatusTotalTime("sb").time}
         />
         <CircleProgress

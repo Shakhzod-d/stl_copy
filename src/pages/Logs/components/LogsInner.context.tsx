@@ -10,7 +10,7 @@ import { mapDriverLogs } from "@/utils";
 import { notification } from "antd";
 import moment from "moment";
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { NumberParam, useQueryParam, withDefault } from "use-query-params";
 import { v4 as uuidV4 } from "uuid";
 import { IInsertInfoLogFormData } from "./LogActions/components/InsertInfoLog";
@@ -24,7 +24,11 @@ import {
   getNewLog,
   getTodaysInitialTime,
   mapDataBeforeSend,
+  sortLogsByTime,
 } from "./correction_algorithms";
+import { useDispatch } from "react-redux";
+import { postInsertInfoLog } from "@/store/slices/logSlice";
+import { AppDispatch } from "@/store";
 
 const useLogsInner = () => {
   const momentZone = useMomentZone();
@@ -74,6 +78,12 @@ const useLogsInner = () => {
     _id2: "",
     time: 0,
   });
+  const dispatch = useDispatch<AppDispatch>();
+  const s = useLocation();
+
+  // inputString.replace(/(inner\/).*$/, '$1') /\/([^/]+)$/.exec(inputString)?.[1]
+  // console.log(`currentLog`, currentLog);
+  // console.log(/\/([^/]+)$/.exec(s?.pathname)?.[1]);
 
   const handleEditClick = (log: any) => {
     const rowIndex = logs.findIndex((item) => item._id === log._id);
@@ -85,7 +95,6 @@ const useLogsInner = () => {
     newData.splice(rowIndex + 1, 0, log);
     setLogs(newData);
   };
-  // console.log(`logs`, logs);
 
   const fetchLogParams = {
     driverId: id,
@@ -207,6 +216,32 @@ const useLogsInner = () => {
   };
 
   const onInsertInfoLog = (infoLog: IInsertInfoLogFormData) => {
+    const newLogObj = {
+      _id: uuidV4(),
+      coDriverId: "",
+      driverId: /\/([^/]+)$/.exec(s?.pathname)?.[1],
+      start: 0,
+      end: 0,
+      status: infoLog.status || "login",
+      engineHours: Number(infoLog.engineHours) || 0,
+      odometer: Number(infoLog.odometer) || 0,
+      distance: 0,
+      document: "",
+      notes: "",
+      trailer: "",
+      serviceId: "",
+      vehicleUnit: "",
+      location: {
+        lat: Number(infoLog?.lat?.split(",")[0]) || 0,
+        lng: Number(infoLog?.lat?.split(",")[1]) || 0,
+        name: "",
+      },
+      origin: "Auto",
+    }; //            /interlogD
+
+    dispatch(postInsertInfoLog(newLogObj));
+    console.log(`newLogObj`, newLogObj);
+
     // @ts-ignore
     const newLog: ILog = {
       ...infoLog,
@@ -219,9 +254,18 @@ const useLogsInner = () => {
       start: infoLog.time + time - 1,
       end: infoLog.time + time - 1,
     };
+
     // @ts-ignore
     setLogs(sortLogsByTime([...logs, newLog]));
   };
+  // console.log(`logs`, logs);
+
+  // engineHours: "29";
+  // lat: "2323323,23323232";
+  // odometer: "32";
+  // status: "poweron_pc";
+  // time: 68827;
+  // truck: "1025";
 
   const onNormalize = () => {};
 
@@ -378,7 +422,10 @@ const useLogsInner = () => {
       log,
       columns: graphColumns,
       logData,
-      logs,
+      logs: logs.map((item: any) => ({
+        ...item,
+        location: { ...item.location, status: item.status },
+      })),
       time,
       driverData,
       croppedTime,

@@ -75,6 +75,31 @@ const LogActions: React.FC<ILogActions> = ({}) => {
     else setTime(moment(initialTime).add(-1, "day").valueOf());
   };
 
+  const handleInserInfoLogSubmit = () => {
+    const insertObj = {
+      driverId: driverData?.data?._id,
+      start: 1706955789,
+      end: 1706955789,
+      status: "login",
+      engineHours: 0,
+      odometer: 0,
+      distance: 0,
+      document: "",
+      notes: " ",
+      trailer: "",
+      serviceId: "",
+      vehicleUnit: "",
+      location: {
+        lat: 0,
+        lng: 0,
+        name: " ",
+      },
+      origin: "Auto",
+    };
+
+    console.log(currentLog);
+  };
+
   return (
     <div className="log-actions">
       <div className="log-left-actions">
@@ -233,7 +258,7 @@ const LogActions: React.FC<ILogActions> = ({}) => {
       <FormModal
         modalTitle="Insert info log"
         onCancel={() => setIsVisibleInsertInfoLog(false)}
-        onOk={() => setIsVisibleInsertInfoLog(false)}
+        onOk={handleInserInfoLogSubmit}
         open={isVisibleInsertInfoLog}
         formId={"insert-info-log"}
         closable

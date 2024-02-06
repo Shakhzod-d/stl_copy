@@ -48,3 +48,7 @@ body.dark {
   scroll-behavior: smooth;
   position: relative;
 }
+.ant-table-body {
+  overflow: auto scroll;
+  max-height: 1700px !important;
+}

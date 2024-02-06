@@ -50,7 +50,7 @@ interface ILogCorrection {
 
 const LogCorrection: React.FC<ILogCorrection> = ({ handleCloseEditing }) => {
   const {
-    state: { currentLog },
+    state: { currentLog, logs },
     actions: { onChangeStatus, onCancel, onTimeChange, setLogs },
   } = useLogsInnerContext();
   const { control, reset, handleSubmit } = useForm<TFormConnection>();
@@ -93,11 +93,11 @@ const LogCorrection: React.FC<ILogCorrection> = ({ handleCloseEditing }) => {
       momentZone(moment.unix(currentLog?.end || 0)),
     ]);
   }, [currentLog]);
+  // console.log(`currentLog?.location?.lng `, currentLog?.location);
 
   const submit = (formData: TFormConnection) => {
     handleCloseEditing();
 
-    //  console.log(initialTime! - moment(formData.fromTo[0]).valueOf());
     //  console.log(moment(formData.fromTo[1]).format("HH:mm:ss"));
     setLogs((prevLogs: any) => {
       return prevLogs.map((prevLog: any) =>
@@ -107,8 +107,8 @@ const LogCorrection: React.FC<ILogCorrection> = ({ handleCloseEditing }) => {
               ...formData,
               location: {
                 name: currentLog?.location.name!,
-                // lat: +formData.lat,
-                lng: +formData.lng,
+                lat: +formData.lng.split(",")[0],
+                lng: +formData.lng.split(",")[1],
               },
               odometer: +formData.odometer,
               engineHours: +formData.hours,

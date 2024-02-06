@@ -92,6 +92,7 @@ export interface IInsertInfoLogFormData {
   engineHours: any;
   // document: string;
   // trailer: string;
+  status: "";
   truck: string;
   lock: string;
 }
@@ -124,6 +125,7 @@ const InsertInfoLog: FC<IInsertInfoLog> = ({ formData, onInsert }) => {
     });
   const [status, setStatus] = useState<TItemStatus>("login");
   const submit = (formData: IInsertInfoLogFormData) => {
+    // console.log(`formData`, formData);
     // @ts-ignore
     onInsert({
       ...formData,

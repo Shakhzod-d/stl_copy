@@ -119,15 +119,23 @@ const useGraphColumns = (
       title: "location",
       dataIndex: "location",
       render(value: any) {
-        // console.log(`value`, `${value.lat}, ${value.lng}`);
+        // console.log(`value`, value);
         // return value?.name;
+        if (value.status === "login" || value.status === "logout") {
+          return `--`;
+        }
+
         return (
           <span>
             {value?.name}{" "}
-            <CopyOutlined
-              onClick={() => copy(`${value.lat}, ${value.lng}`)}
-              style={{ cursor: "pointer" }}
-            />
+            {value.status !== "login" || value.status !== "logout" ? (
+              <CopyOutlined
+                onClick={() => copy(`${value.lat}, ${value.lng}`)}
+                style={{ cursor: "pointer" }}
+              />
+            ) : (
+              "--"
+            )}
             {/* <img
               src={copyIcon}
               alt="copy icon"
