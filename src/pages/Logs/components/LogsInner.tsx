@@ -14,6 +14,7 @@ import { CheckboxChangeEvent } from "antd/lib/checkbox";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/store";
 import { setCompanyTimeZone } from "@/store/slices/logSlice";
+import LogForm from "./LogForm";
 
 const LogsInner: React.FC = () => {
   const {
@@ -150,7 +151,7 @@ const LogsInner: React.FC = () => {
           />
         </div>
       </div>
-      {/* <LogForm /> */}
+      <LogForm />
       <TripPlanner />
     </MainLayout>
   );
