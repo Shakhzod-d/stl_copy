@@ -52,13 +52,15 @@ const LogTable: React.FC<ILogTable> = ({
   const [switchingDriverId, setSwitchingDriverId] = useState();
   // const copy = (tag) => navigator.clipboard.writeText(tag);
   return (
-    <div>
+    <div style={{ padding: "1rem 0" }}>
       <Table
         columns={columns}
         dataSource={data}
         rowKey="_id"
         style={{
-          height: 1000,
+          maxHeight: "1000px",
+          overflow: "scroll",
+          // border: "1px solid red",
         }}
         className="pointer action"
         rowSelection={{

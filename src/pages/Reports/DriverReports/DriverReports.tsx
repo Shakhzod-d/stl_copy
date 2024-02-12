@@ -164,7 +164,7 @@ const DriverReports = () => {
               forcePageBreak=".page-break"
               ref={pdfExportComponent}
               fileName={getReportFileName()}
-              author="STL STL"
+              author="TMK TMK"
             >
               {driverReport?.map((report, i) => {
                 // report = log, data, initialTime

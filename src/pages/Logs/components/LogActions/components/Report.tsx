@@ -78,14 +78,14 @@ const Report: React.FC<IProps> = ({
             <td>{reportData?.mainOfficeAddress}</td>
           </tr>
           <tr>
-            <td>STL ID</td>
+            <td>TMK ID</td>
             <td>----4AWJ----</td>
             <td>Time Zone Offset</td>
             <td>----UTC-5----</td>
           </tr>
           <tr>
-            <td>STL Provider </td>
-            <td>STL STL</td>
+            <td>TMK Provider </td>
+            <td>TMK TMK</td>
             <td>24 Period Starting Time </td>
             <td>----Midnight----</td>
           </tr>

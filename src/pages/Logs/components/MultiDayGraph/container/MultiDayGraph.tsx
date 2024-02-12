@@ -92,8 +92,8 @@ const MultiDayGraph = ({}: IMultiDayGraph) => {
                               // setHoveredId={setHoveredId}
                               // hoveredId={hoveredId}
                               initialTime={day || 0}
-                              isLastLog={croppedLogs.length - 1 === i}
-                              isFirstLog={0 === i}
+                              isLaTMKog={croppedLogs.length - 1 === i}
+                              isFirTMKog={0 === i}
                               isPrevLogDisabled={croppedLogs[i - 1]?.hasFlag}
                               isNextLogDisabled={croppedLogs[i + 1]?.hasFlag}
                               hoverLogOptions={{

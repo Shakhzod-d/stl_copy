@@ -41,7 +41,7 @@ const useColumns = (refetch: IVoid) => {
       dataIndex: "licensePlateIssuingState",
     },
     {
-      title: "STL",
+      title: "TMK",
       dataIndex: "eid_device",
     },
     {

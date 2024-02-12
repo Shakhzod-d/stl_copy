@@ -102,7 +102,7 @@ const Navbar: React.FC = () => {
           >
             <div className="nav-info">
               <span>
-                {companies.find(
+                {companies?.find(
                   (company) => company._id === localStorage.getItem("companyId")
                 )?.companyName || "Company name"}
               </span>

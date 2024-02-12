@@ -52,18 +52,26 @@ const Login: React.FC = () => {
       <form
         className="form"
         onSubmit={handleSubmit(submitFunc)}
-        id="STL-login-forum"
+        id="TMK-login-forum"
       >
         {/* <img src={`/assets/icons/logisoft.png`} alt="logo" /> */}
-        {/* <img className="logo-icon" src="/assets/icons/logo-icon.svg" alt="" /> */}
-        {/* <img className="logo-title" src="/assets/icons/logo-title.svg" alt="" /> */}
-        {/* <img className="logo-title" src="/assets/images/STL.png" alt="" /> */}
         <img
-          style={{ width: 200 }}
-          className="logo-title"
-          src="/assets/icons/Logo_STL1_vector.svg"
+          className="logo-icon"
+          src="https://tmk.roundedteam.uz/assets/icons/logo-icon.svg"
           alt=""
         />
+        <img
+          className="logo-title"
+          src="https://tmk.roundedteam.uz/assets/icons/logo-title.svg"
+          alt=""
+        />
+        {/* <img className="logo-title" src="/assets/images/TMK.png" alt="" /> */}
+        {/* <img
+          style={{ width: 200 }}
+          className="logo-title"
+          src="/assets/icons/Logo_TMK1_vector.svg"
+          alt=""
+        /> */}
         <TextField
           placeholder={"example@gmail.com"}
           label={"Email"}
@@ -95,7 +103,7 @@ const Login: React.FC = () => {
         {/* <Checkbox>Remember me</Checkbox> */}
         <Button
           htmlType="submit"
-          form="STL-login-forum"
+          form="TMK-login-forum"
           type="primary"
           loading={loginMutation.isLoading}
           className="w-100"

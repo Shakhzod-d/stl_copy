@@ -35,6 +35,8 @@ function TimePicker<T extends FieldValues>({
   className,
   range = false,
   onChangeCustom,
+  value: formatValue,
+  format = "",
 }: ITimePicker<T>) {
   return (
     <Controller
@@ -42,6 +44,7 @@ function TimePicker<T extends FieldValues>({
         field: { onChange, /* onBlur, */ value, name /* ref */ },
         fieldState: { error },
       }) => {
+        console.log(value, name, "somethign");
         return (
           <div
             className={`text-field-wrapper ${
@@ -67,15 +70,16 @@ function TimePicker<T extends FieldValues>({
               />
             ) : (
               <AntdTimePicker
-                value={value}
+                // value={value}
+                value={formatValue}
                 // dateRender={moment(23141)}
-                onChange={onChange}
+                onChange={onChangeCustom}
                 // onBlur={onBlur}
                 // ref={ref}
                 status={error && "error"}
                 name={name}
-                disabled={disabled}
-                format="HH:mm:ss"
+                disabled={disabled} //format
+                format={format?.length > 0 ? format : "HH:mm:ss"}
                 autoComplete={autoComplete}
               />
             )}

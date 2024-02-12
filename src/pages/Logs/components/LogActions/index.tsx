@@ -96,8 +96,6 @@ const LogActions: React.FC<ILogActions> = ({}) => {
       },
       origin: "Auto",
     };
-
-    console.log(currentLog);
   };
 
   return (

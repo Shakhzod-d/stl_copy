@@ -83,10 +83,10 @@ const TransferLogs: React.FC<{
     <div>
       <h3>Responsibility warning</h3>
       <p className="color-main medium-16 mb-4">
-        STL STL Inc, as your service provider, is not responsible for any
+        TMK TMK Inc, as your service provider, is not responsible for any
         financial or legal repercussions resulting from facilitating your
         request. It is the sole responsibility of the user to maintain legal
-        compliance while using STL.
+        compliance while using TMK.
       </p>
       <TimePicker
         label="Duration"

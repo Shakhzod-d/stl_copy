@@ -99,8 +99,8 @@ const Graph: React.FC<IGraph> = ({
                     setHoveredId={setHoveredId}
                     hoveredId={hoveredId}
                     initialTime={initialTime || 0}
-                    isLastLog={logs.length - 1 === i}
-                    isFirstLog={0 === i}
+                    isLaTMKog={logs.length - 1 === i}
+                    isFirTMKog={0 === i}
                     afterRangeChange={afterRangeChange}
                     isPrevLogDisabled={logs[i - 1]?.hasFlag}
                     isNextLogDisabled={logs[i + 1]?.hasFlag}

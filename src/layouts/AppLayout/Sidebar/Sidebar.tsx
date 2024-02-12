@@ -39,37 +39,33 @@ const Sidebar: React.FC<Props> = ({ collapsed, setCollapsed }) => {
         }}
         className={`logo ${collapsed ? "collapsed" : ""}`}
       >
+        <img
+          className="logo-icon"
+          src="https://tmk.roundedteam.uz/assets/icons/logo-icon.svg"
+          alt=""
+          width={"119px"}
+        />
         {/* <img
-                         className="logo-icon"
-                         src="/assets/icons/logisoft.png"
-                         alt=""
-                         width={50}
-                    /> */}
-        {/* <img
-                         className="logo-icon"
-                         src="/assets/icons/logo-icon.svg"
-                         alt=""
-                    />
-                    <img
-                         className="logo-title"
-                         src="/assets/icons/logo-title.svg"
-                         alt=""
-                    /> */}
+          className="logo-icon"
+          src="https://tmk.roundedteam.uz/assets/icons/logo-title.svg"
+          alt=""
+        /> */}
+        {/* <img className="logo-title" src="/assets/icons/logo-title.svg" alt="" /> */}
         {/* <img
           width={50}
           height={50}
           className="logo-title"
-          src="/assets/images/STL.png"
+          src="/assets/images/TMK.png"
           alt=""
         /> */}
-        <img
+        {/* <img
           width={50}
           height={50}
           className="logo-title"
           style={{ background: "#FFF", borderRadius: "10px" }}
-          src="/assets/icons/Logo_STL_dashbord_page_vector.svg"
+          src="/assets/icons/Logo_TMK_dashbord_page_vector.svg"
           alt=""
-        />
+        /> */}
       </div>
       <div className="sidebar-scroll">
         <Menu

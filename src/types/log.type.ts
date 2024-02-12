@@ -98,7 +98,7 @@ export interface IReport {
   unidentifiedDriverRecords: string;
   exemptDriverStatus: string;
   usdot: number;
-  STLId: string;
+  TMKId: string;
   currentLocation?: {
     lat: number;
     lng: number;

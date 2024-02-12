@@ -25,7 +25,7 @@ interface IDeviceInfo {
   time: number;
   driverId: string;
   vehicleId: string;
-  STLConnection: boolean;
+  TMKConnection: boolean;
   bluetooth: boolean;
   gpsPermission: boolean;
   location: boolean;

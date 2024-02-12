@@ -1,4 +1,4 @@
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { FC } from "react";
 import Select from "@/components/elements/Select";
 import FormSelect from "@/components/form/Select";
@@ -15,6 +15,9 @@ import {
 } from "../../correction_algorithms";
 import { ILog } from "@/types/log.type";
 import { Moment } from "moment";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store";
+import { timeZones } from "../../LogTable/helper";
 
 const statusOptions = [
   {
@@ -22,12 +25,8 @@ const statusOptions = [
     _id: "certify",
   },
   {
-    name: "intermediate (driving)",
+    name: "intermediate",
     _id: "intermediate",
-  },
-  {
-    name: "intermediate (personal)",
-    _id: "intermediate_pc",
   },
   {
     name: "login",
@@ -38,49 +37,15 @@ const statusOptions = [
     _id: "logout",
   },
   {
-    name: "poweron (driving)",
-    _id: "poweron_dr",
+    name: "power off",
+    _id: "power_off",
   },
   {
-    name: "poweron (personal)",
-    _id: "poweron_pc",
-  },
-  {
-    name: "poweroff (driving)",
-    _id: "poweroff_dr",
-  },
-  {
-    name: "poweroff (personal)",
-    _id: "poweroff_pc",
+    name: "power on",
+    _id: "power_on",
   },
 ];
 
-const truckOptions = [
-  {
-    name: "12",
-    _id: "12",
-  },
-  {
-    name: "231",
-    _id: "231",
-  },
-  {
-    name: "184",
-    _id: "184",
-  },
-  {
-    name: "312",
-    _id: "312",
-  },
-  {
-    name: "873",
-    _id: "873",
-  },
-  {
-    name: "1025",
-    _id: "1025",
-  },
-];
 export interface IInsertInfoLogFormData {
   time: any;
   signature: string;
@@ -117,15 +82,39 @@ export interface IInsertInfoLog {
 }
 
 const InsertInfoLog: FC<IInsertInfoLog> = ({ formData, onInsert }) => {
+  const companyTimeZone: any = useSelector<RootState>(
+    (s) => s.log.companyTimeZone
+  );
   const { control, handleSubmit, setValue, getValues, reset, watch } =
     useForm<IInsertInfoLogFormData>({
       defaultValues: {
-        time: moment("12:00:00", "HH:mm:ss"),
+        // time: moment("12:00:00", "HH:mm:ss"),
+        time: moment(
+          moment // @ts-ignore
+            .unix(formData?.start) // @ts-ignore
+            .tz(timeZones[companyTimeZone])
+            .format("h:mm:ss A")
+        ),
       },
     });
   const [status, setStatus] = useState<TItemStatus>("login");
+  console.log(
+    `formData`,
+    moment // @ts-ignore
+      .unix(formData?.start) // @ts-ignore
+      .tz(timeZones[companyTimeZone])
+      .format("h:mm:ss A")
+  ); // formData ni ichida start unix time bir ekan shuni olihsim kerak
+
+  // {
+  //   moment // @ts-ignore
+  //     .unix(formData?.start) // @ts-ignore
+  //     .tz(timeZones[companyTimeZone])
+  //     .format("h:mm:ss A");
+  // }
+
   const submit = (formData: IInsertInfoLogFormData) => {
-    // console.log(`formData`, formData);
+    // console.log(`getValues()`, getValues());
     // @ts-ignore
     onInsert({
       ...formData,
@@ -155,18 +144,31 @@ const InsertInfoLog: FC<IInsertInfoLog> = ({ formData, onInsert }) => {
     }
   }, []);
 
-  // console.log(watch("time"));
+  const handleChangeTime = (value: moment.Moment | null) => {
+    console.log(getValues());
+    setValue("time", value);
+  };
 
   return (
     <form id="insert-info-log" onSubmit={handleSubmit(submit)}>
       <p className="color-main">
-        STL STL Inc, as your service provider, is not responsible for any
+        TMK TMK Inc, as your service provider, is not responsible for any
         financial or legal repercussions resulting from facilitating your
         request. It is the sole responsibility of the user to maintain legal
-        compliance while using STL.
+        compliance while using TMK.
       </p>
       <br />
-      <TimePicker label="Time" name="time" control={control} />
+
+      <TimePicker
+        value={moment // @ts-ignore
+          .unix(formData?.start) // @ts-ignore
+          .tz(timeZones[companyTimeZone])}
+        format="h:mm:ss A"
+        label="Time"
+        name="time"
+        control={control}
+        onChange={(value) => console.log("Time changed:", value)}
+      />
       <br />
       <Select
         placeholder="status"
@@ -205,35 +207,13 @@ const InsertInfoLog: FC<IInsertInfoLog> = ({ formData, onInsert }) => {
                 label="Lat, lng"
               />
             </Col>
-            {/* <Col span={9}>
-              <TextField
-                required
-                name="lng"
-                placeholder="Lng"
-                control={control}
-                label="Lng"
-              />
-            </Col> */}
+
             <Col style={{ marginTop: "auto" }} span={3}>
               <Button type="primary">Get location </Button>
             </Col>
           </Row>
           <br />
-          {/* <Row justify="space-between" gutter={[36, 0]}>
-            <Col span={10}>
-              <TextField
-                required
-                name="locationName"
-                placeholder="Location Name"
-                control={control}
-                label="Location Name"
-              />
-            </Col>
-            <Col style={{ marginTop: "auto" }} span={7.2}>
-              <Button type="primary">Get coordinates</Button>
-            </Col>
-          </Row> */}
-          {/* <br /> */}
+
           <TextField
             required
             name="odometer"
@@ -252,40 +232,16 @@ const InsertInfoLog: FC<IInsertInfoLog> = ({ formData, onInsert }) => {
             control={control}
             label="Engine hours"
           />
-          {/* <br /> */}
-          {/* <TextField
+          <br />
+          <TextField
+            label="VEHICLE UNIT"
+            placeholder="VEHICLE UNIT"
             required
-            name="document"
-            placeholder="Shipping document"
+            name="truck"
             control={control}
-            label="Shipping document"
-          /> */}
-          {/* <br /> */}
-          {/* <TextField
-            required
-            name="eng"
-            placeholder="ENG. H"
-            control={control}
-            label="ENGIN Hours"
-          /> */}
+          />
         </>
       )}
-      <br />
-      <FormSelect
-        placeholder="truck"
-        label="Truck"
-        required
-        name="truck"
-        data={truckOptions}
-        control={control}
-      />
-      <br />
-      {/* <div className="d-flex"> */}
-      {/* <label htmlFor="lock" className="mr-32">
-          Lock
-        </label> */}
-      {/* <Checkbox required name={formNames.lock} id="lock" /> */}
-      {/* </div> */}
     </form>
   );
 };

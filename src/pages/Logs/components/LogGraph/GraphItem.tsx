@@ -35,8 +35,8 @@ export interface IGraphItem {
   hoveredId?: any;
   afterRangeChange?: (val: any, item: ILog) => void;
   initialTime: number;
-  isLastLog: boolean;
-  isFirstLog: boolean;
+  isLaTMKog: boolean;
+  isFirTMKog: boolean;
   isPrevLogDisabled: boolean | undefined;
   isNextLogDisabled: boolean | undefined;
   hoverLogOptions?: {
@@ -64,8 +64,8 @@ const GraphItem: React.FC<IGraphItem> = ({
   graphWidth = 0,
   afterRangeChange,
   initialTime,
-  isLastLog,
-  isFirstLog,
+  isLaTMKog,
+  isFirTMKog,
   hoverLogOptions = {
     show: "duration",
   },
@@ -393,11 +393,11 @@ const GraphItem: React.FC<IGraphItem> = ({
             // ******************************
             // if (
             //   //. !isPrevLogDisabled &&
-            //   (!isFirstLog ||
+            //   (!isFirTMKog ||
             //     !(rangeVal?.[0] === 0) ||
             //     rangeVal?.[1] !== value[1]) &&
             //   //. !isNextLogDisabled &&
-            //   (!isLastLog ||
+            //   (!isLaTMKog ||
             //     !(rangeVal?.[1] === 60 * 60 * 24) ||
             //     rangeVal?.[0] !== value[0])
             // ) {

@@ -13,7 +13,7 @@ import { IDashboardMap } from "@/types/dashbord.type";
     "vehicleId": "6516df9602d0aec7dc7c15bb",
     "battery": 35,
     "bluetooth": true,
-    "STLConnection": false,
+    "TMKConnection": false,
     "gpsPermission": true,
     "location": true,
     "systemTime": 1700482230

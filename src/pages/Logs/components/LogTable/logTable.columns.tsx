@@ -173,6 +173,10 @@ const useGraphColumns = (
       },
     },
     {
+      title: "Origin",
+      dataIndex: "origin",
+    },
+    {
       title: "action",
       render: (id: any, log: ILog) =>
         // @ts-ignore

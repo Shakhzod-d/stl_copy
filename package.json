@@ -64,7 +64,8 @@
     "deploy": "yarn build && yarn rewrite && rm -rf build",
     "deploy-dev": "scp -r build root@5.161.229.41:/var/www/ELD.roundedteam.uz",
     "deploy-ELD": "scp -i deqwbnfRFVTsXcaWJUMk -r build root@5.161.229.41:/var/www/ELDeld.roundedteam.uz",
-    "deploy-stl": "scp -i deqwbnfRFVTsXcaWJUMk -r build root@5.161.229.41:/var/www/pteld.roundedteam.uz"
+    "deploy-TMK": "scp -i deqwbnfRFVTsXcaWJUMk -r build root@5.161.229.41:/var/www/pteld.roundedteam.uz",
+    "deploy-tmk": "scp -i deqwbnfRFVTsXcaWJUMk -r build root@5.161.229.41:/var/www/tmk.roundedteam.uz"
   },
   "eslintConfig": {
     "extends": [
