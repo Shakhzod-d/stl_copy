@@ -56,6 +56,8 @@ export interface IInsertInfoLogFormData {
   // hours: string;
   engineHours: any;
   // document: string;
+  start: number;
+  end: number;
   // trailer: string;
   status: "";
   truck: string;
@@ -79,12 +81,26 @@ const insertInfoLogFormData = {
 export interface IInsertInfoLog {
   formData?: ILog | undefined;
   onInsert: (infoLog: IInsertInfoLogFormData) => void;
+  onCancel: () => void;
 }
 
-const InsertInfoLog: FC<IInsertInfoLog> = ({ formData, onInsert }) => {
+const InsertInfoLog: FC<IInsertInfoLog> = ({
+  formData,
+  onInsert,
+  onCancel,
+}) => {
   const companyTimeZone: any = useSelector<RootState>(
     (s) => s.log.companyTimeZone
   );
+
+  const [currentTime, setCurrentTime] = useState<Moment | null>(
+    !!formData
+      ? moment // @ts-ignore
+          .unix(formData?.start) // @ts-ignore
+          .tz(timeZones[companyTimeZone]) // @ts-ignore
+      : moment().tz(timeZones[companyTimeZone])
+  );
+
   const { control, handleSubmit, setValue, getValues, reset, watch } =
     useForm<IInsertInfoLogFormData>({
       defaultValues: {
@@ -98,20 +114,6 @@ const InsertInfoLog: FC<IInsertInfoLog> = ({ formData, onInsert }) => {
       },
     });
   const [status, setStatus] = useState<TItemStatus>("login");
-  console.log(
-    `formData`,
-    moment // @ts-ignore
-      .unix(formData?.start) // @ts-ignore
-      .tz(timeZones[companyTimeZone])
-      .format("h:mm:ss A")
-  ); // formData ni ichida start unix time bir ekan shuni olihsim kerak
-
-  // {
-  //   moment // @ts-ignore
-  //     .unix(formData?.start) // @ts-ignore
-  //     .tz(timeZones[companyTimeZone])
-  //     .format("h:mm:ss A");
-  // }
 
   const submit = (formData: IInsertInfoLogFormData) => {
     // console.log(`getValues()`, getValues());
@@ -120,7 +122,10 @@ const InsertInfoLog: FC<IInsertInfoLog> = ({ formData, onInsert }) => {
       ...formData,
       // @ts-ignore
       status,
+      start: currentTime !== null ? currentTime.unix() : moment().valueOf(),
+      end: currentTime !== null ? currentTime.unix() : moment().valueOf(),
       time: formData.time.valueOf() / 1000 - getTodaysInitialTime(),
+      onCancel,
     });
   };
   const formNames = insertInfoLogFormData;
@@ -160,14 +165,14 @@ const InsertInfoLog: FC<IInsertInfoLog> = ({ formData, onInsert }) => {
       <br />
 
       <TimePicker
-        value={moment // @ts-ignore
-          .unix(formData?.start) // @ts-ignore
-          .tz(timeZones[companyTimeZone])}
+        value={currentTime}
         format="h:mm:ss A"
         label="Time"
         name="time"
         control={control}
-        onChange={(value) => console.log("Time changed:", value)}
+        onChangeCustom={(
+          value //@ts-ignore
+        ) => setCurrentTime(value.tz(timeZones[companyTimeZone]))}
       />
       <br />
       <Select

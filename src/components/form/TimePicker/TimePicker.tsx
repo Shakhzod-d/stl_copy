@@ -44,7 +44,6 @@ function TimePicker<T extends FieldValues>({
         field: { onChange, /* onBlur, */ value, name /* ref */ },
         fieldState: { error },
       }) => {
-        console.log(value, name, "somethign");
         return (
           <div
             className={`text-field-wrapper ${

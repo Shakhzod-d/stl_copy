@@ -59,8 +59,9 @@ export const postInsertInfoLog = createAsyncThunk(
   "logs/postInsertInfoLog",
   async (data: any, thunkAPI) => {
     // console.log(`data`, data);
-    const { ...restObj } = data;
+    const { onCancel, ...restObj } = data;
     const url = `/interlog`;
+    console.log(`data`, data);
     try {
       // Make the PUT request using axios
       const response = await api.post(url, restObj);
@@ -68,10 +69,10 @@ export const postInsertInfoLog = createAsyncThunk(
       console.log(`response`, response);
       // Return the data from the response
       // @ts-ignore
-      // if (response.message === "OK") {
-      //   // close modal
-      //   onCancel();
-      // }
+      if (response.message === "OK") {
+        // close modal
+        onCancel();
+      }
 
       return response.data;
     } catch (error) {

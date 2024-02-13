@@ -73,11 +73,14 @@ const useLogsInner = () => {
   const [initialLogs, setInitialLogs] = useState<ILog[]>([]);
   const [hoveredId, setHoveredId] = useState<string | null>(null);
   const [croppedTime, setCroppedTime] = useState<[number, number]>();
+  const [,] = useState();
   const [ids, setIds] = useState<{ _id1: string; _id2: string; time: number }>({
     _id1: "",
     _id2: "",
     time: 0,
   });
+  const [isAlreadyClicked, setIsAlreadyClicked] = useState(false);
+
   const dispatch = useDispatch<AppDispatch>();
   const s = useLocation();
 
@@ -217,11 +220,12 @@ const useLogsInner = () => {
 
   const onInsertInfoLog = (infoLog: IInsertInfoLogFormData) => {
     const newLogObj = {
+      ...infoLog,
       _id: uuidV4(),
       coDriverId: "",
       driverId: /\/([^/]+)$/.exec(s?.pathname)?.[1],
-      start: 0,
-      end: 0,
+      start: infoLog.start,
+      end: infoLog.end,
       status: infoLog.status || "login",
       engineHours: Number(infoLog.engineHours) || 0,
       odometer: Number(infoLog.odometer) || 0,
@@ -240,7 +244,6 @@ const useLogsInner = () => {
     }; //            /interlogD
 
     dispatch(postInsertInfoLog(newLogObj));
-    console.log(`newLogObj`, newLogObj);
 
     // @ts-ignore
     const newLog: ILog = {
@@ -392,6 +395,7 @@ const useLogsInner = () => {
   };
 
   const onInsertDutyStatus = () => {
+    setIsAlreadyClicked(true);
     let val = [
       Math.floor((totalTime - time / 1000 - 1.5 * 60 * 60) / 2),
       Math.floor((totalTime - time / 1000 + 1.5 * 60 * 60) / 2),
@@ -432,6 +436,7 @@ const useLogsInner = () => {
       historyLogs: logData?.history,
       reportData: logData?.report,
       ids,
+      isAlreadyClicked,
       // ... (include other variables here)
     },
     actions: {

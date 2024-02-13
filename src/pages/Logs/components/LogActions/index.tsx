@@ -39,6 +39,7 @@ const LogActions: React.FC<ILogActions> = ({}) => {
       isVisibleInsertInfoLog,
       historyLogs,
       reportData,
+      isAlreadyClicked,
     },
     actions: {
       setTime,
@@ -62,6 +63,7 @@ const LogActions: React.FC<ILogActions> = ({}) => {
   const [isVisibleReport, setIsVisibleReport] = useState(false);
   const [isVisibleNormalize, setIsVisibleNormalize] = useState(false);
   const [isVisibleTransfer, setIsVisibleTransfer] = useState(false);
+
   let componentRef = useRef() as React.MutableRefObject<HTMLInputElement>;
   const whenSomethingIsLoading = !!isFetching;
 
@@ -193,7 +195,7 @@ const LogActions: React.FC<ILogActions> = ({}) => {
               </Button>
             )}
             <Button
-              disabled={whenSomethingIsLoading}
+              disabled={whenSomethingIsLoading || isAlreadyClicked}
               className="log-btn"
               onClick={onInsertDutyStatus}
             >
@@ -267,7 +269,11 @@ const LogActions: React.FC<ILogActions> = ({}) => {
           maxHeight: "calc(100vh - 200px)",
         }}
       >
-        <InsertInfoLog formData={infoLogFormData} onInsert={onInsertInfoLog} />
+        <InsertInfoLog
+          formData={infoLogFormData}
+          onInsert={onInsertInfoLog}
+          onCancel={() => setIsVisibleInsertInfoLog(false)}
+        />
       </FormModal>
       <Modal
         title="History"
