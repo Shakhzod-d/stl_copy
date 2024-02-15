@@ -50,7 +50,7 @@ const FMCSA = () => {
       message.error("Please select a valid date range.");
     }
   };
-  console.log(MFCSAReports);
+  // console.log(MFCSAReports);
 
   // console.log(formState);
 

@@ -39,25 +39,25 @@ const Sidebar: React.FC<Props> = ({ collapsed, setCollapsed }) => {
         }}
         className={`logo ${collapsed ? "collapsed" : ""}`}
       >
-        <img
+        {/* <img
           className="logo-icon"
           src="https://tmk.roundedteam.uz/assets/icons/logo-icon.svg"
           alt=""
           width={"119px"}
-        />
+        /> */}
         {/* <img
           className="logo-icon"
           src="https://tmk.roundedteam.uz/assets/icons/logo-title.svg"
           alt=""
         /> */}
-        {/* <img className="logo-title" src="/assets/icons/logo-title.svg" alt="" /> */}
-        {/* <img
+        {/* <img className="logo-title" src="/assets/images/STL.png" alt="" /> */}
+        <img
           width={50}
           height={50}
           className="logo-title"
-          src="/assets/images/TMK.png"
+          src="/assets/images/STL.png"
           alt=""
-        /> */}
+        />
         {/* <img
           width={50}
           height={50}

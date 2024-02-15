@@ -1,9 +1,21 @@
 import { ExclamationCircleOutlined } from "@ant-design/icons";
 import { Col, Row, Tag } from "antd";
-import React from "react";
+import React, { useEffect } from "react";
 import Accordion from "@/components/elements/Accordion";
 
-const LogForm: React.FC = () => {
+interface ILogForm {
+  logData: any;
+}
+
+const LogForm = ({ logData }: ILogForm) => {
+  // useEffect(() => {
+  //   // https://ptapi.roundedteam.uz/public/uploads/signatures/5d851f2a5809f34ba196f7b46dc627de.jpg
+  //   if (!!logData && logData?.hasOwnProperty("lastCertify")) {
+  //     const imageUrl = `https://ptapi.roundedteam.uz/public/uploads/signatures/${logData?.lastCertify?.signatureImg}`;
+  //     console.log(`logData`, imageUrl);
+  //   }
+  // }, []);
+
   return (
     <Accordion
       className="mb-24 mt-24"
@@ -45,7 +57,15 @@ const LogForm: React.FC = () => {
             <Col span={12}>Broklyn</Col>
             <Col span={12}>Signature</Col>
             <Col span={12}>
-              <Tag color="red">No signature!</Tag>
+              {!!logData && logData?.hasOwnProperty("lastCertify") ? (
+                <img
+                  width={50}
+                  src={`https://ptapi.roundedteam.uz/public/uploads/signatures/${logData?.lastCertify?.signatureImg}`}
+                  alt="signeture"
+                />
+              ) : (
+                <Tag color="red">No signature!</Tag>
+              )}
             </Col>
           </Row>
         </div>

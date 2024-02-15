@@ -27,6 +27,7 @@ const LogsInner: React.FC = () => {
       isFetching,
       logData,
       logs,
+      log,
       time,
       driverData,
       columns,
@@ -78,7 +79,6 @@ const LogsInner: React.FC = () => {
   }, []);
 
   // console.log(`driverData?.data`, driverData?.data?.companyTimeZone); //companyTimeZone
-  // console.log(`ids`, ids);
 
   return (
     <MainLayout>
@@ -151,7 +151,7 @@ const LogsInner: React.FC = () => {
           />
         </div>
       </div>
-      <LogForm />
+      <LogForm logData={logData} />
       <TripPlanner />
     </MainLayout>
   );

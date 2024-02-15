@@ -55,7 +55,7 @@ const Login: React.FC = () => {
         id="TMK-login-forum"
       >
         {/* <img src={`/assets/icons/logisoft.png`} alt="logo" /> */}
-        <img
+        {/* <img
           className="logo-icon"
           src="https://tmk.roundedteam.uz/assets/icons/logo-icon.svg"
           alt=""
@@ -64,14 +64,13 @@ const Login: React.FC = () => {
           className="logo-title"
           src="https://tmk.roundedteam.uz/assets/icons/logo-title.svg"
           alt=""
-        />
-        {/* <img className="logo-title" src="/assets/images/TMK.png" alt="" /> */}
-        {/* <img
+        /> */}
+        <img
           style={{ width: 200 }}
           className="logo-title"
-          src="/assets/icons/Logo_TMK1_vector.svg"
+          src="/assets/images/STL.png"
           alt=""
-        /> */}
+        />
         <TextField
           placeholder={"example@gmail.com"}
           label={"Email"}
