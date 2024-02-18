@@ -79,12 +79,14 @@ const insertInfoLogFormData = {
 };
 
 export interface IInsertInfoLog {
+  driverData: any;
   formData?: ILog | undefined;
-  onInsert: (infoLog: IInsertInfoLogFormData) => void;
+  onInsert: (infoLog: IInsertInfoLogFormData, status: string) => void;
   onCancel: () => void;
 }
 
 const InsertInfoLog: FC<IInsertInfoLog> = ({
+  driverData,
   formData,
   onInsert,
   onCancel,
@@ -92,7 +94,7 @@ const InsertInfoLog: FC<IInsertInfoLog> = ({
   const companyTimeZone: any = useSelector<RootState>(
     (s) => s.log.companyTimeZone
   );
-
+  // console.log(`driverData`, driverData);
   const [currentTime, setCurrentTime] = useState<Moment | null>(
     !!formData
       ? moment // @ts-ignore
@@ -116,9 +118,13 @@ const InsertInfoLog: FC<IInsertInfoLog> = ({
   const [status, setStatus] = useState<TItemStatus>("login");
 
   const submit = (formData: IInsertInfoLogFormData) => {
-    // console.log(`getValues()`, getValues());
-    // @ts-ignore
-    onInsert({
+    const certifyObj = {
+      driverId: driverData?._id,
+      date: moment(currentTime).unix(),
+      onCancel,
+    };
+
+    const otherStatuses = {
       ...formData,
       // @ts-ignore
       status,
@@ -126,9 +132,15 @@ const InsertInfoLog: FC<IInsertInfoLog> = ({
       end: currentTime !== null ? currentTime.unix() : moment().valueOf(),
       time: formData.time.valueOf() / 1000 - getTodaysInitialTime(),
       onCancel,
-    });
+    };
+
+    console.log(`certifyObj`, certifyObj); // onCancel
+
+    // @ts-ignore
+    onInsert(status === "certify" ? certifyObj : otherStatuses, status);
   };
   const formNames = insertInfoLogFormData;
+
   useEffect(() => {
     if (formData) {
       reset({
@@ -157,7 +169,7 @@ const InsertInfoLog: FC<IInsertInfoLog> = ({
   return (
     <form id="insert-info-log" onSubmit={handleSubmit(submit)}>
       <p className="color-main">
-        TMK TMK Inc, as your service provider, is not responsible for any
+        STL Inc, as your service provider, is not responsible for any
         financial or legal repercussions resulting from facilitating your
         request. It is the sole responsibility of the user to maintain legal
         compliance while using TMK.
@@ -186,20 +198,7 @@ const InsertInfoLog: FC<IInsertInfoLog> = ({
         labelProp={"name"}
       />
       {/* @ts-ignore */}
-      {status === "certify" ? (
-        <>
-          <br />
-          <TextField
-            required
-            name="signature"
-            placeholder="signatures"
-            control={control}
-            label="Driver signature"
-          />
-          <br />
-          <DatePicker label="Certify date" className="" />
-        </>
-      ) : (
+      {status !== "certify" && (
         <>
           <br />
           <Row gutter={[36, 0]}>

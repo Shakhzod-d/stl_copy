@@ -58,6 +58,8 @@ const LogActions: React.FC<ILogActions> = ({}) => {
   } = useLogsInnerContext();
   const momentZone = useMomentZone();
 
+  // console.log(driverData);
+
   const [isVisibleHistoryLog, setIsVisibleHistoryLog] = useState(false);
   const [isVisibleOriginalLogs, setIsVisibleOriginalLogs] = useState(false);
   const [isVisibleReport, setIsVisibleReport] = useState(false);
@@ -270,6 +272,7 @@ const LogActions: React.FC<ILogActions> = ({}) => {
         }}
       >
         <InsertInfoLog
+          driverData={driverData?.data}
           formData={infoLogFormData}
           onInsert={onInsertInfoLog}
           onCancel={() => setIsVisibleInsertInfoLog(false)}

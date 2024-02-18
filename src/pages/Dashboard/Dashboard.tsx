@@ -84,15 +84,17 @@ const Dashboard: React.FC = () => {
               </React.Fragment>
             }
             content={
-              // <h1>UnComment the map in Dashboard</h1>
-              <MapContainer
-                mapType={mapType}
-                data={filterDevice(selectedDrivers)}
-              />
+              <>
+                {/* <h1>UnComment the map in Dashboard</h1> */}
+                <MapContainer
+                  mapType={mapType}
+                  data={filterDevice(selectedDrivers)}
+                />
+              </>
             }
           />
           <Accordion
-            title="units"
+            title="units &"
             isClosable={false}
             subButtons={
               <Input

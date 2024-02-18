@@ -34,7 +34,7 @@ const DeviceInfo: React.FC<IDeviceInfo> = (props) => {
           />
           <DeviceStatus
             icon="link"
-            title="TMK Connection"
+            title="STL Connection"
             status={props?.TMKConnection}
           />
 

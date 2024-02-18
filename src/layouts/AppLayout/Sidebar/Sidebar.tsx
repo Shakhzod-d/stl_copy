@@ -51,13 +51,19 @@ const Sidebar: React.FC<Props> = ({ collapsed, setCollapsed }) => {
           alt=""
         /> */}
         {/* <img className="logo-title" src="/assets/images/STL.png" alt="" /> */}
-        <img
-          width={50}
-          height={50}
-          className="logo-title"
-          src="/assets/images/STL.png"
-          alt=""
-        />
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <img
+            width={50}
+            height={50}
+            className="logo-title"
+            src="/assets/images/logo.png"
+            alt=""
+            // style={{ backgroundColor: "#fff", height: "40px", width: 200 }}
+          />
+          <span style={{ color: "#fff", fontWeight: 400, fontSize: "32px" }}>
+            STL ELD
+          </span>
+        </div>
         {/* <img
           width={50}
           height={50}

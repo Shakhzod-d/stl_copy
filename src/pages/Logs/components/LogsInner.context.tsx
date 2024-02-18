@@ -27,7 +27,7 @@ import {
   sortLogsByTime,
 } from "./correction_algorithms";
 import { useDispatch } from "react-redux";
-import { postInsertInfoLog } from "@/store/slices/logSlice";
+import { postInsertInfoLog, putCertify } from "@/store/slices/logSlice";
 import { AppDispatch } from "@/store";
 
 const useLogsInner = () => {
@@ -218,7 +218,7 @@ const useLogsInner = () => {
     });
   };
 
-  const onInsertInfoLog = (infoLog: IInsertInfoLogFormData) => {
+  const onInsertInfoLog = (infoLog: IInsertInfoLogFormData, status: string) => {
     const newLogObj = {
       ...infoLog,
       _id: uuidV4(),
@@ -243,7 +243,11 @@ const useLogsInner = () => {
       origin: "Auto",
     }; //            /interlogD
 
-    dispatch(postInsertInfoLog(newLogObj));
+    if (status === "certify") {
+      dispatch(putCertify(infoLog));
+    } else {
+      dispatch(postInsertInfoLog(newLogObj));
+    }
 
     // @ts-ignore
     const newLog: ILog = {

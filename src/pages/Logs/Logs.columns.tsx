@@ -3,6 +3,7 @@ import {
   DriverStatus,
   TrackNo,
 } from "@/components/elements/TableElements";
+import Icon from "@/components/icon/Icon";
 import { ICycle } from "@/types";
 
 const { Break, Shift, Cycle, Drive } = DriverCondition();
@@ -31,6 +32,13 @@ const useMainColumns = () => {
       title: "Last Know Location",
       dataIndex: "location",
       render: (location: any) => location?.name || "-",
+    },
+    {
+      title: "Connection",
+      dataIndex: "deviceInfo",
+      render: (deviceInfo: any) => (
+        <Icon color={deviceInfo?.eldConnection ? "green" : "red"} icon="link" />
+      ),
     },
     // {
     //      title: "Errors & Violations",

@@ -1,5 +1,5 @@
 import React from "react";
-import { Button } from "antd";
+import { Button, Input } from "antd";
 import TextField from "@/components/form/TextField";
 import PasswordField from "@/components/form/PasswordField";
 import { useForm, SubmitHandler } from "react-hook-form";
@@ -19,6 +19,7 @@ import { IRoleName } from "@/types";
 type FormValues = {
   email: string;
   password: string;
+  pwd: string;
 };
 
 const Login: React.FC = () => {
@@ -68,7 +69,7 @@ const Login: React.FC = () => {
         <img
           style={{ width: 200 }}
           className="logo-title"
-          src="/assets/images/STL.png"
+          src="/assets/icons/Logo_STL1_vector.svg"
           alt=""
         />
         <TextField
@@ -85,12 +86,33 @@ const Login: React.FC = () => {
           }}
           required
         />
-        <PasswordField
+        {/* <Input.Password
+          placeholder="Enter your password"
+          type="password"
+          className="custom-password-input"
+        /> */}
+        {/* <TextField
+          placeholder={"Password"}
           label={"Password"}
-          placeholder={"******"}
           name="password"
           control={control}
-          className="mb-32"
+          className="mb-24 custom-password-input"
+          validation={{
+            minLength: {
+              value: 6,
+              message: "Password should contain at least 6 characters",
+            },
+          }}
+          required
+        /> */}
+        <PasswordField
+          // type={"text"}
+          // style={{ border: "1px solid green" }}
+          label={"Password"}
+          placeholder={"Enter your password"}
+          name="password"
+          control={control}
+          className="mb-32 custom-password-input"
           validation={{
             minLength: {
               value: 6,

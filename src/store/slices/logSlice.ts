@@ -58,13 +58,37 @@ export const updateLogsTransfer = createAsyncThunk(
 export const postInsertInfoLog = createAsyncThunk(
   "logs/postInsertInfoLog",
   async (data: any, thunkAPI) => {
-    // console.log(`data`, data);
     const { onCancel, ...restObj } = data;
     const url = `/interlog`;
     console.log(`data`, data);
     try {
-      // Make the PUT request using axios
       const response = await api.post(url, restObj);
+
+      console.log(`response`, response);
+      // Return the data from the response
+      // @ts-ignore
+      if (response.message === "OK") {
+        // close modal
+        onCancel();
+      }
+
+      return response.data;
+    } catch (error) {
+      // @ts-ignore
+      return thunkAPI.rejectWithValue({ error: error.message });
+    }
+  }
+);
+
+export const putCertify = createAsyncThunk(
+  "certify/putCertify",
+  async (data: any, thunkAPI) => {
+    const { onCancel, ...restObj } = data;
+    // https://ptapi.roundedteam.uz/certify
+    const url = `/certify`;
+    console.log(`data`, data);
+    try {
+      const response = await api.put(url, restObj);
 
       console.log(`response`, response);
       // Return the data from the response

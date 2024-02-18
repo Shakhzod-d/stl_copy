@@ -17,6 +17,7 @@ interface Props<T extends FieldValues = any> extends InputProps {
 }
 
 function PasswordField<T extends FieldValues>({
+  type,
   control,
   name,
   validation,
@@ -40,6 +41,7 @@ function PasswordField<T extends FieldValues>({
         >
           {label && <label>{label}</label>}
           <Input.Password
+            type={type}
             value={value}
             onChange={onChange}
             onBlur={onBlur}

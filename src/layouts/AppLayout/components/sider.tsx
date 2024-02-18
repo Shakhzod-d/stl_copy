@@ -79,7 +79,7 @@ const sider: MenuItem[] = [
       {
         key: "fmsca-reports",
         label: generateSiderLink("FMCSA Reports", "/reports/fmsca-reports"),
-        // icon: <Icon icon="sleep" />,
+        // icon: <Icon icon="track" />,
         icon: <Fmcsa />,
       },
       {
