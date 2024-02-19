@@ -4,7 +4,7 @@ import TimePicker from "@/components/form/TimePicker";
 import Icon from "@/components/icon/Icon";
 import { ISetState, RangeLogStatus } from "@/types";
 import { ILog } from "@/types/log.type";
-import { Button } from "antd";
+import { Button, message } from "antd";
 import { ColumnsType } from "antd/lib/table";
 import moment from "moment-timezone";
 import { useForm } from "react-hook-form";
@@ -67,7 +67,11 @@ const useGraphColumns = (
     // document.documentElement.scrollTo({ top: 0, left: 0, behavior: "smooth" });
     // window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
   };
-  const copy = (text: string) => navigator.clipboard.writeText(text);
+
+  const handleCopy = (text: string) => {
+    navigator.clipboard.writeText(text);
+    message.success("Copied!");
+  };
 
   // console.log(`currentLog`, currentLog);
   // const formattedTime = moment
@@ -130,7 +134,7 @@ const useGraphColumns = (
             {value?.name}{" "}
             {value.status !== "login" || value.status !== "logout" ? (
               <CopyOutlined
-                onClick={() => copy(`${value.lat}, ${value.lng}`)}
+                onClick={() => handleCopy(`${value.lat}, ${value.lng}`)}
                 style={{ cursor: "pointer" }}
               />
             ) : (

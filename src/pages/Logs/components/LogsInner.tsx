@@ -15,6 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/store";
 import { setCompanyTimeZone } from "@/store/slices/logSlice";
 import LogForm from "./LogForm";
+import { Recap } from "./Recap";
 
 const LogsInner: React.FC = () => {
   const {
@@ -119,7 +120,7 @@ const LogsInner: React.FC = () => {
           </Checkbox>
         </div>
         <br />
-        {logData?.violation.map((violation) => (
+        {logData?.violation?.map((violation) => (
           <Badge count={violation.violation} />
         ))}
         <LogGraph
@@ -152,6 +153,7 @@ const LogsInner: React.FC = () => {
         </div>
       </div>
       <LogForm logData={logData} />
+      <Recap data={logData} />
       <TripPlanner />
     </MainLayout>
   );

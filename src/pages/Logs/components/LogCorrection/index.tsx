@@ -277,6 +277,19 @@ const LogCorrection: React.FC<ILogCorrection> = ({ handleCloseEditing }) => {
             {/* </Row> */}
             {/* <Row gutter={[40, 15]}> */}
             {/* <Col span={20}> */}
+
+            {/* </Col> */}
+            {/* <Col span={20}> */}
+            <div>
+              <TextField
+                label={formNames.odometer}
+                placeholder={formNames.odometer}
+                name={formNames.odometer}
+                control={control}
+                required
+                style={{ width: "70px", height: "28px" }}
+              />
+            </div>
             <div style={{}}>
               <TextField
                 label={"Eng H"}
@@ -292,18 +305,6 @@ const LogCorrection: React.FC<ILogCorrection> = ({ handleCloseEditing }) => {
               />
             </div>
             {/* </Col> */}
-            {/* <Col span={20}> */}
-            <div>
-              <TextField
-                label={formNames.odometer}
-                placeholder={formNames.odometer}
-                name={formNames.odometer}
-                control={control}
-                required
-                style={{ width: "70px", height: "28px" }}
-              />
-            </div>
-            {/* </Col> */}
             {/* </Row> */}
             {/* <Row gutter={[40, 15]}> */}
             {/* <Col span={20}> */}
@@ -313,7 +314,7 @@ const LogCorrection: React.FC<ILogCorrection> = ({ handleCloseEditing }) => {
                 placeholder={formNames.notes}
                 name={formNames.notes}
                 control={control}
-                required
+                // required
                 style={{ width: "100px", height: "28px" }}
               />
             </div>
@@ -356,7 +357,7 @@ const LogCorrection: React.FC<ILogCorrection> = ({ handleCloseEditing }) => {
                 placeholder={formNames.document}
                 name={formNames.document}
                 control={control}
-                required
+                // required
                 style={{ width: "100px", height: "28px" }}
               />
             </div>
@@ -367,7 +368,7 @@ const LogCorrection: React.FC<ILogCorrection> = ({ handleCloseEditing }) => {
                 placeholder={formNames.trailer}
                 name={formNames.trailer}
                 control={control}
-                required
+                // required
               />
             </div>
 
