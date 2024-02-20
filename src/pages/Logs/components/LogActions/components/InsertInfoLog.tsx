@@ -119,9 +119,14 @@ const InsertInfoLog: FC<IInsertInfoLog> = ({
 
   const submit = (formData: IInsertInfoLogFormData) => {
     const certifyObj = {
+      ...formData,
       driverId: driverData?._id,
       date: moment(currentTime).unix(),
       onCancel,
+      status,
+      start: currentTime !== null ? currentTime.unix() : moment().valueOf(),
+      end: currentTime !== null ? currentTime.unix() : moment().valueOf(),
+      time: currentTime !== null ? currentTime.unix() : moment().valueOf(),
     };
 
     const otherStatuses = {
@@ -130,7 +135,7 @@ const InsertInfoLog: FC<IInsertInfoLog> = ({
       status,
       start: currentTime !== null ? currentTime.unix() : moment().valueOf(),
       end: currentTime !== null ? currentTime.unix() : moment().valueOf(),
-      time: formData.time.valueOf() / 1000 - getTodaysInitialTime(),
+      time: currentTime !== null ? currentTime.unix() : moment().valueOf(),
       onCancel,
     };
 
@@ -169,10 +174,10 @@ const InsertInfoLog: FC<IInsertInfoLog> = ({
   return (
     <form id="insert-info-log" onSubmit={handleSubmit(submit)}>
       <p className="color-main">
-        STL Inc, as your service provider, is not responsible for any
-        financial or legal repercussions resulting from facilitating your
-        request. It is the sole responsibility of the user to maintain legal
-        compliance while using TMK.
+        STL Inc, as your service provider, is not responsible for any financial
+        or legal repercussions resulting from facilitating your request. It is
+        the sole responsibility of the user to maintain legal compliance while
+        using STL.
       </p>
       <br />
 

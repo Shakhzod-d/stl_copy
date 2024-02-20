@@ -62,7 +62,7 @@ const LogForm = ({ logData }: ILogForm) => {
       key: "signature",
       render: (signature: string) => {
         return !!logData && logData?.hasOwnProperty("lastCertify") ? (
-          <img width={80} src={signature} alt="signeture" />
+          <img width={200} src={signature} alt="signeture" />
         ) : (
           <Tag color="red">No signature!</Tag>
         );

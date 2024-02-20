@@ -22,7 +22,7 @@ const Normalize: React.FC<{ onNormalize: (props: any) => void }> = ({
         STL Inc, as your service provider, is not responsible for any financial
         or legal repercussions resulting from facilitating your request. It is
         the sole responsibility of the user to maintain legal compliance while
-        using TMK.
+        using STL.
       </p>
       <div
         style={{

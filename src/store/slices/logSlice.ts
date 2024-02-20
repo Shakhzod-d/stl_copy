@@ -64,8 +64,6 @@ export const postInsertInfoLog = createAsyncThunk(
     try {
       const response = await api.post(url, restObj);
 
-      console.log(`response`, response);
-      // Return the data from the response
       // @ts-ignore
       if (response.message === "OK") {
         // close modal
@@ -84,7 +82,6 @@ export const putCertify = createAsyncThunk(
   "certify/putCertify",
   async (data: any, thunkAPI) => {
     const { onCancel, ...restObj } = data;
-    // https://ptapi.roundedteam.uz/certify
     const url = `/certify`;
     console.log(`data`, data);
     try {

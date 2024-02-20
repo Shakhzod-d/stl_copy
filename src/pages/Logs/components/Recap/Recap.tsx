@@ -22,9 +22,16 @@ const daysOfWeek = [
   "Saturday",
 ];
 
-const CustomTableToShowRecup = ({ data }: any) => {
-  console.log(`recap`, data);
+const data2 = {
+  HourAvailableToday: 0,
+  HoursAvailableTomarrow: 0,
+  HoursWorkedToday: 0,
+  recup: [],
+  total: 0,
+};
 
+const CustomTableToShowRecup = ({ data = data2 }: any) => {
+  console.log(data);
   return (
     <table style={{ width: "100%", borderCollapse: "collapse" }}>
       <tbody>
