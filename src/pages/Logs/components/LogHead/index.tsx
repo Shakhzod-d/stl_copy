@@ -191,7 +191,7 @@ const CircleProgress: React.FC<Props> = ({ title, value, time = 0, color }) => {
 
     console.log("Off-duty time:", formattedEndTime);
   } else {
-    console.error("Invalid time:", time);
+    // console.error("Invalid time:", time);
   }
 
   return (

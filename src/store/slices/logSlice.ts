@@ -10,6 +10,7 @@ type State = {
   error: null;
   homeTerminalTimezone: string;
   companyTimeZone: string;
+  drivers: any[];
 };
 
 const initialState: State = {
@@ -18,6 +19,7 @@ const initialState: State = {
   error: null,
   homeTerminalTimezone: "",
   companyTimeZone: "",
+  drivers: [],
 };
 
 const apiUrl = "/logs/transfer";
@@ -94,6 +96,31 @@ export const putCertify = createAsyncThunk(
         // close modal
         onCancel();
       }
+
+      return response.data;
+    } catch (error) {
+      // @ts-ignore
+      return thunkAPI.rejectWithValue({ error: error.message });
+    }
+  }
+);
+
+export const getItems = createAsyncThunk(
+  "drivers/getItems",
+  async (url: string, thunkAPI) => {
+    // const { onCancel, ...restObj } = data;
+    // const url = `/certify`;
+    // console.log(`data`, data);
+    try {
+      const response = await api.get(url);
+
+      console.log(`response`, response);
+      // Return the data from the response
+      // @ts-ignore
+      // if (response.message === "OK") {
+      //   // close modal
+      //   onCancel();
+      // }
 
       return response.data;
     } catch (error) {

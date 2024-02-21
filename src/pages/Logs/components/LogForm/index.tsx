@@ -2,12 +2,30 @@ import { ExclamationCircleOutlined } from "@ant-design/icons";
 import { Col, Row, Table, Tag } from "antd";
 import React, { useEffect } from "react";
 import Accordion from "@/components/elements/Accordion";
+import { useLocation, useParams } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { getItems } from "@/store/slices/logSlice";
+import { AppDispatch } from "@/store";
 
 interface ILogForm {
   logData: any;
 }
 
 const LogForm = ({ logData }: ILogForm) => {
+  const params: { id: "" } = useParams();
+  const location = useLocation();
+  const dispatch = useDispatch<AppDispatch>();
+
+  // console.log(`url`, url);
+
+  useEffect(() => {
+    const url = `/mainInfo?driverId=${params?.id}&date=${
+      location?.search?.split("=")[1]
+    }`;
+    dispatch(getItems(url));
+  }, []);
+
+  // moment().unix()
   // useEffect(() => {
   //   // https://ptapi.roundedteam.uz/public/uploads/signatures/5d851f2a5809f34ba196f7b46dc627de.jpg
   //   if (!!logData && logData?.hasOwnProperty("lastCertify")) {

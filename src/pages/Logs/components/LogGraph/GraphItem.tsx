@@ -135,7 +135,10 @@ const GraphItem: React.FC<IGraphItem> = ({
   };
 
   const {
-    state: { time, driverData = { data: { companyTimeZone: "Eastern Time" } } },
+    state: {
+      time = 0,
+      driverData = { data: { companyTimeZone: "Eastern Time" } },
+    },
   } = useLogsInnerContext();
   // const currentDate = new Date();
 

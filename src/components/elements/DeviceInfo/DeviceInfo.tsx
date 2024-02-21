@@ -7,6 +7,8 @@ import { IDeviceInfo } from "@/types";
 const DeviceInfo: React.FC<IDeviceInfo> = (props) => {
   const [isOpen, setOpen] = useState(false);
   const handleModal = () => setOpen((p) => !p);
+
+  // console.log(props);
   return (
     <div>
       <span className="device-info" onClick={handleModal}>
@@ -35,7 +37,7 @@ const DeviceInfo: React.FC<IDeviceInfo> = (props) => {
           <DeviceStatus
             icon="link"
             title="STL Connection"
-            status={props?.TMKConnection}
+            status={props?.eldConnection}
           />
 
           <DeviceStatus

@@ -42,6 +42,7 @@ interface IDeviceInfo {
   locationName?: string;
   currentStatus?: TItemStatus;
   _id: string;
+  eldConnection: boolean;
 }
 
 type TItemStatus =

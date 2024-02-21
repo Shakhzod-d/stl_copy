@@ -95,7 +95,7 @@ const LogErrors: React.FC = () => {
           <Table
             className="pointer"
             columns={columns}
-            dataSource={data?.data.filter((item) =>
+            dataSource={data?.data?.filter((item) =>
               violation ? item.Violations.violation === violation : true
             )}
             loading={isFetching || isLoading}

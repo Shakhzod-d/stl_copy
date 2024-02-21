@@ -42,7 +42,7 @@ const MultiDayGraph = ({}: IMultiDayGraph) => {
       <Tooltip placement="topLeft" title={"Shift + scroll"}>
         <div className="graph-container">
           <div className="graph-content">
-            {data?.data.map(({ logs, day }) => {
+            {data?.data.map(({ logs, day }, idx) => {
               const { croppedLogs } = cropOneDayLogs(logs, day);
               const getLastStatus = (i: number): TItemStatus => {
                 let index = i;
@@ -63,7 +63,7 @@ const MultiDayGraph = ({}: IMultiDayGraph) => {
                 return status;
               };
               return (
-                <div className="graph-body">
+                <div className="graph-body" key={idx}>
                   <img
                     src="/assets/icons/roller-multi-days.svg"
                     alt=""
@@ -74,9 +74,9 @@ const MultiDayGraph = ({}: IMultiDayGraph) => {
                     <div className="status-inner" ref={ref}>
                       {croppedLogs?.length > 0 &&
                         croppedLogs?.map((item, i) => (
-                          <>
+                          <div key={i}>
                             <GraphItem
-                              key={item._id}
+                              key={i}
                               item={item}
                               lastStatus={getLastStatus(i)}
                               graphWidth={graphWidth || 0}
@@ -103,7 +103,7 @@ const MultiDayGraph = ({}: IMultiDayGraph) => {
                             {i === croppedLogs.length - 1 && (
                               <div ref={scrollRef} />
                             )}
-                          </>
+                          </div>
                         ))}
                     </div>
                   </div>

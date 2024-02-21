@@ -14,7 +14,7 @@ import moment from "moment-timezone";
 import { secondsToHoursAndMinutes } from "@/pages/Logs/helper";
 
 export const ClipLocation = (position: { lat: number; lng: number }) => {
-  console.log(`position`, position);
+  // console.log(`position`, position);
   return (
     <div
       className="clip-board"
