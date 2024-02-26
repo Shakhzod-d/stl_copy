@@ -157,6 +157,10 @@ const useGraphColumns = (
     {
       title: "Odometer",
       dataIndex: "odometer",
+      render: (value: any) => {
+        // console.log(`value`, value);
+        return <span>{value === 0 ? "" : value}</span>;
+      },
     },
     {
       title: "Eng. hours",

@@ -3,7 +3,7 @@ import { Col, Row, Table, Tag } from "antd";
 import React, { useEffect } from "react";
 import Accordion from "@/components/elements/Accordion";
 import { useLocation, useParams } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getItems } from "@/store/slices/logSlice";
 import { AppDispatch } from "@/store";
 
@@ -12,16 +12,26 @@ interface ILogForm {
 }
 
 const LogForm = ({ logData }: ILogForm) => {
+  const state = useSelector((state) => state);
+  const {
+    _id,
+    driver = "",
+    mile = 0,
+    notes,
+    trailers = "",
+    //@ts-ignore
+  } = state?.log?.logForm;
+  // notes, trailers, shipping docs ni edit qilsa bo'ladi
   const params: { id: "" } = useParams();
   const location = useLocation();
   const dispatch = useDispatch<AppDispatch>();
 
-  // console.log(`url`, url);
+  console.log(`state`, state);
 
   useEffect(() => {
-    const url = `/mainInfo?driverId=${params?.id}&date=${
-      location?.search?.split("=")[1]
-    }`;
+    const url = `/mainInfo?driverId=${params?.id}&date=${location?.search
+      ?.split("=")[1]
+      .slice(0, 10)}`;
     dispatch(getItems(url));
   }, []);
 
@@ -50,7 +60,7 @@ const LogForm = ({ logData }: ILogForm) => {
       key: "coDriver",
     },
     {
-      title: "Truck",
+      title: "vehicle number",
       dataIndex: "truck",
       key: "truck",
     },
@@ -90,13 +100,14 @@ const LogForm = ({ logData }: ILogForm) => {
 
   const dataSource = [
     {
-      key: "1",
-      name: "Temurbek Rajapboyev",
-      distance: "666 ml",
+      key: _id,
+      name: driver,
+      distance: `${mile} ml`,
       coDriver: "6",
       truck: "1010",
-      trailers: "103",
+      trailers: trailers,
       shippingDocs: "123456",
+      notes,
       from: "New york",
       to: "Broklyn",
       signature: `https://ptapi.roundedteam.uz/public/uploads/signatures/${logData?.lastCertify?.signatureImg}`,

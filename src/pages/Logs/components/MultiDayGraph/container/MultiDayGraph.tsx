@@ -43,7 +43,7 @@ const MultiDayGraph = ({}: IMultiDayGraph) => {
         <div className="graph-container">
           <div className="graph-content">
             {data?.data.map(({ logs, day }, idx) => {
-              const { croppedLogs } = cropOneDayLogs(logs, day);
+              const { croppedLogs = [] } = cropOneDayLogs(logs, day);
               const getLastStatus = (i: number): TItemStatus => {
                 let index = i;
                 let status: TItemStatus = "off";

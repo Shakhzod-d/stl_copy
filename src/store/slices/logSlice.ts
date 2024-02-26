@@ -11,6 +11,7 @@ type State = {
   homeTerminalTimezone: string;
   companyTimeZone: string;
   drivers: any[];
+  logForm: any;
 };
 
 const initialState: State = {
@@ -20,6 +21,7 @@ const initialState: State = {
   homeTerminalTimezone: "",
   companyTimeZone: "",
   drivers: [],
+  logForm: null,
 };
 
 const apiUrl = "/logs/transfer";
@@ -114,7 +116,7 @@ export const getItems = createAsyncThunk(
     try {
       const response = await api.get(url);
 
-      console.log(`response`, response);
+      // console.log(`response`, response);
       // Return the data from the response
       // @ts-ignore
       // if (response.message === "OK") {
@@ -150,25 +152,19 @@ const LogSlice = createSlice({
     });
 
     // Handle the fulfilled state
-    builder.addCase(updateLogsTransfer.fulfilled, (state, action) => {
-      state.status = "succeeded";
-      // You can update your state with the data from the response if needed
-    });
-
-    // Handle the rejected state
-    // builder.addCase(updateLogsTransfer.rejected, (state, action) => {
-    //   state.status = "failed";
-    //   state.error = action.payload.error;
-    // });
-    // builder.addCase(filterReport.pending, (state) => {
-    //   state.loading = true;
-    // });
-    // builder.addCase(filterReport.fulfilled, (state, action) => {
-    //   state.loading = false;
-    //   state.IFTAReports = action.payload
-    //     .flat()
-    //     .map((item: any, idx: number) => ({ ...item, order: idx + 1 }));
-    // });
+    builder
+      .addCase(updateLogsTransfer.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        // You can update your state with the data from the response if needed
+      })
+      .addCase(getItems.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(getItems.fulfilled, (state, action) => {
+        // console.log(`action.payload`, action.payload);
+        state.status = "succeeded";
+        state.logForm = action.payload;
+      });
   },
 });
 

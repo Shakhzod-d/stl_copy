@@ -135,11 +135,12 @@ const InsertInfoLog: FC<IInsertInfoLog> = ({
       status,
       start: currentTime !== null ? currentTime.unix() : moment().valueOf(),
       end: currentTime !== null ? currentTime.unix() : moment().valueOf(),
-      time: currentTime !== null ? currentTime.unix() : moment().valueOf(),
+      time:
+        currentTime !== null ? currentTime.unix() : moment().valueOf() / 1000,
       onCancel,
     };
 
-    console.log(`certifyObj`, certifyObj); // onCancel
+    // console.log(`certifyObj`, certifyObj); // onCancel
 
     // @ts-ignore
     onInsert(status === "certify" ? certifyObj : otherStatuses, status);
