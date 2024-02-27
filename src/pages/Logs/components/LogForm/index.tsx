@@ -6,6 +6,7 @@ import { useLocation, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getItems } from "@/store/slices/logSlice";
 import { AppDispatch } from "@/store";
+import Icon from "@/components/icon/Icon";
 
 interface ILogForm {
   logData: any;
@@ -13,20 +14,19 @@ interface ILogForm {
 
 const LogForm = ({ logData }: ILogForm) => {
   const state = useSelector((state) => state);
-  const {
-    _id,
-    driver = "",
-    mile = 0,
-    notes,
-    trailers = "",
-    //@ts-ignore
-  } = state?.log?.logForm;
+  // const {
+  //   driver = "",
+  //   mile = 0,
+  //   notes,
+  //   trailers = "",
+  //   //@ts-ignore
+  // } = state?.log?.logForm;
   // notes, trailers, shipping docs ni edit qilsa bo'ladi
   const params: { id: "" } = useParams();
   const location = useLocation();
   const dispatch = useDispatch<AppDispatch>();
-
-  console.log(`state`, state);
+  // @ts-ignore
+  console.log(`state`, state?.log);
 
   useEffect(() => {
     const url = `/mainInfo?driverId=${params?.id}&date=${location?.search
@@ -75,16 +75,6 @@ const LogForm = ({ logData }: ILogForm) => {
       key: "shippingDocs",
     },
     {
-      title: "From",
-      dataIndex: "from",
-      key: "from",
-    },
-    {
-      title: "To",
-      dataIndex: "to",
-      key: "to",
-    },
-    {
       title: "Signature",
       dataIndex: "signature",
       key: "signature",
@@ -96,20 +86,42 @@ const LogForm = ({ logData }: ILogForm) => {
         );
       },
     },
+    {
+      title: "action",
+      render: (id: any) => (
+        // @ts-ignore
+
+        <div className="action-table">
+          <div onClick={() => {}}>
+            <Icon icon="pencil" className="pencil" />
+          </div>
+        </div>
+      ),
+    },
+    // {
+    //   title: "Delete",
+    //   dataIndex: "delete",
+    //   key: "delete",
+    //   render: (signature: string) => {
+    //     return "delete";
+    //   },
+    // },
   ];
 
   const dataSource = [
     {
-      key: _id,
-      name: driver,
-      distance: `${mile} ml`,
-      coDriver: "6",
-      truck: "1010",
-      trailers: trailers,
-      shippingDocs: "123456",
-      notes,
-      from: "New york",
-      to: "Broklyn",
+      key: "_id",
+      // @ts-ignore
+      name: state?.log?.logForm?.driver || "no name",
+      // @ts-ignore
+      distance: `${state?.log?.logForm?.mile || 0} ml`,
+      coDriver: "no codriver",
+      truck: "no vehicle number",
+      // @ts-ignore
+      trailers: state?.log?.logForm?.trailers || "no trailer",
+      shippingDocs: "no shipping docs",
+      // @ts-ignore
+      notes: state?.log?.logForm?.notes || "",
       signature: `https://ptapi.roundedteam.uz/public/uploads/signatures/${logData?.lastCertify?.signatureImg}`,
     },
   ];

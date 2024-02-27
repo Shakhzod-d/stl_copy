@@ -228,7 +228,7 @@ const GraphItem: React.FC<IGraphItem> = ({
   // );
 
   // console.log("graphWidth", `ts`, ts - 44, rangeVal[1] - 100); //rangeVal[1] > ts
-  // console.log("graphWidth", rangeVal[1], "ts", ts); //rangeVal[1] > ts
+  // console.log("item", item); //rangeVal[1] > ts
 
   return (
     <div>
@@ -306,14 +306,14 @@ const GraphItem: React.FC<IGraphItem> = ({
             />
           ) : null}
 
-          {!item.isEnded &&
-          item?.hasFlag &&
-          // item.cropPoint === "start" &&
-          item.cropPoint !== "end" ? (
+          {/* {!item.isEnded && item?.hasFlag ? (
+            // item.cropPoint === "start" &&
+            // item.cropPoint !== "end" ? (
+
             <span
               className="flag-content"
               style={{
-                width: graphWidth * 0.002,
+                width: graphWidth * 0.001,
                 bottom: 0,
                 left: "100%",
                 height: graphHeight * 1.2,
@@ -321,7 +321,7 @@ const GraphItem: React.FC<IGraphItem> = ({
             >
               <span className="flag-box">14</span>
             </span>
-          ) : null}
+          ) : null} */}
         </div>
       ) : null}
       <div
