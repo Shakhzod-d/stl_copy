@@ -1,18 +1,20 @@
 import { ExclamationCircleOutlined } from "@ant-design/icons";
 import { Col, Row, Table, Tag } from "antd";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Accordion from "@/components/elements/Accordion";
 import { useLocation, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getItems } from "@/store/slices/logSlice";
 import { AppDispatch } from "@/store";
 import Icon from "@/components/icon/Icon";
+import { EditForm } from "./components";
 
 interface ILogForm {
   logData: any;
 }
 
 const LogForm = ({ logData }: ILogForm) => {
+  const [openEdit, setOpenEdit] = useState(false);
   const state = useSelector((state) => state);
   // const {
   //   driver = "",
@@ -26,7 +28,7 @@ const LogForm = ({ logData }: ILogForm) => {
   const location = useLocation();
   const dispatch = useDispatch<AppDispatch>();
   // @ts-ignore
-  console.log(`state`, state?.log);
+  console.log(`state`, state?.log?.logForm);
 
   useEffect(() => {
     const url = `/mainInfo?driverId=${params?.id}&date=${location?.search
@@ -88,29 +90,41 @@ const LogForm = ({ logData }: ILogForm) => {
     },
     {
       title: "action",
-      render: (id: any) => (
-        // @ts-ignore
-
-        <div className="action-table">
-          <div onClick={() => {}}>
-            <Icon icon="pencil" className="pencil" />
+      render: (item: any) => {
+        console.log(`id`, item);
+        return (
+          <div className="action-table">
+            {item.key === "_id" ? (
+              "Edit not working"
+            ) : (
+              <div onClick={() => setOpenEdit(true)}>
+                <Icon icon="pencil" className="pencil" />
+              </div>
+            )}
           </div>
-        </div>
-      ),
+        );
+      },
     },
     // {
     //   title: "Delete",
     //   dataIndex: "delete",
     //   key: "delete",
     //   render: (signature: string) => {
-    //     return "delete";
+    //     return (
+    //       <div className="action-table">
+    //         <div onClick={() => {}}>
+    //           <Icon icon="trash" className="pencil" />
+    //         </div>
+    //       </div>
+    //     );
     //   },
     // },
   ];
 
   const dataSource = [
     {
-      key: "_id",
+      // @ts-ignore
+      key: state?.log?.logForm?._id || "_id",
       // @ts-ignore
       name: state?.log?.logForm?.driver || "no name",
       // @ts-ignore
@@ -132,6 +146,8 @@ const LogForm = ({ logData }: ILogForm) => {
       title="Log form"
       content={
         <div>
+          {/*  @ts-ignore */}
+          {openEdit && <EditForm item={state?.log?.logForm} />}
           <Table
             dataSource={dataSource}
             columns={columns}
