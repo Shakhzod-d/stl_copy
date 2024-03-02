@@ -306,7 +306,7 @@ const GraphItem: React.FC<IGraphItem> = ({
             />
           ) : null}
 
-          {/* {!item.isEnded && item?.hasFlag ? (
+          {!item.isEnded && item?.hasFlag ? (
             // item.cropPoint === "start" &&
             // item.cropPoint !== "end" ? (
 
@@ -321,7 +321,7 @@ const GraphItem: React.FC<IGraphItem> = ({
             >
               <span className="flag-box">14</span>
             </span>
-          ) : null} */}
+          ) : null}
         </div>
       ) : null}
       <div
