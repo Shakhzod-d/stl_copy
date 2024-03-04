@@ -72,6 +72,11 @@ const LogForm = ({ logData }: ILogForm) => {
       key: "trailers",
     },
     {
+      title: "Notes",
+      dataIndex: "notes",
+      key: "notes",
+    },
+    {
       title: "Shipping Docs",
       dataIndex: "shippingDocs",
       key: "shippingDocs",
@@ -129,11 +134,14 @@ const LogForm = ({ logData }: ILogForm) => {
       name: state?.log?.logForm?.driver || "no name",
       // @ts-ignore
       distance: `${state?.log?.logForm?.mile || 0} ml`,
-      coDriver: "no codriver",
-      truck: "no vehicle number",
+      // @ts-ignore
+      coDriver: state?.log?.logForm?.coDriver || "no codriver",
+      // @ts-ignore
+      truck: state?.log?.logForm?.vehicleUnit || "no vehicle number",
       // @ts-ignore
       trailers: state?.log?.logForm?.trailers || "no trailer",
-      shippingDocs: "no shipping docs",
+      // @ts-ignore
+      shippingDocs: state?.log?.logForm?.documents || "no shipping docs",
       // @ts-ignore
       notes: state?.log?.logForm?.notes || "",
       signature: `https://ptapi.roundedteam.uz/public/uploads/signatures/${logData?.lastCertify?.signatureImg}`,
