@@ -28,14 +28,15 @@ const LogForm = ({ logData }: ILogForm) => {
   const location = useLocation();
   const dispatch = useDispatch<AppDispatch>();
   // @ts-ignore
-  // console.log(`state`, state?.log?.logForm);
+  console.log(`state`, state?.log?.logForm);
+  let upDate = location?.search?.split("=")[1].slice(0, 10)
 
   useEffect(() => {
     const url = `/mainInfo?driverId=${params?.id}&date=${location?.search
       ?.split("=")[1]
       .slice(0, 10)}`;
     dispatch(getItems(url));
-  }, []);
+  }, [upDate]);
 
   // moment().unix()
   // useEffect(() => {
