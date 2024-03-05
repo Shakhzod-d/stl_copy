@@ -107,7 +107,13 @@ const Dashboard: React.FC = () => {
             }
             content={
               <Table
-                dataSource={mapData}
+                dataSource={mapData.map((item) => ({
+                  ...item,
+                  position: {
+                    lat: 0,
+                    lng: 0,
+                  },
+                }))}
                 columns={columns}
                 pagination={false}
                 rowSelection={rowSelection}

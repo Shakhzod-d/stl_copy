@@ -78,7 +78,7 @@ const useColumnsLogsByDriver = (): ColumnsType<ILogsByDriver> => {
       render: (value, record) => DriverStatus(record.status as TItemStatus),
     },
     {
-      title: "Last Know Location",
+      title: "Last Known Location",
       dataIndex: "location",
       render: (value, record) => record.TMKLocation?.name || "-",
     },

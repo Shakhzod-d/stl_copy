@@ -28,7 +28,7 @@ const LogForm = ({ logData }: ILogForm) => {
   const location = useLocation();
   const dispatch = useDispatch<AppDispatch>();
   // @ts-ignore
-  console.log(`state`, state?.log?.logForm);
+  // console.log(`state`, state?.log?.logForm);
 
   useEffect(() => {
     const url = `/mainInfo?driverId=${params?.id}&date=${location?.search
@@ -96,7 +96,7 @@ const LogForm = ({ logData }: ILogForm) => {
     {
       title: "action",
       render: (item: any) => {
-        console.log(`id`, item);
+        // console.log(`id`, item);
         return (
           <div className="action-table">
             {item.key === "_id" ? (

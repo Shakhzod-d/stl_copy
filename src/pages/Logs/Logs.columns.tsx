@@ -29,7 +29,7 @@ const useMainColumns = () => {
       render: DriverStatus,
     },
     {
-      title: "Last Know Location",
+      title: "Last Known Location",
       dataIndex: "location",
       render: (location: any) => location?.name || "-",
     },

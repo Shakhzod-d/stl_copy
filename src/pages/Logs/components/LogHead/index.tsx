@@ -17,6 +17,7 @@ import { ILog } from "@/types/log.type";
 
 import { addMinutes, format } from "date-fns";
 import { formatWithOptions } from "date-fns/fp";
+import { formatTime } from "../Recap/helper";
 
 interface Props {
   title: string;
@@ -70,6 +71,8 @@ const LogsHead: React.FC<ILogsHead> = ({
       time: moment.utc(TOTAL_STATUS_SUM * 1000).format("HH:mm"),
     };
   };
+
+  // console.log(`cycle`, cycle);
 
   return (
     <div className="logs-inner-head">
@@ -139,6 +142,18 @@ const LogsHead: React.FC<ILogsHead> = ({
             )
           }
         />
+        {/* <CircleProgress
+          value={(cycle.cycle / CYCLE_TIME_LIMIT) * 100}
+          title="cycle"
+          color="#EE5E52"
+          time={
+            cycle.cycle > 0 ? (
+              moment.utc(cycle.cycle * 1000).format("HH:mm")
+            ) : (
+              <span className="error-text">limit reached</span>
+            )
+          }
+        /> */}
         <CircleProgress
           value={(cycle.cycle / CYCLE_TIME_LIMIT) * 100}
           title="cycle"
@@ -146,9 +161,17 @@ const LogsHead: React.FC<ILogsHead> = ({
           time={
             getSumDuration(cycle.cycle).hours > 0 ? (
               <>
-                {getSumDuration(cycle.cycle).hours +
-                  ":" +
-                  getSumDuration(cycle.cycle).minutes}
+                {`${
+                  getSumDuration(cycle.cycle).hours < 10 &&
+                  getSumDuration(cycle.cycle).hours > 0
+                    ? `0${getSumDuration(cycle.cycle).hours}`
+                    : getSumDuration(cycle.cycle).hours
+                }:${
+                  getSumDuration(cycle.cycle).minutes < 10 &&
+                  getSumDuration(cycle.cycle).minutes > 0
+                    ? `0${getSumDuration(cycle.cycle).minutes}`
+                    : getSumDuration(cycle.cycle).minutes
+                }`}
               </>
             ) : (
               <span className="error-text">limit reached</span>
@@ -178,9 +201,15 @@ const LogsHead: React.FC<ILogsHead> = ({
   );
 };
 
-const CircleProgress: React.FC<Props> = ({ title, value, time = 0, color }) => {
-  // console.log(`time`, time);
+const formatObjtoHour = (timeObj: any) => {
+  console.log(`time`, timeObj.props.children);
 
+  return timeObj.props.children === "limit reached"
+    ? timeObj.props.children
+    : formatTime(timeObj.props.children);
+};
+
+const CircleProgress: React.FC<Props> = ({ title, value, time = 0, color }) => {
   if (typeof time === "number" && !isNaN(time)) {
     // Calculate off-duty time
     const currentTime = new Date();
@@ -229,7 +258,10 @@ const CircleProgress: React.FC<Props> = ({ title, value, time = 0, color }) => {
           </div>
           <div className="info">
             <p>{title}</p>
-            <span style={{ color }}>{time}</span>
+            <span style={{ color }}>
+              {/* @ts-ignore */}
+              {typeof time === "object" ? formatObjtoHour(time) : time}
+            </span>
           </div>
         </div>
       )}
