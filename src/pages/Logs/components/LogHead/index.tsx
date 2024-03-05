@@ -204,9 +204,13 @@ const LogsHead: React.FC<ILogsHead> = ({
 const formatObjtoHour = (timeObj: any) => {
   console.log(`time`, timeObj.props.children);
 
-  return timeObj.props.children === "limit reached"
-    ? timeObj.props.children
-    : formatTime(timeObj.props.children);
+  return timeObj.props.children === "limit reached" ? (
+    <span style={{ color: "red", fontSize: "12px" }}>
+      {timeObj.props.children}
+    </span>
+  ) : (
+    formatTime(timeObj.props.children)
+  );
 };
 
 const CircleProgress: React.FC<Props> = ({ title, value, time = 0, color }) => {
