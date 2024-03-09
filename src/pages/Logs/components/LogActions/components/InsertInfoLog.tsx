@@ -145,6 +145,7 @@ const InsertInfoLog: FC<IInsertInfoLog> = ({
     // @ts-ignore
     onInsert(status === "certify" ? certifyObj : otherStatuses, status);
   };
+  
   const formNames = insertInfoLogFormData;
 
   useEffect(() => {

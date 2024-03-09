@@ -107,6 +107,34 @@ export const putCertify = createAsyncThunk(
   }
 );
 
+// test
+
+export const putLogForm = createAsyncThunk(
+  "logs/putLogForm",
+  async(data: any, thunkAPI) => {
+    const { onCancel, _id, ...restObj } = data;
+    const url = `/mainInfo?_id=${_id}`
+    console.log("data", data)
+    try{
+      const response = await api.put(url, restObj)
+      console.log("response", response)
+      // Return the data from the response
+      // @ts-ignore
+      if(response.message === "OK"){
+        // close modal 
+        onCancel()
+      }
+
+      return response.data
+    }catch(error){
+      // @ts-ignore
+      return thunkAPI.rejectWithValue({error: error.message})
+    }
+  }
+)
+
+// test
+
 export const getItems = createAsyncThunk(
   "drivers/getItems",
   async (url: string, thunkAPI) => {
