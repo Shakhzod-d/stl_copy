@@ -1,5 +1,4 @@
 import api from "@/api";
-import { getLocalStorage } from "@/utils";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 import moment from "moment";
@@ -110,7 +109,7 @@ export const putCertify = createAsyncThunk(
 // test
 
 export const putLogForm = createAsyncThunk(
-  "logs/putLogForm",
+  "logsForm/putLogForm",
   async(data: any, thunkAPI) => {
     const { onCancel, _id, ...restObj } = data;
     const url = `/mainInfo?_id=${_id}`
@@ -125,7 +124,7 @@ export const putLogForm = createAsyncThunk(
         onCancel()
       }
 
-      return response.data
+      return response 
     }catch(error){
       // @ts-ignore
       return thunkAPI.rejectWithValue({error: error.message})

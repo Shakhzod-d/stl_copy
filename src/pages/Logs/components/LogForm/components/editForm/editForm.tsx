@@ -3,10 +3,9 @@ import { Button, Col, Row, Alert, message } from "antd";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useLogsInnerContext } from "../../../LogsInner.context";
 import { ChangeEvent, useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { putLogForm } from "@/store/slices/logSlice";
 import { AppDispatch } from "@/store";
-import { log } from "console";
 
 interface IEditFormProps {
   item: EditFormValues;
@@ -15,39 +14,28 @@ interface IEditFormProps {
 interface EditFormValues {
   _id: string;
   driver: string;
-  mile: number;
   trailers: string;
   notes: string;
+  documents: string;
 }
 
 interface Props extends IEditFormProps {
   setOpenEdit: (el: boolean) => void;
+  handleLogForm: (data: EditFormValues) => void;
 }
 
-export const EditForm = ({ item, setOpenEdit }: Props) => {
+export const EditForm = ({ item, setOpenEdit, handleLogForm }: Props) => {
+  
   const { control, reset, handleSubmit } =
     useForm<EditFormValues>({
       defaultValues: {
         _id: item?._id || "",
         driver: item?.driver || "",
-        mile: item?.mile || 0,
         trailers: item?.trailers || "",
         notes: item?.notes || "",
-      },
+        documents: item?.documents || ""
+      }
     });
-
-  const dispatch = useDispatch<AppDispatch>();
-
-  const handleLogForm: SubmitHandler<EditFormValues> = (data) => {
-    if (!data.driver || !data.mile || !data.trailers || !data.notes) {
-      return;
-    }else{
-
-      dispatch(putLogForm(data));
-      setOpenEdit(false);
-      message.success('Success');
-    }
-  };
 
   return (
     <form
@@ -92,21 +80,22 @@ export const EditForm = ({ item, setOpenEdit }: Props) => {
         <div>
           <TextField
             style={{ width: "150px", height: "28px" }}
+            name="documents"
+            required
+            placeholder="test"
+            control={control}
+            label="shipping docs"
+          />
+        </div>
+        <div>
+          <TextField
+          disabled
+            style={{ width: "150px", height: "28px" }}
             name="driver"
             required
             placeholder="test"
             control={control}
             label="driver"
-          />
-        </div>
-        <div>
-          <TextField
-            style={{ width: "150px", height: "28px" }}
-            name="mile"
-            required
-            placeholder="test"
-            control={control}
-            label="mile"
           />
         </div>
         <Button
