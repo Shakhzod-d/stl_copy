@@ -24,7 +24,7 @@ const Drivers: React.FC = () => {
 
      // parse api data 
      const { tableData, totalPage } = useParseData<IDriverData>(data)
-
+     
 
      return (
           <div className="drivers page">

@@ -12,6 +12,11 @@ import DriveWheel from "./assets/DriveWheel";
 import MoonIcon from "./assets/MoonIcon";
 import OffIcon from "./assets/OffIcon";
 import TruckIcon from "./assets/TruckIcon";
+import useApiMutation from "@/hooks/useApiMutation";
+import useApiMutationID from "@/hooks/useApiMutationID";
+import { useDispatch } from "react-redux";
+import { ILog } from "@/types/log.type";
+import { AppDispatch } from "@/store";
 
 type TFormConnection = {
   fromTo: any;
@@ -40,6 +45,7 @@ const logCorrectionFormNames = {
 
 interface ILogCorrection {
   handleCloseEditing: () => void;
+  // putTable: () => void;
   // currentLog: ILog | null;
   // onChangeStatus: (val: TItemStatus) => void;
   // initialTime: number | undefined;
@@ -56,7 +62,13 @@ const LogCorrection: React.FC<ILogCorrection> = ({ handleCloseEditing }) => {
   const { control, reset, handleSubmit } = useForm<TFormConnection>();
   const [fromTo, setFromTo] = useState<any[] | undefined>([]);
   const momentZone = useMomentZone();
-
+ const distpatch = useDispatch<AppDispatch>()
+  // const { mutate: createMutate, isLoading: createLoading } =
+  // useApiMutation("/interlog?_id=");
+  //   const { mutate: updateMutate, isLoading: updateLoading } = useApiMutationID(
+  // "PUT",
+  // "/interlog?_id="
+// );
   // const { data: vehicles, isLoading: vehicleLoad } = useApi<{
   //      data: IVehicle[];
   //      total: number;
@@ -97,7 +109,6 @@ const LogCorrection: React.FC<ILogCorrection> = ({ handleCloseEditing }) => {
 
   const submit = (formData: TFormConnection) => {
     handleCloseEditing();
-
     //  console.log(moment(formData.fromTo[1]).format("HH:mm:ss"));
     setLogs((prevLogs: any) => {
       return prevLogs.map((prevLog: any) =>
@@ -126,7 +137,7 @@ const LogCorrection: React.FC<ILogCorrection> = ({ handleCloseEditing }) => {
                      )
                 ); */
     });
-
+    
     //  console.log(moment(formData.fromTo[0]).format("HH:mm:ss")); // that is how time is to be got
   };
 

@@ -46,6 +46,8 @@ const useLogsInner = () => {
     { date: time / 1000, driverId: id },
     { suspense: true }
   );
+
+  
   const { data: driverData } = useApi<IDriverData>(
     `driver/${id}`,
     {},
@@ -90,7 +92,7 @@ const useLogsInner = () => {
 
   const handleEditClick = (log: any) => {
     const rowIndex = logs.findIndex((item) => item._id === log._id);
-    setCurrentLog(log);
+    // setCurrentLog(log);
     // console.log(`currentLog`, logs, log);
     // @ts-ignore
 
@@ -116,6 +118,7 @@ const useLogsInner = () => {
     }
   }, [data]);
 
+
   let totalTime = useMemo(() => {
     const rangeLogs = logs.filter(
       (log) => !POINT_STATUSES.includes(log.status)
@@ -136,6 +139,8 @@ const useLogsInner = () => {
         };
       });
       setInitialLogs(data);
+      
+    
       setLogs(data);
     }
   }, [logData]);
@@ -143,6 +148,7 @@ const useLogsInner = () => {
   useEffect(() => {
     if (currentLog) {
       setIsLogsEdited(false);
+      setLog(currentLog)
       // setLogStatus("correction");
     } else if (!currentLog) {
       // setLogStatus("table");
@@ -158,7 +164,9 @@ const useLogsInner = () => {
     handleEditClick,
     currentLog,
     setCurrentLog,
-    onInsertInfoLogWithFormData
+    onInsertInfoLogWithFormData,
+    logs,
+    setLogs
   );
 
   const filterDrawStatus = (data: ILog[]) => {
@@ -168,6 +176,7 @@ const useLogsInner = () => {
   const afterRangeChange = (val: any, currLog: ILogData) => {
     setRangeVal(val);
   };
+
 
   const onCancel = () => {
     setLogs(initialLogs);
@@ -194,6 +203,7 @@ const useLogsInner = () => {
       setCurrentLog(
         (prev) => newLogs?.find((log) => prev?._id === log._id) || null
       );
+      
       setLogs(newLogs);
     } else if (currentLog?.isNewLog) {
       setCurrentLog((prev) => ({
@@ -241,50 +251,25 @@ const useLogsInner = () => {
         name: "",
       },
       origin: "Auto",
-    }; //            /interlogD
+      handleLogItems
+    }; 
 
     if (status === "certify") {
       dispatch(putCertify(infoLog));
     } else {
       dispatch(postInsertInfoLog(newLogObj));
     }
-
-    // @ts-ignore
-    const newLog: ILog = {
-      ...infoLog,
-      _id: uuidV4(),
-      document: "",
-      // coDriverId: 0,
-      // company: "",
-      // driverId: fetchLogParams?.driverId,
-      duration: 0,
-      start: infoLog.time + time - 1,
-      end: infoLog.time + time - 1,
-    };
-
-    // @ts-ignore
-    setLogs(sortLogsByTime([...logs, newLog]));
+    
   };
-  // console.log(`logs`, logs);
 
-  // engineHours: "29";
-  // lat: "2323323,23323232";
-  // odometer: "32";
-  // status: "poweron_pc";
-  // time: 68827;
-  // truck: "1025";
+  const handleLogItems = (data: any) => {
+    setLogs(sortLogsByTime([...logs, data]));
+  }
 
   const onNormalize = () => {};
 
   const onTransfer = (duration: number, log: ILog) => {
-    // console.log({
-    //      ...log,
-    //      duration: duration - initialTime,
-    //      // @ts-ignore
-    //      start: log?.cropPoint === "start" ? croppedTime[0] : log?.start,
-    //      // @ts-ignore
-    //      end: log?.cropPoint === "end" ? croppedTime[1] : log?.end,
-    // });
+
     mutate({
       ...log,
       // duration: duration - time,
@@ -408,6 +393,7 @@ const useLogsInner = () => {
     // debugger;
     const newLog: ILog = getNewLog(logs, time, val, fetchLogParams);
     setRangeVal(val);
+    
     setLogs([...logs, newLog]);
     setCurrentLog(newLog);
   };

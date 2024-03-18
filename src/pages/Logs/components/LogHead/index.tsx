@@ -202,7 +202,6 @@ const LogsHead: React.FC<ILogsHead> = ({
 };
 
 const formatObjtoHour = (timeObj: any) => {
-  console.log(`time`, timeObj.props.children);
 
   return timeObj.props.children === "limit reached" ? (
     <span style={{ color: "red", fontSize: "12px" }}>

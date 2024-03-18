@@ -6,7 +6,7 @@ import { IDriverData } from "@/types/driver.type";
 import { ILog } from "@/types/log.type";
 import { mapDrivers } from "@/utils";
 import { Button, Table } from "antd";
-import React, { Key, useState } from "react";
+import React, { Key, useEffect, useState } from "react";
 import { v4 as uuidV4 } from "uuid";
 
 interface ILogTable {
@@ -42,14 +42,14 @@ const LogTable: React.FC<ILogTable> = ({
     data: IDriverData[];
   }>("/drivers", select_paging, { suspense: true });
   const [selectedRowKeys, setSelectedRowKeys] = useState<Key[]>();
-
+  const [switchingDriverId, setSwitchingDriverId] = useState();
   const onSelectChange = (newSelectedRowKeys: any[]) => {
     // console.log(newSelectedRowKeys);
     setSelectedRowKeys(newSelectedRowKeys);
   };
 
   //   console.log(`data`, data);
-  const [switchingDriverId, setSwitchingDriverId] = useState();
+ 
   // const copy = (tag) => navigator.clipboard.writeText(tag);
   return (
     <div style={{ padding: "1rem 0" }}>

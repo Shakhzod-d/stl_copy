@@ -49,7 +49,8 @@ const LogsInner: React.FC = () => {
   const [checkbox2Active, setCheckbox2Active] = useState(false);
   const s = useSelector<RootState>((s) => s.log);
   const dispatch = useDispatch<AppDispatch>();
-  // console.log("s", s);
+
+// console.log(logs);
 
   const handleCheckbox1Change = (e: CheckboxChangeEvent) => {
     setCheckbox1(e.target.checked);
@@ -121,7 +122,7 @@ const LogsInner: React.FC = () => {
         </div>
         <br />
         {logData?.violation?.map((violation) => (
-          <Badge count={violation.violation} />
+          <Badge count={violation.violation} key={violation._id}/>
         ))}
         <LogGraph
           data={filterDrawStatus(logs)}

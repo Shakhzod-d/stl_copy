@@ -12,7 +12,7 @@ export interface IDriverForm {
   driverLicense: string;
   driverLicenseIssuingState: string;
   homeTerminalAddress: string;
-  coDriverId: string; // ! number
+  coDriverId: string ; // ! number
   notes: string;
   organization: string;
   fullName: string;

@@ -1,4 +1,4 @@
-import { DriverStatus } from "@/components/elements/TableElements";
+import { DriverStatus, TableAction } from "@/components/elements/TableElements";
 import Select from "@/components/form/Select";
 import TimePicker from "@/components/form/TimePicker";
 import Icon from "@/components/icon/Icon";
@@ -12,13 +12,15 @@ import { useForm } from "react-hook-form";
 import { LogStatusOptions, POINT_STATUSES, RANGE_STATUSES } from "../constants";
 import { v4 as uuidV4 } from "uuid";
 import { useLogsInnerContext } from "../LogsInner.context";
-import { useEffect } from "react";
 // import copyIcon from "../../../../../public/assets/icons/copied-icon.svg";
 // import copyIcon from "../../../../assets/"
 import { CopyOutlined } from "@ant-design/icons";
-import { useSelector } from "react-redux";
-import { RootState } from "@/store";
-import { timeZones } from "./helper";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "@/store";
+import { InterLogsStatus, timeZones } from "./helper";
+import { deleteTableItem } from "@/store/slices/logSlice";
+import { useEffect, useState } from "react";
+import useApi from "@/hooks/useApi";
 
 type TFormConnection = {
   fromTo: any;
@@ -51,19 +53,22 @@ const useGraphColumns = (
   handleEditClick: (log: any) => void,
   currentLog: ILog | null,
   setCurrentLog: ISetState<ILog | null>,
-  onInsertInfoLogWithFormData: (formData: ILog) => void
+  onInsertInfoLogWithFormData: (formData: ILog) => void,
+  logs: ILog[],
+  setLogs: (data: ILog[]) => void
 ) => {
-  // const state = useLogsInnerContext();
-  const state = useLogsInnerContext();
   const companyTimeZone = useSelector<RootState>((s) => s.log.companyTimeZone);
   // console.log("s", companyTimeZone);
-  // console.log(`state`, state);
-
+  const dispatch = useDispatch<AppDispatch>()
+  // const [newLogs, setNewLogs] = useState<ILog[]>([])s
+  
   const editItem = (log: any) => {
     document
       ?.querySelector("#box")
       ?.scrollIntoView({ behavior: "smooth", block: "start" });
     setCurrentLog(log);
+
+    
     // document.documentElement.scrollTo({ top: 0, left: 0, behavior: "smooth" });
     // window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
   };
@@ -73,6 +78,10 @@ const useGraphColumns = (
     message.success("Copied!");
   };
 
+
+  // useEffect(() => {
+  //   state.state
+  // }, [])
   // console.log(`currentLog`, currentLog);
   // const formattedTime = moment
   //   .unix(timestamp)
@@ -80,6 +89,17 @@ const useGraphColumns = (
   //   .format("HH:mm:ss"); // based on time zone
   // @ts-ignore
   // console.log(timeZones[companyTimeZone]);
+  
+  const handleUpdate = (data: any) => {
+    editItem(data)
+  }
+
+  const handleDelete = (id: string) => {
+    dispatch(deleteTableItem(id))
+
+    let filterLog: any = logs.filter(item => item?._id !== id)
+    setLogs(filterLog)
+  };
 
   return [
     {
@@ -99,12 +119,12 @@ const useGraphColumns = (
       render: (start: any) => {
         return (
           <span>
-            {/* {moment(start * 1000).format("HH:mm:ss")} */}
+            {/* {moment(start * 1000).format("h:mm:ss")}
             {/* {JSON.stringify(start)} */}
             {moment
               .unix(start) //@ts-ignore
               .tz(timeZones[companyTimeZone])
-              .format("h:mm:ss A")}
+              .format("h:mm:ss A")} 
           </span>
         );
       },
@@ -116,7 +136,7 @@ const useGraphColumns = (
         const start = moment.unix(record.start);
         const end = moment.unix(record.end);
         const seconds = moment.duration(end.diff(start)).asSeconds();
-        return moment.utc(seconds * 1000).format("HH:mm:ss");
+        return moment.utc(seconds * 1000).format("h:mm:ss");
       },
     },
     {
@@ -186,25 +206,38 @@ const useGraphColumns = (
     },
     {
       title: "action",
-      render: (id: any, log: ILog) =>
+      // dataIndex: "_id",
+      render: (id: any, log: any) =>
+
         // @ts-ignore
-        RANGE_STATUSES.includes(log.status) ? (
-          <div className="action-table">
-            <div onClick={() => editItem(log)}>
-              <Icon icon="pencil" className="pencil" />
+        Object.values(InterLogsStatus).includes(log.status) && (
+          
+            <div className="action-table">
+              <div onClick={() => handleUpdate(log)}>
+                <Icon icon="pencil" className="pencil" />
+              </div>
+              <div onClick={() => handleDelete(id?._id)}>
+                <Icon icon="close" className="close" />
+              </div>
             </div>
-          </div>
-        ) : null,
+
+            // <TableAction
+            //   updateFunction={() => handleUpdate(log)}
+            //   confirmTitle={"Do you want to delete?"}
+            //   onDeleteConfirm={() => handleDelete(_id)}
+            // />
+        ),
     },
   ];
 };
+
 
 const useFormGraphColumns = (): ColumnsType<ILog> => {
   const {
     actions: { setCurrentLog },
   } = useLogsInnerContext();
   const { control, formState } = useForm<TFormConnection>();
-
+  
   return [
     {
       title: "#",

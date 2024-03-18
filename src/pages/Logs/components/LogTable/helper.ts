@@ -6,3 +6,11 @@ export const timeZones = {
   "Alaska Time": "America/Anchorage",
   "Hawaii-Aleutian Time": "America/Pacific/Honolulu",
 };
+
+export enum InterLogsStatus {
+  LOGIN = "login",
+  LOG_OUT = "logout",
+  POWER_OFF = "power_off",
+  POWER_ON = "power_on",
+  INTERMEDIATE = "intermediate",
+}
