@@ -30,7 +30,6 @@ const LogTable: React.FC<ILogTable> = ({
   driver,
   //   rowSelection,
 }) => {
-  // console.log(`data`, data);
   const { mutate } = useApiMutation<{
     coDriverId: string;
     logs: {

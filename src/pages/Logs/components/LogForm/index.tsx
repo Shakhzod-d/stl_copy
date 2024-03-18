@@ -49,7 +49,8 @@ const LogForm = ({ logData }: ILogForm) => {
       .slice(0, 10)}`;
     dispatch(getItems(url));
   }, [location?.search?.split("=")[1].slice(0, 10), upData]);
-
+  
+  
   // moment().unix()
   // useEffect(() => {
   //   // https://ptapi.roundedteam.uz/public/uploads/signatures/5d851f2a5809f34ba196f7b46dc627de.jpg
@@ -99,12 +100,17 @@ const LogForm = ({ logData }: ILogForm) => {
       dataIndex: "signature",
       key: "signature",
       render: (signature: string) => {
-        return !!logData && logData?.hasOwnProperty("lastCertify") ? (
+        return !!stateLogForm && stateLogForm?.hasOwnProperty("signature") && stateLogForm.signature !== "" ? (
           <img width={200} src={signature} alt="signeture" />
         ) : (
-          <Tag color="red">No signature!</Tag>
+          ""
         );
       },
+      // return: () => {
+      //   return !!stateLogForm ? (
+      //     <img width={200} src={stateLogForm?.signature} alt="signeture" />
+      //   ) : ""
+      // }
     },
     {
       title: "action",
@@ -157,7 +163,8 @@ const LogForm = ({ logData }: ILogForm) => {
       shippingDocs: state?.log?.logForm?.documents || "no shipping docs",
       // @ts-ignore
       notes: state?.log?.logForm?.notes || "",
-      signature: `https://ptapi.roundedteam.uz/public/uploads/signatures/${logData?.lastCertify?.signatureImg}`,
+      //@ts-ignore
+      signature: `https://ptapi.roundedteam.uz/public/uploads/signatures/${stateLogForm?.signature}`,
     },
   ];
 
