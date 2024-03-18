@@ -5,7 +5,7 @@ import Accordion from "@/components/elements/Accordion";
 import { useLocation, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getItems, putLogForm } from "@/store/slices/logSlice";
-import { AppDispatch } from "@/store";
+import { AppDispatch, RootState } from "@/store";
 import Icon from "@/components/icon/Icon";
 import { EditForm } from "./components";
 
@@ -30,7 +30,7 @@ const LogForm = ({ logData }: ILogForm) => {
   const dispatch = useDispatch<AppDispatch>();
   // @ts-ignore
   let stateLogForm = state?.log?.logForm;
-  let upDate = location?.search?.split("=")[1].slice(0, 10);
+  
 
   const handleLogForm = async (data: any) => {
     if (!data.driver || !data.trailers || !data.notes || !data.documents) {
@@ -48,7 +48,7 @@ const LogForm = ({ logData }: ILogForm) => {
       ?.split("=")[1]
       .slice(0, 10)}`;
     dispatch(getItems(url));
-  }, [upDate, upData]);
+  }, [location?.search?.split("=")[1].slice(0, 10), upData]);
 
   // moment().unix()
   // useEffect(() => {

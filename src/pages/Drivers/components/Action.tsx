@@ -21,7 +21,7 @@ import useApiMutationID from "@/hooks/useApiMutationID";
 
 const Action = () => {
   const { id } = useParams<{ id: string }>();
-
+  
   // Get data
   const { data: drivers, isLoading: driverLoad } = useApi<{
     data: IDriverData[];
@@ -37,8 +37,6 @@ const Action = () => {
     { enabled: Boolean(id), suspense: true }
   );
 
-  // console.log(`data`, data);
-
   // Action mutation
   const { mutate: createMutation, isLoading: createLoading } =
     useApiMutation("/driver");
@@ -49,9 +47,12 @@ const Action = () => {
 
   const { handleSubmit, control, reset } = useForm<IDriverForm>(formProps);
 
+
+
   useEffect(() => {
     if (data) {
       const driver = data.data;
+      
       reset({
         firstName: driver.firstName,
         lastName: driver.lastName,
@@ -66,6 +67,7 @@ const Action = () => {
         coDriverId: driver.coDriverId,
         notes: driver.notes,
         organization: driver.organization,
+        fullName: driver.coDriverId
       });
     }
   }, [data]);
@@ -209,13 +211,13 @@ const Action = () => {
             <Select
               label={"Co-Driver"}
               placeholder={"Co-Driver"}
-              name="fullName"
+              name="coDriverId"
               control={control}
               data={mapDrivers(drivers?.data?.data || []).filter(
                 (item) => item._id !== id
               )}
               labelProp="fullName"
-              valueProp="fullName"
+              valueProp="_id"
               loading={driverLoad}
             />
           </Col>

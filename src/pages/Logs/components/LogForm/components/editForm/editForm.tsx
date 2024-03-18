@@ -27,15 +27,17 @@ interface Props extends IEditFormProps {
 export const EditForm = ({ item, setOpenEdit, handleLogForm }: Props) => {
   
   const { control, reset, handleSubmit } =
-    useForm<EditFormValues>({
-      defaultValues: {
+    useForm<EditFormValues>({});
+
+    useEffect(() => {
+      reset({
         _id: item?._id || "",
         driver: item?.driver || "",
         trailers: item?.trailers || "",
         notes: item?.notes || "",
         documents: item?.documents || ""
-      }
-    });
+      })
+    }, [item])
 
   return (
     <form

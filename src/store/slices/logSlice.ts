@@ -1,5 +1,6 @@
 import api from "@/api";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { message } from "antd";
 import axios from "axios";
 import moment from "moment";
 
@@ -11,6 +12,7 @@ type State = {
   companyTimeZone: string;
   drivers: any[];
   logForm: any;
+  // logTable: any[]
 };
 
 const initialState: State = {
@@ -21,6 +23,7 @@ const initialState: State = {
   companyTimeZone: "",
   drivers: [],
   logForm: null,
+  // logTable: []
 };
 
 const apiUrl = "/logs/transfer";
@@ -61,16 +64,16 @@ export const updateLogsTransfer = createAsyncThunk(
 export const postInsertInfoLog = createAsyncThunk(
   "logs/postInsertInfoLog",
   async (data: any, thunkAPI) => {
-    const { onCancel, ...restObj } = data;
+    const { onCancel, handleLogItems, ...restObj } = data;
     const url = `/interlog`;
-    console.log(`data`, data);
     try {
       const response = await api.post(url, restObj);
 
       // @ts-ignore
       if (response.message === "OK") {
-        // close modal
+        handleLogItems(response.data)
         onCancel();
+
       }
 
       return response.data;
@@ -98,7 +101,7 @@ export const putCertify = createAsyncThunk(
         onCancel();
       }
 
-      return response.data;
+      return response;
     } catch (error) {
       // @ts-ignore
       return thunkAPI.rejectWithValue({ error: error.message });
@@ -109,30 +112,49 @@ export const putCertify = createAsyncThunk(
 // test
 
 export const putLogForm = createAsyncThunk(
-  "logsForm/putLogForm",
-  async(data: any, thunkAPI) => {
+  "logs/putLogForm",
+  async (data: any, thunkAPI) => {
     const { onCancel, _id, ...restObj } = data;
     const url = `/mainInfo?_id=${_id}`
     console.log("data", data)
-    try{
+    try {
       const response = await api.put(url, restObj)
       console.log("response", response)
       // Return the data from the response
       // @ts-ignore
-      if(response.message === "OK"){
+      if (response.message === "OK") {
         // close modal 
         onCancel()
       }
 
-      return response 
-    }catch(error){
+      return response
+    } catch (error) {
       // @ts-ignore
-      return thunkAPI.rejectWithValue({error: error.message})
+      return thunkAPI.rejectWithValue({ error: error.message })
     }
   }
 )
 
-// test
+export const deleteTableItem = createAsyncThunk(
+  "logs/deleteTableItem",
+  async (id: string, thunkAPI) => {
+    const url = `/interlog/delete/${id}`
+    try {
+      const response = await api.delete(url)
+      console.log("response", response)
+      //@ts-ignore
+      if (response.message === "OK") {
+        message.success("deleted!")
+      }
+
+      return response
+    } catch {
+      // @ts-ignore
+      return thunkAPI.rejectWithValue({ error: error.message })
+    }
+  }
+)
+
 
 export const getItems = createAsyncThunk(
   "drivers/getItems",
@@ -158,7 +180,17 @@ export const getItems = createAsyncThunk(
     }
   }
 );
+ 
+//test
+// const TableSlice = createSlice({
+//   name: "table",
+//   initialState: initialState,
+//   reducers: {
+//     extra
+//   }
+// })
 
+//test
 const LogSlice = createSlice({
   name: "log",
   initialState: initialState,
@@ -191,7 +223,22 @@ const LogSlice = createSlice({
         // console.log(`action.payload`, action.payload);
         state.status = "succeeded";
         state.logForm = action.payload;
-      });
+      })
+      // // log table 
+      // .addCase(getTableItems.pending, (state) => {
+      //   state.status = "loading";
+      // })
+      // .addCase(getTableItems.fulfilled, (state, action) => {
+      //   state.status = "succeeded";
+      //   console.log("jhb", action.payload);
+        
+      //   state.logTable = action.payload
+      //   // You can handle the success state if needed
+      // })
+      // .addCase(getTableItems.rejected, (state, action) => {
+      //   state.status = "failed";
+      //   state.error = null; // Store the error message
+      // });
   },
 });
 

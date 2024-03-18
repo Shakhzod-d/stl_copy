@@ -18,6 +18,8 @@ import { Moment } from "moment";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
 import { timeZones } from "../../LogTable/helper";
+import { useGraphColumns } from "../../LogTable/logTable.columns";
+// import { useFormGraphColumns } from "../../LogTable/logTable.columns";
 
 const statusOptions = [
   {
@@ -120,26 +122,24 @@ const InsertInfoLog: FC<IInsertInfoLog> = ({
   const submit = (formData: IInsertInfoLogFormData) => {
     const certifyObj = {
       ...formData,
+      onCancel,
       driverId: driverData?._id,
       date: moment(currentTime).unix(),
-      onCancel,
       status,
       start: currentTime !== null ? currentTime.unix() : moment().valueOf(),
       end: currentTime !== null ? currentTime.unix() : moment().valueOf(),
       time: currentTime !== null ? currentTime.unix() : moment().valueOf(),
     };
-
+    
     const otherStatuses = {
       ...formData,
       // @ts-ignore
-      status,
-      start: currentTime !== null ? currentTime.unix() : moment().valueOf(),
-      end: currentTime !== null ? currentTime.unix() : moment().valueOf(),
-      time:
-        currentTime !== null ? currentTime.unix() : moment().valueOf() / 1000,
       onCancel,
-    };
-
+      status,
+      start: currentTime !== null ? currentTime.unix() : moment(currentTime).valueOf(),
+      end: currentTime !== null ? currentTime.unix() : moment().valueOf(),
+      time: currentTime !== null ? currentTime.unix() : moment().valueOf() / 1000,
+    }; 
     // console.log(`certifyObj`, certifyObj); // onCancel
 
     // @ts-ignore
@@ -157,10 +157,10 @@ const InsertInfoLog: FC<IInsertInfoLog> = ({
         [formNames.lng]: formData?.location?.lng,
         // [formNames.locationName]: defaultFormData?.location.name,
         // [formNames.trailer]: formData?.trailer,
-        [formNames.truck]: "",
+        [formNames.truck]: formData?.vehicleUnit || "",
         [formNames.time]: moment(
-          moment(formData?.end * 1000).format("HH:mm:ss"),
-          "HH:mm:ss"
+          moment(formData?.start * 1000).format("h:mm:ss"),
+          "h:mm:ss"
         ),
         // [formNames.signature]: defaultFormData?.,
       });
@@ -170,6 +170,7 @@ const InsertInfoLog: FC<IInsertInfoLog> = ({
 
   const handleChangeTime = (value: moment.Moment | null) => {
     console.log(getValues());
+    // useFormGraphColumns
     setValue("time", value);
   };
 
