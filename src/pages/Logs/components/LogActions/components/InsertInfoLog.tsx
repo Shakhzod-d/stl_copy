@@ -154,7 +154,7 @@ const InsertInfoLog: FC<IInsertInfoLog> = ({
         // [formNames.document]: formData?.document,
         [formNames.engineHours]: formData?.duration,
         // [formNames.lat]: formData?.location?.lat,
-        [formNames.lng]: formData?.location?.lng,
+        // [formNames.lng]: formData?.location?.lng,
         // [formNames.locationName]: defaultFormData?.location.name,
         // [formNames.trailer]: formData?.trailer,
         [formNames.truck]: "",
@@ -208,7 +208,7 @@ const InsertInfoLog: FC<IInsertInfoLog> = ({
       {status !== "certify" && (
         <>
           <br />
-          <Row gutter={[36, 0]}>
+          {/* <Row gutter={[36, 0]}>
             <Col span={18}>
               <TextField
                 required
@@ -223,7 +223,7 @@ const InsertInfoLog: FC<IInsertInfoLog> = ({
               <Button type="primary">Get location </Button>
             </Col>
           </Row>
-          <br />
+          <br /> */}
 
           <TextField
             required
