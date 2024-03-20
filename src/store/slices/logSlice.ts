@@ -181,16 +181,6 @@ export const getItems = createAsyncThunk(
   }
 );
  
-//test
-// const TableSlice = createSlice({
-//   name: "table",
-//   initialState: initialState,
-//   reducers: {
-//     extra
-//   }
-// })
-
-//test
 const LogSlice = createSlice({
   name: "log",
   initialState: initialState,
@@ -224,21 +214,6 @@ const LogSlice = createSlice({
         state.status = "succeeded";
         state.logForm = action.payload;
       })
-      // // log table 
-      // .addCase(getTableItems.pending, (state) => {
-      //   state.status = "loading";
-      // })
-      // .addCase(getTableItems.fulfilled, (state, action) => {
-      //   state.status = "succeeded";
-      //   console.log("jhb", action.payload);
-        
-      //   state.logTable = action.payload
-      //   // You can handle the success state if needed
-      // })
-      // .addCase(getTableItems.rejected, (state, action) => {
-      //   state.status = "failed";
-      //   state.error = null; // Store the error message
-      // });
   },
 });
 

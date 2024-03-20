@@ -47,8 +47,6 @@ const Action = () => {
 
   const { handleSubmit, control, reset } = useForm<IDriverForm>(formProps);
 
-
-
   useEffect(() => {
     if (data) {
       const driver = data.data;
@@ -67,7 +65,6 @@ const Action = () => {
         coDriverId: driver.coDriverId,
         notes: driver.notes,
         organization: driver.organization,
-        fullName: driver.coDriverId
       });
     }
   }, [data]);

@@ -32,7 +32,7 @@ const useColumns = (refetch: IVoid) => {
     },
     {
       title: "Co Driver",
-      dataIndex: "coDriverId",
+      dataIndex: "coDriverUserName",
       render: (val: string) => val || "-",
     },
     {

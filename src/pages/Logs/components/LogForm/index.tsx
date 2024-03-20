@@ -30,7 +30,7 @@ const LogForm = ({ logData }: ILogForm) => {
   const dispatch = useDispatch<AppDispatch>();
   // @ts-ignore
   let stateLogForm = state?.log?.logForm;
-  
+  let upDate = location?.search?.split("=")[1].slice(0, 10)
 
   const handleLogForm = async (data: any) => {
     if (!data.driver || !data.trailers || !data.notes || !data.documents) {
@@ -48,7 +48,7 @@ const LogForm = ({ logData }: ILogForm) => {
       ?.split("=")[1]
       .slice(0, 10)}`;
     dispatch(getItems(url));
-  }, [location?.search?.split("=")[1].slice(0, 10), upData]);
+  }, [upDate, upData]);
   
   
   // moment().unix()

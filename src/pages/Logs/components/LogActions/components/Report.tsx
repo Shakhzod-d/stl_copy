@@ -4,8 +4,13 @@ import { ILog, IReport } from "@/types/log.type";
 import { Table } from "antd";
 import { ColumnsType } from "antd/lib/table";
 import moment from "moment";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import LogGraph from "../../LogGraph";
+import { useLocation, useParams } from "react-router-dom";
+import api from "@/api";
+import { timeZones } from "../../LogTable/helper";
+import { RootState } from "@/store";
+import { useSelector } from "react-redux";
 
 interface IProps {
   logs: ILog[];
@@ -25,8 +30,41 @@ const Report: React.FC<IProps> = ({
   width,
 }) => {
   const [hoveredId, setHoveredId] = useState<any | null>(null);
+  const companyTimeZone = useSelector<RootState>((state) => state?.log?.companyTimeZone);
 
   // console.log("test", logs, initialTime, reportData);
+  const [logsData, setLogsData] = useState<ILog[]>();
+  const [data, setData] = useState<any>(null);
+  const params: { id: "" } = useParams();
+  const location = useLocation();
+  let upDate = location?.search?.split("=")[1].slice(0, 10);
+
+  useEffect(() => {
+    const response = api(`daily/report?driverId=${params.id}&date=${upDate}`);
+    response
+      .then((res) => handleSetData(res?.data))
+      .catch((error) => console.log(error));
+  }, []);
+
+  const handleSetData = (res: any) => {
+    changeTimeZone(res?.logs);
+    setData(res?.report);
+  };
+
+  const changeTimeZone = (data: any) => {
+    let newLogsData = data.map((item: ILog) => {
+      return {
+        ...item,
+        start: moment
+          .unix(item.start) //@ts-ignore
+          .tz(timeZones[companyTimeZone]),
+        end: moment
+          .unix(item.end) //@ts-ignore
+          .tz(timeZones[companyTimeZone]),
+      };
+    });
+    setLogsData(newLogsData);
+  };
 
   return (
     <div
@@ -171,9 +209,10 @@ const Report: React.FC<IProps> = ({
       />
       <Table
         bordered
+        className="mb-32"
         columns={columns}
         pagination={false}
-        dataSource={logs}
+        dataSource={logsData}
         size="small"
         onRow={(record, rowIndex) => {
           return {
@@ -182,6 +221,42 @@ const Report: React.FC<IProps> = ({
           };
         }}
       />
+
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          columnGap: "100px",
+        }}
+      >
+        <div>
+          <h3
+            style={{ textAlign: "center", maxWidth: "200px", fontSize: "20px" }}
+          >
+            I certify these entries are true and correct
+          </h3>
+        </div>
+        <div style={{ maxWidth: "150px" }}>
+          <div style={{ borderBottom: "2px solid #000" }}>
+            <img
+              style={{ width: "100%" }}
+              src={`https://ptapi.roundedteam.uz/public/uploads/signatures/${data?.signature}`}
+              alt="signature"
+            />
+          </div>
+          <p
+            style={{
+              color: "#686868",
+              textAlign: "center",
+              fontSize: "14px",
+              fontWeight: "bold",
+            }}
+          >
+            Driver Signature
+          </p>
+        </div>
+      </div>
     </div>
   );
 };
@@ -203,8 +278,8 @@ const columns: ColumnsType<ILog> = [
   {
     title: "start",
     dataIndex: "start",
-    render(value, record, index) {
-      return moment(value * 1000).format("HH:mm:ss");
+    render: (value, record, index) => {
+      return moment(value).format("hh:mm:ss");
     },
   },
   {
@@ -214,14 +289,14 @@ const columns: ColumnsType<ILog> = [
       const start = moment.unix(record.start);
       const end = moment.unix(record.end);
       const seconds = moment.duration(end.diff(start)).asSeconds();
-      return moment.utc(seconds * 1000).format("HH:mm:ss");
+      return moment.utc(seconds).format("hh:mm:ss");
     },
   },
   {
     title: "end",
     dataIndex: "end",
     render(value, record, index) {
-      return moment(value * 1000).format("HH:mm:ss");
+      return moment(value * 1000).format("hh:mm:ss");
     },
   },
   {
