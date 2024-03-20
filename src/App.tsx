@@ -9,13 +9,22 @@ import { useSelector } from "react-redux";
 import { RootState } from "./store";
 import SiteLoader from "./components/loaders/SiteLoader";
 
+
 const AppPages = lazy(() => import("./pages/AppPages"));
 const AdminPages = lazy(() => import("./pages/AdminPages"));
 const Login = lazy(() => import("./pages/Login"));
 
+export enum RoleNames {
+     SUPER_ADMIN = 'superAdmin',
+     SERVICE_ADMIN = 'serviceAdmin',
+     SECOND_SERVICE_ADMIN = 'secondServiceAdmin',
+     COMPANY_ADMIN = 'companyAdmin',
+     LOGGER = 'logger',
+}
+
 const App: React.FC = () => {
      const { isAuth } = useSelector((state: RootState) => state.auth);
-
+     
      return (
           <ThemeProvider>
                <AuthProvider>

@@ -1,11 +1,17 @@
 import { IRoleName } from "./general.type";
 
+export interface IUserRole {
+    roleId: string;
+    roleName: IRoleName;
+    _id: string;
+}
+
 export interface IUserForm {
     firstName: string;
     lastName: string;
     email: string;
     password: string;
-    role: IRoleName;
+    role: IUserRole;
     phone: string | null;
     companyId: string | null;
     serviceId: string | null;
@@ -18,3 +24,4 @@ export interface IUserData extends IUserForm {
     token?: string;
     _id: string;
 }
+

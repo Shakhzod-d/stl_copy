@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { ReactNode, useState } from "react";
 import { Button, Table } from "antd";
 import Icon from "@/components/icon/Icon";
 import ActionModal from "./components/ActionModal";
@@ -18,12 +18,14 @@ import {
   useQueryParam,
   withDefault,
 } from "use-query-params";
+import { getLocalStorage } from "@/utils";
 
 const Services: React.FC = () => {
   // All states
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [isOpenCompanies, setIsOpenCompanies] = useState(false);
   const [updateId, setUpdateId] = useState<string | null>(null);
+  const serviceId: string | null = getLocalStorage('serviceId') || null
 
   // Query params states
   const [search, setSearch] = useQueryParam(
@@ -81,6 +83,37 @@ const Services: React.FC = () => {
     });
   };
 
+  
+  const openModal111 = (): React.ReactNode =>{
+    if(serviceId){
+      setTimeout(() => {
+        setIsOpenCompanies(true)
+      }, 1000)
+      return <Modal
+        open={isOpenCompanies}
+        closable
+        onCancel={() => setIsOpenCompanies(true)}
+        width={"80%"}
+        title="Service companies"
+        >
+            <ServiceCompanies selectedCompanyId={serviceId} />
+        </Modal>
+    }
+    if(!serviceId){
+      
+      return <Modal
+          open={isOpenCompanies}
+          closable
+          onCancel={() => setIsOpenCompanies(false)}
+          width={"80%"}
+          title="Service companies"
+        >
+          <ServiceCompanies selectedCompanyId={updateId} />
+        </Modal>
+    }
+  }
+  
+
   return (
     <section className="admin-services">
       <div className="header">
@@ -125,16 +158,30 @@ const Services: React.FC = () => {
           }}
         />
       )}
-      <Modal
+      {
+        openModal111()
+      }
+
+      {/* {
+        !serviceId ? <Modal
+          open={isOpenCompanies}
+          closable
+          onCancel={() => setIsOpenCompanies(false)}
+          width={"80%"}
+          title="Service companies"
+        >
+          <ServiceCompanies selectedCompanyId={updateId} />
+        </Modal> : <Modal
         open={isOpenCompanies}
         closable
         onCancel={() => setIsOpenCompanies(false)}
         width={"80%"}
         title="Service companies"
-      >
-        <ServiceCompanies selectedCompanyId={updateId} />
-      </Modal>
-    </section>
+        >
+            <ServiceCompanies selectedCompanyId={serviceId} />
+        </Modal>} */}
+
+    </section >
   );
 };
 
