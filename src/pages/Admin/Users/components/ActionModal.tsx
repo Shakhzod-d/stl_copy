@@ -75,12 +75,12 @@ const ActionModal: React.FC<Props> = ({ toggle, id, onSuccess }) => {
 
   const isServiceRequired = useMemo(() => {
     const role = watch("role");
-    return role && role !== "superAdmin";
+    return role && role.roleName !== "superAdmin";
   }, [watch("role")]);
 
   const isCompanyRequired = useMemo(() => {
     const role = watch("role");
-    return role && ["logger", "companyAdmin"].includes(role);
+    return role && ["logger", "companyAdmin"].includes(role.roleName);
   }, [watch("role")]);
 
   const submitFunc = (data: IUserForm) => {
@@ -173,7 +173,7 @@ const ActionModal: React.FC<Props> = ({ toggle, id, onSuccess }) => {
           {isServiceRequired && (
             <Col span={24}>
               <Select
-                label="Serivce*"
+                label="Service*"
                 placeholder="Choose service"
                 data={services}
                 labelProp="name"
