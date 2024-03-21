@@ -37,7 +37,7 @@ const Report: React.FC<IProps> = ({
   const [data, setData] = useState<any>(null);
   const params: { id: "" } = useParams();
   const location = useLocation();
-  let upDate = location?.search?.split("=")[1].slice(0, 10);
+  let upDate = location?.search?.split("=")[1]?.slice(0, 10);
 
   useEffect(() => {
     const response = api(`daily/report?driverId=${params.id}&date=${upDate}`);
@@ -52,7 +52,7 @@ const Report: React.FC<IProps> = ({
   };
 
   const changeTimeZone = (data: any) => {
-    let newLogsData = data.map((item: ILog) => {
+    let newLogsData = data?.map((item: ILog) => {
       return {
         ...item,
         start: moment
@@ -190,8 +190,8 @@ const Report: React.FC<IProps> = ({
           </tr>
         </thead>
         <tbody>
-          {logs?.map((log) => (
-            <tr>
+          {logs?.map((log, i) => (
+            <tr key={log._id}>
               <th>{log.vehicleUnit}</th>
               <th>{log.startOdometer}</th>
               <th>{log.endOdometer}</th>
@@ -238,12 +238,12 @@ const Report: React.FC<IProps> = ({
           </h3>
         </div>
         <div style={{ maxWidth: "150px" }}>
-          <div style={{ borderBottom: "2px solid #000" }}>
-            <img
+          <div style={{ borderBottom: "2px solid #000", textAlign: "center" }}>
+            {data && data.signature !== " " && data.signature? <img
               style={{ width: "100%" }}
               src={`https://ptapi.roundedteam.uz/public/uploads/signatures/${data?.signature}`}
               alt="signature"
-            />
+            /> : "not signature"}
           </div>
           <p
             style={{

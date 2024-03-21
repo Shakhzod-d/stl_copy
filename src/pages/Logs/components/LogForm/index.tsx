@@ -30,7 +30,7 @@ const LogForm = ({ logData }: ILogForm) => {
   const dispatch = useDispatch<AppDispatch>();
   // @ts-ignore
   let stateLogForm = state?.log?.logForm;
-  let upDate = location?.search?.split("=")[1].slice(0, 10)
+  let upDate = location?.search?.split("=")[1]?.slice(0, 10)
 
   const handleLogForm = async (data: any) => {
     if (!data.driver || !data.trailers || !data.notes || !data.documents) {
@@ -44,9 +44,7 @@ const LogForm = ({ logData }: ILogForm) => {
   };
 
   useEffect(() => {
-    const url = `/mainInfo?driverId=${params?.id}&date=${location?.search
-      ?.split("=")[1]
-      .slice(0, 10)}`;
+    const url = `/mainInfo?driverId=${params?.id}&date=${upDate}`;
     dispatch(getItems(url));
   }, [upDate, upData]);
   

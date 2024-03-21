@@ -89,7 +89,7 @@ const Graph: React.FC<IGraph> = ({
                 logs?.length > 0 &&
                 logs?.map((item, i: number) => (
                   <GraphItem
-                    key={item._id}
+                    key={item._id + `${i}`}
                     item={item}
                     lastStatus={getLastStatus(i)}
                     graphWidth={graphWidth || 0}
