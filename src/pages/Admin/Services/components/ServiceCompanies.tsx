@@ -39,8 +39,6 @@ const ServiceCompanies: React.FC<{ selectedCompanyId: string | null }> = ({
       const services = data?.data;
       return mapCompanies(services);
     }
-    console.log('dataaaaaaaaaaa');
-    
     return [];
   }, [data]);
 

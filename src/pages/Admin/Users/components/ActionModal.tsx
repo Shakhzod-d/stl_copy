@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Col, Row } from "antd";
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import {
   EMAIL_PATTERN,
@@ -18,6 +18,7 @@ import PhoneField from "@/components/form/PhoneField";
 import Select from "@/components/form/Select";
 import PasswordField from "@/components/form/PasswordField";
 import useParseData from "@/hooks/useParseData";
+import api from "@/api";
 
 interface Props {
   toggle: () => void;
@@ -25,7 +26,15 @@ interface Props {
   id: string | null;
 }
 
+interface IRole{
+  role: string,
+  _id: string
+}
+
 const ActionModal: React.FC<Props> = ({ toggle, id, onSuccess }) => {
+  
+  const [roleList, setRolList] = useState<IRole[] | undefined>()
+  const [ roleId, setRoldId] = useState<string>('')
   const { handleSubmit, control, reset, watch, getValues } =
     useForm<IUserForm>(formProps);
 
@@ -36,6 +45,32 @@ const ActionModal: React.FC<Props> = ({ toggle, id, onSuccess }) => {
     { enabled: Boolean(id) }
   );
 
+
+  useEffect(()=>{
+    const res = api('role/getAll')
+    res.then((res) => 
+      setRolList(res.data.filter((item: any)=>{
+        if(item?.role === getValues('role')?.roleName){
+          return item
+        }
+      }))
+    ).catch((error)=>console.log(error)
+    )
+    
+    
+  }, [getValues('role')?.roleName])
+
+  useEffect(()=>{
+    roleList?.filter((item: any)=>{
+      setRoldId(item._id)
+    })
+  }, [roleList])
+  console.log(roleId);
+  console.log(roleList);
+  
+  
+  
+  
   // get Services
   const { data: servicesData, isLoading: servicesLoad } = useApi(
     "/main",
@@ -57,9 +92,11 @@ const ActionModal: React.FC<Props> = ({ toggle, id, onSuccess }) => {
 
   // parse data
   const { tableData: services } = useParseData(servicesData);
+  
 
   useEffect(() => {
     const item: IUserForm = data?.data;
+    
     if (item)
       reset({
         firstName: item.firstName,
@@ -67,27 +104,34 @@ const ActionModal: React.FC<Props> = ({ toggle, id, onSuccess }) => {
         email: item.email,
         phone: item.phone,
         password: item.password,
-        role: item.role,
+        role: {
+          roleName: item.role.roleName,
+          roleId: roleId
+        },
         serviceId: item.serviceId,
         companyId: item.companyId,
       });
+      console.log('2222', item)
   }, [data]);
 
+
+
   const isServiceRequired = useMemo(() => {
-    const role = watch("role");
-    return role && role.roleName !== "superAdmin";
-  }, [watch("role")]);
+    const role = watch('role.roleName')
+    return role && role !== "superAdmin";
+  }, [watch("role.roleName")]);
 
   const isCompanyRequired = useMemo(() => {
-    const role = watch("role");
-    return role && ["logger", "companyAdmin"].includes(role.roleName);
-  }, [watch("role")]);
+    const role = watch("role.roleName");
+    return role && ["logger", "companyAdmin"].includes(role);
+  }, [watch("role.roleName")]);
 
   const submitFunc = (data: IUserForm) => {
     if (!isServiceRequired) data.serviceId = null;
     if (!isCompanyRequired) data.serviceId = null;
     if (id) updateMutate({ id, data }, { onSuccess });
-    else createMutate(data, { onSuccess });
+    else createMutate({...data, role: { ...data.role, roleId: roleId}}, { onSuccess });
+    
   };
 
   return (
@@ -125,7 +169,7 @@ const ActionModal: React.FC<Props> = ({ toggle, id, onSuccess }) => {
               data={role_names}
               labelProp="name"
               valueProp="value"
-              name="role"
+              name="role.roleName"
               control={control}
               required
             />

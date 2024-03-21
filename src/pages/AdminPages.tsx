@@ -1,10 +1,27 @@
-import React, { Suspense } from 'react'
+import React, { Suspense, useEffect } from 'react'
 import { Switch, Route } from 'react-router-dom'
 import AdminLayout from '@/layouts/AdminLayout'
-import { filterRoutes } from "@/utils"
+import { filterRoutes, historyPush, setLocalStorage } from "@/utils"
 import AppLoader from '@/components/loaders/AppLoader'
-
+import { RoleNames } from '@/App'
+import { useSelector } from "react-redux";
+import { RootState } from '@/store'
 const AdminPages: React.FC = () => {
+     const { userData } = useSelector((state: RootState) => state.auth);
+
+     useEffect(()=>{
+          changeUser(userData?.role.roleName)
+     }, [userData])
+     
+     
+     function changeUser(role: string | undefined){
+          // if(role === RoleNames.COMPANY_ADMIN){
+          //   historyPush("/main/dashboard")
+          // }
+          if(role === RoleNames.SERVICE_ADMIN){
+            historyPush("/admin/services")
+          }
+         }
      return (
           <AdminLayout>
                <Suspense fallback={<AppLoader />}>

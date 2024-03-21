@@ -84,7 +84,7 @@ const Services: React.FC = () => {
   };
 
   
-  const openModal111 = (): React.ReactNode =>{
+  const openModal = (): React.ReactNode =>{
     if(serviceId){
       setTimeout(() => {
         setIsOpenCompanies(true)
@@ -159,7 +159,7 @@ const Services: React.FC = () => {
         />
       )}
       {
-        openModal111()
+        openModal()
       }
 
       {/* {
