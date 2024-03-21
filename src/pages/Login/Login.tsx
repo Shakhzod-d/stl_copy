@@ -53,7 +53,7 @@ const Login: React.FC = () => {
         // if (isLogger) setTimeout(() => historyReplace('/admin/all-companies'), 0)
         if(isLogger){
           setLocalStorage('companyId', data.companyId)
-          historyPush('/main/dashboard')
+          historyPush('/main/log/logs')
           window.location.reload();
           
         }

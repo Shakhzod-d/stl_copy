@@ -10,13 +10,21 @@ import {
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store";
 import { ICompanyData } from "@/types/company.type";
+import { RoleNames } from "@/App";
+// import { useEffect, useState } from "react";
 
 const useUserMenu = (
      companies: ICompanyData[] | undefined,
      ref: React.MutableRefObject<HTMLElement | undefined>
 ) => {
      const { userData } = useSelector((state: RootState) => state.auth);
-
+     // const [compId, setCompId] = useState<string | null>()
+     // useEffect(()=>{
+     //      if(userData?.role.roleName === RoleNames.COMPANY_ADMIN){
+     //           setCompId(userData.companyId)
+     //      }
+     // }, [])
+     
      return (
           <Menu
                className="navbar-menu-dropdown"
@@ -82,7 +90,7 @@ const useUserMenu = (
                                    </Button>
                               </div>
                          ),
-                         children: companies?.map((company) => ({
+                         children:  companies?.map((company) => ({
                               key: company?._id,
                               label: (
                                    <span
@@ -100,19 +108,18 @@ const useUserMenu = (
                                                   : undefined
                                         }
                                         onClick={(e) => {
-                                             e.stopPropagation();
-                                             setLocalStorage(
-                                                  "companyId",
-                                                  company?._id
-                                             );
-                                             historyPush("/main/dashboard");
-                                             window.location.reload();
+                                             if (userData?.role.roleName !== RoleNames.COMPANY_ADMIN && userData?.role.roleName !== RoleNames.LOGGER) {
+                                                  e.stopPropagation();
+                                                  setLocalStorage("companyId", company?._id);
+                                                  historyPush("/main/dashboard");
+                                                  window.location.reload();
+                                              }
                                         }}
                                    >
                                         {company?.companyName}
                                    </span>
                               ),
-                         })),
+                         }))
                     },
                     {
                          key: "9",
