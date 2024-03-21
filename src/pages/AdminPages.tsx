@@ -8,6 +8,8 @@ import { useSelector } from "react-redux";
 import { RootState } from '@/store'
 const AdminPages: React.FC = () => {
      const { userData } = useSelector((state: RootState) => state.auth);
+     console.log(userData)
+     
 
      useEffect(()=>{
           changeUser(userData?.role.roleName)
