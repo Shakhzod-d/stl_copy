@@ -15,9 +15,9 @@ const AdminPages: React.FC = () => {
      
      
      function changeUser(role: string | undefined){
-          // if(role === RoleNames.COMPANY_ADMIN){
-          //   historyPush("/main/dashboard")
-          // }
+          if(role === RoleNames.COMPANY_ADMIN){
+            historyPush("/main/dashboard")
+          }
           if(role === RoleNames.SERVICE_ADMIN){
             historyPush("/admin/services")
           }

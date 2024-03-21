@@ -111,7 +111,6 @@ const ActionModal: React.FC<Props> = ({ toggle, id, onSuccess }) => {
         serviceId: item.serviceId,
         companyId: item.companyId,
       });
-      console.log('2222', item)
   }, [data]);
 
 
