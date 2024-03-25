@@ -127,9 +127,11 @@ const ActionModal: React.FC<Props> = ({ toggle, id, onSuccess }) => {
 
   const submitFunc = (data: IUserForm) => {
     if (!isServiceRequired) data.serviceId = null;
-    if (!isCompanyRequired) data.serviceId = null;
-    if (id) updateMutate({ id, data }, { onSuccess });
+    // if (!isCompanyRequired) data.serviceId = null;
+    if (id) updateMutate({ id, ...data, role: {...data.role, roleId: roleId} }, { onSuccess });
     else createMutate({...data, role: { ...data.role, roleId: roleId}}, { onSuccess });
+    console.log(data);
+    
     
   };
 

@@ -80,9 +80,14 @@ const useUserMenu = (
                               <div className="d-flex justify-center">
                                    <Button
                                         onClick={() =>
-                                             historyReplace(
-                                                  "/admin/all-companies"
-                                             )
+                                             {
+                                                  if(userData?.role.roleName !== RoleNames.COMPANY_ADMIN && userData?.role.roleName !== RoleNames.LOGGER){
+                                                       historyReplace(
+                                                            "/admin/all-companies"
+                                                       )
+                                                  }
+                                             }
+                                             
                                         }
                                         className="menu-companies-title"
                                    >
