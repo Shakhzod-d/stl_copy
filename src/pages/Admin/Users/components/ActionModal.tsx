@@ -65,8 +65,8 @@ const ActionModal: React.FC<Props> = ({ toggle, id, onSuccess }) => {
       setRoldId(item._id)
     })
   }, [roleList])
-  console.log(roleId);
-  console.log(roleList);
+  // console.log(roleId);
+  // console.log(roleList);
   
   
   
