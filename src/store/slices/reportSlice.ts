@@ -58,7 +58,7 @@ export const getFmcsaReports = createAsyncThunk(
 
     try {
       const response = await api.get(url);
-      console.log(`response`, response.data);
+      // console.log(`response`, response.data);
 
       return response.data;
     } catch (error) {

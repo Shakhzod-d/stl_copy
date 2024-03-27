@@ -226,7 +226,7 @@ const Report: React.FC<IProps> = ({
         </div>
         <div style={{ maxWidth: "150px" }}>
           <div style={{textAlign: "center" }} className="signatur-img">
-            {!signature ? <img
+            {signature ? <img
               style={{ width: "100%" }}
               src={`https://ptapi.roundedteam.uz/public/uploads/signatures/${signature}`}
               alt="signature"
@@ -264,10 +264,10 @@ const columns: ColumnsType<ILog> = [
     title: "duration",
     dataIndex: "hours",
     render(value, record, index) {
-      const start = moment.utc(record.start);
-      const end = moment.utc(record.end);
+      const start = moment.unix(record.start);
+      const end = moment.unix(record.end);
       const seconds = moment.duration(end.diff(start)).asSeconds();
-      return seconds ? moment(seconds).format("hh:mm:ss") : moment(seconds).valueOf();
+      return seconds ? moment.utc(seconds).format("hh:mm:ss") : "0";
     },
   },
   {
