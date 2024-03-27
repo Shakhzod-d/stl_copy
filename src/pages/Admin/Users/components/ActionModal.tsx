@@ -19,6 +19,9 @@ import Select from "@/components/form/Select";
 import PasswordField from "@/components/form/PasswordField";
 import useParseData from "@/hooks/useParseData";
 import api from "@/api";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store";
+import { RoleNames } from "@/App";
 
 interface Props {
   toggle: () => void;
@@ -30,11 +33,19 @@ interface IRole{
   role: string,
   _id: string
 }
+interface IRoleName{
+    name: string;
+    value: string;
+    forService: boolean;
+    forCompany: boolean;
+}
 
 const ActionModal: React.FC<Props> = ({ toggle, id, onSuccess }) => {
-  
+  const { userData } = useSelector((state: RootState) => state.auth);
   const [roleList, setRolList] = useState<IRole[] | undefined>()
   const [ roleId, setRoldId] = useState<string>('')
+  const [ roleName, setRolName] = useState<IRoleName[] | undefined>()
+  const [ newAllServices, setNewAllServices] = useState<any | undefined>()
   const { handleSubmit, control, reset, watch, getValues } =
     useForm<IUserForm>(formProps);
 
@@ -44,7 +55,7 @@ const ActionModal: React.FC<Props> = ({ toggle, id, onSuccess }) => {
     {},
     { enabled: Boolean(id) }
   );
-
+  
 
   useEffect(()=>{
     const res = api('role/getAll')
@@ -74,6 +85,25 @@ const ActionModal: React.FC<Props> = ({ toggle, id, onSuccess }) => {
     "/main",
     select_paging
   );
+
+  useEffect(()=>{
+    if(userData?.role.roleName === RoleNames.SERVICE_ADMIN){
+      setRolName(role_names?.filter((item: IRoleName)=>item.value !== RoleNames.SUPER_ADMIN && item.value !== RoleNames.SERVICE_ADMIN))
+    }else if(userData?.role.roleName === RoleNames.SECOND_SERVICE_ADMIN){
+      setRolName(role_names?.filter((item: IRoleName)=>item.value !== RoleNames.SUPER_ADMIN && item.value !== RoleNames.SERVICE_ADMIN && item.value !==RoleNames.SECOND_SERVICE_ADMIN))
+    }
+    else{
+      setRolName(role_names)
+    }
+}, [servicesData])
+useEffect(()=>{
+  if(userData?.role.roleName === RoleNames.SERVICE_ADMIN || userData?.role.roleName === RoleNames.SECOND_SERVICE_ADMIN){
+    setNewAllServices({...servicesData, data: {data: servicesData?.data.data.filter((item: any)=>item._id === userData?.serviceId)}})
+  }else{
+    setNewAllServices(servicesData)
+  }
+}, [servicesData])
+
   const { data: companiesData, isLoading: companiesLoad } = useApi(
     `/main/${getValues("serviceId")}`,
     select_paging,
@@ -89,7 +119,7 @@ const ActionModal: React.FC<Props> = ({ toggle, id, onSuccess }) => {
   );
 
   // parse data
-  const { tableData: services } = useParseData(servicesData);
+  const { tableData: services } = useParseData(newAllServices);
   
 
   useEffect(() => {
@@ -163,7 +193,7 @@ const ActionModal: React.FC<Props> = ({ toggle, id, onSuccess }) => {
             <Select
               label={"Role*"}
               placeholder="Choose role"
-              data={role_names}
+              data={roleName}
               labelProp="name"
               valueProp="value"
               name="role.roleName"

@@ -18,6 +18,7 @@ import { RoleNames } from "@/App";
 const Users: React.FC = () => {
 	const { userData } = useSelector((state: RootState) => state.auth);
 	const serviceId = userData?.serviceId
+	
 
 
 	// Query params states
@@ -43,7 +44,6 @@ const Users: React.FC = () => {
 	// parse api data 
 	const { tableData, totalPage } = useParseData<IUserData>(data)
 	const { tableData: tableData1, totalPage: totalPage1 } = useParseData<IUserData>(data1)
-	console.log(tableData);
 	
 
 	function editFunc(id: string) {

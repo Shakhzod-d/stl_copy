@@ -1,3 +1,15 @@
+body.dark{
+     .signatur-img{
+          border-bottom: 2px solid #fff;
+     }
+}
+
+body.light{
+     .signatur-img{
+          border-bottom: 2px solid #000;
+     }
+}
+
 .log-actions {
      display: flex;
      height: 80px; // !

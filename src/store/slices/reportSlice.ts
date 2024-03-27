@@ -55,9 +55,10 @@ export const getReportsInitially = createAsyncThunk(
 export const getFmcsaReports = createAsyncThunk(
   "report/getFmcsaReports",
   async (url: string) => {
+
     try {
       const response = await api.get(url);
-      // console.log(`response`, response.data);
+      console.log(`response`, response.data);
 
       return response.data;
     } catch (error) {

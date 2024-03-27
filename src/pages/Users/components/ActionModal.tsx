@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Col, Row } from "antd";
 import { useForm } from "react-hook-form";
 import FormModal from "@/components/elements/FormModal";
@@ -13,11 +13,26 @@ import { IUserForm } from "@/types/user.type";
 import useApiMutation from "@/hooks/useApiMutation";
 import useApiMutationID from "@/hooks/useApiMutationID";
 import { getLocalStorage } from "@/utils";
+import api from "@/api";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store";
+import { RoleNames } from "@/App";
 
 interface Props {
   toggle: () => void;
   editingUserId: string | undefined;
   onSuccess: () => void;
+}
+interface IRole{
+  role: string,
+  _id: string
+}
+
+interface IRoles {
+  name: string;
+  value: string;
+  forService: boolean;
+  forCompany: boolean;
 }
 
 const ActionModal: React.FC<Props> = ({
@@ -25,14 +40,41 @@ const ActionModal: React.FC<Props> = ({
   editingUserId: id,
   onSuccess,
 }) => {
-  const { handleSubmit, control, reset } = useForm<IUserForm>();
-
+  const { handleSubmit, control, reset, getValues, watch } = useForm<IUserForm>();
+  const [ roleId, setRoldId] = useState<string>('')
+  const [roleList, setRolList] = useState<IRole[] | undefined>()
+  const { userData } = useSelector((state: RootState) => state.auth);
+  const [roles1, setRoles1] = useState<IRoles[] | undefined>()
   // get one company to update
   const { data, isLoading } = useApi(
     `/user/${id}`,
     {},
     { enabled: Boolean(id) }
   );
+  
+  const role = watch("role.roleName");
+  useEffect(()=>{
+    const res = api('role/getAll')
+    res.then((res) => 
+      setRolList(res.data.filter((item: any)=>{
+        if(item?.role === role){
+          return item
+        }
+      }))
+    ).catch((error)=>console.log(error)
+    )
+    
+  }, [role])
+  
+
+  useEffect(()=>{
+    roleList?.filter((item: any)=>{
+      setRoldId(item._id)
+    })
+  }, [roleList])
+
+  // console.log(roleId);
+  
 
   const { mutate: createMutate, isLoading: createLoading } =
     useApiMutation("/user");
@@ -50,18 +92,40 @@ const ActionModal: React.FC<Props> = ({
         email: item.email,
         phone: item.phone,
         password: item.password,
-        role: item.role,
+        role: {
+          roleName: item.role.roleName,
+          roleId: roleId
+        },
       });
+      
   }, [data]);
+  
 
   const roles = useMemo(() => {
     return role_names.filter((el) => el.forCompany);
   }, [role_names]);
+  useEffect(()=>{
+    if(userData?.role.roleName === RoleNames.COMPANY_ADMIN){
+      setRoles1(roles.filter((item: IRoles)=>item.value === 'logger'))
+      
+      
+    }
+    else{
+      setRoles1(roles)
+    }
+    
+  }, [])
+  
 
   const submitFunc = (data: IUserForm) => {
+    
     data.companyId = getLocalStorage("companyId");
+    data = {...data, role: {...data.role, roleId: roleId}}
     if (id) updateMutate({ id, data }, { onSuccess });
-    else createMutate(data, { onSuccess });
+    else createMutate({...data, serviceId: userData?.serviceId}, { onSuccess });
+    console.log('rolid', roleId);
+    
+    
   };
 
   return (
@@ -70,7 +134,7 @@ const ActionModal: React.FC<Props> = ({
       onCancel={toggle}
       loading={createLoading || updateLoading}
       modalLoading={isLoading}
-      modalTitle="Assign User"
+      modalTitle="Assign user"
       width={800}
       formId="create-service-form"
     >
@@ -96,10 +160,10 @@ const ActionModal: React.FC<Props> = ({
             <Select
               label={"Role*"}
               placeholder="Choose role"
-              data={roles}
+              data={roles1}
               labelProp="name"
               valueProp="value"
-              name="role"
+              name="role.roleName"
               control={control}
               required
             />
