@@ -33,7 +33,7 @@ const data2 = {
 const CustomTableToShowRecup = ({ data = data2 }: any) => {
   // console.log(data);
   return (
-    <table style={{ width: "100%", borderCollapse: "collapse" }}>
+    <table style={{ width: "100%", borderCollapse: "collapse"}}>
       <tbody>
         {[...data?.recup]?.reverse()?.map((item: any, idx: number) => (
           <tr key={idx}>
