@@ -2,7 +2,7 @@ import React, { Suspense, useEffect } from 'react'
 import { Switch, Route } from 'react-router-dom'
 import AppLayout from '@/layouts/AppLayout'
 import AppLoader from '@/components/loaders/AppLoader'
-import { filterRoutes, getLocalStorage, historyPush } from "@/utils"
+import { filterRoutes, getLocalStorage, historyReplace } from "@/utils"
 
 const AppPages: React.FC = () => {
 
@@ -12,7 +12,7 @@ const AppPages: React.FC = () => {
 
      function changeUser(){
           if(!getLocalStorage('companyId')){
-               historyPush("/admin/services")
+               historyReplace("/admin/services")
           }
     }
      return (

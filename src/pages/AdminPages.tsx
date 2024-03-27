@@ -1,7 +1,7 @@
 import React, { Suspense, useEffect } from 'react'
 import { Switch, Route } from 'react-router-dom'
 import AdminLayout from '@/layouts/AdminLayout'
-import { filterRoutes, getLocalStorage, historyPush } from "@/utils"
+import { filterRoutes, historyPush, historyReplace } from "@/utils"
 import AppLoader from '@/components/loaders/AppLoader'
 import { RoleNames } from '@/App'
 import { useSelector } from "react-redux";
@@ -18,13 +18,13 @@ const AdminPages: React.FC = () => {
      
      function changeUser(role: string | undefined){
           if(role === RoleNames.COMPANY_ADMIN){
-               historyPush("/main/dashboard")
+               historyReplace("/main/dashboard")
           }
           if(role === RoleNames.LOGGER){
-               historyPush("/main/log/logs")
+               historyReplace("/main/log/logs")
           }
           if(role === RoleNames.SERVICE_ADMIN || role === RoleNames.SECOND_SERVICE_ADMIN){
-               historyPush("/admin/services")
+               historyPush("/admin/all-companies")
           }
          }
      return (

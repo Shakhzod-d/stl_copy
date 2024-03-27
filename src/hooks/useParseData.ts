@@ -7,7 +7,7 @@ const useParseData = <T>(data: any, isPaging: boolean = true) => {
 
   const tableData: T[] = useMemo(() => {
     if (data) {
-      const current = isPaging ? data?.data.data : data?.data;
+      const current = isPaging ? data?.data?.data : data?.data;
       return mapTableData(current);
     }
     return [];
@@ -15,7 +15,7 @@ const useParseData = <T>(data: any, isPaging: boolean = true) => {
 
   // get total page
   const totalPage = useMemo(() => {
-    return (isPaging && data?.data.total) || 0;
+    return (isPaging && data?.data?.total) || 0;
   }, [data]);
 
   return { tableData, totalPage };

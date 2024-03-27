@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button, Table } from "antd";
 import { useColumns } from "./components/tableColumns";
 import Icon from "@/components/icon/Icon";
@@ -11,8 +11,14 @@ import { PAGE_LIMIT } from "@/constants/general.const";
 import { IPageData } from "@/types";
 import useParseData from "@/hooks/useParseData";
 import { IUserData } from "@/types/user.type";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store";
+import { RoleNames } from "@/App";
 
 const Users: React.FC = () => {
+	const { userData } = useSelector((state: RootState) => state.auth);
+	const serviceId = userData?.serviceId
+
 
 	// Query params states
 	const [search, setSearch] = useQueryParam("name", withDefault(StringParam, undefined));
@@ -23,8 +29,12 @@ const Users: React.FC = () => {
 	const [updateId, setUpdateId] = useState<string | null>(null);
 
 	// Queries and mutations
-	const { data, isLoading, refetch, isRefetching } = useApi<IPageData<IUserData[]>>("/users", { search, page, limit: PAGE_LIMIT });
 
+	const [users, setUsers] = useState()
+	const { data, isLoading, refetch, isRefetching } = useApi<IPageData<IUserData[]>>("/users", { search, page, limit: PAGE_LIMIT })
+	const { data: data1, isLoading: isLoading1, refetch: refetch1, isRefetching: isRefetching1 } = useApi<IPageData<IUserData[]>>("/users/by", { search, page, limit: PAGE_LIMIT, serviceId })
+	
+	
 	const { mutate: deleteCompany, isLoading: deleteLoading } = useApiMutationID("DELETE", "/user");
 
 	// Genete table columns
@@ -32,6 +42,9 @@ const Users: React.FC = () => {
 
 	// parse api data 
 	const { tableData, totalPage } = useParseData<IUserData>(data)
+	const { tableData: tableData1, totalPage: totalPage1 } = useParseData<IUserData>(data1)
+	console.log(tableData);
+	
 
 	function editFunc(id: string) {
 		setUpdateId(id);
@@ -67,6 +80,20 @@ const Users: React.FC = () => {
 					Add User
 				</Button>
 			</div>
+			{
+				userData?.role.roleName === RoleNames.SERVICE_ADMIN || userData?.role.roleName === RoleNames.SECOND_SERVICE_ADMIN ?
+				<Table
+				columns={columns}
+				dataSource={tableData1}
+				loading={isLoading1 || deleteLoading || isRefetching1}
+				rowClassName="hoverable"
+				pagination={{
+					onChange: (page) => setPage(page),
+					current: page,
+					pageSize: PAGE_LIMIT,
+					total: totalPage1
+				}}
+			/>:
 			<Table
 				columns={columns}
 				dataSource={tableData}
@@ -79,6 +106,7 @@ const Users: React.FC = () => {
 					total: totalPage
 				}}
 			/>
+			}
 			{isOpen && (
 				<ActionModal
 					toggle={handleModal}

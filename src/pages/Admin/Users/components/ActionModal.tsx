@@ -65,8 +65,6 @@ const ActionModal: React.FC<Props> = ({ toggle, id, onSuccess }) => {
       setRoldId(item._id)
     })
   }, [roleList])
-  console.log(roleId);
-  console.log(roleList);
   
   
   
@@ -127,12 +125,10 @@ const ActionModal: React.FC<Props> = ({ toggle, id, onSuccess }) => {
 
   const submitFunc = (data: IUserForm) => {
     if (!isServiceRequired) data.serviceId = null;
-    // if (!isCompanyRequired) data.serviceId = null;
-    if (id) updateMutate({ id, ...data, role: {...data.role, roleId: roleId} }, { onSuccess });
-    else createMutate({...data, role: { ...data.role, roleId: roleId}}, { onSuccess });
-    console.log(data);
-    
-    
+    if (!isCompanyRequired) data.companyId = null;
+    data = {...data, role: {...data.role, roleId: roleId}}
+    if (id) updateMutate( {id, data} , { onSuccess });
+    else createMutate(data, { onSuccess });
   };
 
   return (
@@ -141,7 +137,7 @@ const ActionModal: React.FC<Props> = ({ toggle, id, onSuccess }) => {
       onCancel={toggle}
       loading={createLoading || updateLoading}
       modalLoading={isLoading || servicesLoad}
-      modalTitle="Add Company"
+      modalTitle="Add User"
       width={800}
       formId="create-company-form"
     >

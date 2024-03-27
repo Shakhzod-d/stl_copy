@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Table } from "antd";
 import { historyPush, setLocalStorage, } from "@/utils";
 import { useColumns } from "./components/tableColumns";
@@ -12,8 +12,12 @@ import { PAGE_LIMIT } from "@/constants/general.const";
 import { IPageData } from "@/types";
 import useParseData from "@/hooks/useParseData";
 import { NumberParam, StringParam, useQueryParam, withDefault } from "use-query-params";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store";
+import { RoleNames } from "@/App";
 
 const Companies: React.FC = () => {
+     const { userData } = useSelector((state: RootState) => state.auth);
 
      // Query params states
      const [search, setSearch] = useQueryParam("name", withDefault(StringParam, undefined));
@@ -22,9 +26,22 @@ const Companies: React.FC = () => {
      // All states
      const [isOpen, setIsOpen] = useState(false);
      const [updateId, setUpdateId] = useState<string | null>(null);
+     const [ data1, setData1] = useState<ICompanyData[] | any | undefined>(undefined)
 
      // Queries and mutations
      const { data, isLoading, refetch, isRefetching } = useApi<IPageData<ICompanyData[]>>("/main/allcompany", { search, page, limit: PAGE_LIMIT });
+     
+
+     useEffect(()=>{
+          if(userData?.serviceId){
+               setData1(data?.data?.data.filter((item: any) => {
+                 
+                    if(item.serviceId === userData?.serviceId){
+                         return item
+                    }
+               })) 
+          }
+     }, [data])
 
      const { mutate: updateCompany, isLoading: updateLoading } = useApiMutationID("PUT", "/company");
      const { mutate: deleteCompany, isLoading: deleteLoading } = useApiMutationID("DELETE", "/company");
@@ -34,6 +51,10 @@ const Companies: React.FC = () => {
 
      // parse api data 
      const { tableData, totalPage } = useParseData<ICompanyData>(data)
+     // const { tableData: tableData1, totalPage: totalPage1 } = useParseData<ICompanyData>(data as data1)
+     
+     
+     
 
      function editFunc(id: string) {
           setUpdateId(id);
@@ -72,7 +93,35 @@ const Companies: React.FC = () => {
                          Add Company
                     </Button>
                </div>
-               <Table
+               
+               {
+                    userData?.role.roleName === RoleNames.SERVICE_ADMIN || userData?.role.roleName === RoleNames.SECOND_SERVICE_ADMIN ? 
+                    <div>
+                         <Table
+                    columns={columns}
+                    dataSource={data1}
+                    loading={isLoading || updateLoading || deleteLoading || isRefetching}
+                    rowClassName="hoverable"
+                    pagination={{
+                         onChange: (page) => setPage(page),
+                         current: page,
+                         pageSize: PAGE_LIMIT,
+                         total: totalPage
+                    }}
+                    onRow={(data1: ICompanyData) => {
+                         return {
+                              onClick: (e) => {
+                                   e.stopPropagation();
+                                   setLocalStorage("companyId", data1._id);
+                                   historyPush("/main/dashboard");
+                                   window.location.reload();
+                              },
+                         };
+                    }}
+                    />
+                    </div> 
+                    : 
+                    <Table
                     columns={columns}
                     dataSource={tableData}
                     loading={isLoading || updateLoading || deleteLoading || isRefetching}
@@ -93,7 +142,8 @@ const Companies: React.FC = () => {
                               },
                          };
                     }}
-               />
+                    />
+                } 
                {isOpen && (
                     <ActionModal
                          toggle={handleModal}

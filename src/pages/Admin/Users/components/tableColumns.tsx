@@ -16,20 +16,23 @@ const useColumns = ({
      return [
           {
                title: "First name",
-               dataIndex: "firstName"
+               dataIndex: "firstName",
+               render: (firstName) => firstName || '-'
           },
           {
                title: "Last name",
-               dataIndex: "lastName"
+               dataIndex: "lastName",
+               render: (lastName) => lastName || '-'
           },
           {
                title: "Phone number",
                dataIndex: "phone",
+               render: (phone) => phone || '-'
           },
           {
                title: "Role",
                dataIndex: "role",
-               render: (role) => role_names.find(el => el.value === role)?.name
+               render: (role) => role_names.find(el => el.value === role.roleName)?.name || '-'
           },
           {
                title: "Email",
@@ -37,13 +40,13 @@ const useColumns = ({
           },
           {
                title: "Service",
-               dataIndex: "service",
-               render: (data) => "-",
+               dataIndex: "serviceName",
+               render: (serviceName) => serviceName || '-'
           },
           {
                title: "Company",
-               dataIndex: "company",
-               render: (data) => "-",
+               dataIndex: "companyName",
+               render: (companyName) => companyName || '-'
           },
           {
                title: "Action",

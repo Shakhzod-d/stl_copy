@@ -11,24 +11,33 @@ import { IPageData } from "@/types";
 import { IUserData } from "@/types/user.type";
 import useParseData from "@/hooks/useParseData";
 import useApiMutationID from "@/hooks/useApiMutationID";
+import { getLocalStorage } from "@/utils";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store";
+import { RoleNames } from "@/App";
 
 const Users = () => {
+
+     const { userData } = useSelector((state: RootState) => state.auth);
+     const [companyId, setCompId] = useState<string | null | undefined>(getLocalStorage('companyId'))
 
      // Query params states
      const [search, setSearch] = useQueryParam("name", withDefault(StringParam, undefined));
      const [page, setPage] = useQueryParam("page", withDefault(NumberParam, 1))
-
+     
+     
      // All states
      const [isOpen, setIsOpen] = useState<boolean>(false);
      const [editingUserId, setEditingUserId] = useState<string>();
 
      // Get all drivers data
      const { data, isLoading, refetch, isFetching } = useApi<IPageData<IUserData[]>>("/users", { page, search, limit: PAGE_LIMIT });
-
+     const { data: data1, isLoading: isLoading1, refetch: refetch1, isFetching: isFetching1 } = useApi<IPageData<IUserData[]>>("/users/by", { page, limit: PAGE_LIMIT, companyId });
      const { mutate: deleteCompany, isLoading: deleteLoading } = useApiMutationID("DELETE", "/user");
 
      // parse api data
      const { tableData, totalPage } = useParseData<IUserData>(data)
+     const { tableData: tableData1, totalPage: totalPage1 } = useParseData<IUserData>(data1)
 
      // Handle modal function
      const handleModal = (id?: string) => {
@@ -61,19 +70,38 @@ const Users = () => {
                </div>
                <div className="page-line" />
                <div className="users-main">
-                    <Table
-                         scroll={{ x: "max-content" }}
-                         columns={columns}
-                         loading={isLoading || isFetching}
-                         dataSource={tableData}
-                         className="action"
-                         pagination={{
-                              onChange: (page) => setPage(page),
-                              current: page,
-                              pageSize: PAGE_LIMIT,
-                              total: totalPage
-                         }}
-                    />
+                    {
+                         userData?.role.roleName === RoleNames.COMPANY_ADMIN || 
+                         userData?.role.roleName === RoleNames.LOGGER || 
+                         userData?.role.roleName === RoleNames.SECOND_SERVICE_ADMIN || 
+                         userData?.role.roleName === RoleNames.SERVICE_ADMIN ?
+                              <Table
+                                   scroll={{ x: "max-content" }}
+                                   columns={columns}
+                                   loading={isLoading1 || isFetching1}
+                                   dataSource={tableData1}
+                                   className="action"
+                                   pagination={{
+                                        onChange: (page) => setPage(page),
+                                        current: page,
+                                        pageSize: PAGE_LIMIT,
+                                        total: totalPage1
+                                   }}
+                              /> :
+                              <Table
+                                   scroll={{ x: "max-content" }}
+                                   columns={columns}
+                                   loading={isLoading || isFetching}
+                                   dataSource={tableData}
+                                   className="action"
+                                   pagination={{
+                                        onChange: (page) => setPage(page),
+                                        current: page,
+                                        pageSize: PAGE_LIMIT,
+                                        total: totalPage
+                                   }}
+                              />
+                    }
                </div>
                {isOpen && (
                     <ActionModal

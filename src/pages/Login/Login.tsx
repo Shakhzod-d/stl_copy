@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Input } from "antd";
+import { Button} from "antd";
 import TextField from "@/components/form/TextField";
 import PasswordField from "@/components/form/PasswordField";
 import { useForm, SubmitHandler } from "react-hook-form";
@@ -11,7 +11,6 @@ import {
   setUserData,
   errorMessage,
   historyReplace,
-  historyPush,
 } from "@/utils";
 import { ILoginData } from "./login.types";
 import useApiMutation from "@/hooks/useApiMutation";
@@ -47,20 +46,20 @@ const Login: React.FC = () => {
         // if (isCompany){ setTimeout(() => historyReplace("/main/dashboard"), 0)}
         if (isCompany){ 
           setLocalStorage("companyId", data.companyId)
-          historyPush("/main/dashboard")
+          historyReplace("/main/dashboard")
           window.location.reload();
         }
         // if (isLogger) setTimeout(() => historyReplace('/admin/all-companies'), 0)
         if(isLogger){
           setLocalStorage('companyId', data.companyId)
-          historyPush('/main/log/logs')
+          historyReplace('/main/log/logs')
           window.location.reload();
           
         }
         // if (isService) setTimeout(() => historyReplace('/admin/all-companies'), 0)
         if(isService){
           setLocalStorage('serviceId', data.serviceId)
-          historyPush('/admin/services')
+          historyReplace('/admin/all-companies')
           window.location.reload();
           
         }

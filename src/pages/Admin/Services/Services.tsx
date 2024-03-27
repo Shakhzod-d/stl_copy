@@ -1,4 +1,4 @@
-import React, { ReactNode, useState } from "react";
+import React, { useState } from "react";
 import { Button, Table } from "antd";
 import Icon from "@/components/icon/Icon";
 import ActionModal from "./components/ActionModal";
@@ -86,9 +86,9 @@ const Services: React.FC = () => {
   
   const openModal = (): React.ReactNode =>{
     if(serviceId){
-      setTimeout(() => {
-        setIsOpenCompanies(true)
-      }, 1000)
+      // setTimeout(() => {
+      //   setIsOpenCompanies(true)
+      // }, 1000)
       return <Modal
         open={isOpenCompanies}
         closable
@@ -116,6 +116,7 @@ const Services: React.FC = () => {
 
   return (
     <section className="admin-services">
+     
       <div className="header">
         <SearchByQuery
           query={search}
@@ -161,27 +162,9 @@ const Services: React.FC = () => {
       {
         openModal()
       }
-
-      {/* {
-        !serviceId ? <Modal
-          open={isOpenCompanies}
-          closable
-          onCancel={() => setIsOpenCompanies(false)}
-          width={"80%"}
-          title="Service companies"
-        >
-          <ServiceCompanies selectedCompanyId={updateId} />
-        </Modal> : <Modal
-        open={isOpenCompanies}
-        closable
-        onCancel={() => setIsOpenCompanies(false)}
-        width={"80%"}
-        title="Service companies"
-        >
-            <ServiceCompanies selectedCompanyId={serviceId} />
-        </Modal>} */}
-
+      
     </section >
+    
   );
 };
 

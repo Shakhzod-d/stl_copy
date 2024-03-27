@@ -37,6 +37,7 @@ const ServiceCompanies: React.FC<{ selectedCompanyId: string | null }> = ({
   const tableData: any = useMemo(() => {
     if (data?.data) {
       const services = data?.data;
+      
       return mapCompanies(services);
     }
     return [];

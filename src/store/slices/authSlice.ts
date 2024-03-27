@@ -46,7 +46,11 @@ const AuthSlice = createSlice({
             state.theme = action.payload;
         },
         setCompanies: (state: State, action: PayloadAction<ICompanyData[]>) => {
-            state.companies = action.payload;
+
+            state.companies = state.userData?.companyId === null ? action.payload : action.payload.filter(item=>item._id === state.userData?.companyId)
+            
+            // console.log(state.userData?.companyId);
+            
         },
     },
 });

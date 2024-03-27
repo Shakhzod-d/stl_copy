@@ -12,9 +12,10 @@ import { PAGE_LIMIT } from "@/constants/general.const";
 import useParseData from "@/hooks/useParseData";
 import { IOnlyCompanyData } from "@/types/onlyCompany.type";
 import { IPageData } from "@/types";
+// import {}
 
 const Companies: React.FC = () => {
-
+     
      // Query params states
      const [search, setSearch] = useQueryParam("name", withDefault(StringParam, undefined));
      const [page, setPage] = useQueryParam("page", withDefault(NumberParam, 1))
@@ -57,6 +58,8 @@ const Companies: React.FC = () => {
                return !prev;
           });
      };
+
+     
 
      return (
           <section className="admin-only-company">
