@@ -1,5 +1,5 @@
 import { Col, Row } from "antd";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { formProps, issue_stats, select_paging } from "@/constants";
 import FormModal from "@/components/elements/FormModal";
@@ -12,6 +12,9 @@ import useApiMutation from "@/hooks/useApiMutation";
 import useApiMutationID from "@/hooks/useApiMutationID";
 import { ICompanyForm } from "@/types/company.type";
 import useParseData from "@/hooks/useParseData";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store";
+import { RoleNames } from "@/App";
 
 interface Props {
   toggle: () => void;
@@ -21,6 +24,8 @@ interface Props {
 
 const ActionModal: React.FC<Props> = ({ toggle, id, onSuccess }) => {
   const { handleSubmit, control, reset } = useForm<ICompanyForm>(formProps);
+  const { userData } = useSelector((state: RootState) => state.auth);
+  const [ newAllServices, setNewAllServices] = useState<any | undefined>()
 
   // get one company to update
   const { data, isLoading } = useApi(
@@ -28,6 +33,7 @@ const ActionModal: React.FC<Props> = ({ toggle, id, onSuccess }) => {
     {},
     { enabled: Boolean(id) }
   );
+  
 
   // get Services
   const { data: serviceData, isLoading: servicesLoad } = useApi(
@@ -35,6 +41,15 @@ const ActionModal: React.FC<Props> = ({ toggle, id, onSuccess }) => {
     select_paging
   );
 
+  useEffect(()=>{
+      if(userData?.role.roleName === RoleNames.SERVICE_ADMIN || userData?.role.roleName === RoleNames.SECOND_SERVICE_ADMIN){
+        setNewAllServices({...serviceData, data: {data: serviceData?.data.data.filter((item: any)=>item._id === userData?.serviceId)}})
+      }else{
+        setNewAllServices(serviceData)
+      }
+  }, [serviceData])
+  
+  
   //action mutations
   const { mutate: createMutate, isLoading: createLoading } =
     useApiMutation("/company");
@@ -44,8 +59,12 @@ const ActionModal: React.FC<Props> = ({ toggle, id, onSuccess }) => {
   );
 
   // parse data
-  const { tableData: allServices } = useParseData(serviceData);
-
+  const { tableData: allServices } = useParseData(newAllServices);
+  
+  
+    
+    
+    
   useEffect(() => {
     const item = data?.data;
     if (item)

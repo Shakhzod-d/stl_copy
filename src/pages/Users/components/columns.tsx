@@ -1,6 +1,7 @@
 import { TableAction } from "@/components/elements/TableElements/TableElements";
 import { role_names } from "@/constants";
 import { IRoleName, } from "@/types";
+import { IUserRole } from "@/types/user.type";
 interface IUseColumns {
      handleDelete: (id: string) => void;
      handleModal: (id: string) => void;
@@ -27,7 +28,7 @@ const useColumns = ({
           {
                title: "Role",
                dataIndex: "role",
-               render: (role: IRoleName) => role_names.find(el => el.value === role)?.name
+               render: (role: IUserRole) => role_names.find(el => el.value === role.roleName)?.name
           },
           {
                title: "Email",
@@ -37,7 +38,7 @@ const useColumns = ({
                title: "Actions",
                dataIndex: "_id",
                render: (id: string, order: any) => (
-                    <TableAction
+                    <TableAction 
                          updateFunction={() => handleModal(id)}
                          confirmTitle={`Do you want to deactivate ${order.firstName + " " + order.lastName
                               }`}

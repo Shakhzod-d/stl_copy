@@ -10,8 +10,11 @@ import { NumberParam, StringParam, useQueryParam, withDefault } from "use-query-
 import SearchByQuery from "@/components/elements/SearchByQuery";
 import { PAGE_LIMIT } from "@/constants/general.const";
 import useParseData from "@/hooks/useParseData";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store";
 
 const Vehicles = () => {
+     const { userData } = useSelector((state: RootState) => state.auth);
 
      // Query params states
      const [search, setSearch] = useQueryParam("name", withDefault(StringParam, undefined));
@@ -38,6 +41,7 @@ const Vehicles = () => {
                               setQuery={setSearch}
                          />
                          <Button
+                         disabled={userData?.role.roleName === 'logger'}
                               onClick={() =>
                                    historyPush("/units/vehicles/create")
                               }

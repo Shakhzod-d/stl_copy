@@ -12,6 +12,10 @@ import DeviceInfo from "../DeviceInfo";
 import DeleteConfirm from "../PopConfirms/DeleteConfirm";
 import moment from "moment-timezone";
 import { secondsToHoursAndMinutes } from "@/pages/Logs/helper";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store";
+import { RoleNames } from "@/App";
+
 
 export const ClipLocation = (position: { lat: number; lng: number }) => {
   // console.log(`position`, position);
@@ -76,6 +80,7 @@ export const TableAction: React.FC<{
   onDeleteConfirm,
   children,
 }) => {
+  const { userData } = useSelector((state: RootState) => state.auth);
   return (
     <div className="action-table">
       {children ? (
@@ -83,21 +88,31 @@ export const TableAction: React.FC<{
       ) : (
         <div
           onClick={() => {
-            console.log(1);
-            if (typeof updateFunction === "function") {
-              updateFunction?.();
+            if((userData?.role.roleName !== RoleNames.LOGGER)){
+              if (typeof updateFunction === "function") {
+              
+                updateFunction?.();
+              
+              
             }
             if (replace) {
               historyReplace(updatePush);
             } else {
               historyPush(updatePush);
             }
+            }
+            
+            
           }}
         >
           <Icon icon="pencil" className="pencil" />
         </div>
-      )}
-      <DeleteConfirm onConfirm={onDeleteConfirm} title={confirmTitle} />
+      )}{
+        userData?.role.roleName === RoleNames.LOGGER ? 
+        <DeleteConfirm  title={confirmTitle} /> :
+        <DeleteConfirm onConfirm={onDeleteConfirm} title={confirmTitle} />
+      }
+      
     </div>
   );
 };
