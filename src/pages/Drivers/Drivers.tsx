@@ -10,8 +10,11 @@ import { IPageData } from "@/types";
 import useParseData from "@/hooks/useParseData";
 import { PAGE_LIMIT } from "@/constants/general.const";
 import { useQueryParam, withDefault, StringParam, NumberParam } from "use-query-params";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store";
 
 const Drivers: React.FC = () => {
+     const { userData } = useSelector((state: RootState) => state.auth);
 
      // Query params states
      const [search, setSearch] = useQueryParam("name", withDefault(StringParam, undefined));
@@ -38,6 +41,7 @@ const Drivers: React.FC = () => {
                               setQuery={setSearch}
                          />
                          <Button
+                         disabled={userData?.role.roleName === 'logger'}
                               onClick={() =>
                                    historyPush("/units/drivers/create")
                               }

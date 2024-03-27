@@ -27,7 +27,9 @@ const Report: React.FC<IProps> = ({
   width,
 }) => {
   const [hoveredId, setHoveredId] = useState<any | null>(null);
-  const companyTimeZone = useSelector<RootState>((state) => state?.log?.companyTimeZone);
+  const companyTimeZone = useSelector<RootState>(
+    (state) => state?.log?.companyTimeZone
+  );
 
   const [newLogs, setNewLogs] = useState<ILog[]>(logs)
   const [signature, setSignature] = useState<string>("")

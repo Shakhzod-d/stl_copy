@@ -62,7 +62,7 @@ const Users = () => {
                               query={search}
                               setQuery={setSearch}
                          />
-                         <Button type="primary" onClick={() => handleModal()}>
+                         <Button disabled={userData?.role.roleName === 'logger'} type="primary" onClick={() => handleModal()}>
                               <Icon icon="plus" />
                               Assign User
                          </Button>
