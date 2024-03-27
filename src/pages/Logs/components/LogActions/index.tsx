@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { DownloadOutlined, ReloadOutlined } from "@ant-design/icons";
 import { Button } from "antd";
 import ReactToPrint from "react-to-print";
@@ -22,6 +22,8 @@ import HistoryTable from "./components/HistoryTable";
 import TransferLogs from "./components/TransferLogs";
 import moment from "moment";
 import { useLogsInnerContext } from "../LogsInner.context";
+import api from "@/api";
+import { useLocation, useParams } from "react-router-dom";
 
 interface ILogActions {}
 
@@ -38,7 +40,6 @@ const LogActions: React.FC<ILogActions> = ({}) => {
       infoLogFormData,
       isVisibleInsertInfoLog,
       historyLogs,
-      reportData,
       isAlreadyClicked,
     },
     actions: {
@@ -54,12 +55,11 @@ const LogActions: React.FC<ILogActions> = ({}) => {
       onInsertInfoLog,
       onInsertDutyStatus,
       setIsVisibleInsertInfoLog,
+      setLogs
     },
   } = useLogsInnerContext();
   const momentZone = useMomentZone();
-
-  // console.log(driverData);
-
+  
   const [isVisibleHistoryLog, setIsVisibleHistoryLog] = useState(false);
   const [isVisibleOriginalLogs, setIsVisibleOriginalLogs] = useState(false);
   const [isVisibleReport, setIsVisibleReport] = useState(false);
@@ -68,10 +68,6 @@ const LogActions: React.FC<ILogActions> = ({}) => {
 
   let componentRef = useRef() as React.MutableRefObject<HTMLInputElement>;
   const whenSomethingIsLoading = !!isFetching;
-
-  // useEffect(() => {
-  //      setIsVisibleTransfer(false);
-  // }, [transferStatus]);
 
   const onDateChange = (type: "prev" | "next") => {
     //     setCurrentLog(null); // TODO: uncomment to delete current log
@@ -101,6 +97,23 @@ const LogActions: React.FC<ILogActions> = ({}) => {
       origin: "Auto",
     };
   };
+
+  const [data, setReportData] = useState<any>();
+  const params: { id: "" } = useParams();
+  const location = useLocation();
+  let upDate = location?.search?.split("=")[1]?.slice(0, 10);
+
+  const handleSetData = (res: any) => {
+    setReportData(res?.report);
+    setLogs(res?.logs)
+  };
+
+  useEffect(() => {
+    const response = api(`daily/report?driverId=${params.id}&date=${upDate}`);
+    response
+      .then((res) => {handleSetData(res?.data)})
+      .catch((error) => console.log(error));
+  }, [])
 
   return (
     <div className="log-actions">
@@ -363,7 +376,7 @@ const LogActions: React.FC<ILogActions> = ({}) => {
             isPrinting={true}
             logs={logs}
             initialTime={initialTime / 1000}
-            reportData={reportData}
+            reportData={data}
           />
         </div>
       </Modal>

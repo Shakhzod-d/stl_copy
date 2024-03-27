@@ -10,11 +10,11 @@ import { DownloadOutlined } from "@ant-design/icons";
 import { PDFExport } from "@progress/kendo-react-pdf";
 import { Button } from "antd";
 import moment from "moment";
-import momentTZ from "moment-timezone";
 import { useEffect, useRef, useState } from "react";
 import Report from "../../Logs/components/LogActions/components/Report";
 import { getStartDay } from "../../Logs/components/correction_algorithms";
 import { NOT_DRAW_STATUSES } from "@/pages/Logs/components/constants";
+import { useLogsInnerContext } from "@/pages/Logs/components/LogsInner.context";
 
 interface IQueryParams {
   driverId?: number;
@@ -33,10 +33,9 @@ const DriverReports = () => {
 
   const [selectedDriver, setSelectedDriver] = useState<number>();
   const [date, setDate] = useState<[any, any]>([
-    momentZone().subtract(1, "day").startOf("day"),
+    momentZone().startOf("day"),
     momentZone().startOf("day"),
   ]);
-  // console.log(momentZone().startOf("day"));
 
   const [queryParams, setQueryParams] = useState<IQueryParams>();
   const [driverReport, setDriverReport] = useState<IDriverReportPDF[]>([]);
@@ -167,14 +166,11 @@ const DriverReports = () => {
               author="STL"
             >
               {driverReport?.map((report, i) => {
-                // report = log, data, initialTime
-                // console.log(`report`, report);
-
                 return (
                   report?.log?.length > 0 && (
                     <div
                       className={`daily-log ${i !== 0 ? "page-break" : null}`}
-                      key={report?.data?._id}
+                      key={report?.data?._id + `${i}`}
                     >
                       <Report
                         logs={report?.log}
