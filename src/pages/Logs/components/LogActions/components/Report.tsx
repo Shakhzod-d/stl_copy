@@ -27,9 +27,11 @@ const Report: React.FC<IProps> = ({
   width,
 }) => {
   const [hoveredId, setHoveredId] = useState<any | null>(null);
-  const companyTimeZone = useSelector<RootState>((state) => state?.log?.companyTimeZone);
+  const companyTimeZone = useSelector<RootState>(
+    (state) => state?.log?.companyTimeZone
+  );
 
-  const [newLogs, setNewLogs] = useState<ILog[]>(logs)
+  const [newLogs, setNewLogs] = useState<ILog[]>(logs);
 
   useEffect(() => {
     const newLogData: any = logs?.map((item: ILog) => {
@@ -44,9 +46,8 @@ const Report: React.FC<IProps> = ({
       };
     });
 
-    setNewLogs(newLogData)
+    setNewLogs(newLogData);
   }, []);
-  
 
   return (
     <div
@@ -221,11 +222,17 @@ const Report: React.FC<IProps> = ({
         </div>
         <div style={{ maxWidth: "150px" }}>
           <div style={{ borderBottom: "2px solid #000", textAlign: "center" }}>
-            {reportData && reportData.signature !== " " && reportData.signature? <img
-              style={{ width: "100%" }}
-              src={`https://ptapi.roundedteam.uz/public/uploads/signatures/${reportData?.signature}`}
-              alt="signature"
-            /> : "not signature"}
+            {reportData &&
+            reportData.signature !== " " &&
+            reportData.signature ? (
+              <img
+                style={{ width: "100%" }}
+                src={`https://ptapi.roundedteam.uz/public/uploads/signatures/${reportData?.signature}`}
+                alt="signature"
+              />
+            ) : (
+              "not signature"
+            )}
           </div>
           <p
             style={{
