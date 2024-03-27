@@ -134,14 +134,6 @@ const GraphItem: React.FC<IGraphItem> = ({
     "Hawaii-Aleutian Time": "America/Pacific/Honolulu",
   };
 
-  // const {
-  //   state: {
-  //     // time = 0,
-  //     // driverData = { data: { companyTimeZone: "Eastern Time" } },
-  //   },
-  // } = useLogsInnerContext();
-  // const currentDate = new Date();  
-
   // const isFutureTime = value[1] > getCurrentTimeInSeconds();
 
   // console.log(`rangeVal`, rangeVal); // rangeVal[1] = o'ng slider topdim shu ekan

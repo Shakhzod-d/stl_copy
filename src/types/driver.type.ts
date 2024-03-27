@@ -38,4 +38,5 @@ export interface IDriverData extends IDriverForm {
   violations: IViolation["Violations"][];
   companyTimeZone: string;
   data: any;
+  companyId: string;
 }

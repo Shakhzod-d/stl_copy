@@ -98,6 +98,7 @@ const LogActions: React.FC<ILogActions> = ({}) => {
     };
   };
 
+  const [renderReport, setRenderReport] = useState<boolean>(false)
   const [data, setReportData] = useState<any>();
   const params: { id: "" } = useParams();
   const location = useLocation();
@@ -113,7 +114,12 @@ const LogActions: React.FC<ILogActions> = ({}) => {
     response
       .then((res) => {handleSetData(res?.data)})
       .catch((error) => console.log(error));
-  }, [])
+  }, [renderReport])
+
+  const upDateReport = () => {
+    setIsVisibleReport(true)
+    setRenderReport(!renderReport)
+  }
 
   return (
     <div className="log-actions">
@@ -159,7 +165,7 @@ const LogActions: React.FC<ILogActions> = ({}) => {
             </Button>
             <Button
               disabled={whenSomethingIsLoading}
-              onClick={() => setIsVisibleReport(true)}
+              onClick={() => upDateReport()}
               className="log-btn"
             >
               Report

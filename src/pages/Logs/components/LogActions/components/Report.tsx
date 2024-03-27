@@ -1,6 +1,6 @@
 import { DriverStatus } from "@/components/elements/TableElements";
 import { ILog, IReport } from "@/types/log.type";
-import { Table } from "antd";
+import { Table, theme } from "antd";
 import { ColumnsType } from "antd/lib/table";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
@@ -30,7 +30,8 @@ const Report: React.FC<IProps> = ({
   const companyTimeZone = useSelector<RootState>((state) => state?.log?.companyTimeZone);
 
   const [newLogs, setNewLogs] = useState<ILog[]>(logs)
-
+  const [signature, setSignature] = useState<string>("")
+ 
   useEffect(() => {
     const newLogData: any = logs?.map((item: ILog) => {
       return {
@@ -45,8 +46,12 @@ const Report: React.FC<IProps> = ({
     });
 
     setNewLogs(newLogData)
+
+    if(reportData && reportData.signature){
+      setSignature(reportData.signature.trim())
+    }
   }, []);
-  
+
 
   return (
     <div
@@ -172,7 +177,7 @@ const Report: React.FC<IProps> = ({
           </tr>
         </thead>
         <tbody>
-          {logs?.map((log, i) => (
+          {newLogs?.map((log, i) => (
             <tr key={log._id + `${i}`}>
               <th>{log.vehicleUnit}</th>
               <th>{log.startOdometer}</th>
@@ -183,7 +188,7 @@ const Report: React.FC<IProps> = ({
         </tbody>
       </table>
       <LogGraph
-        data={logs}
+        data={newLogs}
         setHoveredId={setHoveredId}
         initialTime={initialTime}
         hoveredId={hoveredId}
@@ -220,23 +225,14 @@ const Report: React.FC<IProps> = ({
           </h3>
         </div>
         <div style={{ maxWidth: "150px" }}>
-          <div style={{ borderBottom: "2px solid #000", textAlign: "center" }}>
-            {reportData && reportData.signature !== " " && reportData.signature? <img
+          <div style={{textAlign: "center" }} className="signatur-img">
+            {!signature ? <img
               style={{ width: "100%" }}
-              src={`https://ptapi.roundedteam.uz/public/uploads/signatures/${reportData?.signature}`}
+              src={`https://ptapi.roundedteam.uz/public/uploads/signatures/${signature}`}
               alt="signature"
-            /> : "not signature"}
+            /> : <p>not signature</p>}
           </div>
-          <p
-            style={{
-              color: "#686868",
-              textAlign: "center",
-              fontSize: "14px",
-              fontWeight: "bold",
-            }}
-          >
-            Driver Signature
-          </p>
+          <h4 style={{textAlign: "center"}}>Driver Signature</h4>
         </div>
       </div>
     </div>
@@ -268,10 +264,10 @@ const columns: ColumnsType<ILog> = [
     title: "duration",
     dataIndex: "hours",
     render(value, record, index) {
-      const start = moment.unix(record.start);
-      const end = moment.unix(record.end);
+      const start = moment.utc(record.start);
+      const end = moment.utc(record.end);
       const seconds = moment.duration(end.diff(start)).asSeconds();
-      return seconds ? moment.utc(seconds).format("hh:mm:ss") : "00:00:00";
+      return seconds ? moment(seconds).format("hh:mm:ss") : moment(seconds).valueOf();
     },
   },
   {
