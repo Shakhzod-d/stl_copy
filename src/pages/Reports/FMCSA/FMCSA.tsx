@@ -14,6 +14,8 @@ import { useDispatch, useSelector } from "react-redux";
 import useColumns from "./columns";
 import { NumberParam, useQueryParam, withDefault } from "use-query-params";
 import useParseData from "@/hooks/useParseData";
+import { PAGE_LIMIT } from "@/constants/general.const";
+import "./_fmcs.scss"
 
 export interface IIftaCreateForm {
  fromTo: string;
@@ -21,10 +23,10 @@ export interface IIftaCreateForm {
 }
 
 const FMCSA = () => {
- const columns = useColumns();
  const { handleSubmit, control, reset, setValue, formState } =
   useForm<IIftaCreateForm>();
  const [fromTo, setFromTo] = useState<[any, any]>([0, 0]);
+ const [page, setPage] = useQueryParam("page", withDefault(NumberParam, 1))
 
  const { data: drivers, isLoading: driverLoad } = useApi<{
   data: IDriverData[];
@@ -33,12 +35,16 @@ const FMCSA = () => {
 
  // @ts-ignore
  const { MFCSAReports, loading } = useSelector<RootState>((s) => s.reports);
+ const columns = useColumns();
  const [fmData, setFMData] = useState<any>();
+ const { totalPage } = useParseData<IDriverData>(fmData)
  const isValidDateRange =
   fromTo[0] &&
   fromTo[1] &&
   moment.isMoment(fromTo[0]) &&
   moment.isMoment(fromTo[1]);
+  console.log(MFCSAReports);
+  
 
  const handleGetReport = async(formState: any) => {
   // console.log(`**`, formState);
@@ -52,21 +58,23 @@ const FMCSA = () => {
   } else {
    message.error("Please select a valid date range.");
   }
-
   getFmcsaReportsData();
  };
 
  const getFmcsaReportsData = async () => {
-  const url = `/fmcsa/page?page=1&limit=10`;
+  const url = `/fmcsa/page?page=${page}&limit=10`;
 
   await api(url)
    .then((res) => {
     setFMData(res.data.data);
+
    })
    .catch((error) => console.log(error));
  };
 
- useEffect(() => {}, [fmData]);
+ useEffect(() => {
+  getFmcsaReportsData()
+ }, []);
 
  return (
   <div className="ifta-reports page">
@@ -144,7 +152,12 @@ const FMCSA = () => {
      loading={loading}
      // @ts-ignore
      dataSource={fmData}
-     pagination={false}
+     pagination={{
+      onChange: (page) => setPage(page),
+      current: page,
+      pageSize: PAGE_LIMIT,
+      total: totalPage
+ }}
     />
    </div>
   </div>
