@@ -6,14 +6,12 @@ import useApi from "@/hooks/useApi";
 import { AppDispatch, RootState } from "@/store";
 import { getFmcsaReports } from "@/store/slices/reportSlice";
 import { IDriverData } from "@/types/driver.type";
-import { Button, Col, DatePicker, Row, Table, message } from "antd";
+import { Col, DatePicker, Row, Table, message } from "antd";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import useColumns from "./columns";
-import { DownloadOutlined } from "@ant-design/icons";
-import { PAGE_LIMIT } from "@/constants/general.const";
 import { NumberParam, useQueryParam, withDefault } from "use-query-params";
 import useParseData from "@/hooks/useParseData";
 
@@ -27,7 +25,6 @@ const FMCSA = () => {
  const { handleSubmit, control, reset, setValue, formState } =
   useForm<IIftaCreateForm>();
  const [fromTo, setFromTo] = useState<[any, any]>([0, 0]);
- const [page, setPage] = useQueryParam("page", withDefault(NumberParam, 1))
 
  const { data: drivers, isLoading: driverLoad } = useApi<{
   data: IDriverData[];
@@ -37,7 +34,6 @@ const FMCSA = () => {
  // @ts-ignore
  const { MFCSAReports, loading } = useSelector<RootState>((s) => s.reports);
  const [fmData, setFMData] = useState<any>();
- const { totalPage } = useParseData<IDriverData>(fmData)
  const isValidDateRange =
   fromTo[0] &&
   fromTo[1] &&
@@ -61,7 +57,7 @@ const FMCSA = () => {
  };
 
  const getFmcsaReportsData = async () => {
-  const url = `/fmcsa/page?page=${page}&limit=100`;
+  const url = `/fmcsa/page?page=1&limit=10`;
 
   await api(url)
    .then((res) => {
@@ -132,18 +128,6 @@ const FMCSA = () => {
       Submit
      </button>
       </Col>
-      <Col span={4}>
-      <div className="download-btn">
-              <Button
-                type="primary"
-                onClick={() => {
-                }}
-              >
-                <DownloadOutlined />
-                Download PDF
-              </Button>
-            </div>
-      </Col>
      </Row>
      <br />
 
@@ -160,12 +144,7 @@ const FMCSA = () => {
      loading={loading}
      // @ts-ignore
      dataSource={fmData}
-     pagination={{
-      onChange: (page) => setPage(page),
-      current: page,
-      pageSize: PAGE_LIMIT,
-      total: totalPage
- }}
+     pagination={false}
     />
    </div>
   </div>

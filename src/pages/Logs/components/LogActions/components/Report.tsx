@@ -52,7 +52,7 @@ const Report: React.FC<IProps> = ({
     if(reportData && reportData.signature){
       setSignature(reportData.signature.trim())
     }
-  }, []);
+  }, [newLogs]);
 
 
   return (

@@ -1,12 +1,8 @@
-import { timeZones } from "@/pages/Logs/components/LogTable/helper";
-import { RootState } from "@/store";
-import { getLocalStorage } from "@/utils";
+import { DownloadOutlined } from "@ant-design/icons";
+import { Button } from "antd";
 import moment from "moment";
-import { useSelector } from "react-redux";
 
 const useColumns = () => {
- const authCompany: any = useSelector<RootState>((s) => s.auth.companies);
- let companyTimeZone = authCompany?.find((item: any) => item._id === getLocalStorage("companyId"))
 
  return [
   {
@@ -24,17 +20,13 @@ const useColumns = () => {
    dataIndex: "driver",
    render: (value: any) => value.lastName,
   },
-  { title: "Status", dataIndex: "status" },
   {
    title: "Date",
    dataIndex: "date",
    render: (value: any) => {
     return (
      <span>
-      {moment
-        .unix(value) // @ts-ignore
-       .tz(timeZones[companyTimeZone.homeTerminalTimezone])
-       .format("hh:mm:ss")}
+      {moment.unix(value).format("DD.MM.YYYY / HH:mm")}
      </span>
     );
    },
@@ -45,10 +37,7 @@ const useColumns = () => {
    render: (value: any) => {
     return (
      <span>
-      {moment
-        .unix(value) // @ts-ignore
-       .tz(timeZones[companyTimeZone.homeTerminalTimezone])
-       .format("hh:mm:ss")}
+      {moment.unix(value).format("DD.MM.YYYY")}
      </span>
     );
    },
@@ -59,15 +48,43 @@ const useColumns = () => {
    dataIndex: "from",
    render: (value: any) => {
     return (
-     <span style={{ textAlign: "left" }}>
-      {moment
-        .unix(value) // @ts-ignore
-       .tz(timeZones[companyTimeZone.homeTerminalTimezone])
-       .format("hh:mm:ss")}
+     <span>
+      {moment.unix(value).format("DD.MM.YYYY")}
      </span>
     );
    },
   },
+  {
+    title: "Download",
+    render: () => {
+        return(
+            <div className="d-flex" style={{columnGap: "4px", maxWidth: "100px"}}>
+                <div className="download-btn">
+              <Button
+                type="primary"
+                style={{fontSize: "12px", padding: "5px 10px"}}
+                onClick={() => {
+                }}
+              >
+                <DownloadOutlined />
+                XML
+              </Button>
+            </div>
+            <div className="download-btn">
+            <Button
+              type="primary"
+              style={{fontSize: "12px", padding: "5px 10px"}}
+              onClick={() => {
+              }}
+            >
+              <DownloadOutlined />
+              JSON
+            </Button>
+          </div>
+            </div>
+        )
+    }
+  }
  ];
 };
 
