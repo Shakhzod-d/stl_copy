@@ -12,6 +12,10 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import useColumns from "./columns";
+import { DownloadOutlined } from "@ant-design/icons";
+import { PAGE_LIMIT } from "@/constants/general.const";
+import { NumberParam, useQueryParam, withDefault } from "use-query-params";
+import useParseData from "@/hooks/useParseData";
 
 export interface IIftaCreateForm {
  fromTo: string;
@@ -23,6 +27,7 @@ const FMCSA = () => {
  const { handleSubmit, control, reset, setValue, formState } =
   useForm<IIftaCreateForm>();
  const [fromTo, setFromTo] = useState<[any, any]>([0, 0]);
+ const [page, setPage] = useQueryParam("page", withDefault(NumberParam, 1))
 
  const { data: drivers, isLoading: driverLoad } = useApi<{
   data: IDriverData[];
@@ -32,6 +37,7 @@ const FMCSA = () => {
  // @ts-ignore
  const { MFCSAReports, loading } = useSelector<RootState>((s) => s.reports);
  const [fmData, setFMData] = useState<any>();
+ const { totalPage } = useParseData<IDriverData>(fmData)
  const isValidDateRange =
   fromTo[0] &&
   fromTo[1] &&
@@ -55,7 +61,7 @@ const FMCSA = () => {
  };
 
  const getFmcsaReportsData = async () => {
-  const url = "/fmcsa/page?page=1&limit=10";
+  const url = `/fmcsa/page?page=${page}&limit=100`;
 
   await api(url)
    .then((res) => {
@@ -77,10 +83,10 @@ const FMCSA = () => {
     <form
      onSubmit={handleSubmit(handleGetReport)}
      id="create-service-form"
-     style={{ width: "400px", marginBottom: "40px" }}
+     style={{ width: "100%", marginBottom: "40px" }}
     >
-     <Row gutter={[24, 24]}>
-      <Col span={24}>
+     <Row gutter={[24, 24]} style={{alignItems: "flex-end"}}>
+      <Col span={8}>
        <p className="mb-4">Date range</p>
        <DatePicker.RangePicker
         onChange={(val: any) => {
@@ -95,10 +101,11 @@ const FMCSA = () => {
         <span style={{ color: "red" }}>Please select a date range.</span>
        )}
       </Col>
-      <Col span={24}>
+      <Col span={8}>
+        <p className="mb-4">Driver</p>
        <Select
         // mode="multiple"
-        label={"Driver"}
+        label={""}
         placeholder={"Select driver"}
         name="driverId"
         control={control}
@@ -115,10 +122,8 @@ const FMCSA = () => {
         }
        />
       </Col>
-     </Row>
-     <br />
-
-     <button
+      <Col span={4}>
+      <button
       type="submit"
       className="ant-btn ant-btn-primary"
       // @ts-ignore
@@ -126,18 +131,41 @@ const FMCSA = () => {
      >
       Submit
      </button>
+      </Col>
+      <Col span={4}>
+      <div className="download-btn">
+              <Button
+                type="primary"
+                onClick={() => {
+                }}
+              >
+                <DownloadOutlined />
+                Download PDF
+              </Button>
+            </div>
+      </Col>
+     </Row>
+     <br />
+
+     
     </form>
    </div>
    {/* <h3>ddd</h3> */}
    <div>
     <Table
      scroll={{ x: "max-content" }}
+     key={"_id"}
      rowKey={"_id"}
      columns={columns}
      loading={loading}
      // @ts-ignore
      dataSource={fmData}
-     pagination={false}
+     pagination={{
+      onChange: (page) => setPage(page),
+      current: page,
+      pageSize: PAGE_LIMIT,
+      total: totalPage
+ }}
     />
    </div>
   </div>

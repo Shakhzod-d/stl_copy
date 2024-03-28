@@ -1,13 +1,19 @@
 import { timeZones } from "@/pages/Logs/components/LogTable/helper";
 import { RootState } from "@/store";
+import { getLocalStorage } from "@/utils";
 import moment from "moment";
 import { useSelector } from "react-redux";
 
 const useColumns = () => {
- const companyTimeZone = useSelector<RootState>((s) => s.log.companyTimeZone);
+ const authCompany: any = useSelector<RootState>((s) => s.auth.companies);
+ let companyTimeZone = authCompany?.find((item: any) => item._id === getLocalStorage("companyId"))
 
  return [
-  { title: "NO", render: (value: any, item: any, index: any) => index + 1 },
+  {
+   title: "NO",
+   width: "20px",
+   render: (value: any, item: any, index: any) => index + 1,
+  },
   {
    title: "First Name",
    dataIndex: "driver",
@@ -20,24 +26,46 @@ const useColumns = () => {
   },
   { title: "Status", dataIndex: "status" },
   {
-   title: "To",
-   dataIndex: "to",
-   render: (to: any) => {
-    return <span>{moment(to * 1000).format("h:mm:ss")}</span>;
+   title: "Date",
+   dataIndex: "date",
+   render: (value: any) => {
+    return (
+     <span>
+      {moment
+        .unix(value) // @ts-ignore
+       .tz(timeZones[companyTimeZone.homeTerminalTimezone])
+       .format("hh:mm:ss")}
+     </span>
+    );
    },
   },
   {
-   title: "Date",
-   dataIndex: "date",
-   render: (to: any) => {
-    return <span>{moment(to * 1000).format("h:mm:ss")}</span>;
+   title: "To",
+   dataIndex: "to",
+   render: (value: any) => {
+    return (
+     <span>
+      {moment
+        .unix(value) // @ts-ignore
+       .tz(timeZones[companyTimeZone.homeTerminalTimezone])
+       .format("hh:mm:ss")}
+     </span>
+    );
    },
   },
+
   {
    title: "From",
    dataIndex: "from",
-   render: (to: any) => {
-    return <span style={{textAlign: "left"}}>{moment(to * 1000).format("h:mm:ss")}</span>;
+   render: (value: any) => {
+    return (
+     <span style={{ textAlign: "left" }}>
+      {moment
+        .unix(value) // @ts-ignore
+       .tz(timeZones[companyTimeZone.homeTerminalTimezone])
+       .format("hh:mm:ss")}
+     </span>
+    );
    },
   },
  ];

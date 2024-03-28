@@ -269,7 +269,7 @@ const columns: ColumnsType<ILog> = [
       const start = moment.unix(record.start);
       const end = moment.unix(record.end);
       const seconds = moment.duration(end.diff(start)).asSeconds();
-      return seconds ? moment.utc(seconds).format("hh:mm:ss") : "0";
+      return seconds ? moment.utc(seconds).format("hh:mm:ss") : "00:00:00";
     },
   },
   {
