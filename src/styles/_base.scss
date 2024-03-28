@@ -22,6 +22,7 @@ body {
 }
 
 body.dark {
+  background-color: $dark1;
   .ant-layout {
     background-color: $dark1;
   }
@@ -35,6 +36,10 @@ body.dark {
   h6, table, .current-status {
     color: $white;
   }
+  a{
+    color: $dark2
+  }
+
 }
 
 .app {

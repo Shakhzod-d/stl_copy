@@ -23,21 +23,21 @@ const useColumns = () => {
    title: "To",
    dataIndex: "to",
    render: (to: any) => {
-    return <span>{moment(to * 1000).format("h:mm:ss")}</span>;
+    return <span>{moment(to * 1000).format("HH:mm:ss")}</span>;
    },
   },
   {
    title: "Date",
    dataIndex: "date",
    render: (to: any) => {
-    return <span>{moment(to * 1000).format("h:mm:ss")}</span>;
+    return <span>{moment(to * 1000).format("HH:mm:ss")}</span>;
    },
   },
   {
    title: "From",
    dataIndex: "from",
    render: (to: any) => {
-    return <span style={{textAlign: "left"}}>{moment(to * 1000).format("h:mm:ss")}</span>;
+    return <span style={{textAlign: "left"}}>{moment(to * 1000).format("HH:mm:ss")}</span>;
    },
   },
  ];

@@ -12,6 +12,37 @@
         border-color: $primary;
       }
     }
+    .ant-picker{
+      background-color: $dark3;
+      border-color:#3a3c3e;
+    }
+  }
+  input{
+    border-color: $dark-gray;
+      background-color: $dark3 !important;
+      color: white;
+      &:focus,
+      &:hover {
+        border-color: $primary;
+      }
+  }
+  .ant-select-selection-search{
+    .ant-select-selection-search-input{
+      width: 0;
+    }
+  }
+  .ant-input-affix-wrapper{
+    background-color: $dark3;
+    border-color: #3a3c3e;
+    .ant-input-suffix{
+      color: white;
+    }
+  }
+  .trackings-head .driver-info-top{
+    color: $white;
+    span{
+      color: $white;
+    }
   }
 }
 
