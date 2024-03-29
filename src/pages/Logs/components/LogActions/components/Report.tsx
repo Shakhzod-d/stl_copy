@@ -31,8 +31,10 @@ const Report: React.FC<IProps> = ({
     (state) => state?.log?.companyTimeZone
   );
 
-  const [newLogs, setNewLogs] = useState<ILog[]>(logs)
+  const [newLogs, setNewLogs] = useState<ILog[]>()
   const [signature, setSignature] = useState<string>("")
+  console.log(reportData);
+  
  
   useEffect(() => {
     const newLogData: any = logs?.map((item: ILog) => {
@@ -52,7 +54,7 @@ const Report: React.FC<IProps> = ({
     if(reportData && reportData.signature){
       setSignature(reportData.signature.trim())
     }
-  }, [newLogs]);
+  }, [reportData, logs, companyTimeZone]);
 
 
   return (
@@ -64,11 +66,11 @@ const Report: React.FC<IProps> = ({
         margin: "16px auto",
       }}
     >
-      <div className="mb-16 d-flex justify-space-between align-center">
-        <p>USA Property 70 hour / 8 day</p>
-        <div className="text-center">
-          <h1 className="report-title">Drivers daily log</h1>
-          <p>{moment.unix(initialTime).format("YYYY-MM-DD")}</p>
+      <div className="mb-16 d-flex justify-center align-center">
+        <div>
+          <h1 style={{font: "40px bolder"}}>Drivers daily log</h1>
+          <p style={{textAlign: "center" }}>USA Property 70 hour / 8 day</p>
+          <p style={{textAlign: "center"}}>{moment.unix(initialTime).format("YYYY-MM-DD")}</p>
         </div>
         {isPrinting ? (
           <>
@@ -190,7 +192,7 @@ const Report: React.FC<IProps> = ({
         </tbody>
       </table>
       <LogGraph
-        data={newLogs}
+        data={logs}
         setHoveredId={setHoveredId}
         initialTime={initialTime}
         hoveredId={hoveredId}
@@ -213,28 +215,26 @@ const Report: React.FC<IProps> = ({
 
       <div
         style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
           columnGap: "100px",
         }}
+        className="d-flex align-center justify-space-between"
       >
         <div>
           <h3
-            style={{ textAlign: "center", maxWidth: "200px", fontSize: "20px" }}
+            style={{ textAlign: "center", maxWidth: "200px", fontSize: "16px" }}
           >
             I certify these entries are true and correct
           </h3>
         </div>
-        <div style={{ maxWidth: "150px" }}>
-          <div style={{textAlign: "center" }} className="signatur-img">
+        <div>
+          <div style={{maxWidth: "80px" }} className="signatur-img text-center mb-4">
             {signature ? <img
               style={{ width: "100%" }}
               src={`https://ptapi.roundedteam.uz/public/uploads/signatures/${signature}`}
               alt="signature"
-            /> : <p>not signature</p>}
+            /> : <p className="medium-12">not signature</p>}
           </div>
-          <h4 style={{textAlign: "center"}}>Driver Signature</h4>
+          <h3 style={{textAlign: "center", fontSize: "12px"}}>Driver Signature</h3>
         </div>
       </div>
     </div>
@@ -254,13 +254,15 @@ const columns: ColumnsType<ILog> = [
     title: "status",
     dataIndex: "status",
     render: DriverStatus,
+    width: 120
   },
   {
     title: "start",
     dataIndex: "start",
     render: (value, record, index) => {
-      return moment(record.start).format("hh:mm:ss");
+      return moment(record.start).format("hh:mm:ss A");
     },
+    width: 95  
   },
   {
     title: "duration",
@@ -276,8 +278,9 @@ const columns: ColumnsType<ILog> = [
     title: "end",
     dataIndex: "end",
     render(value, record, index) {
-      return moment(value).format("hh:mm:ss");
+      return moment(record.end).format("hh:mm:ss A");
     },
+    width: 95
   },
   {
     title: "location",
@@ -285,6 +288,7 @@ const columns: ColumnsType<ILog> = [
     render(value, record: ILog, index) {
       return record?.location?.name || "location is not given";
     },
+    width: 120
   },
   {
     title: "odometer",
@@ -300,6 +304,10 @@ const columns: ColumnsType<ILog> = [
   {
     title: "notes",
     dataIndex: "notes",
+  },
+  {
+    title: "origin",
+    dataIndex: "origin",
   },
 ];
 

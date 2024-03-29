@@ -43,7 +43,7 @@ const FMCSA = () => {
   fromTo[1] &&
   moment.isMoment(fromTo[0]) &&
   moment.isMoment(fromTo[1]);
-  console.log(MFCSAReports);
+ 
   
 
  const handleGetReport = async(formState: any) => {

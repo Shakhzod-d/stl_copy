@@ -27,7 +27,6 @@ const useColumns = () => {
    fileContent = data;
   }
 
-  //@ts-ignore
   const blob = new Blob([fileContent], { type: mimeType });
 
   const url = window.URL.createObjectURL(blob);
