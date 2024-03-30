@@ -32,7 +32,7 @@ const Users = () => {
 
      // Get all drivers data
      const { data, isLoading, refetch, isFetching } = useApi<IPageData<IUserData[]>>("/users", { page, search, limit: PAGE_LIMIT });
-     const { data: data1, isLoading: isLoading1, refetch: refetch1, isFetching: isFetching1 } = useApi<IPageData<IUserData[]>>("/users/by", { page, limit: PAGE_LIMIT, companyId });
+     const { data: data1, isLoading: isLoading1, isFetching: isFetching1 } = useApi<IPageData<IUserData[]>>("/users/by", { page, limit: PAGE_LIMIT, companyId });
      const { mutate: deleteCompany, isLoading: deleteLoading } = useApiMutationID("DELETE", "/user");
 
      // parse api data

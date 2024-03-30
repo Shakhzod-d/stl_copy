@@ -107,8 +107,6 @@ const ActionModal: React.FC<Props> = ({
   useEffect(()=>{
     if(userData?.role.roleName === RoleNames.COMPANY_ADMIN){
       setRoles1(roles.filter((item: IRoles)=>item.value === 'logger'))
-      
-      
     }
     else{
       setRoles1(roles)

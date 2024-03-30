@@ -83,8 +83,6 @@ const ReportSlice = createSlice({
     builder.addCase(filterReport.fulfilled, (state, action) => {
       state.loading = false;
       state.IFTAReports = action.payload
-        .flat()
-        .map((item: any, idx: number) => ({ ...item, order: idx + 1 }));
     });
 
     builder.addCase(getReportsInitially.pending, (state) => {
@@ -106,6 +104,8 @@ const ReportSlice = createSlice({
       state.loading = false;
       state.MFCSAReports = action.payload;
     });
+
+    
   },
 });
 

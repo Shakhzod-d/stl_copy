@@ -1,5 +1,5 @@
 import { Col, DatePicker, Row, message } from "antd";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import FormModal from "@/components/elements/FormModal";
 import Select from "@/components/form/Select";
@@ -10,19 +10,21 @@ import { state_names } from "@/constants";
 import useApi from "@/hooks/useApi";
 import { IVehicleData } from "@/types/vehicle.type";
 import moment from "moment";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { filterReport } from "@/store/slices/reportSlice";
-import { AppDispatch } from "@/store";
+import { AppDispatch, RootState } from "@/store";
 import useApiMutation from "@/hooks/useApiMutation";
 
 interface Props {
   toggle: () => void;
+  setFromTo1: (item: any) => void;
+  setGeneratedDate: (item: any) => void;
 }
 
-const ActionModal: React.FC<Props> = ({ toggle }) => {
+const ActionModal: React.FC<Props> = ({ toggle, setFromTo1, setGeneratedDate }) => {
   const { handleSubmit, control, reset, setValue, formState } =
     useForm<IIftaCreateForm>();
-
+    const s= useSelector<RootState>((s) => s.reports.IFTAReports);
   const [fromTo, setFromTo] = useState<[any, any]>([0, 0]);
   const dispatch = useDispatch<AppDispatch>();
 
@@ -32,8 +34,10 @@ const ActionModal: React.FC<Props> = ({ toggle }) => {
     page: 1,
     limit: 100,
   });
+  
 
   const submitFunc = (formData: IIftaCreateForm) => {
+    const date = new Date()
     const isValidDateRange =
       moment.isMoment(fromTo[0]) && moment.isMoment(fromTo[1]);
 
@@ -47,11 +51,20 @@ const ActionModal: React.FC<Props> = ({ toggle }) => {
         },
         toggle,
       };
+      
 
       dispatch(filterReport(allObj));
+      setGeneratedDate(date)
+      // setIftaReport();
+      // console.log(s);
+      // handlePrint()
+      
     } else {
       message.error("Please select a valid date range.");
     }
+    
+      
+    setFromTo1(fromTo)
     // const url = `/ifta/data?from=${fromTo[0].unix()}&to=${fromTo[1].unix()}`;
 
     // const allObj = {

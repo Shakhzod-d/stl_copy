@@ -8,4 +8,62 @@
                align-items: center;
           }
      }
+     
+     .tableDiv{
+          width: 880px;
+          padding: 20;
+          padding-top: 100px;
+          padding-bottom: 30px;
+           margin-bottom: 30px;
+           border: 15px white solid;
+           .report-top{
+               position: absolute;
+               top: -70px;
+               right: 0;
+               .name-report{
+                    font-weight: 600;
+                    text-align: right;
+                    margin-bottom: 20px;
+               }
+               .name-report-bottom{
+                    text-align: right;
+               }
+           }
+          .table{
+               border-collapse: collapse;
+               width: 100%;
+               th, td{
+                    border: 1px solid black;
+                    padding: 5px;
+                    font-size: 20px;
+               }
+               td{
+                    padding: 0 10px;
+               }
+               th:nth-child(1) {
+                    width: 5%;
+                  }
+                  th:nth-child(2) {
+                    width: 65%;
+                  }
+                  th:nth-child(3) {
+                    width: 35%;
+                  }
+          }
+          .k-pdf-export .report-title{
+               font-size: 25px;
+               font-weight: 600;
+          }
+          .line{
+               border-bottom: 1px solid black;
+               width: 100%;
+          }
+          .vehicle-unit{
+               margin-top: 16px;
+               font-size: 20px;
+          }
+     }
+     
 }
+
+
