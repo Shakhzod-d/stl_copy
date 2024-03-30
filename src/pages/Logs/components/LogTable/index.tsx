@@ -6,7 +6,7 @@ import { IDriverData } from "@/types/driver.type";
 import { ILog } from "@/types/log.type";
 import { mapDrivers } from "@/utils";
 import { Button, Table } from "antd";
-import React, { Key, useState } from "react";
+import React, { Key, useEffect, useState } from "react";
 // import { v4 as uuidV4 } from "uuid";
 
 interface ILogTable {

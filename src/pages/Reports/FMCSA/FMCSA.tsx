@@ -6,16 +6,16 @@ import useApi from "@/hooks/useApi";
 import { AppDispatch, RootState } from "@/store";
 import { getFmcsaReports } from "@/store/slices/reportSlice";
 import { IDriverData } from "@/types/driver.type";
-import { Button, Col, DatePicker, Row, Table, message } from "antd";
+import { Col, DatePicker, Row, Table, message } from "antd";
 import moment from "moment";
 import React, { useEffect, useState  } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import useColumns from "./columns";
-import { DownloadOutlined } from "@ant-design/icons";
-import { PAGE_LIMIT } from "@/constants/general.const";
 import { NumberParam, useQueryParam, withDefault } from "use-query-params";
 import useParseData from "@/hooks/useParseData";
+import { PAGE_LIMIT } from "@/constants/general.const";
+import "./_fmcs.scss"
 
 
 export interface IIftaCreateForm {
@@ -24,7 +24,6 @@ export interface IIftaCreateForm {
 }
 
 const FMCSA = () => {
- const columns = useColumns();
  const { handleSubmit, control, reset, setValue, formState } =
   useForm<IIftaCreateForm>();
  const [fromTo, setFromTo] = useState<[any, any]>([0, 0]);
@@ -38,6 +37,7 @@ const FMCSA = () => {
 
  // @ts-ignore
  const { MFCSAReports, loading } = useSelector<RootState>((s) => s.reports);
+ const columns = useColumns();
  const [fmData, setFMData] = useState<any>();
  const { totalPage } = useParseData<IDriverData>(fmData)
  const isValidDateRange =
@@ -45,6 +45,8 @@ const FMCSA = () => {
   fromTo[1] &&
   moment.isMoment(fromTo[0]) &&
   moment.isMoment(fromTo[1]);
+ 
+  
 
  const handleGetReport = async(formState: any) => {
   // console.log(`**`, formState);
@@ -58,22 +60,23 @@ const FMCSA = () => {
   } else {
    message.error("Please select a valid date range.");
   }
-
   getFmcsaReportsData();
  };
 
  const getFmcsaReportsData = async () => {
-  const url = `/fmcsa/page?page=${page}&limit=100`;
+  const url = `/fmcsa/page?page=${page}&limit=10`;
 
   await api(url)
    .then((res) => {
     setFMData(res.data.data);
+
    })
    .catch((error) => console.log(error));
  };
 
-
- useEffect(() => {}, [fmData]);
+ useEffect(() => {
+  getFmcsaReportsData()
+ }, []);
 
  return (
   <div className="ifta-reports page">
@@ -134,18 +137,6 @@ const FMCSA = () => {
      >
       Submit
      </button>
-      </Col>
-      <Col span={4}>
-      <div className="download-btn">
-              <Button
-                type="primary"
-                onClick={() => {
-                }}
-              >
-                <DownloadOutlined />
-                Download PDF
-              </Button>
-            </div>
       </Col>
      </Row>
      <br />

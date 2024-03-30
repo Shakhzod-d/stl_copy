@@ -138,9 +138,7 @@ const useLogsInner = () => {
           end: el.end <= endDay ? el.end : endDay,
         };
       });
-      setInitialLogs(data);
-      
-    
+      setInitialLogs(data); 
       setLogs(data);
     }
   }, [logData]);

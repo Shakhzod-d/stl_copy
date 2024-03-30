@@ -36,7 +36,7 @@ const DriverReports = () => {
     momentZone().startOf("day"),
     momentZone().startOf("day"),
   ]);
-
+  
   const [queryParams, setQueryParams] = useState<IQueryParams>();
   const [driverReport, setDriverReport] = useState<IDriverReportPDF[]>([]);
   const pdfExportComponent = useRef(null) as React.MutableRefObject<null>;
@@ -73,6 +73,7 @@ const DriverReports = () => {
       setDriverReport(driverReportPdfs);
     },
   });
+  
 
   // Get all drivers data
   const { data: drivers } = useApi<{ data: IDriverData[] }>(
@@ -86,6 +87,8 @@ const DriverReports = () => {
     }
   );
 
+  
+  
   useEffect(() => {
     // console.log(moment(date?.[0]).unix());
     // console.log(moment(date?.[1]).unix());
@@ -96,6 +99,7 @@ const DriverReports = () => {
       from: moment(date?.[0])?.unix(),
       to: moment(date?.[1])?.unix(),
     }));
+
     // console.log(`data`, date);
   }, [date, selectedDriver]);
 
