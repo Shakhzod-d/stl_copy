@@ -7,14 +7,15 @@ import { getLocalStorage } from "@/utils";
 import { timeZones } from "@/pages/Logs/components/LogTable/helper";
 import { Button } from "antd";
 import { DownloadOutlined } from "@ant-design/icons";
+import api from "@/api";
 
 const useColumns = () => {
   const authCompany: any = useSelector<RootState>((s) => s.auth.companies);
   let companyTimeZone = authCompany?.find((item: any) => item._id === getLocalStorage("companyId"))
 
   function downloadPDF(url: string, filename: string) {
-    fetch(`/ifta/${url}`)
-      .then(response => response.blob())
+    fetch(`http://5.161.229.41:5404/public/uploads/ifta/${url}`)
+      .then((response: any) => response.blob())
       .then(blob => {
         const blobUrl = URL.createObjectURL(blob);
         const link = document.createElement('a');
@@ -41,35 +42,17 @@ const useColumns = () => {
     {
       title: "Create",
       dataIndex: "createdAt",
-      render: (value: any) => moment(value).format('YYYY-MM-DD')
+      render: (value: any) => moment(value).format("DD.MM.YYYY / HH:mm")
     },
     {
       title: "From",
       dataIndex: "from",
-      render: (value: any) => {
-        return (
-         <span>
-          {moment
-            .unix(value) // @ts-ignore
-           .tz(timeZones[companyTimeZone.homeTerminalTimezone])
-           .format("YYYY-MM-DD")}
-         </span>
-        );
-       },
+      render: (value: any) => moment.unix(value) .format("DD.MM.YYYY")
     },
     {
       title: "To",
       dataIndex: "to",
-      render: (value: any) => {
-        return (
-         <span>
-          {moment
-            .unix(value) // @ts-ignore
-           .tz(timeZones[companyTimeZone.homeTerminalTimezone])
-           .format("YYYY-MM-DD")}
-         </span>
-        );
-       },
+      render: (value: any) => moment.unix(value) .format("DD.MM.YYYY")
     },
     {
       title: "Status",
