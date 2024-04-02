@@ -61,7 +61,7 @@ const LogCorrection: React.FC<ILogCorrection> = ({ handleCloseEditing }) => {
     actions: { onChangeStatus, onCancel, onTimeChange, setLogs },
   } = useLogsInnerContext();
   const { control, reset, handleSubmit } = useForm<TFormConnection>();
-  const [fromTo, setFromTo] = useState<any[] | undefined>([]);
+  const [fromTo, setFromTo] = useState<[any, any]>([0, 0]);
   const momentZone = useMomentZone();
  const distpatch = useDispatch<AppDispatch>()
   // const { mutate: createMutate, isLoading: createLoading } =
@@ -111,7 +111,6 @@ const LogCorrection: React.FC<ILogCorrection> = ({ handleCloseEditing }) => {
   const submit = (formData: TFormConnection) => {
     handleCloseEditing();
     //  console.log(moment(formData.fromTo[1]).format("HH:mm:ss"));
-    
     setLogs((prevLogs: any) => {
       return prevLogs.map((prevLog: any) =>
         prevLog._id === currentLog?._id
@@ -149,9 +148,11 @@ const LogCorrection: React.FC<ILogCorrection> = ({ handleCloseEditing }) => {
       lat: +formData.lng.split(",")[0],
       lng: +formData.lng.split(",")[1],
     },
+    // start: fromTo[0].unix(),
+    // end: fromTo[1].unix(),
     odometer: +formData.odometer,
     engineHours: +formData.hours,}
-
+    
     //@ts-ignore
     if(currentLog?.status !== "certify"){
       distpatch(putOtherStatus(newItem))
@@ -221,19 +222,20 @@ const LogCorrection: React.FC<ILogCorrection> = ({ handleCloseEditing }) => {
             }}
           >
             <div className="h-28">
-              <TimePicker
+              {
+                <TimePicker
                 className="w-100 h-20"
                 style={{ height: "28px" }}
                 label={formNames.fromTo}
                 value={fromTo}
                 // placeholder={formNames.from}
                 name={formNames.fromTo}
-                //@ts-ignore
                 // control={control}
                 range={true}
-                onChange={(val) => onTimeChange(val)}
+                onChange={(val) => setFromTo(val)}
                 required
               />
+              }
             </div>
             {/* <Row gutter={[40, 15]} style={{ border: "1px solid green" }}>
               <Col span={20}>

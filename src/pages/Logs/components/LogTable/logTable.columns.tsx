@@ -205,26 +205,28 @@ const useGraphColumns = (
     {
       title: "action",
       // dataIndex: "_id",
-      render: (id: any, log: any) =>
-
-        // @ts-ignore
-        Object.values(InterLogsStatus).includes(log.status) && (
-          
+      render: (id: any, log: any) =>{
+        return(
             <div className="action-table">
-              <div onClick={() => handleUpdate(log)}>
-                <Icon icon="pencil" className="pencil" />
-              </div>
-              <div onClick={() => handleDelete(id?._id, log?.status)}>
-                <Icon icon="close" className="close" />
-              </div>
+              {
+                Object.values(InterLogsStatus).includes(log.status) ? (
+                  <>
+                    <div onClick={() => handleUpdate(log)}>
+                    <Icon icon="pencil" className="pencil" />
+                  </div>
+                    <div onClick={() => handleDelete(id?._id, log?.status)}>
+                    <Icon icon="close" className="close" />
+                  </div>
+                  </>
+                  ): <div onClick={() => handleUpdate(log)}>
+                  <Icon icon="pencil" className="pencil" />
+                </div>
+              }
+              
             </div>
-
-            // <TableAction
-            //   updateFunction={() => handleUpdate(log)}
-            //   confirmTitle={"Do you want to delete?"}
-            //   onDeleteConfirm={() => handleDelete(_id)}
-            // />
-        ),
+        )
+      }
+        
     },
   ];
 };
