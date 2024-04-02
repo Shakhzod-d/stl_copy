@@ -33,8 +33,7 @@ const Report: React.FC<IProps> = ({
 
   const [newLogs, setNewLogs] = useState<ILog[]>()
   const [signature, setSignature] = useState<string>("")
-  console.log(reportData);
-  
+  let distance:number = 0
  
   useEffect(() => {
     const newLogData: any = logs?.map((item: ILog) => {
@@ -42,10 +41,10 @@ const Report: React.FC<IProps> = ({
         ...item,
         start: moment
           .unix(item.start) //@ts-ignore
-          .tz(timeZones[companyTimeZone]),
+          .tz(timeZones[reportData?.timeZone]),
         end: moment
           .unix(item.end) //@ts-ignore
-          .tz(timeZones[companyTimeZone]),
+          .tz(timeZones[reportData?.timeZone]),
       };
     });
 
@@ -54,8 +53,12 @@ const Report: React.FC<IProps> = ({
     if(reportData && reportData.signature){
       setSignature(reportData.signature.trim())
     }
-  }, [reportData, logs, companyTimeZone]);
 
+  }, [reportData, logs, signature]);
+
+  for(let i=0; i<logs.length; i++){
+    distance += logs[i].distance
+  }
 
   return (
     <div
@@ -86,25 +89,24 @@ const Report: React.FC<IProps> = ({
           <tr>
             <td colSpan={2}>Driver</td>
             <td colSpan={2}>
-              {reportData?.firstName}
-              {reportData?.lastName}
+              {reportData?.firstName + " " + reportData?.lastName}
             </td>
           </tr>
           <tr>
             <td>Driver ID</td>
-            <td>{reportData?._id}</td>
+            <td>{reportData?.username}</td>
             <td>ST</td>
             <td>{reportData?.driverLicenseIssuingState}</td>
           </tr>
           <tr>
             <td colSpan={2}>Co-Drivers (ID)</td>
-            <td colSpan={2}>{reportData?.coDriverId}</td>
+            <td colSpan={2}>{reportData?.coDriver?.username}</td>
           </tr>
           <tr>
             <td>DL Number</td>
             <td>{reportData?.driverLicense}</td>
             <td>Time Zone</td>
-            <td>{reportData?.mainOfficeAddress}</td>
+            <td>{reportData?.timeZone}</td>
           </tr>
           <tr>
             <td>STL ID</td>
@@ -134,17 +136,17 @@ const Report: React.FC<IProps> = ({
             <td>Main Office </td>
             <td>{reportData?.mainOfficeAddress}</td>
             <td>Trailers </td>
-            <td>{reportData?.trailers || "----trailers----"}</td>
+            <td>{reportData?.trailers}</td>
           </tr>
           <tr>
             <td>Home Terminal </td>
             <td>{reportData?.homeTerminalAddress}</td>
             <td>Distance </td>
-            <td>{reportData?.distance || "----404----"}</td>
+            <td>{reportData?.distance ? reportData?.distance : 0}</td>
           </tr>
           <tr>
             <td>Shipping Docs</td>
-            <td>{reportData?.shippingDocs || "----some docs----"}</td>
+            <td>{reportData?.shippingDocs}</td>
           </tr>
 
           <tr>
@@ -160,13 +162,13 @@ const Report: React.FC<IProps> = ({
           <tr>
             <td colSpan={2}>Current Location</td>
             <td colSpan={2}>
-              {reportData?.currentLocation || "---Tashkent, Yunusabad---"}
+              {reportData?.currentLocation}
             </td>
           </tr>
 
           <tr>
             <td colSpan={2}>Unidentified Driver Records</td>
-            <td colSpan={2}>----0----</td>
+            <td colSpan={2}>{distance}</td>
           </tr>
         </tbody>
       </table>
@@ -260,9 +262,9 @@ const columns: ColumnsType<ILog> = [
     title: "start",
     dataIndex: "start",
     render: (value, record, index) => {
-      return moment(record.start).format("hh:mm:ss A");
+      return moment(value).format("h:mm:ss A");
     },
-    width: 95  
+    width: 100 
   },
   {
     title: "duration",
@@ -271,16 +273,16 @@ const columns: ColumnsType<ILog> = [
       const start = moment.unix(record.start);
       const end = moment.unix(record.end);
       const seconds = moment.duration(end.diff(start)).asSeconds();
-      return seconds ? moment.utc(seconds).format("hh:mm:ss") : "00:00:00";
+      return seconds ? moment.utc(seconds).format("h:mm:ss") : "00:00:00";
     },
   },
   {
     title: "end",
     dataIndex: "end",
     render(value, record, index) {
-      return moment(record.end).format("hh:mm:ss A");
+      return moment(value).format("h:mm:ss A");
     },
-    width: 95
+    width: 100
   },
   {
     title: "location",

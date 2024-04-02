@@ -84,12 +84,37 @@ export const postInsertInfoLog = createAsyncThunk(
   }
 );
 
+export const putOtherStatus = createAsyncThunk(
+  "logs/putOtherStatus",
+  async (data: any, thunkAPI) => {
+    const { onCancel, ...restObj } = data;
+    const url = `/interlog`;
+    // console.log(`data`, data);
+    try {
+      const response = await api.put(url, restObj);
+
+      console.log(`response`, response);
+      // Return the data from the response
+      // @ts-ignore
+      if (response.message === "OK") {
+        // close modal
+        onCancel();
+      }
+
+      return response;
+    } catch (error) {
+      // @ts-ignore
+      return thunkAPI.rejectWithValue({ error: error.message });
+    }
+  }
+);
+
 export const putCertify = createAsyncThunk(
   "certify/putCertify",
   async (data: any, thunkAPI) => {
     const { onCancel, ...restObj } = data;
     const url = `/certify`;
-    console.log(`data`, data);
+    // console.log(`data`, data);
     try {
       const response = await api.put(url, restObj);
 
@@ -129,6 +154,27 @@ export const putLogForm = createAsyncThunk(
 
       return response
     } catch (error) {
+      // @ts-ignore
+      return thunkAPI.rejectWithValue({ error: error.message })
+    }
+  }
+)
+
+export const certifyDeleteTableItem = createAsyncThunk(
+  "logs/certifyDeleteTableItem",
+  async (id: string, thunkAPI) => {
+    
+    const url = `/certify/${id}`
+    try {
+      const response = await api.delete(url)
+      console.log("response", response)
+      //@ts-ignore
+      if (response.message === "OK") {
+        message.success("deleted!")
+      }
+
+      return response
+    } catch {
       // @ts-ignore
       return thunkAPI.rejectWithValue({ error: error.message })
     }

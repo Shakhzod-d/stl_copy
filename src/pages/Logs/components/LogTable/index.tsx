@@ -36,7 +36,6 @@ const LogTable: React.FC<ILogTable> = ({
       _id: string;
     }[];
   }>("logs/switch");
-  console.log(data);
   
 
   const { data: drivers, isLoading: driverLoad } = useApi<{

@@ -18,7 +18,7 @@ import { CopyOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/store";
 import { InterLogsStatus, timeZones } from "./helper";
-import { deleteTableItem } from "@/store/slices/logSlice";
+import { certifyDeleteTableItem, deleteTableItem, putCertify } from "@/store/slices/logSlice";
 import { useEffect, useState } from "react";
 import useApi from "@/hooks/useApi";
 
@@ -58,16 +58,13 @@ const useGraphColumns = (
   setLogs: (data: ILog[]) => void
 ) => {
   const companyTimeZone = useSelector<RootState>((s) => s.log.companyTimeZone);
-  // console.log("s", companyTimeZone);
   const dispatch = useDispatch<AppDispatch>()
-  // const [newLogs, setNewLogs] = useState<ILog[]>([])s
   
   const editItem = (log: any) => {
     document
       ?.querySelector("#box")
       ?.scrollIntoView({ behavior: "smooth", block: "start" });
     setCurrentLog(log);
-
     
     // document.documentElement.scrollTo({ top: 0, left: 0, behavior: "smooth" });
     // window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
@@ -94,10 +91,11 @@ const useGraphColumns = (
     editItem(data)
   }
 
-  const handleDelete = (id: string) => {
-    dispatch(deleteTableItem(id))
+  const handleDelete = (id: string, status: string) => {
+    status === "certify" ? dispatch(certifyDeleteTableItem(id)) : dispatch(deleteTableItem(id)) 
 
     let filterLog: any = logs.filter(item => item?._id !== id)
+
     setLogs(filterLog)
   };
 
@@ -216,7 +214,7 @@ const useGraphColumns = (
               <div onClick={() => handleUpdate(log)}>
                 <Icon icon="pencil" className="pencil" />
               </div>
-              <div onClick={() => handleDelete(id?._id)}>
+              <div onClick={() => handleDelete(id?._id, log?.status)}>
                 <Icon icon="close" className="close" />
               </div>
             </div>

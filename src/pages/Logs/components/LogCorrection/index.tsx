@@ -17,6 +17,7 @@ import useApiMutationID from "@/hooks/useApiMutationID";
 import { useDispatch } from "react-redux";
 import { ILog } from "@/types/log.type";
 import { AppDispatch } from "@/store";
+import { putLogForm, putOtherStatus } from "@/store/slices/logSlice";
 
 type TFormConnection = {
   fromTo: any;
@@ -110,6 +111,7 @@ const LogCorrection: React.FC<ILogCorrection> = ({ handleCloseEditing }) => {
   const submit = (formData: TFormConnection) => {
     handleCloseEditing();
     //  console.log(moment(formData.fromTo[1]).format("HH:mm:ss"));
+    
     setLogs((prevLogs: any) => {
       return prevLogs.map((prevLog: any) =>
         prevLog._id === currentLog?._id
@@ -139,6 +141,23 @@ const LogCorrection: React.FC<ILogCorrection> = ({ handleCloseEditing }) => {
     });
     
     //  console.log(moment(formData.fromTo[0]).format("HH:mm:ss")); // that is how time is to be got
+    const newItem = {
+      ...currentLog!,
+      ...formData,
+      location: {
+      name: currentLog?.location.name!,
+      lat: +formData.lng.split(",")[0],
+      lng: +formData.lng.split(",")[1],
+    },
+    odometer: +formData.odometer,
+    engineHours: +formData.hours,}
+
+    //@ts-ignore
+    if(currentLog?.status !== "certify"){
+      distpatch(putOtherStatus(newItem))
+    }else{
+      distpatch(putLogForm(newItem))
+    }
   };
 
   return (
@@ -209,6 +228,7 @@ const LogCorrection: React.FC<ILogCorrection> = ({ handleCloseEditing }) => {
                 value={fromTo}
                 // placeholder={formNames.from}
                 name={formNames.fromTo}
+                //@ts-ignore
                 // control={control}
                 range={true}
                 onChange={(val) => onTimeChange(val)}

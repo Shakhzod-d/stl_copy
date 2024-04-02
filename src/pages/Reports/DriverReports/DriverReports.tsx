@@ -73,7 +73,7 @@ const DriverReports = () => {
       setDriverReport(driverReportPdfs);
     },
   });
-  
+
 
   // Get all drivers data
   const { data: drivers } = useApi<{ data: IDriverData[] }>(
@@ -90,8 +90,6 @@ const DriverReports = () => {
   
   
   useEffect(() => {
-    // console.log(moment(date?.[0]).unix());
-    // console.log(moment(date?.[1]).unix());
 
     setQueryParams((prev) => ({
       ...prev,
@@ -100,7 +98,6 @@ const DriverReports = () => {
       to: moment(date?.[1])?.unix(),
     }));
 
-    // console.log(`data`, date);
   }, [date, selectedDriver]);
 
   const getReportFileName = () => {
@@ -115,6 +112,8 @@ const DriverReports = () => {
   const onRangePickerChange = (props: any) => {
     setDate([momentZone(props[0]), momentZone(props[1])]);
   };
+
+  
 
   return (
     <div className="drivers-reports page">

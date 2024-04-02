@@ -13,4 +13,5 @@ export enum InterLogsStatus {
   POWER_OFF = "power_off",
   POWER_ON = "power_on",
   INTERMEDIATE = "intermediate",
+  CERTIFY = "certify"
 }
