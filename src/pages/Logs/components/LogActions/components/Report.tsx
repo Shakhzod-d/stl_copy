@@ -169,7 +169,7 @@ const Report: React.FC<IProps> = ({
 
           <tr>
             <td colSpan={2}>Unidentified Driver Records</td>
-            <td colSpan={2}>{reportData?.distance}</td>
+            <td colSpan={2}>{distance}</td>
           </tr>
         </tbody>
       </table>
