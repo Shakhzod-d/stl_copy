@@ -26,7 +26,7 @@ const useColumns = () => {
    extension = "xml";
    fileContent = data;
   }
-
+  
   const blob = new Blob([fileContent], { type: mimeType });
 
   const url = window.URL.createObjectURL(blob);

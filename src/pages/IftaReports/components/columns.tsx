@@ -14,20 +14,26 @@ const useColumns = () => {
   let companyTimeZone = authCompany?.find((item: any) => item._id === getLocalStorage("companyId"))
 
   function downloadPDF(url: string, filename: string) {
-    fetch(`http://5.161.229.41:5404/public/uploads/ifta/${url}`)
-      .then((response: any) => response.blob())
-      .then(blob => {
-        const blobUrl = URL.createObjectURL(blob);
-        const link = document.createElement('a');
-        link.href = blobUrl;
-        link.download = filename;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link); 
-      })
-      .catch(error => {
-        console.error('Error downloading PDF:', error);
-      });
+    api(`/public/uploads/ifta/${url}`)
+    .then((response: any) => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.blob();
+    })
+    .then(blob => {
+      const blobUrl = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = blobUrl;
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(blobUrl); 
+    })
+    .catch(error => {
+      console.error('Error downloading PDF:', error);
+    });
   }
   return [
     {

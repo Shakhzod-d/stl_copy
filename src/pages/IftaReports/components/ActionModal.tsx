@@ -12,19 +12,24 @@ import moment from "moment";
 import { useDispatch, useSelector } from "react-redux";
 import { filterReport } from "@/store/slices/reportSlice";
 import { AppDispatch, RootState } from "@/store";
+import useParseData from "@/hooks/useParseData";
+
+
 
 interface Props {
   toggle: () => void;
   setFromTo1: (item: any) => void;
   setGeneratedDate: (item: any) => void;
+  setStateVehicle: (item: any) => void;
 }
 
-const ActionModal: React.FC<Props> = ({ toggle, setFromTo1, setGeneratedDate }) => {
+const ActionModal: React.FC<Props> = ({ toggle, setFromTo1, setGeneratedDate, setStateVehicle }) => {
   const { handleSubmit, control, reset, setValue, formState, watch } =
     useForm<IIftaCreateForm>();
     const s= useSelector<RootState>((s) => s.reports.IFTAReports);
   const [fromTo, setFromTo] = useState<[any, any]>([0, 0]);
   const dispatch = useDispatch<AppDispatch>();
+  const [stateNames, setStateNames] = useState([{label: 'All State', value: 'all'}, ...state_names])
 
   const { data, status } = useApi<{
     data: { total: number; data: IVehicleData[] };
@@ -32,8 +37,35 @@ const ActionModal: React.FC<Props> = ({ toggle, setFromTo1, setGeneratedDate }) 
     page: 1,
     limit: 100,
   });
+  // console.log(data);
   
+  const { tableData, totalPage } = useParseData<IVehicleData>(data)
   
+  const [vehicleNames, setVehicleNames] = useState<any[]>([{unit: 'All State', _id: 'all'}, ...tableData])
+  
+  const state11 = watch('state')
+  const vehicle11 = watch('vehicleId')
+
+  
+ useEffect(()=>{
+  if(vehicle11?.includes('all')){
+    setVehicleNames([{unit: 'All Vehicles', _id: 'all'}])
+  }else{
+    setVehicleNames([{unit: 'All Vehicles', _id: 'all'}, ...tableData])
+  }
+  console.log(vehicle11);
+  
+ }, [vehicle11])
+
+ useEffect(()=>{
+  if(vehicle11?.includes('all')){
+    setStateNames([{label: 'All States', value: 'all'}])
+  }else{
+    setStateNames([{label: 'All States', value: 'all'}, ...state_names])
+  }
+  console.log(state11);
+  
+ }, [state11])
 
   const submitFunc = (formData: IIftaCreateForm) => {
     const date = new Date()
@@ -45,13 +77,13 @@ const ActionModal: React.FC<Props> = ({ toggle, setFromTo1, setGeneratedDate }) 
       const allObj = {
         url,
         body: {
-          vehicleId: formData.vehicleId === undefined ? [] : formData.vehicleId,
-          state: formData.state === undefined ? [] : formData.state,
+          vehicleId: vehicle11.includes('all') ? ['all'] : formData.vehicleId === undefined ? [] : formData.vehicleId,
+          state: state11.includes('all') ? ['all'] : formData.state === undefined ? [] : formData.state,
         },
         toggle,
       };
       
-
+      setStateVehicle(allObj?.body)
       dispatch(filterReport(allObj));
       setGeneratedDate(date)
       // setIftaReport();
@@ -120,7 +152,7 @@ const ActionModal: React.FC<Props> = ({ toggle, setFromTo1, setGeneratedDate }) 
               valueProp="_id"
               renderValidation={false}
               // @ts-ignore
-              data={data?.data?.data || []}
+              data={vehicleNames || []}
             />
           </Col>
           <Col span={24}>
@@ -134,7 +166,7 @@ const ActionModal: React.FC<Props> = ({ toggle, setFromTo1, setGeneratedDate }) 
               labelProp={"label"}
               renderValidation={false}
               valueProp={"value"}
-              data={state_names}
+              data={stateNames}
             />
           </Col>
         </Row>
