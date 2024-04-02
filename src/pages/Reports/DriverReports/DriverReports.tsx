@@ -55,7 +55,6 @@ const DriverReports = () => {
             //           driverReport?.log,
             //           initialTime
             //      );
-
             return {
               log: mapDriverLogs(driverReport.log) || [],
               data: driverReport.data,

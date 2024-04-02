@@ -30,10 +30,10 @@ const Report: React.FC<IProps> = ({
   const companyTimeZone = useSelector<RootState>(
     (state) => state?.log?.companyTimeZone
   );
+  let distance:number = 0
 
   const [newLogs, setNewLogs] = useState<ILog[]>()
   const [signature, setSignature] = useState<string>("")
-  let distance:number = 0
  
   useEffect(() => {
     const newLogData: any = logs?.map((item: ILog) => {
@@ -89,7 +89,8 @@ const Report: React.FC<IProps> = ({
           <tr>
             <td colSpan={2}>Driver</td>
             <td colSpan={2}>
-              {reportData?.firstName + " " + reportData?.lastName}
+              {reportData?.firstName}
+              {reportData?.lastName}
             </td>
           </tr>
           <tr>
@@ -100,7 +101,7 @@ const Report: React.FC<IProps> = ({
           </tr>
           <tr>
             <td colSpan={2}>Co-Drivers (ID)</td>
-            <td colSpan={2}>{reportData?.coDriver?.username}</td>
+            <td colSpan={2}>{reportData?.coDriverId}</td>
           </tr>
           <tr>
             <td>DL Number</td>
@@ -168,7 +169,7 @@ const Report: React.FC<IProps> = ({
 
           <tr>
             <td colSpan={2}>Unidentified Driver Records</td>
-            <td colSpan={2}>{distance}</td>
+            <td colSpan={2}>{reportData?.distance}</td>
           </tr>
         </tbody>
       </table>

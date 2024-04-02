@@ -11,9 +11,8 @@
      
      .tableDiv{
           width: 880px;
-          padding: 20;
-          padding-top: 100px;
-          padding-bottom: 30px;
+          padding: 20px;
+          padding-top: 60px;
            margin-bottom: 30px;
            border: 15px white solid;
            .report-top{
@@ -32,6 +31,7 @@
           .table{
                border-collapse: collapse;
                width: 100%;
+               margin-bottom: 50px;
                th, td{
                     border: 1px solid black;
                     padding: 5px;
@@ -50,17 +50,15 @@
                     width: 35%;
                   }
           }
-          .k-pdf-export .report-title{
-               font-size: 25px;
-               font-weight: 600;
-          }
           .line{
-               border-bottom: 1px solid black;
+               border-bottom: 2px solid black;
                width: 100%;
           }
           .vehicle-unit{
                margin-top: 16px;
                font-size: 20px;
+               text-align: center;
+               font-weight: 600;
           }
      }
      
