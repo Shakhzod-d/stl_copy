@@ -18,6 +18,7 @@ import { IDriverData, IDriverForm } from "@/types/driver.type";
 import { IVehicleData } from "@/types/vehicle.type";
 import useApiMutation from "@/hooks/useApiMutation";
 import useApiMutationID from "@/hooks/useApiMutationID";
+import { state_names } from "@/constants";
 
 const Action = () => {
   const { id } = useParams<{ id: string }>();
@@ -190,7 +191,7 @@ const Action = () => {
               name="driverLicenseIssuingState"
               control={control}
               required
-              data={issue_stats}
+              data={state_names}
               labelProp="label"
               valueProp="label"
             />

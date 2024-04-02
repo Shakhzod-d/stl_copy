@@ -11,6 +11,7 @@ import useApi from "@/hooks/useApi";
 import useApiMutation from "@/hooks/useApiMutation";
 import useApiMutationID from "@/hooks/useApiMutationID";
 import { IVehicleData, IVehicleForm } from "@/types/vehicle.type";
+import { state_names } from "@/constants";
 
 const Action = () => {
   const { id } = useParams<{ id: string }>();
@@ -126,10 +127,10 @@ const Action = () => {
           <Col span={8}>
             <Select
               label="License Plate Issuing State*"
-              placeholder={"Select"}
+              placeholder={"License Plate Issuing State"}
               name="licensePlateIssuingState"
               control={control}
-              data={issue_stats}
+              data={state_names}
               required
               labelProp="label"
               valueProp="label"

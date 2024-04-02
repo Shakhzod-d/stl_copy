@@ -92,7 +92,7 @@ const Services: React.FC = () => {
       return <Modal
         open={isOpenCompanies}
         closable
-        onCancel={() => setIsOpenCompanies(true)}
+        onCancel={() => setIsOpenCompanies(false)}
         width={"80%"}
         title="Service companies"
         >

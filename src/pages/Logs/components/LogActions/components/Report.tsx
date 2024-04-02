@@ -33,7 +33,7 @@ const Report: React.FC<IProps> = ({
 
   const [newLogs, setNewLogs] = useState<ILog[]>()
   const [signature, setSignature] = useState<string>("")
-  console.log(reportData);
+  // console.log(reportData);
   
  
   useEffect(() => {
@@ -85,26 +85,24 @@ const Report: React.FC<IProps> = ({
         <tbody>
           <tr>
             <td colSpan={2}>Driver</td>
-            <td colSpan={2}>
-              {reportData?.firstName}
-              {reportData?.lastName}
+            <td colSpan={2}>{`${reportData?.firstName} ${reportData?.lastName}`}
             </td>
           </tr>
           <tr>
             <td>Driver ID</td>
-            <td>{reportData?._id}</td>
+            <td>{reportData?.username}</td>
             <td>ST</td>
             <td>{reportData?.driverLicenseIssuingState}</td>
           </tr>
           <tr>
             <td colSpan={2}>Co-Drivers (ID)</td>
-            <td colSpan={2}>{reportData?.coDriverId}</td>
+            <td colSpan={2}>{reportData?.coDriver.username}</td>
           </tr>
           <tr>
             <td>DL Number</td>
             <td>{reportData?.driverLicense}</td>
             <td>Time Zone</td>
-            <td>{reportData?.mainOfficeAddress}</td>
+            <td>{reportData?.timeZone}</td>
           </tr>
           <tr>
             <td>STL ID</td>
