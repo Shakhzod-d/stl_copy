@@ -5,15 +5,12 @@ import useColumns from "./components/columns";
 import ActionModal from "./components/ActionModal";
 import { useSelector } from "react-redux";
 import {  RootState } from "@/store";
-import { PDFExport, savePDF} from "@progress/kendo-react-pdf";
 import { DownloadOutlined } from "@ant-design/icons";
 import moment from "moment";
 import { NumberParam, useQueryParam, withDefault } from "use-query-params";
 import useApi from "@/hooks/useApi";
 import { PAGE_LIMIT } from "@/constants/general.const";
 import useParseData from "@/hooks/useParseData";
-import { jsPDF } from 'jspdf';
-import html2canvas from 'html2canvas';
 import api from "@/api";
 
 interface StateVehicle{

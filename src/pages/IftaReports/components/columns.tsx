@@ -1,35 +1,31 @@
 import React from "react";
-import { TableAction } from "@/components/elements/TableElements/TableElements";
 import moment from "moment";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
 import { getLocalStorage } from "@/utils";
-import { timeZones } from "@/pages/Logs/components/LogTable/helper";
 import { Button } from "antd";
 import { DownloadOutlined } from "@ant-design/icons";
-import api from "@/api";
 
 const useColumns = () => {
   const authCompany: any = useSelector<RootState>((s) => s.auth.companies);
   let companyTimeZone = authCompany?.find((item: any) => item._id === getLocalStorage("companyId"))
 
   function downloadPDF(url: string, filename: string) {
-    api(`/public/uploads/ifta/${url}`)
-    .then((response: any) => {
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      return response.blob();
-    })
+    fetch(`https://ptapi.roundedteam.uz/public/uploads/ifta/${url}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/pdf'
+      },
+    }).then(response => response.blob())
     .then(blob => {
-      const blobUrl = URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.href = blobUrl;
-      link.download = filename;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      URL.revokeObjectURL(blobUrl); 
+      const downloadLink = document.createElement('a');
+      downloadLink.href = URL.createObjectURL(blob);
+      downloadLink.download = 'example.pdf'; 
+  
+      document.body.appendChild(downloadLink);
+      downloadLink.click();
+  
+      document.body.removeChild(downloadLink)
     })
     .catch(error => {
       console.error('Error downloading PDF:', error);

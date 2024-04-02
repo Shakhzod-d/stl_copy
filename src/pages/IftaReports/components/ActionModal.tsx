@@ -3,8 +3,7 @@ import React, {  useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import FormModal from "@/components/elements/FormModal";
 import Select from "@/components/form/Select";
-import { IIftaCreateBody, IIftaCreateForm } from "./ifta-reports.types";
-import { IftaCreateFormNames as NAMES } from "./ifta-reports.types";
+import {  IIftaCreateForm } from "./ifta-reports.types";
 import { state_names } from "@/constants";
 import useApi from "@/hooks/useApi";
 import { IVehicleData } from "@/types/vehicle.type";
@@ -37,15 +36,15 @@ const ActionModal: React.FC<Props> = ({ toggle, setFromTo1, setGeneratedDate, se
     page: 1,
     limit: 100,
   });
-  // console.log(data);
   
   const { tableData, totalPage } = useParseData<IVehicleData>(data)
   
-  const [vehicleNames, setVehicleNames] = useState<any[]>([{unit: 'All State', _id: 'all'}, ...tableData])
+  
   
   const state11 = watch('state')
   const vehicle11 = watch('vehicleId')
-
+  const [vehicleNames, setVehicleNames] = useState<any[]>([{unit: 'All State', _id: 'all'}, ...tableData])
+  
   
  useEffect(()=>{
   if(vehicle11?.includes('all')){
@@ -53,17 +52,16 @@ const ActionModal: React.FC<Props> = ({ toggle, setFromTo1, setGeneratedDate, se
   }else{
     setVehicleNames([{unit: 'All Vehicles', _id: 'all'}, ...tableData])
   }
-  console.log(vehicle11);
   
- }, [vehicle11])
+ }, [vehicle11, tableData])
 
  useEffect(()=>{
-  if(vehicle11?.includes('all')){
+  if(state11?.includes('all')){
     setStateNames([{label: 'All States', value: 'all'}])
   }else{
     setStateNames([{label: 'All States', value: 'all'}, ...state_names])
   }
-  console.log(state11);
+  
   
  }, [state11])
 
