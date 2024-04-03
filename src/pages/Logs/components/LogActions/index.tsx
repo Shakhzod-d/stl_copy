@@ -127,7 +127,6 @@ const LogActions: React.FC<ILogActions> = ({}) => {
         <div style={{ width: 150 }}>
           <DatePicker
             onChange={(val) => {
-              //     setCurrentLog(null); // TODO: uncomment to delete current log
               setTime(moment(val).valueOf());
             }}
             value={moment(initialTime)}
@@ -170,15 +169,6 @@ const LogActions: React.FC<ILogActions> = ({}) => {
             >
               Report
             </Button>
-            {/* <Button
-                                   disabled={whenSomethingIsLoading}
-                                   onClick={() =>
-                                        setIsVisibleOriginalLogs(true)
-                                   }
-                                   className="log-btn"
-                              >
-                                   Original Logs
-                              </Button> */}
             <Button
               disabled={whenSomethingIsLoading}
               className="log-btn"
@@ -252,12 +242,6 @@ const LogActions: React.FC<ILogActions> = ({}) => {
                 Send
               </Button>
             ) : (
-              // <Button
-              //      className="log-btn"
-              //      onClick={() => onOk()}
-              // >
-              //      Ok
-              // </Button>
               <Button
                 disabled={whenSomethingIsLoading}
                 className="log-btn"
@@ -311,17 +295,6 @@ const LogActions: React.FC<ILogActions> = ({}) => {
           onRevert={onRevert}
         />
       </Modal>
-      {/* <Modal
-                    title="Original logs"
-                    onCancel={() => setIsVisibleOriginalLogs(false)}
-                    visible={isVisibleOriginalLogs}
-                    width="1100px"
-                    bodyStyle={{
-                         padding: 20,
-                    }}
-               >
-                    <OriginalLogs logs={logs} />
-               </Modal> */}
       <Modal
         title="Normalize logs"
         onCancel={() => setIsVisibleNormalize(false)}
