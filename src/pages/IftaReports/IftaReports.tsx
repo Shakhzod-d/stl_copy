@@ -70,7 +70,6 @@ const IftaReports = () => {
             {
                 <div  style={{width: '880px'}} className={`tableDiv`}>
                   <div className="mb-16 d-flex justify-center align-center" style={{ flexDirection: 'column', position: 'relative' }}>
-    
                     <h1 className="report-title" style={{ fontSize: '25px', fontWeight: '600' }}>{`Period: ${moment(fromTo[0]).format('DD/MM/YYYY')} - ${moment(fromTo[1]).format('DD/MM/YYYY')}`}</h1>
                     <h1 className="report-title" style={{ fontSize: '23px', fontWeight: '500' }}>{`Report generated: ${moment(generatedDate).format('DD/MM/YYYY')}`}</h1>
                     

@@ -1,3 +1,20 @@
+body.dark{
+     .tableDiv{
+          .line{
+               border-color: $white;
+          }
+          .vehicle-unit{
+               color: $white
+          }
+          .table{
+               th, td{
+                    border-color: $white;
+               }
+          }
+
+     }
+}
+
 .ifta-reports {
      &-header {
           display: flex;
@@ -13,27 +30,14 @@
           width: 880px;
           padding: 20px;
           padding-top: 10px;
-           margin-bottom: 10px;
-           padding-bottom: 0;
-           .report-top{
-               position: absolute;
-               top: -70px;
-               right: 0;
-               .name-report{
-                    font-weight: 600;
-                    text-align: right;
-                    margin-bottom: 20px;
-               }
-               .name-report-bottom{
-                    text-align: right;
-               }
-           }
+          margin-bottom: 10px;
+          padding-bottom: 0;
           .table{
                border-collapse: collapse;
                width: 100%;
                margin-bottom: 50px;
                th, td{
-                    border: 1px solid black;
+                    border: 1px solid $black;
                     padding: 5px;
                     font-size: 20px;
                }
@@ -51,7 +55,7 @@
                   }
           }
           .line{
-               border-bottom: 2px solid black;
+               border-bottom: 2px solid $black;
                width: 100%;
           }
           .vehicle-unit{
@@ -59,6 +63,7 @@
                font-size: 20px;
                text-align: center;
                font-weight: 600;
+               color: $black;
           }
      }
      
