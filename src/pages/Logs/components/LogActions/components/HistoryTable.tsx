@@ -84,9 +84,10 @@ const HistoryTable: FC<IHistoryTable> = ({
       >
         <Row gutter={[16, 16]}>
           <Col span={12}>
-            <h1 className="bold-24 mt-16 mb-16">
+            <br /><br /><br />
+            {/* <h1 className="bold-24 mt-16 mb-16">
               Corrected by Rajapboyev Temurbek
-            </h1>
+            </h1> */}
             <Graph
               // @ts-ignore
               data={currentHistoryGraph?.beforeLogs}
