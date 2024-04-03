@@ -101,7 +101,7 @@ const Report: React.FC<IProps> = ({
           </tr>
           <tr>
             <td colSpan={2}>Co-Drivers (ID)</td>
-            <td colSpan={2}>{reportData?.coDriverId}</td>
+            <td colSpan={2}>{reportData?.coDriver?.username}</td>
           </tr>
           <tr>
             <td>DL Number</td>

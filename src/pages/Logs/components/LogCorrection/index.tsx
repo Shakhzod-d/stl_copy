@@ -78,7 +78,6 @@ const LogCorrection: React.FC<ILogCorrection> = ({ handleCloseEditing }) => {
   const formNames: TFormConnection = logCorrectionFormNames;
 
   useEffect(() => {
-    // console.log("♻resetting currentLog: ", currentLog);
 
     reset({
       document: currentLog?.document || "",
