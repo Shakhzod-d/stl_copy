@@ -52,7 +52,6 @@ const ActionModal: React.FC<Props> = ({ toggle, setFromTo1, setGeneratedDate, se
   }else{
     setVehicleNames([{unit: 'All Vehicles', _id: 'all'}, ...tableData])
   }
-  
  }, [vehicle11, tableData])
 
  useEffect(()=>{
@@ -61,8 +60,6 @@ const ActionModal: React.FC<Props> = ({ toggle, setFromTo1, setGeneratedDate, se
   }else{
     setStateNames([{label: 'All States', value: 'all'}, ...state_names])
   }
-  
-  
  }, [state11])
 
   const submitFunc = (formData: IIftaCreateForm) => {
