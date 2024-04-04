@@ -69,7 +69,7 @@ const useColumns = ({
       dataIndex: "pdfLink",
       render: (value: any) => {
        return (
-         <div className="download-btn" style={{width: '100%', display: 'flex', justifyContent: 'center'}}>
+         <div className="download-btn" >
           <Button
            type="primary"
            style={{ fontSize: "12px", padding: "5px 10px" }}
