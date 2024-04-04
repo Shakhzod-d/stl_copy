@@ -4,11 +4,14 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/store";
 import { getLocalStorage } from "@/utils";
 import { Button } from "antd";
-import { DownloadOutlined } from "@ant-design/icons";
+import { CloseOutlined, DownloadOutlined } from "@ant-design/icons";
+interface IUseColumns {
+  handleDeleteIfta: (id: string) => void;
+}
 
-const useColumns = () => {
-  const authCompany: any = useSelector<RootState>((s) => s.auth.companies);
-  let companyTimeZone = authCompany?.find((item: any) => item._id === getLocalStorage("companyId"))
+const useColumns = ({
+  handleDeleteIfta
+}: IUseColumns) => {
 
   function downloadPDF(url: string, filename: string) {
     fetch(`https://ptapi.roundedteam.uz/public/uploads/ifta/${url}`, {
@@ -31,6 +34,7 @@ const useColumns = () => {
       console.error('Error downloading PDF:', error);
     });
   }
+
   return [
     {
       title: "No",
@@ -78,18 +82,15 @@ const useColumns = () => {
        );
       },
      },
-    //     {
-    //       title: "Actions",
-    //       dataIndex: "id",
-    //       render: (id: number, order: any) => (
-    //         <TableAction
-    //           updatePush={`/units/drivers/update/${id}`}
-    //           confirmTitle={`Do you want to deactivate ${
-    //             order.first_name + " " + order.last_name
-    //           }`}
-    //         />
-    //       ),
-    //     },
+     {
+      title: "Actions",
+      dataIndex: "_id",
+      render: (id: string, order: any) => (
+           <div className="d-flex justify-center">
+            <CloseOutlined style={{color: '#f0324c', fontSize: '18px'}} onClick={()=> handleDeleteIfta(id)}/>
+           </div>
+      ),
+ },
   ];
 };
 

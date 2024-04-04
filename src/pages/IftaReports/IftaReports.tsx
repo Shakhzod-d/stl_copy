@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Button, Table } from "antd";
 import Icon from "@/components/icon/Icon";
 import useColumns from "./components/columns";
@@ -12,6 +12,7 @@ import useApi from "@/hooks/useApi";
 import { PAGE_LIMIT } from "@/constants/general.const";
 import useParseData from "@/hooks/useParseData";
 import api from "@/api";
+import useApiMutationID from "@/hooks/useApiMutationID";
 
 interface StateVehicle{
   state: string[],
@@ -28,12 +29,17 @@ const IftaReports = () => {
   // Query params
   const [page, setPage] = useQueryParam("page", withDefault(NumberParam, 1))
 
-  const { data, isLoading } = useApi<any>("/ifta", { page, limit: PAGE_LIMIT });
+  const { data, isLoading, refetch, isFetching} = useApi<any>("/ifta", { page, limit: PAGE_LIMIT });
   const { tableData, totalPage } = useParseData<any>(data)
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [isOpen, setIsOpen] = useState<boolean>(false)
+  const { mutate: deleteIfta, isLoading: deleteLoading } = useApiMutationID("DELETE", "/ifta");
+
+  const handleDeleteIfta = (id: string) => {
+    deleteIfta({ id }, { onSuccess: () => refetch() })
+}
 
   // Generate table columns
-  const columns = useColumns();
+  const columns = useColumns({  handleDeleteIfta });
   
 
   const handleModal = () => {
@@ -122,7 +128,7 @@ const IftaReports = () => {
         <Table
           scroll={{ x: "max-content" }}
           columns={columns}
-          loading={isLoading}
+          loading={isLoading || isFetching}
           dataSource={tableData}
           className="action"
           pagination={{

@@ -81,9 +81,6 @@ const ActionModal: React.FC<Props> = ({ toggle, setFromTo1, setGeneratedDate, se
       setStateVehicle(allObj?.body)
       dispatch(filterReport(allObj));
       setGeneratedDate(date)
-      // setIftaReport();
-      // console.log(s);
-      // handlePrint()
       
     } else {
       message.error("Please select a valid date range.");
@@ -91,29 +88,12 @@ const ActionModal: React.FC<Props> = ({ toggle, setFromTo1, setGeneratedDate, se
     
       
     setFromTo1(fromTo)
-    // const url = `/ifta/data?from=${fromTo[0].unix()}&to=${fromTo[1].unix()}`;
-
-    // const allObj = {
-    //   url,
-    //   body: formData,
-    //   toggle,
-    // };
-
-    // if (!fromTo[0] || !fromTo[1]) {
-    //   // Display an error message or handle validation as needed
-    //   // @ts-ignore
-    //   setValue("fromTo", null);
-    //   return;
-    // }
-    // dispatch(filterReport(allObj));
   };
 
   return (
     <FormModal
       open={true}
       onCancel={toggle}
-      // loading={createLoading || updateLoading}
-      // modalLoading={isLoading}
       modalTitle="New IFTA Report"
       width={800}
       formId="create-service-form"
