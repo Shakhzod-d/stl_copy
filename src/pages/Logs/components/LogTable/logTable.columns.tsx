@@ -117,8 +117,6 @@ const useGraphColumns = (
       render: (start: any) => {
         return (
           <span>
-            {/* {moment(start * 1000).format("h:mm:ss")}
-            {/* {JSON.stringify(start)} */}
             {moment
               .unix(start) //@ts-ignore
               .tz(timeZones[companyTimeZone])
@@ -134,7 +132,7 @@ const useGraphColumns = (
         const start = moment.unix(record.start);
         const end = moment.unix(record.end);
         const seconds = moment.duration(end.diff(start)).asSeconds();
-        return moment.utc(seconds * 1000).format("h:mm:ss");
+        return moment.utc(seconds * 1000).format("H:mm:ss");
       },
     },
     {

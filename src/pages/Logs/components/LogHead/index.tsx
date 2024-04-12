@@ -72,6 +72,7 @@ const LogsHead: React.FC<ILogsHead> = ({
     };
   };
 
+  const today = moment().format("YYYY-MM-DD")
   // console.log(`cycle`, cycle);
 
   return (
@@ -95,7 +96,8 @@ const LogsHead: React.FC<ILogsHead> = ({
         </p>
       </div>
 
-      <div className="driver-progress-bar">
+      { today === moment(initialTime).format("YYYY-MM-DD") && (
+        <div className="driver-progress-bar">
         <CircleProgress
           value={(cycle.break / BREAK_TIME_LIMIT) * 100}
           title="break"
@@ -178,7 +180,8 @@ const LogsHead: React.FC<ILogsHead> = ({
             )
           }
         />
-      </div>
+      </div>)
+      }
       <div className="driver-progress">
         <div className="driver-progress-info">
           <div className="driver-progress-info-item">
@@ -221,7 +224,6 @@ const CircleProgress: React.FC<Props> = ({ title, value, time = 0, color }) => {
     // Format the off-duty time
     const formattedEndTime = format(logEndTime, "hh:mm a");
 
-    console.log("Off-duty time:", formattedEndTime);
   } else {
     // console.error("Invalid time:", time);
   }

@@ -344,17 +344,6 @@ const useLogsInner = () => {
           rangeVal
         );
         const fixedStatusLogs = fixLogsStatus(res);
-        // debugger;
-        // setHistoryLogs([
-        //      ...historyLogs,
-        //      {
-        //           corrector: "Rajapboyev Temurbek",
-        //           _id: uuidV4(),
-        //           editTime: moment(),
-        //           before: logs,
-        //           after: fixedStatusLogs,
-        //      },
-        // ]);
         setLogs(fixedStatusLogs);
       } else if (!currentLog?.isNewLog) {
         const timeCorrectedLogs = correctLogsTime(
@@ -364,16 +353,6 @@ const useLogsInner = () => {
           rangeVal
         );
         const fixedStatusLogs = fixLogsStatus(timeCorrectedLogs);
-        // setHistoryLogs([
-        //      ...historyLogs,
-        //      {
-        //           corrector: "Rajapboyev Temurbek",
-        //           _id: uuidV4(),
-        //           editTime: moment(),
-        //           before: logs,
-        //           after: fixedStatusLogs,
-        //      },
-        // ]);
         setLogs(fixedStatusLogs);
         // debugger;
       }
@@ -387,7 +366,6 @@ const useLogsInner = () => {
       Math.floor((totalTime - time / 1000 - 1.5 * 60 * 60) / 2),
       Math.floor((totalTime - time / 1000 + 1.5 * 60 * 60) / 2),
     ];
-    // console.log(logs);
     // debugger;
     const newLog: ILog = getNewLog(logs, time, val, fetchLogParams);
     setRangeVal(val);
