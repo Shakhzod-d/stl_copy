@@ -57,7 +57,7 @@ const issue_stats = [
   { label: "Mountain Time", value: "America/Denver" },
   { label: "Pacific Time", value: "America/Los_Angeles" },
   { label: "Alaska Time", value: "America/Anchorage" },
-  { label: "Hawaii-Aleutian Time", value: "America/Pacific/Honolulu" },
+  { label: "Hawaii-Aleutian Time", value: "Pacific/Honolulu" },
 ];
 
 interface State {

@@ -4,7 +4,7 @@ export const timeZones = {
   "Mountain Time": "America/Denver",
   "Pacific Time": "America/Los_Angeles",
   "Alaska Time": "America/Anchorage",
-  "Hawaii-Aleutian Time": "America/Pacific/Honolulu",
+  "Hawaii-Aleutian Time": "Pacific/Honolulu",
 };
 
 export enum InterLogsStatus {

@@ -5,7 +5,6 @@ import { ISetState, TItemStatus } from "@/types";
 import { getDurationDate, parseUnix } from "@/utils";
 import { ILog } from "@/types/log.type";
 import moment from "moment";
-import { getCurrentTimeInSeconds } from "./helper";
 import { useSelector } from "react-redux";
 import useTimezoneConverter from "./useTimezoneConverter";
 import { RootState } from "@/store";
@@ -50,7 +49,7 @@ const myMap = new Map([
   ["Mountain Time", "America/Denver"],
   ["Pacific Time", "America/Los_Angeles"],
   ["Alaska Time", "America/Anchorage"],
-  ["Hawaii-Aleutian Time", "America/Pacific/Honolulu"],
+  ["Hawaii-Aleutian Time", "Pacific/Honolulu"],
 ]);
 
 const GraphItem: React.FC<IGraphItem> = ({
@@ -64,8 +63,6 @@ const GraphItem: React.FC<IGraphItem> = ({
   graphWidth = 0,
   afterRangeChange,
   initialTime,
-  isLaTMKog,
-  isFirTMKog,
   hoverLogOptions = {
     show: "duration",
   },
@@ -74,7 +71,9 @@ const GraphItem: React.FC<IGraphItem> = ({
 }) => {
   const [rangeVal, setRangeVal] = useState<any>(initialItem.rangeVal || []);
   const state = useSelector((state: any) => state?.auth);
-  const companyTimeZone: any = useSelector<RootState>((state) => state?.log.companyTimeZone);
+  const companyTimeZone: any = useSelector<RootState>(
+    (state) => state?.log.companyTimeZone
+  );
 
   const item = initialItem;
   const start = initialItem.start;
@@ -131,12 +130,11 @@ const GraphItem: React.FC<IGraphItem> = ({
     "Mountain Time": "America/Denver",
     "Pacific Time": "America/Los_Angeles",
     "Alaska Time": "America/Anchorage",
-    "Hawaii-Aleutian Time": "America/Pacific/Honolulu",
+    "Hawaii-Aleutian Time": "Pacific/Honolulu",
   };
 
   // const isFutureTime = value[1] > getCurrentTimeInSeconds();
 
-  // console.log(`rangeVal`, rangeVal); // rangeVal[1] = o'ng slider topdim shu ekan
   // o'ng slider
   const timeZone = "America/New_York";
 
@@ -150,8 +148,7 @@ const GraphItem: React.FC<IGraphItem> = ({
 
   const dateFromTimestamp = new Date(0);
   const currentDateET = new Date().toLocaleString("en-US", {
-    timeZone: 
-    timeZones[companyTimeZone as keyof typeof timeZones],
+    timeZone: timeZones[companyTimeZone as keyof typeof timeZones],
   });
   const currentDate = new Date(currentDateET);
 
@@ -167,22 +164,30 @@ const GraphItem: React.FC<IGraphItem> = ({
   // ******************************************* hook
   const formattedStartTime = useTimezoneConverter({
     unixTimestamp: start,
-    timezone: timeZones[companyTimeZone as keyof typeof timeZones] || "America/New_York",
+    timezone:
+      timeZones[companyTimeZone as keyof typeof timeZones] ||
+      "America/New_York",
   });
 
   const formattedEndTime = useTimezoneConverter({
     unixTimestamp: end,
-    timezone: timeZones[companyTimeZone as keyof typeof timeZones] || "America/New_York",
+    timezone:
+      timeZones[companyTimeZone as keyof typeof timeZones] ||
+      "America/New_York",
   });
 
   const formattedLeftTime = useTimezoneConverter({
     unixTimestamp: initialTime + rangeVal[0],
-    timezone: timeZones[companyTimeZone as keyof typeof timeZones] || "America/New_York",
+    timezone:
+      timeZones[companyTimeZone as keyof typeof timeZones] ||
+      "America/New_York",
   });
 
   const formattedRightTime = useTimezoneConverter({
     unixTimestamp: initialTime + rangeVal[1],
-    timezone: timeZones[companyTimeZone as keyof typeof timeZones] || "America/New_York",
+    timezone:
+      timeZones[companyTimeZone as keyof typeof timeZones] ||
+      "America/New_York",
   });
 
   useEffect(() => {
@@ -194,10 +199,10 @@ const GraphItem: React.FC<IGraphItem> = ({
     //   timeZone: "America/New_York", // Eastern Time
     // });
     const etDateTime = moment(
-            moment // @ts-ignore
-            .unix(date) // @ts-ignore
-            .tz(timeZones[companyTimeZone])
-    ).format("h:mm:ss A")
+      moment // @ts-ignore
+        .unix(date) // @ts-ignore
+        .tz(timeZones[companyTimeZone])
+    ).format("h:mm:ss A");
 
     // Set the formatted date and time to state
     setFormattedDateTime(etDateTime);
@@ -239,11 +244,9 @@ const GraphItem: React.FC<IGraphItem> = ({
           style={{
             width: itemWidth,
             left: itemPosition,
-            // border: "1px solid red",
           }}
           className={`box-wrapper ${status} ${
-            /* ? "readonly"
-                                   : " " + */ item._id === hoveredId
+            item._id === hoveredId
               ? "hovered"
               : ""
           }`}
@@ -254,17 +257,8 @@ const GraphItem: React.FC<IGraphItem> = ({
           <div className="box-content">
             {!currentLog && (
               <>
-                <span className="start">
-                  {/* {moment(parseUnix(start)).format("HH:mm:ss")} */}
-                  {formattedStartTime}
-                </span>
-                <span className="end">
-                  {/* {moment(parseUnix(end)).format("HH:mm:ss")} */}
-                  {formattedEndTime}
-                </span>
-                {/* <span className="duration">
-                               moment.duration(duration).seconds()
-                         </span> */}
+                <span className="start">{formattedStartTime}</span>
+                <span className="end">{formattedEndTime}</span>
                 {hoverLogOptions.show === "duration"
                   ? getStatusDuration(start, end)
                   : getStatusTime()}

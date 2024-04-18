@@ -147,9 +147,7 @@ const useLogsInner = () => {
     if (currentLog) {
       setIsLogsEdited(false);
       setLog(currentLog)
-      // setLogStatus("correction");
     } else if (!currentLog) {
-      // setLogStatus("table");
     }
   }, [currentLog]);
 
@@ -217,7 +215,6 @@ const useLogsInner = () => {
   };
 
   const onTimeChange = (range: [any, any]) => {
-    // const startDayOclock = moment("00:00:00", "HH:mm:ss").unix();
     setRangeVal([range[0].unix() - time / 1000, range[1].unix() - time / 1000]);
     // @ts-ignore
     setCurrentLog({

@@ -7,7 +7,6 @@ import { ILog } from "@/types/log.type";
 import { mapDrivers } from "@/utils";
 import { Button, Table } from "antd";
 import React, { Key, useEffect, useState } from "react";
-// import { v4 as uuidV4 } from "uuid";
 
 interface ILogTable {
   columns: any;
@@ -15,11 +14,6 @@ interface ILogTable {
   setHoveredId: any;
   hoveredId: any;
   driver?: IDriverData;
-  //   rowSelection: {
-  //     selectedRowKeys: React.Key[];
-  //     onChange: (newSelectedRowKeys: React.Key[]) => void;
-  //     columns: ILog[];
-  //   };
 }
 
 const LogTable: React.FC<ILogTable> = ({
@@ -36,8 +30,6 @@ const LogTable: React.FC<ILogTable> = ({
       _id: string;
     }[];
   }>("logs/switch");
-  // console.log(data);
-  
 
   const { data: drivers, isLoading: driverLoad } = useApi<{
     data: IDriverData[];
@@ -45,13 +37,9 @@ const LogTable: React.FC<ILogTable> = ({
   const [selectedRowKeys, setSelectedRowKeys] = useState<Key[]>();
   const [switchingDriverId, setSwitchingDriverId] = useState();
   const onSelectChange = (newSelectedRowKeys: any[]) => {
-    // console.log(newSelectedRowKeys);
     setSelectedRowKeys(newSelectedRowKeys);
   };
 
-  //   console.log(`data`, data);
- 
-  // const copy = (tag) => navigator.clipboard.writeText(tag);
   return (
     <div style={{ padding: "1rem 0" }}>
       <Table

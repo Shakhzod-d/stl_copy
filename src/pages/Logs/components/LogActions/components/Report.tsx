@@ -8,6 +8,7 @@ import LogGraph from "../../LogGraph";
 import { timeZones } from "../../LogTable/helper";
 import { RootState } from "@/store";
 import { useSelector } from "react-redux";
+import { useLogsInnerContext } from "../../LogsInner.context";
 
 interface IProps {
   logs: ILog[] | undefined;
@@ -59,6 +60,10 @@ const Report: React.FC<IProps> = ({
   for(let i=0; i<logs.length; i++){
     distance += logs[i].distance
   }
+
+  const {actions: {
+    filterDrawStatus,
+  },} = useLogsInnerContext()
 
   return (
     <div
@@ -195,7 +200,7 @@ const Report: React.FC<IProps> = ({
         </tbody>
       </table>
       <LogGraph
-        data={logs}
+        data={filterDrawStatus(logs)}
         setHoveredId={setHoveredId}
         initialTime={initialTime}
         hoveredId={hoveredId}
@@ -272,9 +277,13 @@ const columns: ColumnsType<ILog> = [
     dataIndex: "hours",
     render(value, record, index) {
       const start = moment.unix(record.start);
-      const end = moment.unix(record.end);
-      const seconds = moment.duration(end.diff(start)).asSeconds();
-      return seconds ? moment.utc(seconds).format("h:mm:ss") : "00:00:00";
+        const end = moment.unix(record.end);
+        const seconds = moment.duration(end.diff(start)).asSeconds() / 1000;
+        const hour = Math.trunc(seconds / 3600) 
+        const min = Math.trunc((seconds % 3600) / 60)
+        const sec = seconds % 60
+        
+        return `${hour >= 10 ? hour : "0" + hour }:${min >= 10 ? min : "0" + min}:${sec >= 10 ? sec : "0" + sec}`;
     },
   },
   {

@@ -1,4 +1,4 @@
-import { DriverStatus, TableAction } from "@/components/elements/TableElements";
+import { DriverStatus } from "@/components/elements/TableElements";
 import Select from "@/components/form/Select";
 import TimePicker from "@/components/form/TimePicker";
 import Icon from "@/components/icon/Icon";
@@ -8,19 +8,14 @@ import { Button, message } from "antd";
 import { ColumnsType } from "antd/lib/table";
 import moment from "moment-timezone";
 import { useForm } from "react-hook-form";
-// import { useLogsInnerContext } from "../LogsInner.context";
-import { LogStatusOptions, POINT_STATUSES, RANGE_STATUSES } from "../constants";
-import { v4 as uuidV4 } from "uuid";
+import { LogStatusOptions, POINT_STATUSES } from "../constants";
 import { useLogsInnerContext } from "../LogsInner.context";
-// import copyIcon from "../../../../../public/assets/icons/copied-icon.svg";
-// import copyIcon from "../../../../assets/"
 import { CopyOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/store";
 import { InterLogsStatus, timeZones } from "./helper";
-import { certifyDeleteTableItem, deleteTableItem, putCertify } from "@/store/slices/logSlice";
-import { useEffect, useState } from "react";
-import useApi from "@/hooks/useApi";
+import { certifyDeleteTableItem, deleteTableItem } from "@/store/slices/logSlice";
+
 
 type TFormConnection = {
   fromTo: any;
@@ -66,26 +61,12 @@ const useGraphColumns = (
       ?.scrollIntoView({ behavior: "smooth", block: "start" });
     setCurrentLog(log);
     
-    // document.documentElement.scrollTo({ top: 0, left: 0, behavior: "smooth" });
-    // window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
   };
 
   const handleCopy = (text: string) => {
     navigator.clipboard.writeText(text);
     message.success("Copied!");
   };
-
-
-  // useEffect(() => {
-  //   state.state
-  // }, [])
-  // console.log(`currentLog`, currentLog);
-  // const formattedTime = moment
-  //   .unix(timestamp)
-  //   .tz(companyTimeZone as string)
-  //   .format("HH:mm:ss"); // based on time zone
-  // @ts-ignore
-  // console.log(timeZones[companyTimeZone]);
   
   const handleUpdate = (data: any) => {
     editItem(data)
@@ -132,15 +113,18 @@ const useGraphColumns = (
         const start = moment.unix(record.start);
         const end = moment.unix(record.end);
         const seconds = moment.duration(end.diff(start)).asSeconds();
-        return moment.utc(seconds * 1000).format("H:mm:ss");
+      
+        const hour = Math.trunc(seconds / 3600) 
+        const min = Math.trunc((seconds % 3600) / 60)
+        const sec = seconds % 60
+        
+        return `${hour >= 10 ? hour : "0" + hour }:${min >= 10 ? min : "0" + min}:${sec >= 10 ? sec : "0" + sec}`;
       },
     },
     {
       title: "location",
       dataIndex: "location",
       render(value: any) {
-        // console.log(`value`, value);
-        // return value?.name;
         if (value.status === "login" || value.status === "logout") {
           return `--`;
         }
@@ -156,12 +140,6 @@ const useGraphColumns = (
             ) : (
               "--"
             )}
-            {/* <img
-              src={copyIcon}
-              alt="copy icon"
-              onClick={() => copy("text")}
-              style={{ cursor: "pointer" }}
-            /> */}
           </span>
         );
       },
