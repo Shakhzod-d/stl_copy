@@ -1,8 +1,6 @@
 import api from "@/api";
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { message } from "antd";
-import axios from "axios";
-import moment from "moment";
 
 type State = {
   IFTAReports: any[];
@@ -12,7 +10,6 @@ type State = {
   companyTimeZone: string;
   drivers: any[];
   logForm: any;
-  // logTable: any[]
 };
 
 const initialState: State = {
@@ -23,7 +20,6 @@ const initialState: State = {
   companyTimeZone: "",
   drivers: [],
   logForm: null,
-  // logTable: []
 };
 
 const apiUrl = "/logs/transfer";
@@ -89,12 +85,9 @@ export const putOtherStatus = createAsyncThunk(
   async (data: any, thunkAPI) => {
     const { onCancel, ...restObj } = data;
     const url = `/interlog`;
-    // console.log(`data`, data);
     try {
       const response = await api.put(url, restObj);
 
-      console.log(`response`, response);
-      // Return the data from the response
       // @ts-ignore
       if (response.message === "OK") {
         // close modal
@@ -114,7 +107,6 @@ export const putCertify = createAsyncThunk(
   async (data: any, thunkAPI) => {
     const { onCancel, ...restObj } = data;
     const url = `/certify`;
-    // console.log(`data`, data);
     try {
       const response = await api.put(url, restObj);
 
@@ -134,26 +126,29 @@ export const putCertify = createAsyncThunk(
   }
 );
 
-// test
-
 export const putLogForm = createAsyncThunk(
   "logs/putLogForm",
   async (data: any, thunkAPI) => {
     const { onCancel, _id, ...restObj } = data;
     const url = `/mainInfo?_id=${_id}`
-    console.log("data", data)
     try {
       const response = await api.put(url, restObj)
-      console.log("response", response)
       // Return the data from the response
+  
       // @ts-ignore
       if (response.message === "OK") {
         // close modal 
+        message.success("Success")
         onCancel()
+        
+      }else{
+        message.error("Error")
       }
-
+      
+      
       return response
     } catch (error) {
+      
       // @ts-ignore
       return thunkAPI.rejectWithValue({ error: error.message })
     }
@@ -167,7 +162,6 @@ export const certifyDeleteTableItem = createAsyncThunk(
     const url = `/certify/${id}`
     try {
       const response = await api.delete(url)
-      console.log("response", response)
       //@ts-ignore
       if (response.message === "OK") {
         message.success("deleted!")
@@ -205,19 +199,8 @@ export const deleteTableItem = createAsyncThunk(
 export const getItems = createAsyncThunk(
   "drivers/getItems",
   async (url: string, thunkAPI) => {
-    // const { onCancel, ...restObj } = data;
-    // const url = `/certify`;
-    // console.log(`data`, data);
     try {
       const response = await api.get(url);
-
-      // console.log(`response`, response);
-      // Return the data from the response
-      // @ts-ignore
-      // if (response.message === "OK") {
-      //   // close modal
-      //   onCancel();
-      // }
 
       return response.data;
     } catch (error) {

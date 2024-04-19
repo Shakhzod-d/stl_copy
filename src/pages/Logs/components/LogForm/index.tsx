@@ -1,62 +1,52 @@
-import { ControlFilled, ExclamationCircleOutlined } from "@ant-design/icons";
-import { Col, Modal, Row, Table, Tag, message } from "antd";
-import React, { useEffect, useState } from "react";
+import { Table } from "antd";
+import { useEffect, useState } from "react";
 import Accordion from "@/components/elements/Accordion";
 import { useLocation, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getItems, putLogForm } from "@/store/slices/logSlice";
-import { AppDispatch, RootState } from "@/store";
+import { AppDispatch } from "@/store";
 import Icon from "@/components/icon/Icon";
 import { EditForm } from "./components";
-
 interface ILogForm {
   logData: any;
 }
 
 const LogForm = ({ logData }: ILogForm) => {
   const [openEdit, setOpenEdit] = useState(false);
-  const [upData, setUpData] = useState(null)
+  const [upData, setUpData] = useState(null);
   const state = useSelector((state) => state);
-  // const {
-  //   driver = "",
-  //   mile = 0,
-  //   notes,
-  //   trailers = "",
-  //   //@ts-ignore
-  // } = state?.log?.logForm;
-  // notes, trailers, shipping docs ni edit qilsa bo'ladi
+
   const params: { id: "" } = useParams();
   const location = useLocation();
   const dispatch = useDispatch<AppDispatch>();
   // @ts-ignore
   let stateLogForm = state?.log?.logForm;
-  let upDate = location?.search?.split("=")[1]?.slice(0, 10)
+  let upDate = location?.search?.split("=")[1]?.slice(0, 10);
 
   const handleLogForm = async (data: any) => {
-    if (!data.driver || !data.trailers || !data.notes || !data.documents) {
+    if (!data.trailers || !data.notes || !data.documents) {
       return;
     }
 
-    dispatch(putLogForm(data));
-    setUpData(data)
-    setOpenEdit(false);
-    message.success("Success");
-  };
+    let newItem = {
+      ...data,
+      _id: stateLogForm?._id || null,
+      date: Number(upDate),
+      coDriverId: logData?.log[0]?.coDriverId || null,
+      driverId: logData?.log[0]?.driverId || "",
+    }
 
+    await dispatch(putLogForm(newItem));
+    
+    setUpData(newItem);
+    setOpenEdit(false);
+  };
+  
   useEffect(() => {
     const url = `/mainInfo?driverId=${params?.id}&date=${upDate}`;
     dispatch(getItems(url));
   }, [upDate, upData]);
-  
-  
-  // moment().unix()
-  // useEffect(() => {
-  //   // https://ptapi.roundedteam.uz/public/uploads/signatures/5d851f2a5809f34ba196f7b46dc627de.jpg
-  //   if (!!logData && logData?.hasOwnProperty("lastCertify")) {
-  //     const imageUrl = `https://ptapi.roundedteam.uz/public/uploads/signatures/${logData?.lastCertify?.signatureImg}`;
-  //     console.log(`logData`, imageUrl);
-  //   }
-  // }, []);
+
   const columns = [
     {
       title: "Driver",
@@ -98,49 +88,27 @@ const LogForm = ({ logData }: ILogForm) => {
       dataIndex: "signature",
       key: "signature",
       render: (signature: string) => {
-        return !!stateLogForm && stateLogForm?.hasOwnProperty("signature") && stateLogForm.signature !== "" ? (
+        return !!stateLogForm &&
+          stateLogForm?.hasOwnProperty("signature") &&
+          stateLogForm.signature !== "" && stateLogForm.signature !== "null" ? (
           <img width={200} src={signature} alt="signeture" />
         ) : (
           ""
         );
       },
-      // return: () => {
-      //   return !!stateLogForm ? (
-      //     <img width={200} src={stateLogForm?.signature} alt="signeture" />
-      //   ) : ""
-      // }
     },
     {
       title: "action",
       render: (item: any) => {
-        // console.log(`id`, item);
         return (
           <div className="action-table">
-            {item.key === "_id" ? (
-              "Edit not working"
-            ) : (
-              <div onClick={() => setOpenEdit(true)}>
+            <div onClick={() => setOpenEdit(true)}>
                 <Icon icon="pencil" className="pencil" />
               </div>
-            )}
           </div>
         );
       },
     },
-    // {
-    //   title: "Delete",
-    //   dataIndex: "delete",
-    //   key: "delete",
-    //   render: (signature: string) => {
-    //     return (
-    //       <div className="action-table">
-    //         <div onClick={() => {}}>
-    //           <Icon icon="trash" className="pencil" />
-    //         </div>
-    //       </div>
-    //     );
-    //   },
-    // },
   ];
 
   const dataSource = [

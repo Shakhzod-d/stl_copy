@@ -4,7 +4,7 @@ import TruckLoader from "@/components/loaders/TruckLoader";
 import useApi from "@/hooks/useApi";
 import useMomentZone from "@/hooks/useMomentZone";
 import { IDriverData } from "@/types/driver.type";
-import { ILog, IReport } from "@/types/log.type";
+import { IReport } from "@/types/log.type";
 import { mapDriverLogs } from "@/utils";
 import { DownloadOutlined } from "@ant-design/icons";
 import { PDFExport } from "@progress/kendo-react-pdf";
@@ -12,9 +12,6 @@ import { Button } from "antd";
 import moment from "moment";
 import { useEffect, useRef, useState } from "react";
 import Report from "../../Logs/components/LogActions/components/Report";
-import { getStartDay } from "../../Logs/components/correction_algorithms";
-import { NOT_DRAW_STATUSES } from "@/pages/Logs/components/constants";
-import { useLogsInnerContext } from "@/pages/Logs/components/LogsInner.context";
 
 interface IQueryParams {
   driverId?: number;
@@ -50,11 +47,6 @@ const DriverReports = () => {
         (driverReport) => {
           if (driverReport?.log) {
             const initialTime = driverReport?.log?.[0]?.start;
-            // const { croppedLogs, croppedTime } =
-            //      cropOneDayLogs(
-            //           driverReport?.log,
-            //           initialTime
-            //      );
             return {
               log: mapDriverLogs(driverReport.log) || [],
               data: driverReport.data,

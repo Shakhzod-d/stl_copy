@@ -1,18 +1,14 @@
 import TextField from "@/components/form/TextField";
-import { Button, Col, Row, Alert, message } from "antd";
-import { SubmitHandler, useForm } from "react-hook-form";
-import { useLogsInnerContext } from "../../../LogsInner.context";
-import { ChangeEvent, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { putLogForm } from "@/store/slices/logSlice";
-import { AppDispatch } from "@/store";
+import { Button } from "antd";
+import { useForm } from "react-hook-form";
+import { useEffect } from "react";
 
 interface IEditFormProps {
   item: EditFormValues;
 }
 
 interface EditFormValues {
-  _id: string;
+  _id: string | null;
   driver: string;
   trailers: string;
   notes: string;
@@ -31,7 +27,6 @@ export const EditForm = ({ item, setOpenEdit, handleLogForm }: Props) => {
 
     useEffect(() => {
       reset({
-        _id: item?._id || "",
         driver: item?.driver || "",
         trailers: item?.trailers || "",
         notes: item?.notes || "",
@@ -87,17 +82,6 @@ export const EditForm = ({ item, setOpenEdit, handleLogForm }: Props) => {
             placeholder="test"
             control={control}
             label="shipping docs"
-          />
-        </div>
-        <div>
-          <TextField
-          disabled
-            style={{ width: "150px", height: "28px" }}
-            name="driver"
-            required
-            placeholder="test"
-            control={control}
-            label="driver"
           />
         </div>
         <Button
