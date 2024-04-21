@@ -61,9 +61,6 @@ const Report: React.FC<IProps> = ({
     distance += logs[i].distance
   }
 
-  const {actions: {
-    filterDrawStatus,
-  },} = useLogsInnerContext()
 
   return (
     <div
@@ -200,7 +197,7 @@ const Report: React.FC<IProps> = ({
         </tbody>
       </table>
       <LogGraph
-        data={filterDrawStatus(logs)}
+        data={logs}
         setHoveredId={setHoveredId}
         initialTime={initialTime}
         hoveredId={hoveredId}
