@@ -48,11 +48,8 @@ const IftaReports = () => {
   
 
   const handleDownloadPDF = async () => {
-
-      const postPDFUrl = `/ifta/pdf?from=${fromTo[0]?.unix()}&to=${fromTo[1]?.unix()}`;
-      
-      api.post(postPDFUrl, stateVehicle).then(data => console.log(data)).catch(error => console.log(error))
-  
+      const postPDFUrl = `/ifta/pdf?from=${fromTo[0]?.unix()}&to=${fromTo[1]?.unix()}`
+      api.post(postPDFUrl, stateVehicle)
   }
 
   return (
