@@ -10,11 +10,14 @@ import {
   setLocalStorage,
   setUserData,
   errorMessage,
-  historyReplace,
+  historyPush,
+ 
+ 
 } from "@/utils";
 import { ILoginData } from "./login.types";
 import useApiMutation from "@/hooks/useApiMutation";
 import { IUserRole } from "@/types/user.type";
+
 
 type FormValues = {
   email: string;
@@ -31,39 +34,40 @@ const Login: React.FC = () => {
     loginMutation.mutate(data, {
       onSuccess: (res: ILoginData) => {
         const { data } = res;
-        const role: IUserRole = data.role;
+        // const role: IUserRole = data.role;
 
-        const isAdmin = role.roleName === "superAdmin";
-        const isService = ["serviceAdmin", "secondServiceAdmin"].includes(role.roleName);
-        const isCompany = ["companyAdmin"].includes(role.roleName);
-        const isLogger = ["logger"].includes(role.roleName)
+        // const isAdmin = role.roleName === "superAdmin";
+        // const isService = ["serviceAdmin", "secondServiceAdmin"].includes(role.roleName);
+        // const isCompany = ["companyAdmin"].includes(role.roleName);
+        // const isLogger = ["logger"].includes(role.roleName)
         
 
         setIsAuth(true);
         setUserData(data);
         setLocalStorage("token", data?.token);
-        if (isAdmin) setTimeout(() => historyReplace("/admin/services"), 0);
-        // if (isCompany){ setTimeout(() => historyReplace("/main/dashboard"), 0)}
-        if (isCompany){ 
-          setLocalStorage("companyId", data.companyId)
-          historyReplace("/main/dashboard")
-          window.location.reload();
-        }
-        // if (isLogger) setTimeout(() => historyReplace('/admin/all-companies'), 0)
-        if(isLogger){
-          setLocalStorage('companyId', data.companyId)
-          historyReplace('/main/log/logs')
-          window.location.reload();
+        historyPush("/")
+        // if (isAdmin) setTimeout(() => historyReplace("/admin/services"), 0);
+        // // if (isCompany){ setTimeout(() => historyReplace("/main/dashboard"), 0)}
+        // if (isCompany){ 
+        //   setLocalStorage("companyId", data.companyId)
+        //   historyReplace("/main/dashboard")
+        //   window.location.reload();
+        // }
+        // // if (isLogger) setTimeout(() => historyReplace('/admin/all-companies'), 0)
+        // if(isLogger){
+        //   setLocalStorage('companyId', data.companyId)
+        //   historyReplace('/main/log/logs')
+        //   window.location.reload();
           
-        }
-        // if (isService) setTimeout(() => historyReplace('/admin/all-companies'), 0)
-        if(isService){
-          setLocalStorage('serviceId', data.serviceId)
-          historyReplace('/admin/all-companies')
-          window.location.reload();
+        // }
+        // // if (isService) setTimeout(() => historyReplace('/admin/all-companies'), 0)
+        // if(isService){
+        //   setLocalStorage('serviceId', data.serviceId)
+        //   historyReplace('/admin/all-companies')
+        //   window.location.reload();
           
-        }
-        console.log('user', data);
+        // }
+        // console.log('user', data);
       },
       onError: (err) => {
         errorMessage(err?.data.error);

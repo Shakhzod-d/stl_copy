@@ -3,7 +3,7 @@ import Select from "@/components/elements/Select";
 import useApi from "@/hooks/useApi";
 import useMomentZone from "@/hooks/useMomentZone";
 import { useQueryParams } from "@/hooks/useQueryParams";
-import MainLayout from "@/layouts/MainLayout";
+
 import { IPageData } from "@/types";
 import { IDriverData } from "@/types/driver.type";
 import { historyPush } from "@/utils";
@@ -43,7 +43,7 @@ const LogsByDriver: React.FC = () => {
   );
 
   return (
-    <MainLayout>
+  
       <div className="logs-by-driver page">
         <div className="logs-by-driver-head">
           <div className="logs-by-driver-head-left">
@@ -102,7 +102,7 @@ const LogsByDriver: React.FC = () => {
           />
         </div>
       </div>
-    </MainLayout>
+ 
   );
 };
 

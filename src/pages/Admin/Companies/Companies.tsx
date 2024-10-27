@@ -1,158 +1,131 @@
-import React, { useEffect, useState } from "react";
-import { Button, Table } from "antd";
-import { historyPush, setLocalStorage, } from "@/utils";
-import { useColumns } from "./components/tableColumns";
-import Icon from "@/components/icon/Icon";
-import ActionModal from "./components/ActionModal";
-import SearchByQuery from "@/components/elements/SearchByQuery";
+import React, { useState } from "react";
+
+import { historyPush, setLocalStorage } from "@/utils";
+
 import useApi from "@/hooks/useApi";
-import useApiMutationID from "@/hooks/useApiMutationID";
+
 import { ICompanyData } from "@/types/company.type";
 import { PAGE_LIMIT } from "@/constants/general.const";
 import { IPageData } from "@/types";
-import useParseData from "@/hooks/useParseData";
-import { NumberParam, StringParam, useQueryParam, withDefault } from "use-query-params";
+
+import { NumberParam, useQueryParam, withDefault } from "use-query-params";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
-import { RoleNames } from "@/App";
+
+import { companyTableHeader, Main } from "@/track/constants";
+import { CustomInput, Navbar, PageLoad } from "@/track/components/ui";
+import { AddBtn, Top } from "./company-styled";
+import { FaPlus } from "react-icons/fa";
+import { InfoTable } from "@/track/components/shared";
+
+import { HiPhone } from "react-icons/hi2";
+import { IoMdMail } from "react-icons/io";
+import { RiUser3Fill } from "react-icons/ri";
+import { CompanyData } from "@/track/types";
+import { Company } from "@/track/utils/method";
+import { setCompany, setPageLoading } from "@/track/utils/dispatch";
+import { useErrAuth } from "@/hooks/useAuth";
+import { CompanyModal } from "./modals/company-page-modal";
 
 const Companies: React.FC = () => {
-     const { userData } = useSelector((state: RootState) => state.auth);
+  const { userData } = useSelector((state: RootState) => state.auth);
+  const [open, setOpen] = useState(false);
+  const [page, setPage] = useQueryParam("page", withDefault(NumberParam, 1));
 
-     // Query params states
-     const [search, setSearch] = useQueryParam("name", withDefault(StringParam, undefined));
-     const [page, setPage] = useQueryParam("page", withDefault(NumberParam, 1))
+  const { data, isLoading, refetch, isRefetching } = useApi<
+    IPageData<ICompanyData[]>
+  >("/main/allcompany", { page, limit: PAGE_LIMIT });
 
-     // All states
-     const [isOpen, setIsOpen] = useState(false);
-     const [updateId, setUpdateId] = useState<string | null>(null);
-     const [ data1, setData1] = useState<ICompanyData[] | any | undefined>(undefined)
+  const mapData = (data: ICompanyData[]): CompanyData[] => {
+    return data.map((item) => {
+      return {
+        id: item._id,
+        name: {
+          label: item.companyName,
+          img: "/company-logo.png",
+          data: [
+            { id: 1, text: "9328382389", icon: <HiPhone /> },
+            { id: 2, text: "support@asritsolutions.com", icon: <IoMdMail /> },
+          ],
+        },
+        status: { label: "Active" },
+        contact: {
+          label: "",
+          data: [
+            {
+              id: 1,
+              text: "Farmon Muhammadiyev (Owner)",
+              icon: <RiUser3Fill />,
+            },
+            { id: 2, text: " (318) 818-0000", icon: <HiPhone /> },
+            { id: 3, text: "zavajan96@gmail.com", icon: <IoMdMail /> },
+          ],
+        },
+        created: {
+          label: "",
+          data: [
+            { id: 1, text: "Created: Apr 3rd 2023", icon: "" },
+            { id: 2, text: "Edited: Apr 3rd 2023", icon: "" },
+          ],
+        },
+        edit: { label: "Edit" },
+      };
+    });
+  };
+  const modalActive = (id: string) => {
+    // console.log(id);
+    setOpen(true);
+  };
+  const { errFun } = useErrAuth();
+  const CompanyHandler = async (id: string) => {
+    try {
+      setPageLoading(true);
+      const data = await Company(id);
 
-     // Queries and mutations
-     const { data, isLoading, refetch, isRefetching } = useApi<IPageData<ICompanyData[]>>("/main/allcompany", { search, page, limit: PAGE_LIMIT });
-     
+      setLocalStorage("companyId", id);
+      setLocalStorage("company", data);
+      setCompany(data);
+      await historyPush(`/`);
+    } catch (err) {
+      // console.log(err);
+      return errFun(err);
+    } finally {
+      setPageLoading(false);
+    }
+  };
 
-     useEffect(()=>{
-          if(userData?.serviceId){
-               setData1(data?.data?.data.filter((item: any) => {
-                 
-                    if(item.serviceId === userData?.serviceId){
-                         return item
-                    }
-               })) 
-          }
-     }, [data])
+  const tableData: CompanyData[] = mapData(data ? data?.data.data : []);
 
-     const { mutate: updateCompany, isLoading: updateLoading } = useApiMutationID("PUT", "/company");
-     const { mutate: deleteCompany, isLoading: deleteLoading } = useApiMutationID("DELETE", "/company");
+  return (
+    <Main>
+      <CompanyModal open={open} setOpen={setOpen} />
+      <Navbar title="Company" search={false} />
+      <Top>
+        <CustomInput
+          type="search"
+          // change={(e: React.ChangeEvent<HTMLInputElement>) =>
+          //   setSearchTerm(e.target.value)
+          // }
+        />
+        <AddBtn>
+          <FaPlus size={18} />
+        </AddBtn>
+      </Top>
 
-     // Genete table columns
-     const columns = useColumns({ updateStatus, handleDelete, editFunc });
-
-     // parse api data 
-     const { tableData, totalPage } = useParseData<ICompanyData>(data)
-     // const { tableData: tableData1, totalPage: totalPage1 } = useParseData<ICompanyData>(data as data1)
-     
-     
-     
-
-     function editFunc(id: string) {
-          setUpdateId(id);
-          setIsOpen(true);
-     }
-
-     function updateStatus(id: string, isActive: boolean) {
-          updateCompany({ id, data: { isActive } }, { onSuccess: () => refetch() })
-     }
-
-     function handleDelete(id: string) {
-          deleteCompany({ id }, { onSuccess: () => refetch() })
-     }
-
-     // Handle modal function
-     const handleModal = () => {
-          setIsOpen((prev) => {
-               if (!prev && updateId) {
-                    setUpdateId(null);
-               }
-               return !prev;
-          });
-     };
-
-     return (
-          <section className="admin-company">
-               <div className="header">
-                    <SearchByQuery
-                         query={search}
-                         setQuery={setSearch}
-                         className="mw-250"
-                         placeholder="search"
-                    />
-                    <Button onClick={handleModal} type="primary">
-                         <Icon icon="plus" className="mr-8" />
-                         Add Company
-                    </Button>
-               </div>
-               
-               {
-                    userData?.role.roleName === RoleNames.SERVICE_ADMIN || userData?.role.roleName === RoleNames.SECOND_SERVICE_ADMIN ? 
-                    <div>
-                         <Table
-                    columns={columns}
-                    dataSource={data1}
-                    loading={isLoading || updateLoading || deleteLoading || isRefetching}
-                    rowClassName="hoverable"
-                    pagination={{
-                         onChange: (page) => setPage(page),
-                         current: page,
-                         pageSize: PAGE_LIMIT,
-                         total: totalPage
-                    }}
-                    onRow={(data1: ICompanyData) => {
-                         return {
-                              onClick: (e) => {
-                                   e.stopPropagation();
-                                   setLocalStorage("companyId", data1._id);
-                                   historyPush("/main/dashboard");
-                                   window.location.reload();
-                              },
-                         };
-                    }}
-                    />
-                    </div> 
-                    : 
-                    <Table
-                    columns={columns}
-                    dataSource={tableData}
-                    loading={isLoading || updateLoading || deleteLoading || isRefetching}
-                    rowClassName="hoverable"
-                    pagination={{
-                         onChange: (page) => setPage(page),
-                         current: page,
-                         pageSize: PAGE_LIMIT,
-                         total: totalPage
-                    }}
-                    onRow={(data: ICompanyData) => {
-                         return {
-                              onClick: (e) => {
-                                   e.stopPropagation();
-                                   setLocalStorage("companyId", data._id);
-                                   historyPush("/main/dashboard");
-                                   window.location.reload();
-                              },
-                         };
-                    }}
-                    />
-                } 
-               {isOpen && (
-                    <ActionModal
-                         toggle={handleModal}
-                         id={updateId}
-                         onSuccess={() => { handleModal(); refetch() }}
-                    />
-               )}
-          </section>
-     );
+      <div>
+        {isLoading ? (
+          <PageLoad h="calc(100vh - 400px)" />
+        ) : (
+          <InfoTable
+            header={companyTableHeader}
+            data={tableData}
+            editData={modalActive}
+            onClick={CompanyHandler}
+          />
+        )}
+      </div>
+    </Main>
+  );
 };
 
 export default Companies;

@@ -1,35 +1,26 @@
-import React from "react";
-import { Route, Redirect } from "react-router-dom";
+import React, { ReactNode, useEffect } from "react";
+import { useAuth } from "@/track/hooks/useAuth";
+import { PageLoad } from "@/track/components/ui";
+import { historyPush } from "@/utils";
 
 interface Props {
-     component: React.FC;
-     isAuth: boolean;
-     exact?: boolean;
-     path: string;
+  children: React.ReactNode;
 }
 
-const PrivateRoute: React.FC<Props> = ({
-     component: Component,
-     isAuth,
-     ...rest
-}) => {
-     return (
-          <Route
-               {...rest}
-               render={({ location }) =>
-                    isAuth ? (
-                         <Component />
-                    ) : (
-                         <Redirect
-                              to={{
-                                   pathname: "/login",
-                                   state: { from: location },
-                              }}
-                         />
-                    )
-               }
-          />
-     );
-};
+export const PrivateRoute: React.FC<Props> = ({ children }) => {
+  const { loading, isAuth } = useAuth();
 
-export default PrivateRoute;
+  useEffect(() => {
+    if (!loading && !isAuth) {
+      historyPush("/login");
+    }
+  }, [loading, isAuth]);
+
+  if (loading) {
+    return <PageLoad />;
+  } else if (isAuth) {
+    return <>{children}</>; // ReactNode qaytarish
+  } else {
+    return null; // Foydalanuvchi avtorizatsiyadan o'tmagan bo'lsa, null qaytariladi
+  }
+};

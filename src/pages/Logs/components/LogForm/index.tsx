@@ -34,14 +34,14 @@ const LogForm = ({ logData }: ILogForm) => {
       date: Number(upDate),
       coDriverId: logData?.log[0]?.coDriverId || null,
       driverId: logData?.log[0]?.driverId || "",
-    }
+    };
 
     await dispatch(putLogForm(newItem));
-    
+
     setUpData(newItem);
     setOpenEdit(false);
   };
-  
+
   useEffect(() => {
     const url = `/mainInfo?driverId=${params?.id}&date=${upDate}`;
     dispatch(getItems(url));
@@ -90,7 +90,8 @@ const LogForm = ({ logData }: ILogForm) => {
       render: (signature: string) => {
         return !!stateLogForm &&
           stateLogForm?.hasOwnProperty("signature") &&
-          stateLogForm.signature !== "" && stateLogForm.signature !== "null" ? (
+          stateLogForm.signature !== "" &&
+          stateLogForm.signature !== "null" ? (
           <img width={200} src={signature} alt="signeture" />
         ) : (
           ""
@@ -103,8 +104,8 @@ const LogForm = ({ logData }: ILogForm) => {
         return (
           <div className="action-table">
             <div onClick={() => setOpenEdit(true)}>
-                <Icon icon="pencil" className="pencil" />
-              </div>
+              <Icon icon="pencil" className="pencil" />
+            </div>
           </div>
         );
       },

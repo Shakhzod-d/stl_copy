@@ -1,9 +1,9 @@
-import Logs from "./Logs";
+import LogDrivers from "./LogDrivers";
 
 const index = () => {
      return (
           <>
-               <Logs />
+               <LogDrivers />
           </>
      );
 };

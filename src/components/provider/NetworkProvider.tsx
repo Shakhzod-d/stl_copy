@@ -18,7 +18,7 @@ const NetworkProvider: React.FC<Props> = ({ children }) => {
   return (
     <React.Fragment>
       {children}
-      <Modal open={isNetworkErr} closable={false} footer={null} centered>
+      {/* <Modal open={isNetworkErr} closable={false} footer={null} centered>
         <Result
           status="warning"
           title="Iltimos qurilmangizni internetga ulang!"
@@ -31,7 +31,7 @@ const NetworkProvider: React.FC<Props> = ({ children }) => {
         >
           Sahifani yangilash
         </Button>
-      </Modal>
+      </Modal> */}
     </React.Fragment>
   );
 };

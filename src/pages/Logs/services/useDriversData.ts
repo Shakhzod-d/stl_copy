@@ -25,7 +25,7 @@ const useDriversData = ({
   // parse api data
   const { tableData, totalPage } = useParseData<IDriverData>(data);
 
-  return { tableData, totalPage, page, setPage, isLoading, isFetching };
+  return { tableData, totalPage, page, setPage, isLoading, isFetching ,data};
 };
 
 export { useDriversData };
