@@ -1,20 +1,22 @@
-import React from "react";
-import SiteLoader from "../loaders/SiteLoader";
-import useIsAuth from "@/hooks/useAuth";
+// import React from "react";
+// import SiteLoader from "../loaders/SiteLoader";
+// // import useIsAuth from "@/hooks/useAuth";
 
-type Props = {
-   children: any;
-};
+// type Props = {
+//    children: any;
+// };
 
-const AuthProvider: React.FC<Props> = ({ children }) => {
-   const isIdentified = useIsAuth();
+// const AuthProvider: React.FC<Props> = ({ children }) => {
+//    const isIdentified = useIsAuth();
 
-   if (!isIdentified) {
-      //! here to disable loader
-      return <SiteLoader />;
-   }
+//    if (!isIdentified) {
+//       //! here to disable loader
+//       return <SiteLoader />;
+//    }
 
-   return children;
-};
+//    return children;
+// };
 
-export default AuthProvider;
+// export default AuthProvider;
+
+export {};

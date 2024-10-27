@@ -1,0 +1,13 @@
+export { Login } from "./login";
+export { Transfer } from "./transfer";
+export { IftaReports } from "./ifta-reports";
+export { ManageCompany } from "./manage-company/manage-company";
+export { CompanyUsers } from "./company-users";
+export { ApiKeys } from "./api-keys";
+export { Histories } from "./histories";
+export { LogsLog } from "./logs-log";
+export { Violation } from "./violation";
+export { Trackings } from "./trackings";
+export { NotFound } from "./not-found";
+export { Users } from "./users-page";
+export { LogsDrivers } from "./logs-drivers";

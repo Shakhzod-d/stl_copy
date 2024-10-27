@@ -1,0 +1,115 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "SF Pro Display";
+}
+p {
+  margin: 0;
+}
+::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+@font-face {
+  font-family: "SF Pro Display";
+  src: url("/public/fonts/SFPRODISPLAYBOLD.OTF");
+  src: url("/public/fonts/SFPRODISPLAYMEDIUM.OTF");
+  src: url("/public/fonts/SFPRODISPLAYREGULAR.OTF");
+}
+
+body {
+  background: #192345;
+  overflow: hidden;
+}
+.activeClassName {
+  color: red;
+  flex-direction: column;
+}
+.hover_container {
+  position: absolute;
+  border-radius: 10px;
+  padding: 16px 10px;
+  width: 173px;
+  height: 109px;
+  backdrop-filter: blur(80px);
+  box-shadow: 0 10px 60px 0 rgba(0, 0, 0, 0.1);
+  /* background: rgba(255, 255, 255, 0.97); */
+  z-index: 9999;
+  bottom: 80px;
+  left: -20px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  display: none;
+  color: black;
+}
+.table_hover_elm {
+  &:hover {
+    .hover_container {
+      display: flex;
+    }
+  }
+  /* color: #7c7c80d6 ; */
+}
+
+a {
+  text-decoration: none;
+}
+
+.ant-layout-sider-children {
+  display: flex;
+  flex-direction: column;
+}
+
+.btn-default {
+  padding: 15px 25px;
+  color: #5d5e5f;
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: -0.5px;
+  border-radius: 10px;
+  background: var(--card-card-secondary, #f3f3f4);
+}
+
+.btn-primary {
+  color: #fff;
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: -0.5px;
+  padding: 20px 25px;
+  border-radius: 10px;
+  background: #fc973a;
+}
+
+.ant-modal-footer {
+  display: none;
+}
+
+.ant-table-thead th {
+  background-color: #f3f3f4 !important;
+  scrollbar-color: #f3f3f4 !important;
+}
+
+/* .ant-table-row-level-0 {
+  border-radius: 10px !important;
+  background: #fdfdfd !important;
+  margin-bottom: 50px !important;
+  overflow: hidden !important;
+} */
+
+.ant-table-thead * {
+  color: #303030;
+  font-size: 14px;
+  font-weight: 590;
+}
+
+.ant-table-tbody * {
+  color: #000;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 2;
+}

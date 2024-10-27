@@ -1,107 +1,104 @@
-import DatePicker from "@/components/elements/DatePicker";
-import DoubleButton from "@/components/elements/DoubleButton";
-import SearchByQuery from "@/components/elements/SearchByQuery";
-import { PAGE_LIMIT } from "@/constants/general.const";
-import useApi from "@/hooks/useApi";
-import useMomentZone from "@/hooks/useMomentZone";
-import useParseData from "@/hooks/useParseData";
-import MainLayout from "@/layouts/MainLayout";
-import { IPageData } from "@/types";
-import { IDriverData } from "@/types/driver.type";
-import { historyPush } from "@/utils";
-import { Table } from "antd";
-import { Moment } from "moment";
-import React from "react";
-import {
-   NumberParam,
-   StringParam,
-   useQueryParam,
-   withDefault,
-} from "use-query-params";
-import { useMainColumns } from "../Logs/Logs.columns";
+// import DatePicker from "@/components/elements/DatePicker";
+// import DoubleButton from "@/components/elements/DoubleButton";
+// import SearchByQuery from "@/components/elements/SearchByQuery";
+// import { PAGE_LIMIT } from "@/constants/general.const";
+// import useApi from "@/hooks/useApi";
+// import useMomentZone from "@/hooks/useMomentZone";
+// import useParseData from "@/hooks/useParseData";
 
-const Trackings: React.FC = () => {
-   const momentZone = useMomentZone();
+// import { IPageData } from "@/types";
+// import { IDriverData } from "@/types/driver.type";
+// import { historyPush } from "@/utils";
+// import { Table } from "antd";
+// import { Moment } from "moment";
+// import React from "react";
+// import {
+//   NumberParam,
+//   StringParam,
+//   useQueryParam,
+//   withDefault,
+// } from "use-query-params";
+// import { useMainColumns } from "../Logs/Logs.columns";
 
-   // Query params states
-   const [search, setSearch] = useQueryParam(
-      "name",
-      withDefault(StringParam, undefined)
-   );
-   const [page, setPage] = useQueryParam("page", withDefault(NumberParam, 1));
-   const [time, setTime] = useQueryParam(
-      "time",
-      withDefault(NumberParam, momentZone().valueOf())
-   );
+// const Trackings: React.FC = () => {
+//   const momentZone = useMomentZone();
 
-   // Get all drivers data
-   const { data, isLoading, isFetching } = useApi<IPageData<IDriverData[]>>(
-      "/drivers",
-      { search, page, limit: 1000 }
-   );
+//   // Query params states
+//   const [search, setSearch] = useQueryParam(
+//     "name",
+//     withDefault(StringParam, undefined)
+//   );
+//   const [page, setPage] = useQueryParam("page", withDefault(NumberParam, 1));
+//   const [time, setTime] = useQueryParam(
+//     "time",
+//     withDefault(NumberParam, momentZone().valueOf())
+//   );
 
-   const columns = useMainColumns();
+//   // Get all drivers data
+//   const { data, isLoading, isFetching } = useApi<IPageData<IDriverData[]>>(
+//     "/drivers",
+//     { search, page, limit: 1000 }
+//   );
 
-   // parse api data
-   const { tableData, totalPage } = useParseData<IDriverData>(data);
+//   const columns = useMainColumns();
 
-   const handleLeft = () => {
-      setTime(momentZone(time).add(-1, "day").valueOf());
-   };
-   const handleRight = () => {
-      setTime(momentZone(time).add(1, "day").valueOf());
-   };
+//   // parse api data
+//   const { tableData, totalPage } = useParseData<IDriverData>(data);
 
-   const onDateChange = (value: Moment) => {
-      setTime(momentZone(value).valueOf());
-   };
+//   const handleLeft = () => {
+//     setTime(momentZone(time).add(-1, "day").valueOf());
+//   };
+//   const handleRight = () => {
+//     setTime(momentZone(time).add(1, "day").valueOf());
+//   };
 
-   return (
-      <MainLayout>
-         <div className="logs page">
-            <div className="logs-head">
-               <div className="logs-head-left">
-                  <DatePicker
-                     onChange={onDateChange}
-                     value={momentZone(time)}
-                     allowClear={false}
-                  />
-                  <DoubleButton onLeft={handleLeft} onRight={handleRight} />
-               </div>
-               <SearchByQuery
-                  className="mw-250 mr-8"
-                  placeholder={"Search"}
-                  query={search}
-                  setQuery={setSearch}
-               />
-            </div>
-            <div className="logs-body mt-24">
-               <Table
-                  className="pointer"
-                  columns={columns}
-                  dataSource={tableData}
-                  loading={isLoading || isFetching}
-                  pagination={{
-                     onChange: (page) => setPage(page),
-                     current: page,
-                     pageSize: PAGE_LIMIT,
-                     total: totalPage,
-                  }}
-                  onRow={({ _id }: IDriverData) => {
-                     return {
-                        onClick: () =>
-                           historyPush(
-                              `/main/trackings/inner/${_id}?time=${momentZone(
-                                 time
-                              ).unix()}`
-                           ),
-                     };
-                  }}
-               />
-            </div>
-         </div>
-      </MainLayout>
-   );
-};
+//   const onDateChange = (value: Moment) => {
+//     setTime(momentZone(value).valueOf());
+//   };
 
-export default Trackings;
+//   return (
+//     <div className="logs page">
+//       <div className="logs-head">
+//         <div className="logs-head-left">
+//           <DatePicker
+//             onChange={onDateChange}
+//             value={momentZone(time)}
+//             allowClear={false}
+//           />
+//           <DoubleButton onLeft={handleLeft} onRight={handleRight} />
+//         </div>
+//         <SearchByQuery
+//           className="mw-250 mr-8"
+//           placeholder={"Search"}
+//           query={search}
+//           setQuery={setSearch}
+//         />
+//       </div>
+//       <div className="logs-body mt-24">
+//         <Table
+//           className="pointer"
+//           columns={columns}
+//           dataSource={tableData}
+//           loading={isLoading || isFetching}
+//           pagination={{
+//             onChange: (page) => setPage(page),
+//             current: page,
+//             pageSize: PAGE_LIMIT,
+//             total: totalPage,
+//           }}
+//           onRow={({ _id }: IDriverData) => {
+//             return {
+//               onClick: () =>
+//                 historyPush(
+//                   `/main/trackings/inner/${_id}?time=${momentZone(time).unix()}`
+//                 ),
+//             };
+//           }}
+//         />
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default Trackings;
+export {}

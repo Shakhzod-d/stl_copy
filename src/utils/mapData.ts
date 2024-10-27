@@ -10,6 +10,7 @@ import { IServiceData } from "@/types/service.type";
 import { IDriverData } from "@/types/driver.type";
 import { IVehicleData } from "@/types/vehicle.type";
 import { IHistoryLog, ILog } from "@/types/log.type";
+import { formatTime } from "@/track/utils/method";
 
 const mapService = (data: IServiceData[]): IServiceData[] => {
   return data.map((el) => {
@@ -134,11 +135,22 @@ const mapHistoryLogs = (data: IHistoryLog[]): IHistoryLog[] => {
 };
 
 const mapTableData = (data: any[]) => {
-  return data?.map((el, i: number) => {
+  console.log(data);
+
+  return data?.map((item, i: number) => {
     return {
-      ...el,
-      key: el._id,
-      no: i + 1,
+      id: item?._id,
+      date: "1/1/2020",
+      truckNo: 2358,
+      status: item.status,
+      location: "835, Trần Hưng Đạo",
+      warnings: "No Signature!",
+      break: formatTime(item.cycle ? item.cycle.break : 0),
+      drive: formatTime(item.cycle ? item.cycle.drive : 0),
+      shift: formatTime(item.cycle ? item.cycle.shift : 0),
+      cycle: formatTime(item.cycle ? item.cycle.cycle : 0),
+      recap: "00:00",
+      updated: "13 weeks ago",
     };
   });
 };

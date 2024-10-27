@@ -4,7 +4,7 @@ import { useMemo } from "react";
 const useParseData = <T>(data: any, isPaging: boolean = true) => {
   // Map vehicles data to table
 
-  const tableData: T[] = useMemo(() => {
+  const tableData = useMemo(() => {
     if (data) {
       const current = isPaging ? data?.data?.data : data?.data;
       return mapTableData(current);

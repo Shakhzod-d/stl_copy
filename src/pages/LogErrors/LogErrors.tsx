@@ -5,7 +5,7 @@ import Icon from "@/components/icon/Icon";
 import useApi from "@/hooks/useApi";
 import useMomentZone from "@/hooks/useMomentZone";
 import { useQueryParams } from "@/hooks/useQueryParams";
-import MainLayout from "@/layouts/MainLayout";
+
 import { IViolation, TViolation } from "@/types/violation";
 import { Button, Table } from "antd";
 import { Moment } from "moment";
@@ -57,7 +57,7 @@ const LogErrors: React.FC = () => {
   );
 
   return (
-    <MainLayout>
+  
       <div className="logs page">
         <div className="logs-head">
           <div className="logs-head-left">
@@ -111,7 +111,7 @@ const LogErrors: React.FC = () => {
           />
         </div>
       </div>
-    </MainLayout>
+  
   );
 };
 

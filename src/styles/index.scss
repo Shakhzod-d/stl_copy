@@ -27,15 +27,15 @@
 @import "./classes";
 
 // layout
-@import "../layouts/AppLayout/layout";
-@import "../layouts/AdminLayout/admin-layout";
-@import "../layouts/MainLayout/main-layout";
+// @import "../layouts/AppLayout/layout";
+// @import "../layouts/AdminLayout/admin-layout";
+// @import "../layouts/MainLayout/main-layout";
 // pages
 @import "../pages/Login/login";
 @import "../pages/Profile/profile";
 @import "../pages/Drivers/drivers";
 @import "../pages/Vehicles/vehicles";
-@import "../pages/Dashboard/dashboard";
+// @import "../pages/Dashboard/dashboard";
 @import "../pages/Logs/logs";
 @import "../pages/Logs/components/LogActions/actions";
 @import "../pages/Logs/components/LogCorrection/logsCorrection";

@@ -1,10 +1,10 @@
 import React from "react";
 
 interface IRoute {
-  component: React.FC;
+  component: React.FC ;
   path: string;
-  exact: boolean;
-  status?: "app" | "admin" | "company";
+  admin: string;
+  route?: IRoute[];
 }
 
 interface INavStatus {

@@ -1,5 +1,5 @@
 import TruckLoader from "@/components/loaders/TruckLoader";
-import MainLayout from "@/layouts/MainLayout";
+
 import { Badge, Checkbox } from "antd";
 import LogActions from "./LogActions";
 import LogCorrection from "./LogCorrection";
@@ -7,7 +7,8 @@ import LogGraph from "./LogGraph";
 import LogHead from "./LogHead";
 import LogTable from "./LogTable";
 import { useLogsInnerContext } from "./LogsInner.context";
-import TripPlanner from "./TripPlanner";
+// import TripPlanner from "./TripPlanner";
+
 import MultiDayGraph from "./MultiDayGraph/container/MultiDayGraph";
 import { useEffect, useState } from "react";
 import { CheckboxChangeEvent } from "antd/lib/checkbox";
@@ -16,16 +17,22 @@ import { AppDispatch, RootState } from "@/store";
 import { setCompanyTimeZone } from "@/store/slices/logSlice";
 import LogForm from "./LogForm";
 import { Recap } from "./Recap";
+import { DriversHeader } from "@/track/components/shared/drivers-header";
+import { Diagrams } from "@/track/components/shared/diagrams";
+import { CustomTable } from "@/track/components/shared/custom-table";
+import { driversTableHeader, Main } from "@/track/constants";
+import { DriversForm } from "@/track/components/shared/drivers-form";
+import { TripPlanner } from "@/track/components/shared/trip-planner";
 
 const LogsInner: React.FC = () => {
   const {
     state: {
-      disableActions,
+      disableActions, //----------------> false
       // ... (other state variables)
       // Include other variables here
-      currentLog,
-      hoveredId,
-      isFetching,
+      currentLog, //-------null
+      hoveredId, //-----------------------> 668978a6b53c69bda65551ae
+      isFetching, //----------------------->false
       logData,
       logs,
       log,
@@ -49,8 +56,6 @@ const LogsInner: React.FC = () => {
   const [checkbox2Active, setCheckbox2Active] = useState(false);
   const s = useSelector<RootState>((s) => s.log);
   const dispatch = useDispatch<AppDispatch>();
-
-// console.log(logs);
 
   const handleCheckbox1Change = (e: CheckboxChangeEvent) => {
     setCheckbox1(e.target.checked);
@@ -83,48 +88,15 @@ const LogsInner: React.FC = () => {
   // console.log(`driverData?.data`, driverData?.data?.companyTimeZone); //companyTimeZone
 
   return (
-    <MainLayout>
+    <Main>
       <div
-        className="logs-inner page"
+        className=""
         style={{ pointerEvents: disableActions ? "none" : "all" }}
       >
-        {driverData && (
-          <LogHead
-            driverData={driverData?.data}
-            initialTime={time}
-            cycle={logData?.cycle}
-            logs={logs}
-          />
-        )}
-        <LogActions />
-        <div
-          style={{
-            // border: "1px solid red",
-            display: "flex",
-            justifyContent: "center",
-            // alignItems: "center",
-          }}
-        >
-          <Checkbox
-            disabled={!currentLog?.hasOwnProperty("_id")}
-            onChange={handleCheckbox1Change}
-            checked={checkbox1}
-          >
-            Log 1
-          </Checkbox>
-          <Checkbox
-            disabled={!currentLog?.hasOwnProperty("_id")}
-            onChange={handleCheckbox2Change}
-            checked={checkbox2}
-          >
-            Log 2
-          </Checkbox>
-        </div>
-        <br />
-        {logData?.violation?.map((violation) => (
-          <Badge count={violation.violation} key={violation._id}/>
-        ))}
-        <LogGraph
+        <DriversHeader />
+        {/* <LogActions/> */}
+        <Diagrams
+          filterDrawStatus={filterDrawStatus(logs)}
           data={filterDrawStatus(logs)}
           setHoveredId={setHoveredId}
           hoveredId={hoveredId}
@@ -134,7 +106,8 @@ const LogsInner: React.FC = () => {
           isFetching={isFetching}
           initialTime={time / 1000}
         />
-        <MultiDayGraph />
+
+        {/* <MultiDayGraph /> */}
         {(isFetching || disableActions) && <TruckLoader />}
         <div>
           <div id="box">
@@ -143,20 +116,22 @@ const LogsInner: React.FC = () => {
             )}
           </div>
 
-          <LogTable
+          {/* <LogTable
             data={logs}
             columns={columns}
             setHoveredId={setHoveredId}
             hoveredId={hoveredId}
             driver={driverData?.data}
             //  rowSelection={rowSelection} //these are must to be same
-          />
+          /> */}
+          {/* <CustomTable data={logs} columns={driversTableHeader} />     track table*/}
         </div>
       </div>
-      <LogForm logData={logData} />
-      <Recap data={logData} />
+      {/* <LogForm logData={logData} /> */}
+      <DriversForm />
+      {/* <Recap data={logData} /> */}
       <TripPlanner />
-    </MainLayout>
+    </Main>
   );
 };
 

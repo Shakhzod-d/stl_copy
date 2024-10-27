@@ -17,6 +17,7 @@ export interface IGraph {
   afterRangeChange?: (val: any, item: any) => void;
   initialTime?: number;
   isFetching?: boolean;
+  filterDrawStatus?:any
 }
 
 const Graph: React.FC<IGraph> = ({

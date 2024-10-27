@@ -1,0 +1,1 @@
+export {MapArticle} from "./map-article"

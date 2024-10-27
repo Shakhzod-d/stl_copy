@@ -19,3 +19,4 @@ export const historyGo = (length: number) => {
 export const historyGoBack = () => {
     history.goBack();
 };
+

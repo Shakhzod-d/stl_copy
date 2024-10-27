@@ -1,130 +1,196 @@
-import React, { useEffect, useMemo, useState } from "react";
-import MainLayout from "@/layouts/MainLayout";
-import Accordion from "@/components/elements/Accordion";
-import { Button, Input, Table } from "antd";
-import Icon from "@/components/icon/Icon";
-import MapContainer from "./component/MapContainer";
-import { useColumns } from "./component/columns";
-import TruckLoader from "@/components/loaders/TruckLoader";
-import useApi from "@/hooks/useApi";
-import { useQueryParams } from "@/hooks/useQueryParams";
-import { IDashboardMap } from "@/types/dashbord.type";
-import useParseData from "@/hooks/useParseData";
+import { CustomTable, ViolationsChart } from "@/track/components/shared";
+import {
+  CustomSelect,
+  Drivers,
+  Navbar,
+  OverviewCard,
+} from "@/track/components/ui";
+import { getLocalStorage, setLocalStorage } from "../../utils/index";
 
-const Dashboard: React.FC = () => {
-  const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
+import { useDispatch, useSelector } from "react-redux";
+import { BiCalendarStar } from "react-icons/bi";
+import { IoIosArrowDown } from "react-icons/io";
+import { Radio } from "antd";
+import {
+  dashboardTableHeader,
+  dataSource,
+  Reload,
+  companyTable,
+  Text,
+  companyTableElement,
+  dateTable,
+  dateTableElement,
+  Main,
+} from "@/track/constants";
 
-  // Query params states
-  const [search, setSearch] = useState("");
-  const [mapType, setMapType] = useQueryParams("map_type", "roadmap");
+import {
+  ArrowIcon,
+  CardWrapper,
+  CustomBtn,
+  Day,
+  SelectWrapper,
+  Title,
+  CustomRadio,
+} from "./dashboard-styled";
+import { OrderTable } from "@/track/components/shared/order-table";
+import { useEffect, useState } from "react";
+import { RootState } from "@/store";
+import { dashboardProgressActive } from "@/store/slices/booleans-slice";
+import { autoRefresh } from "@/track/utils/method";
+import { Flex } from "@/track/components/shared/drivers-header/drivers-header-styled";
+// import useApi from "../../hooks/useApi";
+// import { dashboardData } from "../../utils/mapData";
 
-  const { data, status, refetch, isFetching } = useApi(
-    "/map",
-    { search },
-    {
-      suspense: true,
-    }
+export const Dashboard = () => {
+  const active = useSelector(
+    (state: RootState) => state.booleans.dashboardProgress
   );
+  const sidebarActive = useSelector(
+    (state: RootState) => state.booleans.sidebarActive
+  );
+  const [selectEvent, setSelectEvent] = useState<unknown>("order");
+  const option = [
+    { value: "status", label: "Two-factures" },
+    { value: "active", label: "Actice" },
+    { value: "completed", label: "Completed" },
+  ];
+  // const { data, isLoading } = useApi("/main/violations", {
+  //   page: 1,
+  //   limit: 10,
+  // });
+  // console.log(data);
+  // const filerData = dashboardData(data ? data?.data?.data : []);
+  // console.log(filerData);
 
-  const columns = useColumns();
+  const refreshSelect = [
+    { value: "off", label: "Auto Refresh off" },
+    { value: 30000, label: "1 minute" },
+    { value: 300000, label: "5 minute" },
+    { value: 600000, label: "10 minute" },
+  ];
+  const dispatch = useDispatch();
 
-  const { tableData: mapData } = useParseData<IDashboardMap>(data, false);
-
-  const selectedDrivers = useMemo(() => {
-    return mapData.filter((el: any) => selectedRowKeys.includes(el.key));
-  }, [selectedRowKeys, mapData]);
+  function onChange(event: unknown) {
+    setSelectEvent(event);
+  }
+  const refreshHandler = (e: number | string | unknown) => {
+    setLocalStorage("autoReload", e);
+    autoRefresh(e);
+  };
+  const reloadStatus: number | string | null =
+    getLocalStorage("autoReload") !== null
+      ? getLocalStorage("autoReload")
+      : "off";
 
   useEffect(() => {
-    setSelectedRowKeys(
-      mapData.map((el: any) => {
-        return el.key;
-      })
-    );
-  }, [mapData]);
-
-  const filterDevice = (data: IDashboardMap[]) => {
-    return data.filter((el) => el.device);
-  };
-
-  const changeMapType = () => {
-    setMapType(mapType === "roadmap" ? "hybrid" : "roadmap");
-  };
-
-  const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
-    setSelectedRowKeys(newSelectedRowKeys);
-  };
-
-  const rowSelection = {
-    selectedRowKeys,
-    onChange: onSelectChange,
-  };
-
+    if (reloadStatus !== "off" || reloadStatus !== null) {
+      autoRefresh(reloadStatus);
+    }
+  }, [reloadStatus]);
   return (
-    <MainLayout>
-      <div className="dashboard">
-        {/* {isFetching ? (
-          <TruckLoader />
-        ) : ( */}
-        <>
-          <Accordion
-            className="mb-24"
-            title="map"
-            subButtons={
-              <React.Fragment>
-                <Button
-                  type="primary"
-                  className="medium capitalize"
-                  onClick={changeMapType}
-                >
-                  {mapType === "roadmap" ? "satellite" : "roadmap"}
-                </Button>
-                <Button className="rounded outlined" onClick={() => refetch()}>
-                  <Icon icon="refresh" />
-                </Button>
-              </React.Fragment>
-            }
-            content={
-              <>
-                {/* <h1>UnComment the map in Dashboard</h1> */}
-                <MapContainer
-                  mapType={mapType}
-                  data={filterDevice(selectedDrivers)}
-                />
-              </>
-            }
+    <Main>
+      <Navbar title="Dashboard" />
+      <Day>
+        <Flex $gap={"5px"}>
+          <CustomSelect
+            option={refreshSelect}
+            dValue={reloadStatus}
+            width="170px"
+            // placeholder="Auto Refresh off"
+            change={refreshHandler}
           />
-          <Accordion
-            title="units &"
-            isClosable={false}
-            subButtons={
-              <Input
-                className="mw-250 mr-8"
-                placeholder={"Search"}
-                style={{ borderRadius: "16px" }}
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-              />
-            }
-            content={
-              <Table
-                dataSource={mapData.map((item) => ({
-                  ...item,
-                  position: {
-                    lat: 0,
-                    lng: 0,
-                  },
-                }))}
-                columns={columns}
-                pagination={false}
-                rowSelection={rowSelection}
-              />
-            }
+        </Flex>
+        <CustomBtn type="primary" onClick={Reload}>
+          Refresh
+        </CustomBtn>
+        <Flex $gap={"20px"}>
+          <CustomBtn>
+            <BiCalendarStar size={30} />
+          </CustomBtn>
+        </Flex>
+      </Day>
+
+      <CardWrapper $width={sidebarActive}>
+        <Drivers />
+        <ViolationsChart />
+        <OverviewCard />
+        <CustomBtn onClick={() => dispatch(dashboardProgressActive())}>
+          <ArrowIcon $active={active}>
+            <IoIosArrowDown />
+          </ArrowIcon>
+        </CustomBtn>
+      </CardWrapper>
+
+      <Title>Drivers info</Title>
+
+      <SelectWrapper>
+        <Radio.Group defaultValue={1}>
+          <CustomRadio value={1}>
+            <Text>Include</Text>
+          </CustomRadio>
+          <CustomRadio value={2}>
+            <Text>Exclude</Text>
+          </CustomRadio>
+        </Radio.Group>
+        <Flex $gap={"6px"} $align="end" $wrap={"wrap"}>
+          <CustomSelect option={option} placeholder="Name" width="200px" />
+          <CustomSelect option={option} placeholder="Company" width="200px" />
+          <CustomSelect
+            option={option}
+            placeholder="Violations"
+            width="200px"
           />
-        </>
-        {/*  )} */}
-      </div>
-    </MainLayout>
+          <CustomSelect option={option} placeholder="Date" width="200px" />
+          <CustomSelect
+            option={option}
+            placeholder="Eld connection"
+            width="200px"
+          />
+          <CustomSelect option={option} placeholder="Cycle" />
+
+          <div>
+            <Text size={12} $mb="10px">
+              Driver option
+            </Text>
+            <CustomSelect option={option} placeholder="Cycle" />
+          </div>
+          <div>
+            <Text size={12} $mb="10px">
+              Driver option
+            </Text>
+            <CustomSelect
+              option={[
+                { value: "order", label: "Order By" },
+                { value: "company", label: "Company" },
+                { value: "date", label: "Date" },
+              ]}
+              width={"126px"}
+              placeholder="Order By"
+              change={onChange}
+            />
+          </div>
+          <div>
+            <Text size={12} $mb="20px"></Text>
+            <CustomSelect
+              option={[{ value: "direction", label: "direction" }]}
+              width={"126px"}
+              placeholder="Direction"
+            />
+          </div>
+        </Flex>
+      </SelectWrapper>
+
+      {selectEvent == "order" ? (
+        <CustomTable columns={dashboardTableHeader} data={dataSource} />
+      ) : (
+        <OrderTable
+          data={selectEvent == "company" ? companyTable : dateTable}
+          element={
+            selectEvent == "company" ? companyTableElement : dateTableElement
+          }
+          selectEvent={selectEvent}
+        />
+      )}
+    </Main>
   );
 };
-
-export default Dashboard;
