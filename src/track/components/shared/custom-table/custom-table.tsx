@@ -23,7 +23,10 @@ import { RootState } from "@/store";
 // import { RootState } from "../../../store/store";
 
 // import { successMessage } from "../../../utils/message";
-type CustomObject = Record<string, string | number | JSX.Element>;
+export type CustomObject = Record<
+  string,
+  string | number | JSX.Element | undefined
+>;
 
 interface TableColumn {
   header: string | JSX.Element;

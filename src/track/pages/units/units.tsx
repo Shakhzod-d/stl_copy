@@ -15,6 +15,7 @@ import { Flex } from "@/track/components/shared/drivers-header/drivers-header-st
 import { TransparentButton } from "@/track/constants";
 import useApi from "@/hooks/useApi";
 import { UnitsAddModal } from "./modals/units-add-modal";
+import { CustomObject } from "@/track/components/shared/custom-table/custom-table";
 export const Units = () => {
   const [open, setOpen] = useState<boolean>(false);
   const [activeBtn, setActiveBtn] = useState<number>(1);
@@ -37,7 +38,7 @@ export const Units = () => {
   }
 
   const dataSort = (dataArr: ObjType[] | []) => {
-    const arr: unitsProp[] = dataArr.map((item, i) => {
+    const arr = dataArr.map((item, i) => {
       const firstName = item?.driver.firstName;
       const lastNama = item?.driver.lastName;
 
@@ -68,9 +69,9 @@ export const Units = () => {
     return { arr, select };
   };
 
-  // const unitsData = dataSort(data ? data.data?.data : []);
+  const unitsData = dataSort(data ? data.data?.data : []);
 
-  // DriversSelectId(unitsData.select);
+  DriversSelectId(unitsData.select);
   return (
     <Main>
       <Navbar title={"Units"} />
@@ -92,11 +93,14 @@ export const Units = () => {
       {/* Units table data */}
       {isLoading ? (
         <PageLoad h="calc(100vh - 400px)" />
-      ) : [].length === 0 ? (
+      ) : unitsData.arr.length === 0 ? (
         <CustomTable columns={unitsColumns} data={[]} />
       ) : (
         <>
-          <CustomTable columns={unitsColumns} data={[{}]} />
+          <CustomTable
+            columns={unitsColumns}
+            data={unitsData.arr ? unitsData.arr : []}
+          />
           <Text size={20}>NO Data</Text>
         </>
       )}

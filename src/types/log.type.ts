@@ -149,3 +149,57 @@ export interface IInfoLog {
   notes: string;
   rangeVal?: any;
 }
+
+export interface InnerTable {
+  coDriverId: string;
+  companyId: string;
+  createdAt: string;
+  distance: number;
+  document: string;
+  driverId: "6707d10ce91290665289fc67";
+  duration: number | string;
+  end: number;
+  engineHours: number;
+  hasCycle: boolean;
+  hasFlag: boolean;
+  isDeleted: boolean;
+  isEnded: boolean;
+  isFirst: boolean;
+  location: {
+    lat: number;
+    lng: number;
+    name: string;
+    _id: string;
+    status: string;
+  };
+  notes: string;
+  odometer: number;
+  origin: string;
+  start: number;
+  status: string;
+  trailer: string;
+
+  updatedAt: string;
+  vehicleId: string;
+  vehicleUnit: string;
+  __v: number;
+  _id: string;
+}
+export interface LogTableData {
+  id: string;
+  checkbox: any;
+  status: string;
+  start: string;
+  duration: string;
+  location: string;
+  vehicle: string;
+  odometer: number;
+  hours: string;
+  notes: string;
+  document: string;
+  trailer: string;
+  add: any;
+  dots: any;
+  lat: number;
+  lng: number;
+}
