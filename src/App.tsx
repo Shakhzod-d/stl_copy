@@ -11,10 +11,9 @@ import { Layout } from "./track/components/shared/layout";
 
 import { ThemeProvider } from "styled-components";
 import { darkTheme, lightTheme } from "./utils/theme";
-import {PrivateRoute} from "./routes/PrivateRoute";
+import { PrivateRoute } from "./routes/PrivateRoute";
 import { Login, NotFound } from "./track/pages";
 import { getLocalStorage, historyPush } from "./utils";
-
 
 export enum RoleNames {
   SUPER_ADMIN = "superAdmin",
@@ -26,9 +25,7 @@ export enum RoleNames {
 const App: React.FC = () => {
   const { pathname } = useLocation();
 
-  const company =
-    useSelector((state: RootState) => state.company.company) ||
-    getLocalStorage("company");
+  const company = useSelector((state: RootState) => state.company.company);
   const dark = useSelector((state: RootState) => state.booleans.darkMode);
   useEffect(() => {
     if (!company && pathname == "/") {
