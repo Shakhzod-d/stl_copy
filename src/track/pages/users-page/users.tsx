@@ -1,11 +1,9 @@
 import { CustomInput, Navbar, PageLoad } from "../../components/ui";
 import { Main } from "../../utils";
-import { CustomButton } from "./users-styled";
+
 import { FaPlus } from "react-icons/fa";
 import { InfoTable } from "../../components/shared";
-// import { useState } from "react";
-// import useApi from "../../hooks/useApi";
-// import { mapUserData } from "../../utils/mapData";
+
 import { usersTableHeader } from "../../utils/constants";
 import { useState } from "react";
 import { Flex } from "@/track/components/shared/drivers-header/drivers-header-styled";
@@ -13,9 +11,10 @@ import { UserEditModal } from "./modals/user-edit-modal";
 import { AddUser } from "./modals/add-user-modal";
 import useApi from "@/hooks/useApi";
 import { useDebounce } from "@/track/hooks/use-debauce";
-import { usersTableData } from "@/track/constants";
+
 import { AddBtn } from "@/pages/Admin/Companies/company-styled";
-// import { useDebounce } from "../../hooks/use-debauce";
+
+import { mapUserData } from "@/track/utils/mapData";
 
 export const Users = () => {
   const [open, setOpen] = useState<boolean>(false);
@@ -27,14 +26,13 @@ export const Users = () => {
     page: 1,
     limit: 1000,
   });
-  // const users = mapUserData(data ? data?.data?.data : []);
-  // console.log(users);
+  const users = mapUserData(data ? data?.data?.data : []);
 
-  // const filteredData = users.filter((data) =>
-  //   String(data?.name?.label)
-  //     .toLowerCase()
-  //     .startsWith(searchValue.toLowerCase())
-  // );
+  const filteredData: any[] = users.filter((data) =>
+    String(data?.name?.label)
+      .toLowerCase()
+      .startsWith(searchValue.toLowerCase())
+  );
 
   const editData = (id: string) => {
     setOpen(true);
@@ -52,7 +50,7 @@ export const Users = () => {
             setSearchTerm(e.target.value)
           }
         />
-       <AddBtn onClick={()=>setAddUser(true)}>
+        <AddBtn onClick={() => setAddUser(true)}>
           <FaPlus size={18} />
         </AddBtn>
       </Flex>
@@ -60,7 +58,7 @@ export const Users = () => {
       {isLoading || (
         <InfoTable
           header={usersTableHeader}
-          data={usersTableData}
+          data={filteredData}
           editData={editData}
         />
       )}

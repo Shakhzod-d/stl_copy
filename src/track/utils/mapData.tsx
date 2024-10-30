@@ -5,7 +5,7 @@ import { useDate } from "@/track/hooks/useDate";
 import { IoMdMail } from "react-icons/io";
 import { RiUser3Fill } from "react-icons/ri";
 import { formatTime } from "./method";
-import { InnerTable, LogTableData } from "@/types/log.type";
+import { InnerTable } from "@/types/log.type";
 import { Checkbox } from "antd";
 import { MdModeEdit } from "react-icons/md";
 import { BsThreeDotsVertical } from "react-icons/bs";
@@ -109,7 +109,7 @@ interface Cycle {
   cycle: number;
 }
 
-interface DriversGet<T> {
+interface DriversGet {
   _id: string;
   firstName: string;
   lastName: string;
@@ -120,7 +120,7 @@ interface DriversGet<T> {
   cycle?: Cycle;
 }
 
-export function companyDrivers<T>(data: DriversGet<T>[] = []) {
+export function companyDrivers(data: DriversGet[] = []) {
   const drivers = data.map((item, i) => {
     return {
       id: i,
@@ -129,9 +129,7 @@ export function companyDrivers<T>(data: DriversGet<T>[] = []) {
       u_name: item.username,
       co_driver: "",
       vehicle: item.vehicleUnit,
-      driver_Type: "",
       app_version: "4.6.7",
-      documents: "Not uploaded",
       activated: "2024-03-02",
       device_info: item.deviceInfo,
       action: "",

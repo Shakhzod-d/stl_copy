@@ -1,4 +1,9 @@
-import { SelectData, setPageLoad, setSelect } from "@/store/slices/booleans-slice";
+import {
+  SelectData,
+  setModalActive,
+  setPageLoad,
+  setSelect,
+} from "@/store/slices/booleans-slice";
 import { Data, setCompanyData } from "@/store/slices/company-slice";
 import { setAuth, setData } from "@/store/slices/isAuth";
 // import { store } from "@/store/index";
@@ -15,3 +20,5 @@ export const setCompany = (data: false | Data) =>
   dispatch(setCompanyData(data));
 
 export const setPageLoading = (data: boolean) => dispatch(setPageLoad(data));
+
+export const setModal = (data: boolean) => dispatch(setModalActive(data));

@@ -5,17 +5,17 @@ import { Main, unitsButtons, unitsColumns } from "../../utils/index";
 import { Navbar, PageLoad } from "../../components/ui";
 
 import { CustomTable } from "../../components/shared";
-// import { UnitsAddModal } from "../../components/shared/units-add-modal"; //modal
+
 
 import { ObjType } from "../../types/helper.type";
 import { SelectData } from "../../types";
 import { DriversSelectId } from "../../utils/dispatch";
-import { Text } from "../../utils/constants";
+
 import { Flex } from "@/track/components/shared/drivers-header/drivers-header-styled";
 import { TransparentButton } from "@/track/constants";
 import useApi from "@/hooks/useApi";
 import { UnitsAddModal } from "./modals/units-add-modal";
-import { CustomObject } from "@/track/components/shared/custom-table/custom-table";
+
 export const Units = () => {
   const [open, setOpen] = useState<boolean>(false);
   const [activeBtn, setActiveBtn] = useState<number>(1);
@@ -25,20 +25,10 @@ export const Units = () => {
     limit: 1000,
   });
 
-  interface unitsProp {
-    id: number | string;
-    vehicle: { [key: string]: string | number | undefined };
-    drivers: string;
-    model: string;
-    eld: string;
-    notes: { [key: string]: string | number | undefined };
-    vin: { [key: string]: string | number | undefined };
-    documents: string;
-    activated: string;
-  }
+
 
   const dataSort = (dataArr: ObjType[] | []) => {
-    const arr = dataArr.map((item, i) => {
+    const arr: any[] = dataArr.map((item, i) => {
       const firstName = item?.driver.firstName;
       const lastNama = item?.driver.lastName;
 
@@ -82,7 +72,7 @@ export const Units = () => {
         {unitsButtons.map((item) => (
           <TransparentButton
             key={item.id}
-            active={(activeBtn == item.id).toString()}
+            active={(activeBtn === item.id).toString()}
             onClick={() => setActiveBtn(item.id)}
           >
             {item.text}
@@ -101,11 +91,10 @@ export const Units = () => {
             columns={unitsColumns}
             data={unitsData.arr ? unitsData.arr : []}
           />
-          <Text size={20}>NO Data</Text>
         </>
       )}
       <UnitsAddModal open={open} setOpen={setOpen} refetch={refetch} />
-      {/* Units change modal */}
+
     </Main>
   );
 };

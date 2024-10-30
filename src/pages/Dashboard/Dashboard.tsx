@@ -41,6 +41,12 @@ import { Flex } from "@/track/components/shared/drivers-header/drivers-header-st
 // import useApi from "../../hooks/useApi";
 // import { dashboardData } from "../../utils/mapData";
 
+export const refreshSelect = [
+   { value: "off", label: "Auto Refresh off" },
+   { value: 30000, label: "1 minute" },
+   { value: 300000, label: "5 minute" },
+   { value: 600000, label: "10 minute" },
+ ];
 export const Dashboard = () => {
   const active = useSelector(
     (state: RootState) => state.booleans.dashboardProgress
@@ -62,31 +68,30 @@ export const Dashboard = () => {
   // const filerData = dashboardData(data ? data?.data?.data : []);
   // console.log(filerData);
 
-  const refreshSelect = [
-    { value: "off", label: "Auto Refresh off" },
-    { value: 30000, label: "1 minute" },
-    { value: 300000, label: "5 minute" },
-    { value: 600000, label: "10 minute" },
-  ];
+  
+  useEffect(() => {}, []);
   const dispatch = useDispatch();
-
+  
   function onChange(event: unknown) {
     setSelectEvent(event);
   }
+  const reloadStatus: number =
+  getLocalStorage("autoReload") !== null
+  ? Number(getLocalStorage("autoReload"))
+      : 0;
   const refreshHandler = (e: number | string | unknown) => {
-    setLocalStorage("autoReload", e);
-    autoRefresh(e);
+    let reload = e === 30000 ? 1 : e === 300000 ? 2 : e === 600000 ? 3 : 0;
+    console.log(reload, e);
+
+    setLocalStorage("autoReload", reload);
+    autoRefresh(e !== "off" ? Number(e) : 0);
   };
-  const reloadStatus: number | string | null =
-    getLocalStorage("autoReload") !== null
-      ? getLocalStorage("autoReload")
-      : "off";
 
   useEffect(() => {
-    if (reloadStatus !== "off" || reloadStatus !== null) {
+    if (Boolean(reloadStatus)) {
       autoRefresh(reloadStatus);
     }
-  }, [reloadStatus]);
+  }, []);
   return (
     <Main>
       <Navbar title="Dashboard" />

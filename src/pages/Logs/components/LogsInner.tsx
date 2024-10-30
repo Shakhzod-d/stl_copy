@@ -24,6 +24,7 @@ import { driversTableHeader, Main } from "@/track/constants";
 import { DriversForm } from "@/track/components/shared/drivers-form";
 import { TripPlanner } from "@/track/components/shared/trip-planner";
 import { innerTable } from "@/track/utils/mapData";
+import { setPageLoading } from "@/track/utils/dispatch";
 
 const LogsInner: React.FC = () => {
   const {
@@ -88,8 +89,8 @@ const LogsInner: React.FC = () => {
 
   const tableData = innerTable(logs ? logs : []);
   // console.log(`driverData?.data`, driverData?.data?.companyTimeZone); //companyTimeZone
-console.log(logs);
-
+  console.log(logs);
+  setPageLoading(isFetching);
   return (
     <Main>
       <div
@@ -118,8 +119,7 @@ console.log(logs);
               <LogCorrection handleCloseEditing={() => setCurrentLog(null)} />
             )}
           </div>
-          <CustomTable data={tableData} columns={driversTableHeader} /> track
-          table
+          <CustomTable data={tableData} columns={driversTableHeader} />
         </div>
       </div>
 

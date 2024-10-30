@@ -8,6 +8,7 @@ import { RootState } from "@/store";
 import { setLocalStorage } from "@/utils/localStorage";
 import { CgSun } from "react-icons/cg";
 import { Flex } from "../../shared/drivers-header/drivers-header-styled";
+import { setModal } from "@/track/utils/dispatch";
 
 interface Props {
   title: string;
@@ -24,11 +25,11 @@ export const Navbar = ({ title, search = true }: Props) => {
     <Header>
       <Title>{title}</Title>
       <Flex $align="center" $gap={"20px"}>
-        {search && <CustomInput type="search"  />}
+        {search && <CustomInput type="search" />}
         <Icon onClick={darkMode}>
           {dark ? <CgSun size={30} /> : <IoMoonOutline size={30} />}
         </Icon>
-        <Icon>
+        <Icon onClick={() => setModal(true)}>
           <IoNotificationsOutline size={30} />
         </Icon>
       </Flex>

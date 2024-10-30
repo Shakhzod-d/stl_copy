@@ -5,12 +5,8 @@ import { historyPush, setLocalStorage } from "@/utils";
 import useApi from "@/hooks/useApi";
 
 import { ICompanyData } from "@/types/company.type";
-import { PAGE_LIMIT } from "@/constants/general.const";
-import { IPageData } from "@/types";
 
-import { NumberParam, useQueryParam, withDefault } from "use-query-params";
-import { useSelector } from "react-redux";
-import { RootState } from "@/store";
+import { IPageData } from "@/types";
 
 import { companyTableHeader, Main } from "@/track/constants";
 import { CustomInput, Navbar, PageLoad } from "@/track/components/ui";
@@ -26,15 +22,16 @@ import { Company } from "@/track/utils/method";
 import { setCompany, setPageLoading } from "@/track/utils/dispatch";
 import { useErrAuth } from "@/hooks/useAuth";
 import { CompanyModal } from "./modals/company-page-modal";
+import { useDebounce } from "@/track/hooks/use-debauce";
 
 const Companies: React.FC = () => {
-  const { userData } = useSelector((state: RootState) => state.auth);
   const [open, setOpen] = useState(false);
-  const [page, setPage] = useQueryParam("page", withDefault(NumberParam, 1));
 
-  const { data, isLoading, refetch, isRefetching } = useApi<
-    IPageData<ICompanyData[]>
-  >("/main/allcompany", { page, limit: PAGE_LIMIT });
+  const [searchTerm, setSearchTerm] = useState<string>("");
+  const { data, isLoading } = useApi<IPageData<ICompanyData[]>>(
+    "/main/allcompany",
+    { page: 1, limit: 10000 }
+  );
 
   const mapData = (data: ICompanyData[]): CompanyData[] => {
     return data.map((item) => {
@@ -73,7 +70,6 @@ const Companies: React.FC = () => {
     });
   };
   const modalActive = (id: string) => {
-    // console.log(id);
     setOpen(true);
   };
   const { errFun } = useErrAuth();
@@ -83,19 +79,22 @@ const Companies: React.FC = () => {
       const data = await Company(id);
 
       setLocalStorage("companyId", id);
-      setLocalStorage("company", data);
+      setLocalStorage("company", JSON.stringify(data));
       setCompany(data);
       await historyPush(`/`);
     } catch (err) {
-      // console.log(err);
       return errFun(err);
     } finally {
       setPageLoading(false);
     }
   };
-
+  const searchValue = useDebounce(searchTerm, 300);
   const tableData: CompanyData[] = mapData(data ? data?.data.data : []);
-
+  const filteredData = tableData.filter((data) =>
+    String(data?.name?.label)
+      .toLowerCase()
+      .startsWith(searchValue.toLowerCase())
+  );
   return (
     <Main>
       <CompanyModal open={open} setOpen={setOpen} />
@@ -103,9 +102,9 @@ const Companies: React.FC = () => {
       <Top>
         <CustomInput
           type="search"
-          // change={(e: React.ChangeEvent<HTMLInputElement>) =>
-          //   setSearchTerm(e.target.value)
-          // }
+          change={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setSearchTerm(e.target.value)
+          }
         />
         <AddBtn>
           <FaPlus size={18} />
@@ -118,7 +117,7 @@ const Companies: React.FC = () => {
         ) : (
           <InfoTable
             header={companyTableHeader}
-            data={tableData}
+            data={filteredData}
             editData={modalActive}
             onClick={CompanyHandler}
           />

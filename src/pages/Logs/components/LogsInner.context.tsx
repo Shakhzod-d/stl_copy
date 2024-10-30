@@ -29,6 +29,7 @@ import {
 import { useDispatch } from "react-redux";
 import { postInsertInfoLog, putCertify } from "@/store/slices/logSlice";
 import { AppDispatch } from "@/store";
+import { setPageLoading } from "@/track/utils/dispatch";
 
 const useLogsInner = () => {
   const momentZone = useMomentZone();
@@ -41,13 +42,17 @@ const useLogsInner = () => {
     withDefault(NumberParam, moment().valueOf())
   );
 
-  const { data, refetch, isFetching } = useApi<ILogData>(
+  const { data, refetch, isFetching, isLoading } = useApi<ILogData>(
     "/logs",
     { date: time / 1000, driverId: id },
     { suspense: true }
   );
 
+  setPageLoading(isLoading);
+
+  console.log(({isFetching,isLoading}));
   
+
   const { data: driverData } = useApi<IDriverData>(
     `driver/${id}`,
     {},
@@ -118,7 +123,6 @@ const useLogsInner = () => {
     }
   }, [data]);
 
-
   let totalTime = useMemo(() => {
     const rangeLogs = logs.filter(
       (log) => !POINT_STATUSES.includes(log.status)
@@ -138,7 +142,7 @@ const useLogsInner = () => {
           end: el.end <= endDay ? el.end : endDay,
         };
       });
-      setInitialLogs(data); 
+      setInitialLogs(data);
       setLogs(data);
     }
   }, [logData]);
@@ -146,7 +150,7 @@ const useLogsInner = () => {
   useEffect(() => {
     if (currentLog) {
       setIsLogsEdited(false);
-      setLog(currentLog)
+      setLog(currentLog);
     } else if (!currentLog) {
     }
   }, [currentLog]);
@@ -173,7 +177,6 @@ const useLogsInner = () => {
     setRangeVal(val);
   };
 
-
   const onCancel = () => {
     setLogs(initialLogs);
     setRangeVal(undefined);
@@ -199,7 +202,7 @@ const useLogsInner = () => {
       setCurrentLog(
         (prev) => newLogs?.find((log) => prev?._id === log._id) || null
       );
-      
+
       setLogs(newLogs);
     } else if (currentLog?.isNewLog) {
       setCurrentLog((prev) => ({
@@ -246,25 +249,23 @@ const useLogsInner = () => {
         name: "",
       },
       origin: "Auto",
-      handleLogItems
-    }; 
+      handleLogItems,
+    };
 
     if (status === "certify") {
       dispatch(putCertify(infoLog));
     } else {
       dispatch(postInsertInfoLog(newLogObj));
     }
-    
   };
 
   const handleLogItems = (data: any) => {
     setLogs(sortLogsByTime([...logs, data]));
-  }
+  };
 
   const onNormalize = () => {};
 
   const onTransfer = (duration: number, log: ILog) => {
-
     mutate({
       ...log,
       // duration: duration - time,
@@ -366,7 +367,7 @@ const useLogsInner = () => {
     // debugger;
     const newLog: ILog = getNewLog(logs, time, val, fetchLogParams);
     setRangeVal(val);
-    
+
     setLogs([...logs, newLog]);
     setCurrentLog(newLog);
   };

@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { UserTypes, ThemeProps } from "@/types";
-import { ILoginData } from "../../pages/Login/login.types";
+
 import { IUserData } from "@/types/user.type";
 import { ICompanyData } from "@/types/company.type";
 
