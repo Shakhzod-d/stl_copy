@@ -11,10 +11,10 @@ import { Layout } from "./track/components/shared/layout";
 
 import { ThemeProvider } from "styled-components";
 import { darkTheme, lightTheme } from "./utils/theme";
-import PrivateRoute from "./routes/PrivateRoute";
+import {PrivateRoute} from "./routes/PrivateRoute";
 import { Login, NotFound } from "./track/pages";
 import { getLocalStorage, historyPush } from "./utils";
-import { NotificationModal } from "./track/components/shared/notification-modal/notification";
+
 
 export enum RoleNames {
   SUPER_ADMIN = "superAdmin",

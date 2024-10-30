@@ -1,6 +1,5 @@
 import {
   SelectData,
-  setModalActive,
   setPageLoad,
   setSelect,
 } from "@/store/slices/booleans-slice";
@@ -20,5 +19,3 @@ export const setCompany = (data: false | Data) =>
   dispatch(setCompanyData(data));
 
 export const setPageLoading = (data: boolean) => dispatch(setPageLoad(data));
-
-export const setModal = (data: boolean) => dispatch(setModalActive(data));

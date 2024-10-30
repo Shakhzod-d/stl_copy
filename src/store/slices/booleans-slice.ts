@@ -26,7 +26,7 @@ const initialState: Bool = {
   modal: false,
 };
 
- const booleanSlice = createSlice({
+const booleanSlice = createSlice({
   name: "booleans",
   initialState,
   reducers: {
@@ -48,9 +48,6 @@ const initialState: Bool = {
     setPageLoad: (state, action: PayloadAction<boolean>) => {
       state.pageLoading = action.payload;
     },
-    setModalActive: (state, action: PayloadAction<boolean>) => {
-      state.modal = action.payload;
-    },
   },
 });
 
@@ -61,7 +58,6 @@ export const {
   setDarkMode,
   setSelect,
   setPageLoad,
-  setModalActive
 } = booleanSlice.actions;
 
 export default booleanSlice.reducer;
