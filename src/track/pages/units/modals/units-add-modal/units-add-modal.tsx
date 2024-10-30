@@ -22,6 +22,7 @@ import {
   makesState,
   models,
   stateSelect,
+  Text,
   yearState,
 } from "@/track/constants";
 import { Flex } from "@/track/components/shared/drivers-header/drivers-header-styled";
@@ -104,7 +105,7 @@ export const UnitsAddModal = ({ open, setOpen, refetch }: Prop) => {
                   message: "Please input your Makes",
                 },
               ]}
-              pClr="#000"
+              // pClr="#000"
               data={makesState}
               h={"60px"}
               name="make"
@@ -192,7 +193,9 @@ export const UnitsAddModal = ({ open, setOpen, refetch }: Prop) => {
           </Form.Item>
 
           <Flex $vertical={true}>
-            <ModalCheckBox>Enter Vin Manually</ModalCheckBox>
+            <ModalCheckBox>
+              <Text>Enter Vin Manually</Text>
+            </ModalCheckBox>
             <FormInput
               placeholder="Type"
               name="vin"
@@ -210,7 +213,7 @@ export const UnitsAddModal = ({ open, setOpen, refetch }: Prop) => {
 
           <Flex $vertical={true}>
             <ModalCheckBox>
-              Get Automatically from ELD ( recommended )
+              <Text>Get Automatically from ELD ( recommended )</Text>
             </ModalCheckBox>
             <FormInput
               placeholder="Type"

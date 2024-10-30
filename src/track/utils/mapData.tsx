@@ -5,6 +5,10 @@ import { useDate } from "@/track/hooks/useDate";
 import { IoMdMail } from "react-icons/io";
 import { RiUser3Fill } from "react-icons/ri";
 import { formatTime } from "./method";
+import { InnerTable } from "@/types/log.type";
+import { Checkbox } from "antd";
+import { MdModeEdit } from "react-icons/md";
+import { BsThreeDotsVertical } from "react-icons/bs";
 function calculateDaysBetweenDates(startDate: string): number {
   // Sana: ISO formatidagi satrni Date ob'ektiga o'zgartirish
   const start = new Date(startDate);
@@ -15,8 +19,23 @@ function calculateDaysBetweenDates(startDate: string): number {
   // Millisekundlarni kunlarga o'zgartirish (millisekund -> sekund -> soat -> kun)
   const differenceInDays = Math.floor(differenceInTime / (1000 * 3600 * 24));
 
-  return differenceInDays == 0 ? 1 : differenceInDays;
-} // 3 kun
+  return differenceInDays === 0 ? 1 : differenceInDays;
+}
+
+function formattedTime(timestamp: number): string {
+  const date = new Date(timestamp);
+  let hours = date.getUTCHours();
+  const minutes = date.getUTCMinutes();
+  const seconds = date.getUTCSeconds();
+  const ampm = hours >= 12 ? "PM" : "AM";
+
+  hours = hours % 12;
+  hours = hours ? hours : 12; // 0 o'zgartirildi 12 ga
+  const minutesStr = minutes < 10 ? "0" + minutes : minutes;
+  const secondsStr = seconds < 10 ? "0" + seconds : seconds;
+
+  return `${hours}:${minutesStr}:${secondsStr} ${ampm}`;
+}
 
 // Test qilish
 export const mapUserData = (data: ObjType[]) => {
@@ -90,7 +109,7 @@ interface Cycle {
   cycle: number;
 }
 
-interface DriversGet<T> {
+interface DriversGet {
   _id: string;
   firstName: string;
   lastName: string;
@@ -101,7 +120,7 @@ interface DriversGet<T> {
   cycle?: Cycle;
 }
 
-export function companyDrivers<T>(data: DriversGet<T>[] = []) {
+export function companyDrivers(data: DriversGet[] = []) {
   const drivers = data.map((item, i) => {
     return {
       id: i,
@@ -110,9 +129,7 @@ export function companyDrivers<T>(data: DriversGet<T>[] = []) {
       u_name: item.username,
       co_driver: "",
       vehicle: item.vehicleUnit,
-      driver_Type: "",
       app_version: "4.6.7",
-      documents: "Not uploaded",
       activated: "2024-03-02",
       device_info: item.deviceInfo,
       action: "",
@@ -153,4 +170,29 @@ export const dashboardData = (data: ObjType[] | []) => {
     };
   });
   return data;
+};
+
+export const innerTable = (data: InnerTable[]) => {
+  const result = data.map((item) => {
+    const start = formattedTime(item.start);
+    return {
+      id: item._id,
+      checkbox: <Checkbox></Checkbox>,
+      status: item.status,
+      start: start,
+      duration: "12min 9sec",
+      location: item.location.name,
+      vehicle: item.vehicleUnit,
+      odometer: item.odometer,
+      hours: "10109.4",
+      notes: item.notes,
+      document: item.document,
+      trailer: "v502269",
+      add: <MdModeEdit color="blue" size={20} style={{ cursor: "pointer" }} />,
+      dots: <BsThreeDotsVertical style={{ cursor: "pointer" }} />,
+      lat: item.location.lat,
+      lng: item.location.lng,
+    };
+  });
+  return result;
 };

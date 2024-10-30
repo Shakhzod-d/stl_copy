@@ -1,4 +1,5 @@
 import api from "@/api";
+import { refreshSelect } from "@/pages/Dashboard/Dashboard";
 
 import { removeLocalStorage } from "@/utils/localStorage";
 
@@ -17,6 +18,7 @@ export const Company = async (id: string) => {
   return data;
 };
 
+// localStorage.clear()
 export function formatTime(seconds: number): string {
   const totalMinutes = Math.floor(seconds / 60);
   const hours = Math.floor(totalMinutes / 60);
@@ -26,16 +28,16 @@ export function formatTime(seconds: number): string {
 
 let intervalId: NodeJS.Timeout | undefined;
 
-export const autoRefresh = (interval: number | string | unknown) => {
+export const autoRefresh = (interval: number) => {
   if (intervalId) {
     clearInterval(intervalId);
     intervalId = undefined;
   }
 
-  if (interval !== "off") {
+  if (interval !== 0) {
     intervalId = setInterval(() => {
       window.location.reload();
-    }, Number(interval));
+    }, Number(refreshSelect[interval].value));
   }
 };
 

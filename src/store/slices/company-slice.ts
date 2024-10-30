@@ -4,15 +4,14 @@ export interface Data {
   [key: string]: string | number | boolean | null;
 }
 interface State {
-  company: Data | false | null ;
+  company: Data | false | null;
   companyId: string | null;
 }
 const boolean = Boolean(getLocalStorage("company"));
-const companyData = JSON.stringify(getLocalStorage("company"))
-  ? getLocalStorage("company")
-  : {};
+const companyData = getLocalStorage("company");
+const parseData = companyData ? JSON.parse(companyData) : null;
 const initialState: State = {
-  company: boolean ? companyData : false,
+  company: boolean ? parseData : false,
   companyId: getLocalStorage("companyId"),
 };
 export const companySlice = createSlice({

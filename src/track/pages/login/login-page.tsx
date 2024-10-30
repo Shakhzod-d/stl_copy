@@ -50,7 +50,7 @@ export const Login = () => {
         errorMessage(err?.message);
 
         setLoading(false);
-        error(err.message);
+        
       },
     });
   };

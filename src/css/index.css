@@ -21,7 +21,9 @@ p {
 body {
   background: #192345;
   overflow: hidden;
+
 }
+
 .activeClassName {
   color: red;
   flex-direction: column;

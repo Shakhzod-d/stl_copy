@@ -8,30 +8,30 @@ interface Props {
 }
 
 export const StyledSelect = styled(Select)<Props>`
-  width: ${({ width = "268px" }) => width};
-  height: ${({ height = 47 }) => `${height}px`};
-  border-radius: 10px;
-  background: ${(props) => props.theme.white} !important;
+  // background: ${(props) => props.theme.white} !important;
 
   .ant-select-selector {
-    padding: 25px 10px;
+    border-radius: 10px !important;
+    width: ${({ width = "268px" }) => width} !important;
+    height: ${({ height = 47 }) => `${height}px`} !important;
+    padding: 8px 10px !important;
     border: none !important;
     background: ${(props) => props.theme.white} !important;
+    // background: red !important;
   }
 
   .ant-select-arrow {
-    * {
-      display: flex !important;
-      justify-content: center !important;
-      align-items: center !important;
-      width: 15px !important;
-      height: 12px !important;
-      overflow: hidden !important;
-      fill: ${({ theme }) => theme.clr} !important;
-      background: ${(props) => props.theme.white} !important;
-    }
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    width: 15px !important;
+    height: 12px !important;
+    overflow: hidden !important;
+    fill: ${({ theme }) => theme.clr} !important;
+    background: ${(props) => props.theme.white} !important;
+
     color: ${({ theme }) => theme.clr} !important;
-    font-size: 15px;
+    font-size: 15px !important;
     height: 10px;
   }
 
@@ -52,12 +52,10 @@ export const StyledSelect = styled(Select)<Props>`
   }
 
   span {
-    color: ${({ theme, color = theme.clr }) => color};
+    color: ${({ theme, color = theme.clr }) => color} !important;
     font-size: 16px !important;
     font-weight: 500;
   }
 
-  &::placeholder {
-    color: ${({ theme }) => theme.clr} !important;
-  }
+
 `;

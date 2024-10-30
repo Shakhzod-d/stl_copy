@@ -24,7 +24,7 @@ export const Navbar = ({ title, search = true }: Props) => {
     <Header>
       <Title>{title}</Title>
       <Flex $align="center" $gap={"20px"}>
-        {search && <CustomInput type="search"  />}
+        {search && <CustomInput type="search" />}
         <Icon onClick={darkMode}>
           {dark ? <CgSun size={30} /> : <IoMoonOutline size={30} />}
         </Icon>

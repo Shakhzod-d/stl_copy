@@ -34,6 +34,7 @@ import useApi from "@/hooks/useApi";
 export const Sidebar = () => {
   const [btnActive, setBtnActive] = useState<number>(0);
   const companyData = useSelector((state: RootState) => state.company.company);
+ 
 
   const items = [
     {
@@ -93,7 +94,6 @@ export const Sidebar = () => {
       ],
     },
   ];
-  // const navigate = useNavigate();
 
   const { data } = useApi("/companies", {
     page: 1,
@@ -202,7 +202,7 @@ export const Sidebar = () => {
               </BtnWrap>
 
               {!active ||
-                (btnActive == item.key &&
+                (btnActive === item.key &&
                   item.page?.map((i) => {
                     return (
                       <PageActive key={i.id} to={i.url}>

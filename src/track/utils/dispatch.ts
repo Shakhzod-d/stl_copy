@@ -1,4 +1,8 @@
-import { SelectData, setPageLoad, setSelect } from "@/store/slices/booleans-slice";
+import {
+  SelectData,
+  setPageLoad,
+  setSelect,
+} from "@/store/slices/booleans-slice";
 import { Data, setCompanyData } from "@/store/slices/company-slice";
 import { setAuth, setData } from "@/store/slices/isAuth";
 // import { store } from "@/store/index";

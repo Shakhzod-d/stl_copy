@@ -3,6 +3,7 @@ import { StyledSelect } from "./select-styled";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
 import { GlobalStyle } from "../form-select/select-styled";
+
 interface Option {
   value: string | number;
   label: string;
@@ -14,7 +15,7 @@ interface Props {
   height?: number;
   placeholder?: string;
   color?: string;
-  dValue?: string | number | null;
+  dValue?: number;
 }
 export const CustomSelect = ({
   option,
@@ -26,12 +27,13 @@ export const CustomSelect = ({
   change,
 }: Props) => {
   const darkMode = useSelector((state: RootState) => state.booleans.darkMode);
+
   return (
     <>
       <GlobalStyle />
       <StyledSelect
         placeholder={placeholder}
-        defaultValue={dValue}
+        defaultValue={option[dValue ? dValue : 0]}
         options={option}
         width={width}
         height={height}

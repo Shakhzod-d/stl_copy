@@ -12,6 +12,7 @@ interface Bool {
   darkMode: boolean;
   driverSelect: SelectData[] | [];
   pageLoading: boolean;
+  modal: boolean;
 }
 const dark_mode = getLocalStorage("darkMode") == "false" ? false : true;
 
@@ -22,9 +23,10 @@ const initialState: Bool = {
   darkMode: Boolean(dark_mode),
   driverSelect: [],
   pageLoading: false,
+  modal: false,
 };
 
-export const booleanSlice = createSlice({
+const booleanSlice = createSlice({
   name: "booleans",
   initialState,
   reducers: {

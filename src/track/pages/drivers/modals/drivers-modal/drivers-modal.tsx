@@ -7,6 +7,7 @@ import {
   DefaultBtn,
   ModalCheckBox,
   ModalTextArea,
+  ModalTitle,
   PrimaryBtn,
 } from "@/track/pages/units/units-styled";
 import { Obj } from "@/track/types/helper.type";
@@ -66,7 +67,7 @@ export const DriversModal = ({ open, setOpen, refetch }: Prop) => {
       width={"95%"}
       style={{ maxWidth: "1515px" }}
     >
-      <h2 className="modal-title">Create Drivers</h2>
+      <ModalTitle>Create Drivers</ModalTitle>
       <Form onFinish={submit} form={form}>
         <Flex $vertical={true} $gap={"10px"} $w="100%">
           <Flex $gap={"10px"} $w="100%">

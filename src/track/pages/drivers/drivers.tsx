@@ -8,7 +8,8 @@ import { BtnWrap, ActiveBtn, DefaultBtn } from "./styled";
 import { DriversModal } from "./modals/drivers-modal";
 import useApi from "@/hooks/useApi";
 
-// import { companyDrivers } from "../../utils/mapData";
+import { companyDrivers } from "../../utils/mapData";
+
 
 export const Drivers = () => {
   const [open, setOpen] = useState(false);
@@ -18,7 +19,7 @@ export const Drivers = () => {
     limit: 1000,
   });
 
-  // const drivers = companyDrivers(data ? data?.data?.data : []);
+  const drivers = companyDrivers(data ? data?.data?.data : []);
   return (
     <>
       <Main>
@@ -40,7 +41,10 @@ export const Drivers = () => {
         {isLoading ? (
           <PageLoad h="calc(100vh - 400px)" />
         ) : [].length === 0 ? (
-          <CustomTable columns={driverColumns} data={[]} />
+          <CustomTable
+            columns={driverColumns}
+            data={drivers.drivers ? drivers.drivers : []}
+          />
         ) : (
           <>
             <CustomTable columns={driverColumns} data={[{}]} /> <p>No Data</p>

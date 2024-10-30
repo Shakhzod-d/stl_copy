@@ -23,6 +23,8 @@ import { CustomTable } from "@/track/components/shared/custom-table";
 import { driversTableHeader, Main } from "@/track/constants";
 import { DriversForm } from "@/track/components/shared/drivers-form";
 import { TripPlanner } from "@/track/components/shared/trip-planner";
+import { innerTable } from "@/track/utils/mapData";
+import { setPageLoading } from "@/track/utils/dispatch";
 
 const LogsInner: React.FC = () => {
   const {
@@ -85,8 +87,10 @@ const LogsInner: React.FC = () => {
     }
   }, []);
 
+  const tableData = innerTable(logs ? logs : []);
   // console.log(`driverData?.data`, driverData?.data?.companyTimeZone); //companyTimeZone
-
+  console.log(logs);
+  setPageLoading(isFetching);
   return (
     <Main>
       <div
@@ -115,21 +119,12 @@ const LogsInner: React.FC = () => {
               <LogCorrection handleCloseEditing={() => setCurrentLog(null)} />
             )}
           </div>
-
-          {/* <LogTable
-            data={logs}
-            columns={columns}
-            setHoveredId={setHoveredId}
-            hoveredId={hoveredId}
-            driver={driverData?.data}
-            //  rowSelection={rowSelection} //these are must to be same
-          /> */}
-          {/* <CustomTable data={logs} columns={driversTableHeader} />     track table*/}
+          <CustomTable data={tableData} columns={driversTableHeader} />
         </div>
       </div>
-      {/* <LogForm logData={logData} /> */}
+
       <DriversForm />
-      {/* <Recap data={logData} /> */}
+
       <TripPlanner />
     </Main>
   );

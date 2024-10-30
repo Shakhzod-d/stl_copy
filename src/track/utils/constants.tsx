@@ -77,30 +77,22 @@ export const driverColumns = [
     accessor: "Co_driver",
     id: 5,
   },
-  {
-    header: "Driver Type",
-    accessor: "driver_Type",
-    id: 6,
-  },
+
   {
     header: "Vehicle ID",
     accessor: "vehicle",
-    id: 7,
+    id: 6,
   },
   {
     header: "App version",
     accessor: "app_version",
-    id: 8,
+    id: 7,
   },
-  {
-    header: "Documents",
-    accessor: "documents",
-    id: 9,
-  },
+  
   {
     header: "Activated",
     accessor: "activated",
-    id: 10,
+    id: 8,
   },
   {
     header: "Device Info",
@@ -220,7 +212,7 @@ export const unitsColumns = [
     id: 1,
   },
   {
-    header: "Vehicle ID",
+    header: "Vehicle Unit",
     accessor: "vehicle",
     id: 2,
   },
