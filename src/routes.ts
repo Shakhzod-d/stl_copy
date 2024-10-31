@@ -32,6 +32,7 @@ import { Drivers } from "./track/pages/drivers";
 
 import { TabCompany } from "./track/pages/tab-company";
 import { CompanyUsers } from "./track/pages/company-users";
+import { Notification } from "./track/pages/notification/notification";
 
 // Result pages
 const routes = [
@@ -96,6 +97,16 @@ const routes = [
     path: "/main/transfer",
     component: Transfer,
     admin: "company",
+  },
+  {
+    path: "/main/notification",
+    component: Notification,
+    admin: "company",
+  },
+  {
+    path: "/main/notification",
+    component: Notification,
+    admin: "app",
   },
   {
     path: "/main/ifta-reports",

@@ -387,14 +387,14 @@ export const InfoCard = styled.div<{
   min-width: ${({ $minW = "300px" }) => $minW};
   height: ${({ $active }) => ($active ? "244px" : "50px")};
   background: ${({ theme }) => theme.white};
-  transition: height 1s ease, width 0.3s ease;
+  transition: height 0.6s ease, width 0.1s ease;
   overflow-x: auto;
 
   flex-grow: calc(300px, 500px)
     ${({ $active }) =>
       $active &&
       css`
-        animation: ${expandAnimation} 0.6s ease-in;
+        animation: ${expandAnimation} 0.1s ease-in;
       `};
 `;
 

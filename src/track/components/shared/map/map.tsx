@@ -2,8 +2,7 @@ import { useEffect, useState } from "react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import "leaflet-routing-machine";
-
-import "leaflet-routing-machine/dist/leaflet-routing-machine.css"; // Routing CSS
+import "leaflet-routing-machine/dist/leaflet-routing-machine.css"; 
 import { useSelector } from "react-redux";
 import { Maps, MapWrapper } from "./map-styled";
 import { RootState } from "@/store";
@@ -18,7 +17,7 @@ interface Truck {
   destination: string;
   destLat: number;
   destLng: number;
-  progress: number; // 0 to 100 for progress
+  progress: number;
 }
 
 interface Props {
@@ -69,6 +68,19 @@ export function Map({ mapData, activeId, height }: Props) {
         activeTruck.progress
       );
 
+      const startEndIcon = L.icon({
+        iconUrl: "/assets/images/location.png",
+        iconSize: [30, 30] as [number, number],
+        iconAnchor: [15, 30] as [number, number],
+      });
+
+      const driverIcon = L.icon({
+        iconUrl: "/assets/icons/navigation.svg",
+        iconSize: [30, 30] as [number, number],
+        iconAnchor: [15, 30] as [number, number],
+      });
+
+      // Initialize routing control with type assertion
       L.Routing.control({
         waypoints: [
           L.latLng(activeTruck.lat, activeTruck.lng),
@@ -80,46 +92,20 @@ export function Map({ mapData, activeId, height }: Props) {
           extendToWaypoints: true,
           missingRouteTolerance: 0.1,
         },
-      }).addTo(map);
+        createMarker: () => null, // Avoid duplicate markers
+      } as any).addTo(map); // Type assertion to bypass strict typing
 
-      const startIcon = new L.Icon({
-        iconUrl:
-          "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Green_Dot.svg/2048px-Green_Dot.svg.png",
-        iconSize: [25, 25],
-        iconAnchor: [12, 25],
-      });
-
-      const endIcon = new L.Icon({
-        iconUrl:
-          "https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Red_Dot.svg/2048px-Red_Dot.svg.png",
-        iconSize: [25, 25],
-        iconAnchor: [12, 25],
-      });
-
-      const driverIcon = new L.Icon({
-        iconUrl:
-          "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Yellow_Dot.svg/2048px-Yellow_Dot.svg.png",
-        iconSize: [25, 25],
-        iconAnchor: [12, 25],
-      });
-
-      L.marker([activeTruck.lat, activeTruck.lng], { icon: startIcon })
+      L.marker([activeTruck.lat, activeTruck.lng], { icon: startEndIcon })
         .addTo(map)
-        .bindPopup(
-          `<strong>Start Point</strong><br>Truck: ${activeTruck.name}`
-        );
+        .bindPopup(`<strong>Start Point</strong><br>Truck: ${activeTruck.name}`);
 
-      L.marker([activeTruck.destLat, activeTruck.destLng], { icon: endIcon })
+      L.marker([activeTruck.destLat, activeTruck.destLng], { icon: startEndIcon })
         .addTo(map)
-        .bindPopup(
-          `<strong>End Point</strong><br>Destination: ${activeTruck.destination}`
-        );
+        .bindPopup(`<strong>End Point</strong><br>Destination: ${activeTruck.destination}`);
 
       L.marker([currentLocation.lat, currentLocation.lng], { icon: driverIcon })
         .addTo(map)
-        .bindPopup(
-          `<strong>${activeTruck.name}</strong><br>Status: ${activeTruck.status}<br>Address: ${activeTruck.address}`
-        );
+        .bindPopup(`<strong>${activeTruck.name}</strong><br>Status: ${activeTruck.status}<br>Address: ${activeTruck.address}`);
 
       return () => {
         map.remove();

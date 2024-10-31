@@ -5,10 +5,11 @@ import {
   Div,
   Department,
   Container,
-  Text,
+  TextTable,
 } from "./order-styled";
 import { IoIosArrowUp } from "react-icons/io";
 import { Obj } from "@/track/types/helper.type";
+import { Text } from "@/track/constants";
 const Company = [
   { title: "Company" },
   { title: "Name" },
@@ -43,9 +44,9 @@ export const OrderTable = (props: TableProps) => {
       <Column>
         {(selectEvent == "company" ? Company : Data).map((items, i) => {
           return (
-            <p key={i} style={{ margin: "auto" }}>
+            <Text key={i} style={{ margin: "auto" }}>
               {items.title}
-            </p>
+            </Text>
           );
         })}
       </Column>

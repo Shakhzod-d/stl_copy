@@ -35,7 +35,6 @@ export const DriversModal = ({ open, setOpen, refetch }: Prop) => {
   const vehicleId = useSelector(
     (state: RootState) => state.booleans.driverSelect
   );
-  console.log(vehicleId);
 
   const driversMutation = useApiMutation("/driver", { hideMessage: true });
   const submit = (data: Obj) => {

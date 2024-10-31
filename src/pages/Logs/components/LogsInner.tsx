@@ -119,7 +119,7 @@ const LogsInner: React.FC = () => {
               <LogCorrection handleCloseEditing={() => setCurrentLog(null)} />
             )}
           </div>
-          <CustomTable data={tableData} columns={driversTableHeader} />
+          <CustomTable data={tableData} columns={driversTableHeader} copyId={5}/>
         </div>
       </div>
 

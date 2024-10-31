@@ -54,7 +54,7 @@ export const Units = () => {
         label: `${firstName} ${lastNama}`,
       };
     });
-    console.log(select);
+
 
     return { arr, select };
   };

@@ -37,12 +37,12 @@ export const Description = styled.p`
   font-weight: 300;
   margin: 10px 0;
 `;
-export const PageBtn = styled(NavLink)<{ $active?: boolean }>`
+export const PageBtn = styled(NavLink)<{ $active?: boolean; $p?: string }>`
   * {
     cursor: pointer;
   }
   border-radius: 10px;
-  padding: 15px 20px;
+  padding: ${({ $p = "15px 20px" }) => $p};
   // height: 60px;
   width: 100%;
   max-width: 220px;
@@ -53,7 +53,7 @@ export const PageBtn = styled(NavLink)<{ $active?: boolean }>`
 
   color: #fff;
   display: flex;
-  // justify-content: center;
+  justify-content: ${({ $active }) => (!$active ? "center" : "start")};
   align-items: center;
   p {
     font-weight: 500;
@@ -63,7 +63,6 @@ export const PageBtn = styled(NavLink)<{ $active?: boolean }>`
     background-color: #fff;
     color: #000;
   }
-    
 `;
 export const Exit = styled(Button)`
   border-radius: 10px;
@@ -77,7 +76,7 @@ export const Exit = styled(Button)`
     opacity: 0.8;
   }
 `;
-export const TabBtn = styled.div<{ $active: boolean }>`
+export const TabBtn = styled.div<{ $active?: boolean }>`
   border-radius: 10px;
   width: ${({ $active }) => ($active ? "220px" : "100%")};
   // min-height: 70px;
@@ -106,7 +105,7 @@ export const BtnWrap = styled.div`
 export const PageActive = styled(NavLink)`
   display: block;
   padding: 15px 20px;
-  
+
   color: white;
   width: 100%;
   // height: 49px;

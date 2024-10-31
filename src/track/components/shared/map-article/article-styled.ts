@@ -1,8 +1,10 @@
-
 import styled from "styled-components";
 
 export const CardArticle = styled.article`
   width: 100%;
+  display: flex;
+  gap: 5px;
+  flex-direction: column;
   max-width: 360px !important;
   height: calc(100vh - 175px);
   overflow-y: auto !important;
@@ -20,7 +22,7 @@ export const Card = styled.div<{ $color: boolean }>`
   border: ${({ $color }) => ($color ? "1px solid #FC973A" : "")};
   height: 108px;
   background: ${({ theme }) => theme.white};
-  margin-bottom: 5px;
+  // margin-bottom: 5px;
 `;
 export const Status = styled.div<{ $statusBg: string }>`
   border-radius: 5px;

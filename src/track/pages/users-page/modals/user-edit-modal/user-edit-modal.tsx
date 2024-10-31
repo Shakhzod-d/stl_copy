@@ -141,7 +141,12 @@ export const UserEditModal = ({ setOpen, open }: Props) => {
           >
             Cancel
           </DefaultBtn>
-          <PrimaryBtn style={{ width: "200px", height: "55px" }}>Ok</PrimaryBtn>
+          <PrimaryBtn
+            style={{ width: "200px", height: "55px" }}
+            onClick={() => setOpen(false)}
+          >
+            Ok
+          </PrimaryBtn>
         </Flex>
       </Flex>
     </CustomModal>

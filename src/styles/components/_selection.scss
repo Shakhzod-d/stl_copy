@@ -153,7 +153,7 @@
                     // }
                     &-selected {
                          background-color: rgba($color: $primary, $alpha: 0.2) !important;
-                         color: $primary !important;
+                         // color: $primary !important;
                     }
                     &:not(:frist-child) {
                          margin-top: 2px;

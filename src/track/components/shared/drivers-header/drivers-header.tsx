@@ -17,6 +17,7 @@ import { useSelector } from "react-redux";
 // import { RootState } from "../../../store/store";
 import { getLocalStorage } from "@/utils/localStorage";
 import { RootState } from "@/store";
+import LogActions from "@/pages/Logs/components/LogActions";
 
 export const DriversHeader = () => {
   const [activeBtn, setActiveBtn] = useState(1);
@@ -77,21 +78,8 @@ export const DriversHeader = () => {
             </Block>
           </Flex>
         </Flex>
-        <Flex $gap="6px">
-          <Block display="flex" width={200}>
-            <div>
-              <Text size={15} color="#babac1">
-                03-10-2024
-              </Text>
-            </div>
-          </Block>
-          <Block display="flex" content="center">
-            <IoIosArrowBack color={dark ? "#fff" : "#000"} />
-          </Block>
-          <Block display="flex" content="center">
-            <IoIosArrowForward color={dark ? "#fff" : "#000"} />
-          </Block>
-        </Flex>
+
+        <LogActions />
       </Flex>
       <BtnContainer>
         {DriversWeek.map((item) => (

@@ -6,7 +6,7 @@ export const Wrapper = styled.div`
   width: 100%;
   // max-width: 1040px;
   padding: 20px;
-  height: 533px;
+  height: 480px;
   margin-top: 10px;
   background: ${({ theme }) => theme.white};
   // background: #fdfdfd;

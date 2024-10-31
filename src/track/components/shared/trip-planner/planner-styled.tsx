@@ -11,7 +11,7 @@ export const Block = styled.div<{ $bottom?: string; width?: string }>`
   margin-bottom: ${({ $bottom }) => $bottom};
 `;
 
-export const Map = styled.div`
+export const MapWrap = styled.div`
   border: 5px solid #fff;
   border-radius: 10px;
   padding: 5px;
