@@ -359,7 +359,7 @@ export const TabCompany = () => {
       >
         <Note placeholder="Note" />
       </Form.Item>
-      <Flex $justify="end" $gap={"20px"}>
+      <Flex $justify="end" $gap={"20px"} onClick={handleReset}>
         <DefaultBtn
         
         >

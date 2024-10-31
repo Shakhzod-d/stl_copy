@@ -104,6 +104,11 @@ const routes = [
     admin: "company",
   },
   {
+    path: "/main/notification",
+    component: Notification,
+    admin: "app",
+  },
+  {
     path: "/main/ifta-reports",
     component: IftaReports,
     admin: "company",
