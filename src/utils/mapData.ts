@@ -135,8 +135,6 @@ const mapHistoryLogs = (data: IHistoryLog[]): IHistoryLog[] => {
 };
 
 const mapTableData = (data: any[]) => {
-  console.log(data);
-
   return data?.map((item, i: number) => {
     return {
       id: item?._id,

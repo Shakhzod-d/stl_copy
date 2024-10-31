@@ -30,11 +30,11 @@ import { Link } from "react-router-dom";
 import { historyPush, removeLocalStorage } from "@/utils";
 import { setCompany } from "@/track/utils/dispatch";
 import useApi from "@/hooks/useApi";
+import { BiLogOut } from "react-icons/bi";
 
 export const Sidebar = () => {
   const [btnActive, setBtnActive] = useState<number>(0);
   const companyData = useSelector((state: RootState) => state.company.company);
- 
 
   const items = [
     {
@@ -105,11 +105,12 @@ export const Sidebar = () => {
   );
 
   const exitFun = () => {
-    removeLocalStorage("company");
-    removeLocalStorage("companyId");
+    sessionStorage.removeItem("company");
+    sessionStorage.removeItem("companyId");
     setCompany(false);
     historyPush("/company");
   };
+  const userData = useSelector((state: RootState) => state.auth.userData);
 
   const companyPage = ["Fleet manager", "ELD", "Reports"];
   const filterData = items.filter(
@@ -119,7 +120,12 @@ export const Sidebar = () => {
 
   const dispatch = useDispatch();
 
+
   const tabBtnFun = (key: number) => {
+    if (key === 3) {
+      historyPush("/main/notification");
+    }
+
     if (key > 0) {
       setBtnActive(key);
       dispatch(sidebarToggle(true));
@@ -128,7 +134,15 @@ export const Sidebar = () => {
       setBtnActive(0);
     }
   };
-
+  const userFullName = `${userData?.firstName}  ${userData?.lastName}`;
+  const logoutFun = () => {
+    removeLocalStorage("token");
+    removeLocalStorage("roleId");
+    sessionStorage.clear();
+    window.location.reload();
+  };
+  const userImage =
+    userData?.image === null ? "/assets/images/user-logo.png" : userData?.image;
   return (
     <SidebarContainer $active={active}>
       <StyleFlex $active={active}>
@@ -190,29 +204,57 @@ export const Sidebar = () => {
         <Description>Menu</Description>
         {sidebarData.map((item) => {
           const Icon = () => item.icon;
-          return (
-            <TabBtn
-              key={item.key}
-              onClick={() => tabBtnFun(item.key)}
-              $active={active}
-            >
-              <BtnWrap>
-                <Icon />
-                {active && <p>{item.label}</p>}
-              </BtnWrap>
+          if (item.key == 3) {
+            return (
+              <PageBtn
+                key={item.key}
+                onClick={() => tabBtnFun(item.key)}
+                $active={active}
+                $p="0"
+                to={`/main/notification`}
+              >
+                <BtnWrap>
+                  <Icon />
+                  {active && <p>{item.label}</p>}
+                </BtnWrap>
 
-              {!active ||
-                (btnActive === item.key &&
-                  item.page?.map((i) => {
-                    return (
-                      <PageActive key={i.id} to={i.url}>
-                        {/* <TbDeviceSdCard /> */}
-                        {active && <p>{i.text}</p>}
-                      </PageActive>
-                    );
-                  }))}
-            </TabBtn>
-          );
+                {!active ||
+                  (btnActive === item.key &&
+                    item.page?.map((i) => {
+                      return (
+                        <PageActive key={i.id} to={i.url}>
+                          {/* <TbDeviceSdCard /> */}
+                          {active && <p>{i.text}</p>}
+                        </PageActive>
+                      );
+                    }))}
+              </PageBtn>
+            );
+          } else {
+            return (
+              <TabBtn
+                key={item.key}
+                onClick={() => tabBtnFun(item.key)}
+                $active={active}
+              >
+                <BtnWrap>
+                  <Icon />
+                  {active && <p>{item.label}</p>}
+                </BtnWrap>
+
+                {!active ||
+                  (btnActive === item.key &&
+                    item.page?.map((i) => {
+                      return (
+                        <PageActive key={i.id} to={i.url}>
+                          {/* <TbDeviceSdCard /> */}
+                          {active && <p>{i.text}</p>}
+                        </PageActive>
+                      );
+                    }))}
+              </TabBtn>
+            );
+          }
         })}
         {!companyData && (
           <PageBtn
@@ -224,14 +266,23 @@ export const Sidebar = () => {
           </PageBtn>
         )}
       </div>
-
+      <TabBtn onClick={logoutFun}>
+        <BtnWrap>
+          <BiLogOut />
+          {active && <p>Logout</p>}
+        </BtnWrap>
+      </TabBtn>
       <User className="user-profile">
-        <img src="/assets/images/user.png" alt="user" />
+        <img src={userImage} alt="user" className="user-img" />
         {active && (
           <div>
-            <h2>Jonibek Muradov</h2>
+            <h2>
+              {userFullName.length > 20
+                ? userFullName.slice(0, 22) + "..."
+                : userFullName}
+            </h2>
             <Text size={12} color="#fff">
-              jonibek1984@gmail.com
+              {userData?.email}
             </Text>
           </div>
         )}

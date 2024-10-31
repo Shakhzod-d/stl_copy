@@ -1,20 +1,19 @@
-
-
 import { CustomButton, Text } from "@/track/constants";
 import { Flex } from "../drivers-header/drivers-header-styled";
-import { Block, Map } from "./planner-styled";
+import { Block, MapWrap } from "./planner-styled";
 import { IoIosArrowDown } from "react-icons/io";
+import { Map } from "../map";
 
 export const TripPlanner = () => {
   return (
-    <section>
+    <section style={{ marginBottom: "20px" }}>
       <Flex
         $align="center"
         $justify="space-between"
         style={{ marginBottom: "15px" }}
       >
         <Text size={32} $font="500">
-        Trip Planner
+          Trip Planner
         </Text>
         <CustomButton
           type="primary"
@@ -55,13 +54,26 @@ export const TripPlanner = () => {
             <Block width="193px">Copy last location</Block>
           </Flex>
         </div>
-        <Map>
-        <iframe
-          src="https://yandex.uz/map-widget/v1/?um=constructor%3A31d0b3b1d6458e4ef408bb6eeb5c3278cc2ff150ae9b84e02b99e2ae3c9872b6&amp;source=constructor"
-          width={"100%"}
-          height={"100%"}
-        ></iframe>
-        </Map>
+        {/* <MapWrap> */}
+        <Map
+          mapData={[
+            {
+              id: 1,
+              name: "Aisyah Clara Riyanti",
+              lat: 38.861, // Qarshi
+              lng: 65.7847,
+              address: "Qarshi, Uzbekistan",
+              status: "61 mph",
+              destination: "Samarqand, Uzbekistan",
+              destLat: 39.6542, // Samarqand
+              destLng: 66.9597,
+              progress: 20, // 20% of the route completed
+            },
+          ]}
+          activeId={1}
+          height="calc(100vh - 613px)"
+        />
+        {/* </MapWrap> */}
       </Flex>
     </section>
   );

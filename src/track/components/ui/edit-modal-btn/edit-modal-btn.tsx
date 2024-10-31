@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { StyledBtn } from "./styled";
+import { BsX } from "react-icons/bs";
 
 interface Props {
   text: string;
@@ -11,12 +12,13 @@ export const EditModalBtn = ({ text, isActive }: Props) => {
 
   return (
     <StyledBtn
+    // type="primary"
       active={String(activeBtn)}
       onClick={() => setActiveBtn((prev) => !prev)}
     >
       {text}
 
-      {activeBtn ? <span>x</span> : ""}
+      {activeBtn ? <BsX size={20} color="#fff"/> : ""}
     </StyledBtn>
   );
 };

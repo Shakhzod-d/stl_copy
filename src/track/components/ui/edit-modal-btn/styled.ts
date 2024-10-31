@@ -3,7 +3,8 @@ import styled from "styled-components";
 
 export const StyledBtn = styled(Button)<{ active: string }>`
   border-radius: 10px;
-  background: ${({ active }) => (active === "true" ? "#FC973A" : "#f9f9fa")};
+  background: ${({ active }) =>
+    active === "true" ? "#FC973A" : "#f9f9fa"} !important;
   padding: 10px 15px;
   color: ${({ active }) => (active === "true" ? "#fff" : "#5d5e5f")};
   font-size: 14px;

@@ -7,8 +7,9 @@ interface State {
   company: Data | false | null;
   companyId: string | null;
 }
-const boolean = Boolean(getLocalStorage("company"));
-const companyData = getLocalStorage("company");
+const boolean = Boolean(sessionStorage.getItem("company"));
+const companyData = sessionStorage.getItem("company");
+
 const parseData = companyData ? JSON.parse(companyData) : null;
 const initialState: State = {
   company: boolean ? parseData : false,

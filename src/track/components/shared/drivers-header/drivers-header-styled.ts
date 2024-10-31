@@ -19,6 +19,7 @@ export const Block = styled.div<{
   gap: ${({ $gap = 0 }) => `${$gap}px`};
   justify-content: ${({ content }) => content};
   color ${({ theme }) => theme.clr};
+  cursor:pointer;
 `;
 
 export const Div = styled.div<{ $w?: string }>`

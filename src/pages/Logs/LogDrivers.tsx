@@ -152,7 +152,7 @@ const LogDrivers: React.FC = () => {
       ) : (
         <CustomTable
           columns={LogsDriverDataHeader}
-          data={tableData}
+          data={tableData ? tableData : []}
           onClick={driversInfoHandler}
         />
       )}

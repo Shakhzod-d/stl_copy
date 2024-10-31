@@ -41,7 +41,7 @@ function formattedTime(timestamp: number): string {
 export const mapUserData = (data: ObjType[]) => {
   return data?.map((item) => {
     const role = item["role"] as unknown as ObjType;
-    console.log(item);
+   
 
     const daysBetween = calculateDaysBetweenDates(String(item.updatedAt));
     return {

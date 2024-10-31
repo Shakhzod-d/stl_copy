@@ -77,9 +77,8 @@ const Companies: React.FC = () => {
     try {
       setPageLoading(true);
       const data = await Company(id);
-
-      setLocalStorage("companyId", id);
-      setLocalStorage("company", JSON.stringify(data));
+      sessionStorage.setItem("companyId", id);
+      sessionStorage.setItem("company", JSON.stringify(data));
       setCompany(data);
       await historyPush(`/`);
     } catch (err) {

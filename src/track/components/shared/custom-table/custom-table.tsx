@@ -174,7 +174,7 @@ export const CustomTable = (props: TableProps) => {
                     {copyId === column.id ? (
                       <GoCopy
                         style={{ marginLeft: "20px " }}
-                        onClick={() => handleCopy(String(row[column.accessor]))}
+                        onClick={() => handleCopy(`(${row["lat"]},${row["lng"]})`)}
                       />
                     ) : (
                       ""

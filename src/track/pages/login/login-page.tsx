@@ -2,10 +2,15 @@ import { Button, Form, message } from "antd";
 import { ILoginData, LoginData } from "../../types";
 
 import useApiMutation from "@/hooks/useApiMutation";
-import { getLocalStorage, historyPush, setLocalStorage } from "@/utils";
+import {
+  getLocalStorage,
+  historyPush,
+  setLocalStorage,
+  setUserData,
+} from "@/utils";
 import { errorMessage } from "@/utils/message";
 import { useState } from "react";
-import { setUser } from "../../utils/dispatch";
+
 
 import {
   BoldText,
@@ -37,7 +42,8 @@ export const Login = () => {
         setLoading(false);
         const { data } = res;
         setLocalStorage("token", data?.token);
-        setUser(data);
+      
+        setUserData(data);
         setLocalStorage("roleId", data?.role?.roleId);
         // setLocalStorage("companyId", "66fcf8f52ccf4ba8e6b32c36");
         if (!getLocalStorage("company")) {
@@ -50,7 +56,6 @@ export const Login = () => {
         errorMessage(err?.message);
 
         setLoading(false);
-        
       },
     });
   };
@@ -64,7 +69,11 @@ export const Login = () => {
       {contextHolder}
       <FromWrapper>
         <StyledForm autoComplete="off" onFinish={onFinish}>
-          <img src="assets/icons/logo.svg" alt="logo" style={{ marginBottom: "20px" }} />
+          <img
+            src="assets/icons/logo.svg"
+            alt="logo"
+            style={{ marginBottom: "20px" }}
+          />
           <Label htmlFor="">Login</Label>
           <Form.Item
             name={"email"}
@@ -103,7 +112,7 @@ export const Login = () => {
                 color: "#fff",
                 height: "60px",
                 marginBottom: "5px",
-                borderRadius:"6px"
+                borderRadius: "6px",
               }}
             >
               Create

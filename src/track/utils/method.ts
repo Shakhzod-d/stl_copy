@@ -28,7 +28,7 @@ export function formatTime(seconds: number): string {
 
 let intervalId: NodeJS.Timeout | undefined;
 
-export const autoRefresh = (interval: number) => {
+export const autoRefresh = (interval: number) => {  
   if (intervalId) {
     clearInterval(intervalId);
     intervalId = undefined;

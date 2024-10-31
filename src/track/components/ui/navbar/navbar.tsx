@@ -3,11 +3,12 @@ import { Header, Icon, Title } from "./navbar-styled";
 
 import { CustomInput } from "../custom-input";
 import { useDispatch, useSelector } from "react-redux";
-import { setDarkMode } from "@/store/slices/booleans-slice";
+import { setDarkMode, setModalActive } from "@/store/slices/booleans-slice";
 import { RootState } from "@/store";
 import { setLocalStorage } from "@/utils/localStorage";
 import { CgSun } from "react-icons/cg";
 import { Flex } from "../../shared/drivers-header/drivers-header-styled";
+// import { setModal } from "@/track/utils/dispatch";
 
 interface Props {
   title: string;
@@ -28,7 +29,7 @@ export const Navbar = ({ title, search = true }: Props) => {
         <Icon onClick={darkMode}>
           {dark ? <CgSun size={30} /> : <IoMoonOutline size={30} />}
         </Icon>
-        <Icon>
+        <Icon onClick={()=>dispatch(setModalActive(true))}>
           <IoNotificationsOutline size={30} />
         </Icon>
       </Flex>
