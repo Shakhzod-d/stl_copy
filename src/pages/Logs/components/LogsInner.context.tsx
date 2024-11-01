@@ -50,9 +50,6 @@ const useLogsInner = () => {
 
   setPageLoading(isLoading);
 
-  console.log(({isFetching,isLoading}));
-  
-
   const { data: driverData } = useApi<IDriverData>(
     `driver/${id}`,
     {},

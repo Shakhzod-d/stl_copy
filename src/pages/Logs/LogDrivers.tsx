@@ -9,7 +9,7 @@ import useMomentZone from "@/hooks/useMomentZone";
 import { IViolation } from "@/types/violation";
 import { historyPush, setLocalStorage } from "@/utils";
 import { Table } from "antd";
-import { Moment } from "moment-timezone";
+import moment, { Moment } from "moment-timezone";
 import React, { ReactNode } from "react";
 
 import {
@@ -23,10 +23,14 @@ import { useMainColumns } from "./Logs.columns";
 import { PageLoad, TimeContainer } from "@/track/components/ui";
 import { CustomTable } from "@/track/components/shared";
 import { dateTable, LogsDriverDataHeader } from "@/track/constants";
+import { useWeekData } from "@/track/hooks/use-data-piker";
+import { useDispatch } from "react-redux";
+import { WeekData } from "@/track/components/shared/drivers-header/drivers-header";
+import { setWeekData } from "@/store/slices/company-slice";
 
 const LogDrivers: React.FC = () => {
   const momentZone = useMomentZone();
-
+  const dispatch = useDispatch();
   // Query params states
   const [violations, setViolations] = useQueryParam(
     "violation",
@@ -73,13 +77,17 @@ const LogDrivers: React.FC = () => {
     date: time / 1000,
   });
 
+  const date = moment(time).format("LLLL");
+  const weekData: WeekData[] = useWeekData(date);
+
   const driversInfoHandler = (id: string) => {
     setLocalStorage("driverId", id);
     historyPush(`inner/${id}?time=${time}`);
+    dispatch(setWeekData(weekData));
   };
 
   // return (
-  //   // <MainLayout>
+  //   // <MainLayout
   //   <div className="logs page">
   //     <div className="logs-head">
   //       <div className="logs-head-left">

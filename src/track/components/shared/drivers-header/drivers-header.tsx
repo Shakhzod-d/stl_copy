@@ -9,7 +9,7 @@ import {
 import { BiLeftArrow } from "react-icons/bi";
 import { BsAndroid2 } from "react-icons/bs";
 // import ptIcon from "../../../assets/icons/pt.svg";
-import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
+
 import { useState } from "react";
 import { DriversWeek } from "@/track/constants";
 import { Link } from "react-router-dom";
@@ -18,10 +18,42 @@ import { useSelector } from "react-redux";
 import { getLocalStorage } from "@/utils/localStorage";
 import { RootState } from "@/store";
 import LogActions from "@/pages/Logs/components/LogActions";
+import { useLogsInnerContext } from "@/pages/Logs/components/LogsInner.context";
+import moment from "moment";
+import { useWeekData } from "@/track/hooks/use-data-piker";
+interface DriverData {
+  fullName: string | undefined;
+  phone?: string;
+}
+export interface WeekData {
+  text: string;
+  value: number;
+}
+export const DriversHeader = ({ fullName, phone }: DriverData) => {
+  const [activeBtn, setActiveBtn] = useState(0);
+  // const dark = useSelector((state: RootState) => state.booleans.darkMode);
 
-export const DriversHeader = () => {
-  const [activeBtn, setActiveBtn] = useState(1);
-  const dark = useSelector((state: RootState) => state.booleans.darkMode);
+  const {
+    state: { time: initialTime },
+    actions: { setTime },
+  } = useLogsInnerContext();
+  const onDateChange = (value: number, i: number) => {
+    if (i !== activeBtn) {
+      //     setCurrentLog(null); // TODO: uncomment to delete current log
+      setTime(
+        moment(initialTime)
+          .add(-value + 1, "day")
+          .valueOf()
+      );
+      setActiveBtn(i);
+    }
+  };
+  const date = moment(initialTime).format("LLLL");
+
+  const arrData: WeekData[] = useSelector(
+    (state: RootState) => state.company.weekData
+  );
+
   const companyId = getLocalStorage("companyId");
   return (
     <div>
@@ -35,10 +67,10 @@ export const DriversHeader = () => {
           <Block display="flex" content="center" $gap={64}>
             <div>
               <Text size={20} $font={500}>
-                Jonibek Muradov
+                {fullName}
               </Text>
               <Text size={13} color="#babac1">
-                Phone No: Show phone
+                Phone No: {phone}
               </Text>
             </div>
             <Flex $gap={"16px"} $align="center">
@@ -82,14 +114,14 @@ export const DriversHeader = () => {
         <LogActions />
       </Flex>
       <BtnContainer>
-        {DriversWeek.map((item) => (
+        {arrData.map((item, i) => (
           <StyleButton
-            key={item.id}
-            active={activeBtn == item.id ? "true" : ""}
+            key={item.value}
+            active={activeBtn === i ? "true" : ""}
             type={"primary"}
-            onClick={() => setActiveBtn(item.id)}
+            // onClick={() => onDateChange(item.value, i)}
           >
-            Jan 24 / Wed
+            {item.text}
           </StyleButton>
         ))}
       </BtnContainer>
