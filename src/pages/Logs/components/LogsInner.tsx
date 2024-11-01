@@ -1,11 +1,11 @@
 import TruckLoader from "@/components/loaders/TruckLoader";
 
-import { Badge, Checkbox } from "antd";
-import LogActions from "./LogActions";
+// import { Badge, Checkbox } from "antd";
+// import LogActions from "./LogActions";
 import LogCorrection from "./LogCorrection";
-import LogGraph from "./LogGraph";
-import LogHead from "./LogHead";
-import LogTable from "./LogTable";
+// import LogGraph from "./LogGraph";
+// import LogHead from "./LogHead";
+// import LogTable from "./LogTable";
 import { useLogsInnerContext } from "./LogsInner.context";
 // import TripPlanner from "./TripPlanner";
 
@@ -15,12 +15,12 @@ import { CheckboxChangeEvent } from "antd/lib/checkbox";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/store";
 import { setCompanyTimeZone } from "@/store/slices/logSlice";
-import LogForm from "./LogForm";
-import { Recap } from "./Recap";
+// import LogForm from "./LogForm";
+// import { Recap } from "./Recap";
 import { DriversHeader } from "@/track/components/shared/drivers-header";
 import { Diagrams } from "@/track/components/shared/diagrams";
 import { CustomTable } from "@/track/components/shared/custom-table";
-import { driversTableHeader, Main } from "@/track/constants";
+import { driversData, driversTableHeader, Main } from "@/track/constants";
 import { DriversForm } from "@/track/components/shared/drivers-form";
 import { TripPlanner } from "@/track/components/shared/trip-planner";
 import { innerTable } from "@/track/utils/mapData";
@@ -52,34 +52,34 @@ const LogsInner: React.FC = () => {
       setIds,
     },
   } = useLogsInnerContext();
-  const [checkbox1, setCheckbox1] = useState(false);
-  const [checkbox1Active, setCheckbox1Active] = useState(false);
-  const [checkbox2, setCheckbox2] = useState(false);
-  const [checkbox2Active, setCheckbox2Active] = useState(false);
+  // const [checkbox1, setCheckbox1] = useState(false);
+  // const [checkbox1Active, setCheckbox1Active] = useState(false);
+  // const [checkbox2, setCheckbox2] = useState(false);
+  // const [checkbox2Active, setCheckbox2Active] = useState(false);
   const s = useSelector<RootState>((s) => s.log);
   const dispatch = useDispatch<AppDispatch>();
 
-  const handleCheckbox1Change = (e: CheckboxChangeEvent) => {
-    setCheckbox1(e.target.checked);
-    setCheckbox1Active(e.target.checked);
-  };
+  // const handleCheckbox1Change = (e: CheckboxChangeEvent) => {
+  //   setCheckbox1(e.target.checked);
+  //   setCheckbox1Active(e.target.checked);
+  // };
 
-  const handleCheckbox2Change = (e: CheckboxChangeEvent) => {
-    setCheckbox2(e.target.checked);
-    setCheckbox2Active(e.target.checked);
-  };
+  // const handleCheckbox2Change = (e: CheckboxChangeEvent) => {
+  //   setCheckbox2(e.target.checked);
+  //   setCheckbox2Active(e.target.checked);
+  // };
 
-  useEffect(() => {
-    if (checkbox1 && checkbox1Active) {
-      setIds((pre) => ({ ...pre, _id1: currentLog?._id as string }));
-      setCheckbox1Active(false);
-    }
+  // useEffect(() => {
+  //   if (checkbox1 && checkbox1Active) {
+  //     setIds((pre) => ({ ...pre, _id1: currentLog?._id as string }));
+  //     setCheckbox1Active(false);
+  //   }
 
-    if (checkbox2 && checkbox2Active) {
-      setIds((pre) => ({ ...pre, _id2: currentLog?._id as string }));
-      setCheckbox2Active(false);
-    }
-  }, [checkbox1, checkbox2]);
+  //   if (checkbox2 && checkbox2Active) {
+  //     setIds((pre) => ({ ...pre, _id2: currentLog?._id as string }));
+  //     setCheckbox2Active(false);
+  //   }
+  // }, [checkbox1, checkbox2]);
 
   useEffect(() => {
     if (!!driverData?.data?.companyTimeZone) {
@@ -89,15 +89,20 @@ const LogsInner: React.FC = () => {
 
   const tableData = innerTable(logs ? logs : []);
   // console.log(`driverData?.data`, driverData?.data?.companyTimeZone); //companyTimeZone
-  console.log(logs);
+  // console.log(logs);
   setPageLoading(isFetching);
+  const driverFullName: string | undefined = ` ${
+    driverData?.data ? driverData?.data.firstName : ""
+  }  ${driverData?.data ? driverData?.data.lastName : ""}`;
+
+  const driverPhone = driverData?.data ? driverData?.data.phone : "";
   return (
     <Main>
       <div
         className=""
         style={{ pointerEvents: disableActions ? "none" : "all" }}
       >
-        <DriversHeader />
+        <DriversHeader fullName={driverFullName} phone={driverPhone} />
         {/* <LogActions/> */}
         <Diagrams
           filterDrawStatus={filterDrawStatus(logs)}
@@ -119,7 +124,11 @@ const LogsInner: React.FC = () => {
               <LogCorrection handleCloseEditing={() => setCurrentLog(null)} />
             )}
           </div>
-          <CustomTable data={tableData} columns={driversTableHeader} copyId={5}/>
+          <CustomTable
+            data={tableData}
+            columns={driversTableHeader}
+            copyId={5}
+          />
         </div>
       </div>
 

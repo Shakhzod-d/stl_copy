@@ -48,8 +48,6 @@ export const CustomTable = (props: TableProps) => {
   >(null);
 
   function tableDataHandler<T>(id: string, text?: T): void {
-    console.log(id);
-
     if (onClick) {
       onClick(id);
     }
@@ -174,7 +172,9 @@ export const CustomTable = (props: TableProps) => {
                     {copyId === column.id ? (
                       <GoCopy
                         style={{ marginLeft: "20px " }}
-                        onClick={() => handleCopy(`(${row["lat"]},${row["lng"]})`)}
+                        onClick={() =>
+                          handleCopy(`(${row["lat"]},${row["lng"]})`)
+                        }
                       />
                     ) : (
                       ""
