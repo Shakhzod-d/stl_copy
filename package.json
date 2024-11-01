@@ -76,10 +76,7 @@
     "rewrite": "scp -r build root@5.161.134.59:/var/www/ELD.arava.app/",
     "deploy": "yarn build && yarn rewrite && rm -rf build",
     "deploy-dev": "scp -r build root@5.161.229.41:/var/www/ELD.roundedteam.uz",
-    "deploy-ELD": "scp -i deqwbnfRFVTsXcaWJUMk -r build root@5.161.229.41:/var/www/ELDeld.roundedteam.uz",
-    "deploy-TMK": "scp -i deqwbnfRFVTsXcaWJUMk -r build root@5.161.229.41:/var/www/pteld.roundedteam.uz",
-    "deploy-tmk": "scp -i deqwbnfRFVTsXcaWJUMk -r build root@5.161.229.41:/var/www/tmk.roundedteam.uz",
-    "deploy-stl": "scp -i deqwbnfRFVTsXcaWJUMk -r build root@5.78.112.203:/var/www/admin.stleld.com"
+    "deploy-ELD": "scp -i deqwbnfRFVTsXcaWJUMk -r dist root@5.161.229.41:/var/www/unity.roundedteam.uz"
   },
   "eslintConfig": {
     "extends": [
