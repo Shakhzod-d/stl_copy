@@ -63,7 +63,7 @@ function NumberField<T extends FieldValues>({
       )}
       name={name}
       control={control}
-      rules={{ required: required, ...validation }}
+      rules={{ required: required, ...validation } as any}
     />
   );
 }

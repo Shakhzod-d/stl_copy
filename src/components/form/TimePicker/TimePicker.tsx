@@ -7,6 +7,7 @@ import {
   Path,
 } from "react-hook-form";
 import { TimePicker as AntdTimePicker, TimePickerProps } from "antd";
+import moment from "moment";
 
 export interface ITimePicker<T extends FieldValues = any>
   extends TimePickerProps {
@@ -70,7 +71,8 @@ function TimePicker<T extends FieldValues>({
             ) : (
               <AntdTimePicker
                 // value={value}
-                value={formatValue}
+                // value={formatValue}
+                value={value ? moment(value) : null}
                 // dateRender={moment(23141)}
                 onChange={onChangeCustom}
                 // onBlur={onBlur}
@@ -92,7 +94,7 @@ function TimePicker<T extends FieldValues>({
       }}
       name={name}
       control={control}
-      rules={{ required: required, ...validation }}
+      rules={{ required: required }}
     />
   );
 }

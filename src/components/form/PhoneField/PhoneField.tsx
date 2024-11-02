@@ -82,13 +82,16 @@ function PhoneField<T extends FieldValues>({
       }}
       name={name}
       control={control}
-      rules={{
-        required: required,
-        validate: (val) =>
-          required &&
-          (isValidPhoneNumber(val) || "Please enter the correct phone number"),
-        ...validation,
-      }}
+      rules={
+        {
+          required: required,
+          validate: (val: string) =>
+            required &&
+            (isValidPhoneNumber(val) ||
+              "Please enter the correct phone number"),
+          ...validation,
+        } as any
+      }
     />
   );
 }

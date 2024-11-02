@@ -26,6 +26,7 @@
     "@types/uuid": "^8.3.4",
     "antd": "^4.21.2",
     "axios": "^0.25.0",
+    "caniuse-lite": "^1.0.30001676",
     "craco-less": "^2.0.0",
     "date-fns": "^3.2.0",
     "dotenv": "^16.3.1",
@@ -76,7 +77,7 @@
     "rewrite": "scp -r build root@5.161.134.59:/var/www/ELD.arava.app/",
     "deploy": "yarn build && yarn rewrite && rm -rf build",
     "deploy-dev": "scp -r build root@5.161.229.41:/var/www/ELD.roundedteam.uz",
-    "deploy-ELD": "scp -i deqwbnfRFVTsXcaWJUMk -r dist root@5.161.229.41:/var/www/unity.roundedteam.uz"
+    "deploy-ELD": "scp -i deqwbnfRFVTsXcaWJUMk -r build root@5.161.229.41:/var/www/unity.roundedteam.uz"
   },
   "eslintConfig": {
     "extends": [
@@ -97,6 +98,7 @@
     ]
   },
   "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@types/leaflet": "^1.9.14",
     "@types/leaflet-routing-machine": "^3.2.8"
   }
