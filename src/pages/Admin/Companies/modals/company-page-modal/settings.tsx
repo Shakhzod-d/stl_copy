@@ -5,7 +5,7 @@ import { companySettingsModal } from "@/track/constants";
 export const Settings = () => {
   return (
     <>
-      {companySettingsModal.map((col) => (
+      {companySettingsModal?.map((col) => (
         <Flex key={col.id} $vertical={true} $gap={"20px"}>
           {col.options.map((item) => (
             <Flex $vertical={true} $gap={"15px"} style={{ margin: "40px" }}>
