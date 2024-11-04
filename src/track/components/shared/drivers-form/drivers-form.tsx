@@ -1,8 +1,6 @@
 import {
   CustomButton,
-  logsForm,
-  logsFormTwo,
-  logsFromThee,
+
   Text,
 } from "@/track/constants";
 import { Flex } from "../drivers-header/drivers-header-styled";
@@ -14,13 +12,13 @@ import {
   Value,
   ValueBox,
 } from "./form-styled";
-// import { useSelector } from "react-redux";
-// import { RootState } from "../../../store/store";
+import { FormData } from "@/types/log.type";
 
-export const DriversForm = () => {
-  // const sidebarActive = useSelector(
-  //   (state: RootState) => state.booleans.sidebarActive
-  // );
+interface Props {
+  LogForm: FormData[];
+}
+export const DriversForm = ({ LogForm }: Props) => {
+
   const sidebarActive = false;
   return (
     <section style={{ marginBottom: "40px" }}>
@@ -43,24 +41,25 @@ export const DriversForm = () => {
       </Flex>
       <StyleFlex $active={sidebarActive}>
         <div>
-          {logsForm.map((item) => (
+          {LogForm.map((item: any) => (
             <FormRow key={item.id}>
               <FormTitle>
                 <FormTitleText>{item.title}</FormTitleText>
               </FormTitle>
-              {item.title == "Trailers" || item.title == "Shipping docs" ? (
+              {item.title === "Trailers" || item.title === "Shipping docs" ? (
                 <ValueBox>
                   <Value $clr="black">{item.value}</Value>
                 </ValueBox>
               ) : (
-                <Value $clr={item.value == "Signed" ? "#32BE61" : ""}>
+                <Value $clr={item.value === "Signed" ? "#32BE61" : ""}>
                   {item.value}
                 </Value>
               )}
             </FormRow>
           ))}
         </div>
-        <div>
+
+        {/* <div>
           {logsFormTwo.map((item) => (
             <FormRow key={item.id}>
               <FormTitle>
@@ -71,6 +70,8 @@ export const DriversForm = () => {
             </FormRow>
           ))}
         </div>
+
+
         <div>
           {logsFromThee.map((item) => (
             <FormRow key={item.id}>
@@ -81,7 +82,7 @@ export const DriversForm = () => {
               <Value>{item.value}</Value>
             </FormRow>
           ))}
-        </div>
+        </div> */}
       </StyleFlex>
     </section>
   );

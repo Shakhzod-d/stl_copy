@@ -30,7 +30,11 @@ export interface WeekData {
   value: number;
 }
 export const DriversHeader = ({ fullName, phone }: DriverData) => {
-  const [activeBtn, setActiveBtn] = useState(0);
+  const arrData: WeekData[] = useSelector(
+    (state: RootState) => state.company.weekData
+  );
+  const week_data = arrData.slice().reverse();
+  const [activeBtn, setActiveBtn] = useState(week_data.length-1);
   // const dark = useSelector((state: RootState) => state.booleans.darkMode);
 
   const {
@@ -46,9 +50,7 @@ export const DriversHeader = ({ fullName, phone }: DriverData) => {
   };
   const date = moment(initialTime).format("LLLL");
 
-  const arrData: WeekData[] = useSelector(
-    (state: RootState) => state.company.weekData
-  );
+  // console.log(arrData.slice().reverse());
 
   const companyId = getLocalStorage("companyId");
   return (
@@ -110,7 +112,7 @@ export const DriversHeader = ({ fullName, phone }: DriverData) => {
         <LogActions />
       </Flex>
       <BtnContainer>
-        {arrData.map((item, i) => (
+        {week_data.map((item, i) => (
           <StyleButton
             key={item.value}
             active={activeBtn === i ? "true" : ""}

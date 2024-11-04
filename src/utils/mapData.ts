@@ -137,6 +137,8 @@ const mapHistoryLogs = (data: IHistoryLog[]): IHistoryLog[] => {
 const mapTableData = (data: any[]) => {
   return data?.map((item, i: number) => {
     const fullName = `${i} ${item.firstName} ${item.lastName}`;
+    // console.log(item);
+
     return {
       _id: fullName,
       id: item?._id,

@@ -9,8 +9,9 @@ interface Props {
 
 export const StyledSelect = styled(Select)<Props>`
   // background: ${(props) => props.theme.white} !important;
-
   .ant-select-selector {
+    position: absolute;
+    left:1px;
     border-radius: 10px !important;
     width: ${({ width = "268px" }) => width} !important;
     height: ${({ height = 47 }) => `${height}px`} !important;
@@ -36,8 +37,12 @@ export const StyledSelect = styled(Select)<Props>`
   }
 
   .ant-select-dropdown {
+    // position: relative !important; /* Ensure dropdown is positioned correctly */
+    // z-index: 1000 !important; /* Ensure it appears above other content */
+    // border:1px solid !important;
     .ant-select-item-option {
       background: ${(props) => props.theme.white} !important;
+      border: 1px solid red !important;
       &:hover {
         background: black !important; /* Hover holatida fon qizil bo'ladi */
       }
@@ -56,6 +61,4 @@ export const StyledSelect = styled(Select)<Props>`
     font-size: 16px !important;
     font-weight: 500;
   }
-
-
 `;

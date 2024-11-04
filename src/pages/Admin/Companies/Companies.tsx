@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { getLocalStorage, historyPush, setLocalStorage } from "@/utils";
+import {historyPush, setLocalStorage } from "@/utils";
 
 import useApi from "@/hooks/useApi";
 
@@ -35,11 +35,14 @@ const Companies: React.FC = () => {
 
   const mapData = (data: ICompanyData[]): CompanyData[] => {
     return data.map((item) => {
+      const image :string |undefined=
+        item?.logo ? item?.logo : "/assets/images/user-logo.png";
+        
       return {
         id: item._id,
         name: {
           label: item.companyName,
-          img: "/company-logo.png",
+          img: image,
           data: [
             { id: 1, text: "9328382389", icon: <HiPhone /> },
             { id: 2, text: "support@asritsolutions.com", icon: <IoMdMail /> },

@@ -10,7 +10,7 @@ import { getLocalStorage, setLocalStorage } from "../../utils/index";
 import { useDispatch, useSelector } from "react-redux";
 import { BiCalendarStar } from "react-icons/bi";
 import { IoIosArrowDown } from "react-icons/io";
-import { Radio } from "antd";
+import { Radio, Select } from "antd";
 import {
   dashboardTableHeader,
   dataSource,
@@ -144,6 +144,7 @@ export const Dashboard = () => {
             width="200px"
           />
           <CustomSelect option={option} placeholder="Date" width="200px" />
+
           <CustomSelect
             option={option}
             placeholder="Eld connection"

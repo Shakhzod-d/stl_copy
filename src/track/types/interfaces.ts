@@ -112,7 +112,7 @@ export interface CompanyData {
   id: string | number;
   name: {
     label: string;
-    img: string;
+    img: string | undefined;
     data?: CompaniesArr[];
   };
   status: { label: string };
@@ -155,7 +155,7 @@ export interface InfoTableData {
   id: string | number;
   name: {
     label: string;
-    img: string;
+    img: string |undefined;
     data?: CompaniesArr[];
   };
   // Allows other properties, but excludes `id` and `name` from the dynamic type

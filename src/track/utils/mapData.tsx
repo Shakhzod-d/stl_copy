@@ -5,18 +5,17 @@ import { useDate } from "@/track/hooks/useDate";
 import { IoMdMail } from "react-icons/io";
 import { RiUser3Fill } from "react-icons/ri";
 import { formatTime } from "./method";
-import { InnerTable } from "@/types/log.type";
+import { InnerTable, LogsFormData } from "@/types/log.type";
 import { Checkbox } from "antd";
 import { MdModeEdit } from "react-icons/md";
 import { BsThreeDotsVertical } from "react-icons/bs";
 function calculateDaysBetweenDates(startDate: string): number {
-  // Sana: ISO formatidagi satrni Date ob'ektiga o'zgartirish
+
   const start = new Date(startDate);
   const endDate = new Date();
-  // Har ikkala sana orasidagi farqni millisekundlarda hisoblash
+
   const differenceInTime = endDate.getTime() - start.getTime();
 
-  // Millisekundlarni kunlarga o'zgartirish (millisekund -> sekund -> soat -> kun)
   const differenceInDays = Math.floor(differenceInTime / (1000 * 3600 * 24));
 
   return differenceInDays === 0 ? 1 : differenceInDays;
@@ -38,16 +37,19 @@ function formattedTime(timestamp: number): string {
 }
 
 // Test qilish
-export const mapUserData = (data: ObjType[]) => {
+export const mapUserData = (data: any[]) => {
   return data?.map((item) => {
     const role = item["role"] as unknown as ObjType;
-
+    let image: string | undefined = "/assets/images/user-logo.png";
+    if (item.image && item?.image !== "Not found image url") {
+      image = item.image;
+    }
     const daysBetween = calculateDaysBetweenDates(String(item.updatedAt));
     return {
       _id: item._id,
       name: {
         label: `${item.firstName} ${item.lastName}`,
-        img: "/company-logo.png",
+        img: image,
         data: [{ id: 1, text: item.email }],
       },
       updated: { label: `${daysBetween} day ago` },
@@ -173,9 +175,10 @@ export const dashboardData = (data: ObjType[] | []) => {
 };
 
 export const innerTable = (data: InnerTable[]) => {
-  const result = data.map((item) => {
+  const result = data.map((item, i) => {
     const start = formattedTime(item.start);
     return {
+      _id: i + 1,
       id: item._id,
       checkbox: <Checkbox></Checkbox>,
       status: item.status,
@@ -195,4 +198,16 @@ export const innerTable = (data: InnerTable[]) => {
     };
   });
   return result;
+};
+
+export const LogsFormMap = (data: LogsFormData) => {
+  return [
+    { id: 1, title: "Driver", value: data.driver },
+    { id: 2, title: "Distance", value: data.mile },
+    { id: 3, title: "Co Driver", value: data.coDriver },
+    { id: 4, title: "Truck", value: "105" },
+    { id: 5, title: "Trailers", value: data.trailers },
+    { id: 6, title: "Shipping docs", value: "N/A 11194RY9P" },
+    { id: 7, title: "Signature", value: "Signed" },
+  ];
 };

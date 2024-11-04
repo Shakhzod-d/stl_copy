@@ -6,6 +6,7 @@ export interface ICompanyForm {
     homeTerminalTimezone: string;
     homeTerminalAddress: string;
     serviceId: string;
+    logo?:string
 }
 
 export interface ICompanyData extends ICompanyForm {

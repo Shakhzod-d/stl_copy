@@ -1,4 +1,4 @@
-import { Button,  Input } from "antd";
+import { Button, Input } from "antd";
 import styled from "styled-components";
 
 export const TabBtn = styled(Button)<{ $active: boolean }>`
@@ -42,7 +42,7 @@ export const TextAria = styled.textarea`
   padding: 25px 20px;
   width: 1250px;
   height: 150px;
-  background: ${({ theme }) => theme.selectGray};
+  background: ${({ theme }) => theme.textAriaBg};
   color: ${({ theme }) => theme.clr};
   border: none;
   outline: none;

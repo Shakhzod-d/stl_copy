@@ -60,3 +60,9 @@ export const CustomFlex = styled.div`
   gap: 8px;
   flex-direction: column;
 `;
+
+export const Img = styled.img`
+  width: 35px;
+  height: 35px;
+  border-radius:50%;
+`;

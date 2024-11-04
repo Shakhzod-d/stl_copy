@@ -815,7 +815,7 @@ export const CYCLE_TIME_LIMIT = 60 * 60 * 70;
 
 export const driversTableHeader = [
   { header: <MdCheckBoxOutlineBlank />, accessor: "checkbox", id: 1 },
-  { header: "ID", accessor: "id", id: 1 },
+  { header: "ID", accessor: "_id", id: 1 },
   { header: "Status", accessor: "status", id: 2 },
   { header: "Start", accessor: "start", id: 3 },
   { header: "Duration", accessor: "duration", id: 4 },
