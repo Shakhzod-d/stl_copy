@@ -136,7 +136,9 @@ const mapHistoryLogs = (data: IHistoryLog[]): IHistoryLog[] => {
 
 const mapTableData = (data: any[]) => {
   return data?.map((item, i: number) => {
+    const fullName = `${i} ${item.firstName} ${item.lastName}`;
     return {
+      _id: fullName,
       id: item?._id,
       date: "1/1/2020",
       truckNo: 2358,

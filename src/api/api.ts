@@ -10,7 +10,7 @@ const api = axios.create({
 api.interceptors.request.use(
   (config: any) => {
     const token = getLocalStorage("token");
-    const companyId = sessionStorage.getItem("companyId");
+    const companyId = getLocalStorage("companyId");
     config.headers["Authorization"] = `Bearer ${token}`; // ! here is to disable authorization
     config.headers["companyId"] = companyId;
     config.headers["Content-Type"] = "application/json";

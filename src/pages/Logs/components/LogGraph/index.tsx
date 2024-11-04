@@ -7,7 +7,12 @@ import { ILog } from "@/types/log.type";
 import useTimeZone from "@/hooks/useMomentZone";
 import "rc-slider/assets/index.css";
 import { getDurationDate, parseUnix } from "@/utils";
-
+export interface Cycle {
+  break: number;
+  cycle: number;
+  drive: number;
+  shift: number;
+}
 export interface IGraph {
   data?: ILog[];
   setHoveredId?: ISetState<string | null>;
@@ -17,7 +22,8 @@ export interface IGraph {
   afterRangeChange?: (val: any, item: any) => void;
   initialTime?: number;
   isFetching?: boolean;
-  filterDrawStatus?:any
+  filterDrawStatus?: any;
+  cycle?: Cycle;
 }
 
 const Graph: React.FC<IGraph> = ({

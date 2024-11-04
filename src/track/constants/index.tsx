@@ -567,7 +567,7 @@ export const TrackingsMapItem = [
 
 // tab header
 export const LogsDriverDataHeader = [
-  { header: "ID", accessor: "id", id: 1 },
+  { header: "ID", accessor: "_id", id: 1 },
   { header: "Date", accessor: "date", id: 2 },
   { header: "Truck no", accessor: "truckNo", id: 3 },
   { header: "Status", accessor: "status", id: 4 },
@@ -806,37 +806,10 @@ export const DriversWeek = [
   { id: 7, text: "Jan 19 / Fri" },
 ];
 
-
-export const circleDiagram = [
-  {
-    id: 1,
-    title: "Break",
-    color: "#FFAF66",
-    valueData: "8:00",
-    value: 10,
-  },
-  {
-    id: 2,
-    title: "Drive",
-    color: "#32BE61",
-    valueData: "14:00",
-    value: 40,
-  },
-  {
-    id: 3,
-    title: "Shift",
-    color: "#6298EF",
-    valueData: "20:00",
-    value: 50,
-  },
-  {
-    id: 4,
-    title: "Cycle",
-    color: "#5D5E5F",
-    valueData: "50:00",
-    value: 80,
-  },
-];
+export const BREAK_TIME_LIMIT = 60 * 60 * 8;
+export const DRIVE_TIME_LIMIT = 60 * 60 * 11;
+export const SHIFT_TIME_LIMIT = 60 * 60 * 14;
+export const CYCLE_TIME_LIMIT = 60 * 60 * 70;
 
 // MdModeEdit
 

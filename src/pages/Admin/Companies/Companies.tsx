@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { historyPush, setLocalStorage } from "@/utils";
+import { getLocalStorage, historyPush, setLocalStorage } from "@/utils";
 
 import useApi from "@/hooks/useApi";
 
@@ -77,8 +77,10 @@ const Companies: React.FC = () => {
     try {
       setPageLoading(true);
       const data = await Company(id);
-      sessionStorage.setItem("companyId", id);
-      sessionStorage.setItem("company", JSON.stringify(data));
+      // sessionStorage.setItem("companyId", id);
+      // sessionStorage.setItem("company", JSON.stringify(data));
+      setLocalStorage("companyId", id);
+      setLocalStorage("company", JSON.stringify(data));
       setCompany(data);
       await historyPush(`/`);
     } catch (err) {

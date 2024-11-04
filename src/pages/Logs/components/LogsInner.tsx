@@ -25,6 +25,14 @@ import { DriversForm } from "@/track/components/shared/drivers-form";
 import { TripPlanner } from "@/track/components/shared/trip-planner";
 import { innerTable } from "@/track/utils/mapData";
 import { setPageLoading } from "@/track/utils/dispatch";
+import { useWeekData } from "@/track/hooks/use-data-piker";
+import { WeekData } from "@/track/components/shared/drivers-header/drivers-header";
+import moment from "moment";
+import { setWeekData } from "@/store/slices/company-slice";
+import LogsHead from "./LogHead";
+import LogActions from "./LogActions";
+import { Badge } from "antd";
+import { ILog } from "@/track/types";
 
 const LogsInner: React.FC = () => {
   const {
@@ -81,21 +89,41 @@ const LogsInner: React.FC = () => {
   //   }
   // }, [checkbox1, checkbox2]);
 
+  const date = moment(time).format("LLLL");
+  const weekData: WeekData[] = useWeekData(date);
   useEffect(() => {
     if (!!driverData?.data?.companyTimeZone) {
       dispatch(setCompanyTimeZone(driverData?.data?.companyTimeZone));
     }
+    dispatch(setWeekData(weekData));
   }, []);
 
   const tableData = innerTable(logs ? logs : []);
   // console.log(`driverData?.data`, driverData?.data?.companyTimeZone); //companyTimeZone
-  // console.log(logs);
+  const [TableLog, setLogs] = useState(tableData);
+  useEffect(() => {
+    setLogs(tableData);
+  }, [tableData]);
   setPageLoading(isFetching);
   const driverFullName: string | undefined = ` ${
     driverData?.data ? driverData?.data.firstName : ""
   }  ${driverData?.data ? driverData?.data.lastName : ""}`;
 
   const driverPhone = driverData?.data ? driverData?.data.phone : "";
+  const handleEditClick = (log: any) => {
+    console.log(log);
+
+    const rowIndex = logs.findIndex((item) => item._id === log);
+    const logData = logs.find((item) => item._id === log);
+    setCurrentLog(logData);
+    // console.log(`currentLog`, logs, log);
+    // @ts-ignore
+
+    const newData = [...logs];
+    newData.splice(rowIndex + 1, 0, log);
+    const data = innerTable(logs ? logs : []);
+    setLogs(data);
+  };
   return (
     <Main>
       <div
@@ -103,7 +131,14 @@ const LogsInner: React.FC = () => {
         style={{ pointerEvents: disableActions ? "none" : "all" }}
       >
         <DriversHeader fullName={driverFullName} phone={driverPhone} />
+        {/* <LogsHead
+          driverData={driverData?.data ? driverData?.data : []}
+          initialTime={time}
+          cycle={logData?.cycle}
+          logs={logs}
+        /> */}
         {/* <LogActions/> */}
+
         <Diagrams
           filterDrawStatus={filterDrawStatus(logs)}
           data={filterDrawStatus(logs)}
@@ -114,6 +149,7 @@ const LogsInner: React.FC = () => {
           afterRangeChange={afterRangeChange}
           isFetching={isFetching}
           initialTime={time / 1000}
+          cycle={logData?.cycle}
         />
 
         {/* <MultiDayGraph /> */}
@@ -125,16 +161,17 @@ const LogsInner: React.FC = () => {
             )}
           </div>
           <CustomTable
-            data={tableData}
+            data={TableLog}
             columns={driversTableHeader}
             copyId={5}
+            onClick={handleEditClick}
           />
         </div>
       </div>
 
       <DriversForm />
 
-      <TripPlanner />
+      {/* <TripPlanner /> */}
     </Main>
   );
 };

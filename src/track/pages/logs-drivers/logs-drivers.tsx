@@ -13,6 +13,8 @@ export function LogsDrivers() {
     limit: 1000,
   });
   const driversData = companyDrivers(data ? data.data.data : []);
+  console.log(driversData);
+
   const driversInfoHandler = (id: string) => {
     setLocalStorage("driverId", id);
     historyPush(`inner/${id}`);
