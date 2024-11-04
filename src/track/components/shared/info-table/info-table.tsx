@@ -1,6 +1,6 @@
 import { CompanyData, InfoTableData, UserData } from "@/track/types";
 import { Flex } from "../drivers-header/drivers-header-styled";
-import { Card, CardsTop, CustomFlex } from "./info-table-styled";
+import { Card, CardsTop, CustomFlex, Img } from "./info-table-styled";
 
 import { Text } from "@/track/constants";
 
@@ -57,7 +57,7 @@ export const InfoTable = ({
             return (
               <div key={ind}>
                 <Flex $gap="8px" $align="center">
-                  {rowData?.img && <img src={rowData.img} alt="" />}
+                  {rowData?.img && <Img src={rowData.img} alt="" />}
                   <Text
                     color={
                       rowData?.label === "Active"

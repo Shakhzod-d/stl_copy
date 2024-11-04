@@ -139,7 +139,7 @@
           .rc-virtual-list-holder-inner {
                .ant-select-item-option {
                     border-radius: 20px;
-                    color: $gray1;
+                    color: red;
                     padding: 8px 16px;
                     transition: $theme;
                     &-content {
@@ -153,7 +153,7 @@
                     // }
                     &-selected {
                          background-color: rgba($color: $primary, $alpha: 0.2) !important;
-                         // color: $primary !important;
+                         color: black !important;
                     }
                     &:not(:frist-child) {
                          margin-top: 2px;

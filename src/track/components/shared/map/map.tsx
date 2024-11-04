@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import "leaflet-routing-machine";
-import "leaflet-routing-machine/dist/leaflet-routing-machine.css"; 
+import "leaflet-routing-machine/dist/leaflet-routing-machine.css";
 import { useSelector } from "react-redux";
 import { Maps, MapWrapper } from "./map-styled";
 import { RootState } from "@/store";
@@ -97,15 +97,23 @@ export function Map({ mapData, activeId, height }: Props) {
 
       L.marker([activeTruck.lat, activeTruck.lng], { icon: startEndIcon })
         .addTo(map)
-        .bindPopup(`<strong>Start Point</strong><br>Truck: ${activeTruck.name}`);
+        .bindPopup(
+          `<strong>Start Point</strong><br>Truck: ${activeTruck.name}`
+        );
 
-      L.marker([activeTruck.destLat, activeTruck.destLng], { icon: startEndIcon })
+      L.marker([activeTruck.destLat, activeTruck.destLng], {
+        icon: startEndIcon,
+      })
         .addTo(map)
-        .bindPopup(`<strong>End Point</strong><br>Destination: ${activeTruck.destination}`);
+        .bindPopup(
+          `<strong>End Point</strong><br>Destination: ${activeTruck.destination}`
+        );
 
       L.marker([currentLocation.lat, currentLocation.lng], { icon: driverIcon })
         .addTo(map)
-        .bindPopup(`<strong>${activeTruck.name}</strong><br>Status: ${activeTruck.status}<br>Address: ${activeTruck.address}`);
+        .bindPopup(
+          `<strong>${activeTruck.name}</strong><br>Status: ${activeTruck.status}<br>Address: ${activeTruck.address}`
+        );
 
       return () => {
         map.remove();

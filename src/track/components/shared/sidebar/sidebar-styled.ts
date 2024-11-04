@@ -94,6 +94,9 @@ export const TabBtn = styled.div<{ $active?: boolean }>`
   * {
     cursor: pointer;
   }
+  &:hover {
+    color: #FC973A !important;
+  }
 `;
 export const BtnWrap = styled.div`
   padding: 15px 20px;

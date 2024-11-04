@@ -1,93 +1,63 @@
 import TruckLoader from "@/components/loaders/TruckLoader";
-
-// import { Badge, Checkbox } from "antd";
-// import LogActions from "./LogActions";
 import LogCorrection from "./LogCorrection";
-// import LogGraph from "./LogGraph";
-// import LogHead from "./LogHead";
-// import LogTable from "./LogTable";
-import { useLogsInnerContext } from "./LogsInner.context";
-// import TripPlanner from "./TripPlanner";
 
-import MultiDayGraph from "./MultiDayGraph/container/MultiDayGraph";
+import { useLogsInnerContext } from "./LogsInner.context";
+
 import { useEffect, useState } from "react";
-import { CheckboxChangeEvent } from "antd/lib/checkbox";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "@/store";
+
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "@/store";
 import { setCompanyTimeZone } from "@/store/slices/logSlice";
-// import LogForm from "./LogForm";
-// import { Recap } from "./Recap";
+
 import { DriversHeader } from "@/track/components/shared/drivers-header";
 import { Diagrams } from "@/track/components/shared/diagrams";
 import { CustomTable } from "@/track/components/shared/custom-table";
-import { driversData, driversTableHeader, Main } from "@/track/constants";
+import { driversTableHeader, Main } from "@/track/constants";
 import { DriversForm } from "@/track/components/shared/drivers-form";
-import { TripPlanner } from "@/track/components/shared/trip-planner";
-import { innerTable } from "@/track/utils/mapData";
+
+import { innerTable, LogsFormMap } from "@/track/utils/mapData";
 import { setPageLoading } from "@/track/utils/dispatch";
 import { useWeekData } from "@/track/hooks/use-data-piker";
 import { WeekData } from "@/track/components/shared/drivers-header/drivers-header";
 import moment from "moment";
 import { setWeekData } from "@/store/slices/company-slice";
-import LogsHead from "./LogHead";
-import LogActions from "./LogActions";
-import { Badge } from "antd";
-import { ILog } from "@/track/types";
+import { TripPlanner } from "@/track/components/shared";
+import useApi from "@/hooks/useApi";
+import { getLocalStorage } from "@/utils";
+import { FormData, LogsFormData } from "@/types/log.type";
 
 const LogsInner: React.FC = () => {
   const {
     state: {
-      disableActions, //----------------> false
-      // ... (other state variables)
-      // Include other variables here
-      currentLog, //-------null
-      hoveredId, //-----------------------> 668978a6b53c69bda65551ae
-      isFetching, //----------------------->false
+      disableActions,
+
+      currentLog,
+      hoveredId,
+      isFetching,
       logData,
       logs,
-      log,
+
       time,
       driverData,
-      columns,
-      ids,
-      // ... (include other variables here)
     },
     actions: {
       afterRangeChange,
       setHoveredId,
       filterDrawStatus,
       setCurrentLog,
-      setIds,
+      // setIds,
     },
   } = useLogsInnerContext();
-  // const [checkbox1, setCheckbox1] = useState(false);
-  // const [checkbox1Active, setCheckbox1Active] = useState(false);
-  // const [checkbox2, setCheckbox2] = useState(false);
-  // const [checkbox2Active, setCheckbox2Active] = useState(false);
-  const s = useSelector<RootState>((s) => s.log);
+
   const dispatch = useDispatch<AppDispatch>();
+  const driverId = getLocalStorage("driverId");
+  const { data } = useApi(`/mainInfo?driverId=${driverId}&date=1730368800`);
+  // console.log(data);
 
-  // const handleCheckbox1Change = (e: CheckboxChangeEvent) => {
-  //   setCheckbox1(e.target.checked);
-  //   setCheckbox1Active(e.target.checked);
-  // };
 
-  // const handleCheckbox2Change = (e: CheckboxChangeEvent) => {
-  //   setCheckbox2(e.target.checked);
-  //   setCheckbox2Active(e.target.checked);
-  // };
-
-  // useEffect(() => {
-  //   if (checkbox1 && checkbox1Active) {
-  //     setIds((pre) => ({ ...pre, _id1: currentLog?._id as string }));
-  //     setCheckbox1Active(false);
-  //   }
-
-  //   if (checkbox2 && checkbox2Active) {
-  //     setIds((pre) => ({ ...pre, _id2: currentLog?._id as string }));
-  //     setCheckbox2Active(false);
-  //   }
-  // }, [checkbox1, checkbox2]);
+  const logsFormData: FormData[] | [] = LogsFormMap(
+    data?.data ? data.data : {}
+  );
 
   const date = moment(time).format("LLLL");
   const weekData: WeekData[] = useWeekData(date);
@@ -98,26 +68,23 @@ const LogsInner: React.FC = () => {
     dispatch(setWeekData(weekData));
   }, []);
 
-  const tableData = innerTable(logs ? logs : []);
-  // console.log(`driverData?.data`, driverData?.data?.companyTimeZone); //companyTimeZone
-  const [TableLog, setLogs] = useState(tableData);
+  const [TableLog, setLogs] = useState(innerTable(logs || []));
+
   useEffect(() => {
-    setLogs(tableData);
-  }, [tableData]);
+    if (logs) {
+      setLogs(innerTable(logs));
+    }
+  }, [logs]);
   setPageLoading(isFetching);
-  const driverFullName: string | undefined = ` ${
-    driverData?.data ? driverData?.data.firstName : ""
-  }  ${driverData?.data ? driverData?.data.lastName : ""}`;
+  const driverFullName: string = `${driverData?.data?.firstName || ""} ${
+    driverData?.data?.lastName || ""
+  }`;
 
-  const driverPhone = driverData?.data ? driverData?.data.phone : "";
+  const driverPhone: string = driverData?.data?.phone || "";
   const handleEditClick = (log: any) => {
-    console.log(log);
-
     const rowIndex = logs.findIndex((item) => item._id === log);
     const logData = logs.find((item) => item._id === log);
     setCurrentLog(logData);
-    // console.log(`currentLog`, logs, log);
-    // @ts-ignore
 
     const newData = [...logs];
     newData.splice(rowIndex + 1, 0, log);
@@ -131,14 +98,6 @@ const LogsInner: React.FC = () => {
         style={{ pointerEvents: disableActions ? "none" : "all" }}
       >
         <DriversHeader fullName={driverFullName} phone={driverPhone} />
-        {/* <LogsHead
-          driverData={driverData?.data ? driverData?.data : []}
-          initialTime={time}
-          cycle={logData?.cycle}
-          logs={logs}
-        /> */}
-        {/* <LogActions/> */}
-
         <Diagrams
           filterDrawStatus={filterDrawStatus(logs)}
           data={filterDrawStatus(logs)}
@@ -152,7 +111,6 @@ const LogsInner: React.FC = () => {
           cycle={logData?.cycle}
         />
 
-        {/* <MultiDayGraph /> */}
         {(isFetching || disableActions) && <TruckLoader />}
         <div>
           <div id="box">
@@ -169,9 +127,9 @@ const LogsInner: React.FC = () => {
         </div>
       </div>
 
-      <DriversForm />
+      <DriversForm LogForm={logsFormData ? logsFormData : []} />
 
-      {/* <TripPlanner /> */}
+      <TripPlanner />
     </Main>
   );
 };

@@ -3,10 +3,11 @@ import { Flex } from "../drivers-header/drivers-header-styled";
 import { Block, MapWrap } from "./planner-styled";
 import { IoIosArrowDown } from "react-icons/io";
 import { Map } from "../map";
+import MapTrip from "../map-trip/map-trip";
 
 export const TripPlanner = () => {
   return (
-    <section style={{ marginBottom: "20px" }}>
+    <section style={{ marginBottom: "40px" }}>
       <Flex
         $align="center"
         $justify="space-between"
@@ -54,26 +55,9 @@ export const TripPlanner = () => {
             <Block width="193px">Copy last location</Block>
           </Flex>
         </div>
-        {/* <MapWrap> */}
-        <Map
-          mapData={[
-            {
-              id: 1,
-              name: "Aisyah Clara Riyanti",
-              lat: 38.861, // Qarshi
-              lng: 65.7847,
-              address: "Qarshi, Uzbekistan",
-              status: "61 mph",
-              destination: "Samarqand, Uzbekistan",
-              destLat: 39.6542, // Samarqand
-              destLng: 66.9597,
-              progress: 20, // 20% of the route completed
-            },
-          ]}
-          activeId={1}
-          height="calc(100vh - 613px)"
-        />
-        {/* </MapWrap> */}
+        <MapWrap>
+        <MapTrip />
+        </MapWrap>
       </Flex>
     </section>
   );

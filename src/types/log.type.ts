@@ -203,3 +203,23 @@ export interface LogTableData {
   lat: number;
   lng: number;
 }
+
+export interface LogsFormData {
+  coDriver: null | string | undefined;
+  createdAt: string;
+  documents: string;
+  driver: string;
+  mile: number;
+  notes: string;
+  signature: string;
+  trailers: string;
+  updatedAt: string;
+  vehicleUnit: string;
+  _id: string;
+}
+
+export interface FormData {
+  id: number;
+  title: string;
+  value: unknown;
+}

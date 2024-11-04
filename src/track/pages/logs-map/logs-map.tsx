@@ -102,7 +102,7 @@ export function LogsMap() {
         active={active}
         setActive={setActive}
       />
-      <Map mapData={truckData} activeId={active}  height="calc(100vh - 213px)"/>
+      <Map mapData={truckData} activeId={active}  height="calc(100vh - 195px)"/>
     </Wrapper>
   );
 }
