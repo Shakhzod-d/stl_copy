@@ -105,8 +105,8 @@ export const Sidebar = () => {
   );
 
   const exitFun = () => {
-    sessionStorage.removeItem("company");
-    sessionStorage.removeItem("companyId");
+    removeLocalStorage("company");
+    removeLocalStorage("companyId");
     setCompany(false);
     historyPush("/company");
   };
@@ -119,7 +119,6 @@ export const Sidebar = () => {
   const sidebarData = companyData ? items : filterData;
 
   const dispatch = useDispatch();
-
 
   const tabBtnFun = (key: number) => {
     if (key === 3) {
@@ -138,6 +137,8 @@ export const Sidebar = () => {
   const logoutFun = () => {
     removeLocalStorage("token");
     removeLocalStorage("roleId");
+    removeLocalStorage("company");
+    removeLocalStorage("companyId");
     sessionStorage.clear();
     window.location.reload();
   };

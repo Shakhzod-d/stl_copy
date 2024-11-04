@@ -40,11 +40,7 @@ export const DriversHeader = ({ fullName, phone }: DriverData) => {
   const onDateChange = (value: number, i: number) => {
     if (i !== activeBtn) {
       //     setCurrentLog(null); // TODO: uncomment to delete current log
-      setTime(
-        moment(initialTime)
-          .add(-value + 1, "day")
-          .valueOf()
-      );
+      setTime(moment(value).valueOf());
       setActiveBtn(i);
     }
   };
@@ -119,7 +115,7 @@ export const DriversHeader = ({ fullName, phone }: DriverData) => {
             key={item.value}
             active={activeBtn === i ? "true" : ""}
             type={"primary"}
-            // onClick={() => onDateChange(item.value, i)}
+            onClick={() => onDateChange(item.value, i)}
           >
             {item.text}
           </StyleButton>

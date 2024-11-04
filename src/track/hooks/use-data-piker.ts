@@ -12,10 +12,12 @@ export const useWeekData = (dateStr: string) => {
   const result = datesArray.map((item, i) => {
     const month = item.slice(0, item.indexOf(",")),
       day = item.slice(item.indexOf(",") + 1, item.indexOf("-")),
-      week = item.slice(item.indexOf("-") + 1);
+      week = item.slice(item.indexOf("-") + 1),
+      timestamp = moment(item, "ddd, D-MMM").valueOf();
+
     return {
       text: `${month} ${day}/${week}`,
-      value: i + 1,
+      value: timestamp,
     };
   });
 

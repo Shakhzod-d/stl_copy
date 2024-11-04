@@ -41,7 +41,6 @@ function formattedTime(timestamp: number): string {
 export const mapUserData = (data: ObjType[]) => {
   return data?.map((item) => {
     const role = item["role"] as unknown as ObjType;
-   
 
     const daysBetween = calculateDaysBetweenDates(String(item.updatedAt));
     return {
@@ -136,10 +135,11 @@ export function companyDrivers(data: DriversGet[] = []) {
     };
   });
 
-  const logDrivers = data.map((item) => {
+  const logDrivers = data.map((item, i) => {
+    const fullName = `${i + 1} ${item.firstName} ${item.lastName}`;
     return {
-      id: item?._id,
-      date: "1/1/2020",
+      id: fullName,
+      date: "1/1/2021",
       truckNo: 2358,
       status: item.status,
       location: "835, Trần Hưng Đạo",

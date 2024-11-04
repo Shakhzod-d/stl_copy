@@ -9,8 +9,8 @@ interface State {
   companyId: string | null;
   weekData: WeekData[];
 }
-const boolean = Boolean(sessionStorage.getItem("company"));
-const companyData = sessionStorage.getItem("company");
+const boolean = Boolean(getLocalStorage("company"));
+const companyData = getLocalStorage("company");
 
 const parseData = companyData ? JSON.parse(companyData) : null;
 const initialState: State = {
@@ -31,5 +31,5 @@ export const companySlice = createSlice({
   },
 });
 
-export const { setCompanyData ,setWeekData} = companySlice.actions;
+export const { setCompanyData, setWeekData } = companySlice.actions;
 export default companySlice.reducer;
