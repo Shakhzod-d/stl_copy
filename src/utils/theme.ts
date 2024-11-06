@@ -14,14 +14,15 @@ export const lightTheme = {
   formSelect: "#fff",
   textAriaBg: "#F9F9FA",
   selectClr: " #5D5E5F",
+  selectHover: "#f9f9fa",
 };
 
 export const darkTheme = {
-  body: "#19223f",
-  clr: "#fff",
+  body: "#212121",
+  clr: "#E3E3E3",
   selectClr: " #fff",
-  mainBg: "#000",
-  white: "#19223f",
+  mainBg: "#151515",
+  white: "#212121",
   clrGray: "#fff",
   clrGray2: "gray",
   selectGray: "gray",
@@ -32,4 +33,5 @@ export const darkTheme = {
   customBtn: "#222a4387",
   FormSelect: "#7c7c80d6",
   textAriaBg: "#7c7c80d6",
+  selectHover: "rgba(255, 255, 255, 0.1)",
 };

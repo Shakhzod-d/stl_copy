@@ -16,7 +16,7 @@ export const ProgressBar: FC<Props> = ({ title, value, color }) => {
       <Progress
         type="dashboard"
         percent={value}
-        trailColor={dark ? "gray" : ""}
+        trailColor={dark ? "#fff" : ""}
         width={155}
         gapDegree={70}
         strokeColor={color}

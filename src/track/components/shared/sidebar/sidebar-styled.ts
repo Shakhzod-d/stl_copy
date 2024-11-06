@@ -95,7 +95,7 @@ export const TabBtn = styled.div<{ $active?: boolean }>`
     cursor: pointer;
   }
   &:hover {
-    color: #FC973A !important;
+    color: #fc973a !important;
   }
 `;
 export const BtnWrap = styled.div`
@@ -104,6 +104,7 @@ export const BtnWrap = styled.div`
   gap: 10px;
   height: 48px;
   align-items: center;
+  font-size: 14px;
 `;
 export const PageActive = styled(NavLink)`
   display: block;

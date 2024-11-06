@@ -17,8 +17,7 @@
 }
 
 body {
-  background: #192345;
-  overflow: hidden;
+  
 }
 @keyframes modal {
   0% {
@@ -40,7 +39,6 @@ body {
 .activeClassName {
   color: blue;
   flex-direction: column;
-
 }
 .hover_container {
   position: absolute;
@@ -128,4 +126,11 @@ a {
   font-size: 16px;
   font-weight: 400;
   line-height: 2;
+}
+
+pp {
+  display: grid;
+  grid-template-columns: minmax(100px, 300px);
+  grid-auto-rows: auto;
+  gap: 20px;
 }

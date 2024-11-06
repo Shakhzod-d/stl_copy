@@ -46,7 +46,7 @@ export const Navbar = ({ title, search = true }: Props) => {
         {CompanyData && (
           <User
             className="light user-profile"
-            $background="#FFF"
+            $background={dark ? "#212121" : "#fff"}
             color="#000"
             onClick={exitFun}
           >
@@ -57,7 +57,10 @@ export const Navbar = ({ title, search = true }: Props) => {
             </CompanyIcon>
 
             <div>
-              <h2> {CompanyData && CompanyData?.companyName}</h2>
+              <h2 style={{ color: dark ? "#fff" : "#000" }}>
+                {" "}
+                {CompanyData && CompanyData?.companyName}
+              </h2>
             </div>
           </User>
         )}

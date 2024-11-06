@@ -1,7 +1,8 @@
 import { Form } from "antd";
 import styled from "styled-components";
 export const Container = styled.div<{ $w?: string }>`
-  width: ${({ $w = "200px" }) => $w};
+  width: ${({ $w = "200px" }) => $w} !important;
+  max-width: 300px;
   position: relative;
   // border: 1px solid red;
   margin: 0;
@@ -13,7 +14,7 @@ export const StyleSelect = styled.div`
   border-radius: 10px;
   padding-right: 10px;
   // margin-bottom: 10px;
-  background: #fff;
+  background: ${({ theme }) => theme.white};
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -28,7 +29,7 @@ export const OptionContainer = styled.div<{ $active: boolean; $w?: string }>`
   backdrop-filter: blur(80px);
 
   padding: 10px;
-  background: #fff;
+  background: ${({ theme }) => theme.white};
   display: flex;
   flex-direction: column;
   gap: 5px;
@@ -57,7 +58,7 @@ export const OptionContainer = styled.div<{ $active: boolean; $w?: string }>`
 export const Option = styled.div<{ $active: boolean; $clr?: string }>`
   width: 100%;
   height: 49px;
-  background: ${({ $active }) => ($active ? "blue" : "#f9f9fa")};
+  background: ${({ $active, theme }) => ($active ? "blue" : theme.selectHover)};
   border-radius: 10px;
   padding-left: 15px;
   display: flex;
@@ -65,13 +66,15 @@ export const Option = styled.div<{ $active: boolean; $clr?: string }>`
   align-items: center;
   cursor: pointer;
   font-size: 16px;
-  color: ${({ $active, $clr = "#000000" }) => ($active ? "#fff" : $clr)};
+  color: ${({ theme, $active, $clr = theme.clr }) => ($active ? "#fff" : $clr)};
   user-select: none;
   &:hover {
-    background: #ababb07d;
+    background: ${({ theme }) => theme.selectHover};
+    opacity: 0.8;
   }
 `;
 
 export const Item = styled(Form.Item)`
+  width: 100%;
   margin: 0;
 `;

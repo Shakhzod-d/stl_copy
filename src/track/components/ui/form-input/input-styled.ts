@@ -5,6 +5,7 @@ import styled from "styled-components";
 export const Item = styled(Form.Item)`
   width: 100%;
   background: ${({ theme }) => theme.formSelect};
+  border-radius: 10px;
 `;
 
 export const StyledInput = styled(Input)<{
@@ -15,18 +16,18 @@ export const StyledInput = styled(Input)<{
   $bg?: string;
   $h?: string;
 }>`
-  border-radius: 10px;
-  padding: ${({ $p = "20px" }) => $p};
-  height: ${({ $h = "60px" }) => $h};
+  border-radius: 10px !important;
+  padding: ${({ $p = "1.25rem" }) => $p};
+  height: ${({ $h = "3.75rem" }) => $h};
   width: ${({ $w = "100%" }) => $w};
   color: ${({ $clr = "#000" }) => $clr} !important;
-  background: ${({ $bg="#f9f9fa" }) => $bg};
+  background: ${({ $bg = "#f9f9fa" }) => $bg};
   border: none;
   &:hover {
     background: ${({ $bg = "#f9f9fa" }) => $bg} !important;
   }
-    &.ant-input-affix-wrapper-status-error {
-   background: ${({ $bg = "#f9f9fa" }) => $bg} !important;
+  &.ant-input-affix-wrapper-status-error {
+    background: ${({ $bg = "#f9f9fa" }) => $bg} !important;
   }
   &:focus {
     background: ${({ $bg = "#f9f9fa" }) => $bg} !important;
@@ -34,7 +35,7 @@ export const StyledInput = styled(Input)<{
   &::placeholder {
     color: ${({ $pClr = "#000" }) => $pClr} !important;
   }
-    &.ant-input {
+  &.ant-input {
     background-color: ${({ $bg = "#f9f9fa" }) => $bg} !important;
   }
 `;

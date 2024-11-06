@@ -34,7 +34,7 @@ export const Title = styled.h2`
   font-weight: 500;
   font-size: 32px;
   letter-spacing: -0.02em;
-  color: #000;
+  color: ${({ theme }) => theme.clr};
   margin-bottom: 20px;
 `;
 

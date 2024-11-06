@@ -383,7 +383,7 @@ export const InfoCard = styled.div<{
   align-items:center;
   
   `}
-  padding: ${({ $active }) => ($active ? "25px" : "10px 8px")};
+  padding: 10px 25px;
 
   min-width: ${({ $minW = "300px" }) => $minW};
   height: ${({ $active }) => ($active ? "244px" : "50px")};

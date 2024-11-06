@@ -111,9 +111,7 @@ export const Dashboard = () => {
             // change={refreshHandler}
           />
         </Flex>
-        <CustomBtn  onClick={Reload}>
-          Refresh
-        </CustomBtn>
+        <CustomBtn onClick={Reload}>Refresh</CustomBtn>
       </Day>
 
       <CardWrapper $width={sidebarActive}>
@@ -138,62 +136,62 @@ export const Dashboard = () => {
             <Text>Exclude</Text>
           </CustomRadio>
         </Radio.Group>
-        <Flex $gap={"6px"} $align="end" $wrap={"wrap"}>
-          <Select option={option} placeholder="Name" w="264px" clr="#5D5E5F" />
+        <Flex $gap={"6px"} $w="100%" $align="end">
+          <Select option={option} placeholder="Name" clr="#5D5E5F" w="100%" />
           <Select
             option={option}
             placeholder="Company"
-            w="264px"
             clr="#5D5E5F"
+            w="100%"
           />
           <Select
             option={option}
             placeholder="Violations"
-            w="264px"
             clr="#5D5E5F"
+            w="100%"
           />
-          <Select option={option} placeholder="Date" w="264px" clr="#5D5E5F" />
+          <Select option={option} placeholder="Date" clr="#5D5E5F" w="100%" />
           <Select
             option={option}
             placeholder="Eld connection"
-            w="264px"
             clr="#5D5E5F"
+            w="100%"
           />
-          <Select option={option} placeholder="Cycle" w="264px" clr="#5D5E5F" />
+          <Select option={option} placeholder="Cycle" clr="#5D5E5F" />
 
-          <div>
-            <Text size={12} $mb="10px">
+          <div style={{ width: "100%" }}>
+            <Text size={12} $mb="3px">
               Driver option
             </Text>
             <Select
               option={option}
               placeholder="Cycle"
-              w="264px"
+              w="100%"
               clr="#5D5E5F"
             />
           </div>
-          <div>
-            <Text size={12} $mb="10px">
+          <div style={{ width: "100%" }}>
+            <Text size={12} $mb="3px">
               Driver option
             </Text>
             <Select
+              w="100%"
               clr="#5D5E5F"
               option={[
                 { value: "order", label: "Order By" },
                 { value: "company", label: "Company" },
                 { value: "date", label: "Date" },
               ]}
-              w={"126px"}
               placeholder="Order By"
               // change={onChange}
             />
           </div>
-          <div>
+          <div style={{ width: "100%" }}>
             <Text size={12} $mb="20px"></Text>
             <Select
               clr="#5D5E5F"
               option={[{ value: "direction", label: "direction" }]}
-              w={"126px"}
+              w={"100%"}
               placeholder="Direction"
             />
           </div>

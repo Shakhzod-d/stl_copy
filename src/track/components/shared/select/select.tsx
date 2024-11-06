@@ -7,7 +7,10 @@ import {
   StyleSelect,
 } from "./select-css";
 import { useState } from "react";
-import { Form } from "antd";
+
+import { Text } from "@/track/constants";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store";
 
 interface SelectOption {
   id?: number;
@@ -31,6 +34,7 @@ interface Props {
   font?: string;
 }
 export const Select = (props: Props) => {
+  const dark = useSelector((state: RootState) => state.booleans.darkMode);
   const { option, placeholder, dValue, w, clr, optionW, font } = props;
   const [active, setActive] = useState(false);
   const value = dValue ? dValue : placeholder ? placeholder : undefined;
@@ -52,14 +56,14 @@ export const Select = (props: Props) => {
     >
       <Container $w={w}>
         <StyleSelect onClick={() => setActive((c) => !c)}>
-          <p style={{ color: clr, fontWeight:font }}>
+          <Text $font={font} color={clr}>
             {typeof defaultValue == "string"
               ? defaultValue
               : defaultValue?.label}
-          </p>
-          <IoIosArrowDown />
+          </Text>
+          <IoIosArrowDown color={dark ? "#fff" : "#000"} />
         </StyleSelect>
-        <OptionContainer $active={active} $w={optionW}>
+        <OptionContainer $active={active} $w={optionW ? optionW : w}>
           {option.map((item) => {
             const isActive =
               typeof defaultValue !== "string"

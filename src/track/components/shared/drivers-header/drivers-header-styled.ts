@@ -88,3 +88,14 @@ export const Flex = styled.div<{
   margin: ${({ $m = "0" }) => $m};
   flex-direction: ${({ $vertical }) => ($vertical ? "column" : "")};
 `;
+
+export const StyleFlex = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: end;
+  gap: 6px;
+
+  @media (max-width: 1500px) {
+    flex-wrap: wrap;
+  }
+`;

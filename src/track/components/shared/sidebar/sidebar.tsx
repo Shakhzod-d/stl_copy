@@ -199,7 +199,7 @@ export const Sidebar = () => {
               >
                 <BtnWrap>
                   <Icon />
-                  {active && <p>{item.label}</p>}
+                  {active && <p style={{fontSize:"0.938rem"}}>{item.label}</p>}
                 </BtnWrap>
 
                 {!active ||

@@ -38,11 +38,22 @@ interface TableProps {
   copyId?: number;
   pagination?: true | false;
   pTotal?: number;
+  font?: string;
+  fontId?: number;
 }
 
 const status = ["sb", "off", "dr", "on"];
 export const CustomTable = (props: TableProps) => {
-  const { columns, data, onClick, copyId = 0, pagination, pTotal } = props;
+  const {
+    columns,
+    data,
+    onClick,
+    copyId = 0,
+    pagination,
+    pTotal,
+    font,
+    fontId,
+  } = props;
   const [PopupActive, setPopupActive] = useState<
     number | null | string | undefined
   >(null);
@@ -129,6 +140,7 @@ export const CustomTable = (props: TableProps) => {
                         ? "table_hover_elm"
                         : ""
                     }
+                    $font={fontId === column.id ? font : ""}
                     key={column.accessor}
                     color={colorFun(
                       row[column?.accessor]?.valueOf().toString().toLowerCase(),

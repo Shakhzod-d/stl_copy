@@ -26,6 +26,7 @@ export const TableRow = styled.tr`
   padding: 25px;
   background: ${(props) => props.theme.white};
   position: relative;
+  font-weight: 400;
   height: 77px;
 
   &:not(:last-child) {
@@ -33,15 +34,17 @@ export const TableRow = styled.tr`
   }
 `;
 export const HoverContainer = styled.div``;
-export const TableData = styled.td<{ color: string | number }>`
-  padding: 10px;
+export const TableData = styled.td<{ color: string | number; $font?: string }>`
+  padding: 20px 25px;
   // background: #ddd;
   border-bottom: 6px solid ${(props) => props.theme.mainBg};
   text-align: left;
   font-size: 16px;
   color: ${({ color }) => color};
   position: relative;
+  font-weight: ${({ $font = "400" }) => $font};
   cursor: pointer;
+  // color: red;
   &:first-child {
   }
 `;
