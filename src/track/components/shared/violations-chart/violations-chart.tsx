@@ -34,7 +34,7 @@ export const ViolationsChart = () => {
                   width={22}
                   strokeWidth={22}
                   showInfo={false}
-                  trailColor={dark ? "gray" : ""}
+                  trailColor={dark ? "#fff" : ""}
                   strokeColor={"#EF3E2D"}
                   />
                 <ResValue>2 ( 20% )</ResValue>
@@ -47,7 +47,7 @@ export const ViolationsChart = () => {
                   width={22}
                   strokeWidth={22}
                   showInfo={false}
-                  trailColor={dark ? "gray" : ""}
+                  trailColor={dark ? "#fff" : ""}
                   strokeColor={"#FC973A"}
                   />
                 <ResValue>8 ( 80% )</ResValue>

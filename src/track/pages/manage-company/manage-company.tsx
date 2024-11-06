@@ -11,19 +11,23 @@ import { FaPlus } from "react-icons/fa6";
 import { historyPush } from "@/utils";
 import { Flex } from "@/track/components/shared/drivers-header/drivers-header-styled";
 import { ManageUserModal } from "../company-users/modals/manage-user-modal";
+import { AddKey } from "../api-keys/modal/addKey";
 interface Props {
   children: ReactNode;
 }
 export const ManageCompany: React.FC<Props> = ({ children }) => {
   const { pathname } = useLocation();
   const [open, setOpen] = useState(false);
+  const [keysModal, setKeysModal] = useState(false);
   useEffect(() => {
-    if (String(pathname.endsWith("/company"))) historyPush("/main/manage-company/company");
+    if (String(pathname.endsWith("/company")))
+      historyPush("/main/manage-company/company");
   }, []);
 
   return (
     <Main>
       <ManageUserModal open={open} setOpen={setOpen} />
+      {keysModal && <AddKey open={keysModal} setOpen={setKeysModal} />}
       <Navbar title="Manage Company" />
       {/* <DriversStatistics /> */}
 
@@ -43,6 +47,11 @@ export const ManageCompany: React.FC<Props> = ({ children }) => {
         {pathname === "/main/manage-company/users" && (
           <AddBtn type="primary" onClick={() => setOpen(true)}>
             <FaPlus /> Add
+          </AddBtn>
+        )}
+        {pathname === "/main/manage-company/keys" && (
+          <AddBtn type="primary" onClick={() => setKeysModal(true)}>
+            Add Key
           </AddBtn>
         )}
       </Flex>

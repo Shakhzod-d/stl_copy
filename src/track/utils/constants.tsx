@@ -1,4 +1,3 @@
-
 import { Button, Checkbox, Modal } from "antd";
 
 import styled, { keyframes, css } from "styled-components";
@@ -34,6 +33,12 @@ export const Text = styled.p<{
   line-height: ${({ $line }) => $line};
 `;
 
+export const Body = styled.div`
+  width: 100%;
+  height: 100vh;
+  background: ${({ theme }) => theme.body};
+  overflow: hidden;
+`;
 export const driversData = [
   {
     id: "0",
@@ -88,7 +93,7 @@ export const driverColumns = [
     accessor: "app_version",
     id: 7,
   },
-  
+
   {
     header: "Activated",
     accessor: "activated",
@@ -139,7 +144,8 @@ export const CustomButton = styled(Button)<{
 
 export const CustomModal = styled(Modal)`
   .ant-modal-close-x {
- color: ${({ theme }) => theme.clr}!important; // X tugmasi rangini qizil qilish
+    color: ${({ theme }) =>
+      theme.clr}!important; // X tugmasi rangini qizil qilish
   }
   .ant-modal-content {
     background-color: ${({ theme }) => theme.white} !important;
