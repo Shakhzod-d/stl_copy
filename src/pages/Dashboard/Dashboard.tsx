@@ -10,7 +10,7 @@ import { getLocalStorage, setLocalStorage } from "../../utils/index";
 import { useDispatch, useSelector } from "react-redux";
 import { BiCalendarStar } from "react-icons/bi";
 import { IoIosArrowDown } from "react-icons/io";
-import { Radio, Select } from "antd";
+import { Radio } from "antd";
 import {
   dashboardTableHeader,
   dataSource,
@@ -38,6 +38,7 @@ import { RootState } from "@/store";
 import { dashboardProgressActive } from "@/store/slices/booleans-slice";
 import { autoRefresh } from "@/track/utils/method";
 import { Flex } from "@/track/components/shared/drivers-header/drivers-header-styled";
+import { Select } from "@/track/components/shared/select";
 // import useApi from "../../hooks/useApi";
 // import { dashboardData } from "../../utils/mapData";
 
@@ -94,23 +95,25 @@ export const Dashboard = () => {
     <Main>
       <Navbar title="Dashboard" />
       <Day>
-        <Flex $gap={"5px"}>
-          <CustomSelect
-            option={refreshSelect}
-            dValue={reloadStatus}
-            width="170px"
-            // placeholder="Auto Refresh off"
-            change={refreshHandler}
-          />
-        </Flex>
-        <CustomBtn type="primary" onClick={Reload}>
-          Refresh
-        </CustomBtn>
         <Flex $gap={"20px"}>
           <CustomBtn>
             <BiCalendarStar size={30} />
           </CustomBtn>
         </Flex>
+        <Flex $gap={"5px"}>
+          <Select
+            option={refreshSelect}
+            dValue={refreshSelect[0]}
+            optionW="220px"
+            font="600"
+            w="170px"
+            // placeholder="Auto Refresh off"
+            // change={refreshHandler}
+          />
+        </Flex>
+        <CustomBtn  onClick={Reload}>
+          Refresh
+        </CustomBtn>
       </Day>
 
       <CardWrapper $width={sidebarActive}>
@@ -136,61 +139,74 @@ export const Dashboard = () => {
           </CustomRadio>
         </Radio.Group>
         <Flex $gap={"6px"} $align="end" $wrap={"wrap"}>
-          <CustomSelect option={option} placeholder="Name" width="200px" />
-          <CustomSelect option={option} placeholder="Company" width="200px" />
-          <CustomSelect
+          <Select option={option} placeholder="Name" w="264px" clr="#5D5E5F" />
+          <Select
+            option={option}
+            placeholder="Company"
+            w="264px"
+            clr="#5D5E5F"
+          />
+          <Select
             option={option}
             placeholder="Violations"
-            width="200px"
+            w="264px"
+            clr="#5D5E5F"
           />
-          <CustomSelect option={option} placeholder="Date" width="200px" />
-
-          <CustomSelect
+          <Select option={option} placeholder="Date" w="264px" clr="#5D5E5F" />
+          <Select
             option={option}
             placeholder="Eld connection"
-            width="200px"
+            w="264px"
+            clr="#5D5E5F"
           />
-          <CustomSelect option={option} placeholder="Cycle" />
+          <Select option={option} placeholder="Cycle" w="264px" clr="#5D5E5F" />
 
           <div>
             <Text size={12} $mb="10px">
               Driver option
             </Text>
-            <CustomSelect option={option} placeholder="Cycle" />
+            <Select
+              option={option}
+              placeholder="Cycle"
+              w="264px"
+              clr="#5D5E5F"
+            />
           </div>
           <div>
             <Text size={12} $mb="10px">
               Driver option
             </Text>
-            <CustomSelect
+            <Select
+              clr="#5D5E5F"
               option={[
                 { value: "order", label: "Order By" },
                 { value: "company", label: "Company" },
                 { value: "date", label: "Date" },
               ]}
-              width={"126px"}
+              w={"126px"}
               placeholder="Order By"
-              change={onChange}
+              // change={onChange}
             />
           </div>
           <div>
             <Text size={12} $mb="20px"></Text>
-            <CustomSelect
+            <Select
+              clr="#5D5E5F"
               option={[{ value: "direction", label: "direction" }]}
-              width={"126px"}
+              w={"126px"}
               placeholder="Direction"
             />
           </div>
         </Flex>
       </SelectWrapper>
 
-      {selectEvent == "order" ? (
+      {selectEvent === "order" ? (
         <CustomTable columns={dashboardTableHeader} data={dataSource} />
       ) : (
         <OrderTable
-          data={selectEvent == "company" ? companyTable : dateTable}
+          data={selectEvent === "company" ? companyTable : dateTable}
           element={
-            selectEvent == "company" ? companyTableElement : dateTableElement
+            selectEvent === "company" ? companyTableElement : dateTableElement
           }
           selectEvent={selectEvent}
         />

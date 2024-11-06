@@ -24,6 +24,8 @@ export const ViolationsChart = () => {
           <>
             <StyleFlex>
               <ResTitle>Violations Chart</ResTitle>
+              <Flex $gap="20px" $align="center">
+
               <Flex $gap={"6px"} $align="center">
                 <ResText $clr="#EF3E2D">Violations</ResText>
                 <Progress
@@ -34,7 +36,7 @@ export const ViolationsChart = () => {
                   showInfo={false}
                   trailColor={dark ? "gray" : ""}
                   strokeColor={"#EF3E2D"}
-                />
+                  />
                 <ResValue>2 ( 20% )</ResValue>
               </Flex>
               <Flex $gap={"6px"} $align="center">
@@ -47,15 +49,16 @@ export const ViolationsChart = () => {
                   showInfo={false}
                   trailColor={dark ? "gray" : ""}
                   strokeColor={"#FC973A"}
-                />
+                  />
                 <ResValue>8 ( 80% )</ResValue>
+                  </Flex>
               </Flex>
             </StyleFlex>
           </>
         )}
         {active && (
           <>
-            <Text $mb="30px">Violations Chart</Text>
+            <Text $mb="30px" size={16} $font="600" $line="19.09px">Violations Chart</Text>
             <div
               style={{
                 display: "flex",

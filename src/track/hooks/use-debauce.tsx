@@ -1,5 +1,4 @@
-import { useState, useEffect } from 'react';
-
+import { useState, useEffect } from "react";
 
 export function useDebounce<T>(value: T, delay: number): T {
   const [debouncedValue, setDebouncedValue] = useState(value);
@@ -9,36 +8,36 @@ export function useDebounce<T>(value: T, delay: number): T {
       setDebouncedValue(value);
     }, delay);
 
-
     return () => {
       clearTimeout(handler);
     };
-  }, [value, delay]); 
+  }, [value, delay]);
 
   return debouncedValue;
 }
 
-
-
-
-
 // Rasm yuklash, almashtirish va o'chirish uchun asosiy funksiya
-export const useImageHandler = () => {
-  const [image, setImage] = useState<string | null>(null);
 
-  // Rasmni yuklash yoki almashtirish funksiyasi
+// useImageUpload hook
+export const useImageUpload = () => {
+  const [image, setImage] = useState<string | null>(null);
+  const [file, setFile] = useState<File | null>(null);
+
+  // Faylni tanlash va rasmni yuklash uchun funksiyalar
   const handleImageUpload = () => {
-    const fileInput = document.createElement('input');
-    fileInput.type = 'file';
-    fileInput.accept = 'image/*';
+    const fileInput = document.createElement("input");
+    fileInput.type = "file";
+    fileInput.accept = "image/*";
     fileInput.onchange = () => {
-      const file = fileInput.files?.[0];
-      if (file) {
+      const selectedFile = fileInput.files?.[0];
+      if (selectedFile) {
+        setFile(selectedFile); // Faylni saqlash
+
         const reader = new FileReader();
         reader.onload = () => {
-          setImage(reader.result as string);
+          setImage(reader.result as string); // Faylni Data URL shaklida olish
         };
-        reader.readAsDataURL(file);
+        reader.readAsDataURL(selectedFile);
       }
     };
     fileInput.click();
@@ -47,8 +46,8 @@ export const useImageHandler = () => {
   // Rasmni olib tashlash funksiyasi
   const handleRemoveImage = () => {
     setImage(null);
+    setFile(null);
   };
 
-  return { image, handleImageUpload, handleRemoveImage };
+  return { image, file, handleImageUpload, handleRemoveImage };
 };
-

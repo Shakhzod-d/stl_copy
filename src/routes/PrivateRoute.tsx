@@ -1,4 +1,4 @@
-import React, { ReactNode, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useAuth } from "@/track/hooks/useAuth";
 import { PageLoad } from "@/track/components/ui";
 import { historyPush } from "@/utils";

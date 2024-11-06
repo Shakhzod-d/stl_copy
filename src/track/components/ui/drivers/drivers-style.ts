@@ -10,7 +10,7 @@ export const Item = styled.div`
 export const ItemTitle = styled.p`
   font-weight: 590;
   font-size: 14px;
-  color: ${({theme})=>theme.clrGray};
+  color: ${({ theme }) => theme.clrGray};
   margin-bottom: 5px;
 `;
 
@@ -20,11 +20,11 @@ export const Title = styled.p`
   margin-bottom: 20px;
 `;
 
-export const ActiveCard = styled.div`
+export const ActiveCard = styled.div<{ $active?: boolean }>`
   width: 100%;
   display: flex;
-  gap: 10px;
-  justify-content: space-between;
+  gap: 25px;
+  justify-content: ${({ $active }) => ($active ? "space-between" : "end")};
 `;
 
 export const BoldNum = styled.b`

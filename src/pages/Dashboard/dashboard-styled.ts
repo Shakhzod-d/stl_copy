@@ -85,7 +85,8 @@ export const SelectWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
-  margin-bottom: 20px;
+  // margin-bottom: 20px;
+  // border:1px solid red
 `;
 export const TableWrapper = styled.div`
   height: calc(100vh - 505px);

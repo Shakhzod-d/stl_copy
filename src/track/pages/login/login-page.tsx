@@ -11,11 +11,11 @@ import {
 import { errorMessage } from "@/utils/message";
 import { useState } from "react";
 
-
 import {
   BoldText,
   Description,
   FromWrapper,
+  Image,
   Label,
   Main,
   StyledForm,
@@ -42,7 +42,7 @@ export const Login = () => {
         setLoading(false);
         const { data } = res;
         setLocalStorage("token", data?.token);
-      
+
         setUserData(data);
         setLocalStorage("roleId", data?.role?.roleId);
         // setLocalStorage("companyId", "66fcf8f52ccf4ba8e6b32c36");
@@ -61,19 +61,12 @@ export const Login = () => {
   };
   return (
     <Main>
-      <img
-        src="assets/images/loginBg.png"
-        alt="photo"
-        style={{ width: "50%", borderRadius: "20px" }}
-      />
+      <Image>
+        <img src="assets/icons/login-logo.svg" alt="" />
+      </Image>
       {contextHolder}
       <FromWrapper>
         <StyledForm autoComplete="off" onFinish={onFinish}>
-          <img
-            src="assets/icons/logo.svg"
-            alt="logo"
-            style={{ marginBottom: "20px" }}
-          />
           <Label htmlFor="">Login</Label>
           <Form.Item
             name={"email"}

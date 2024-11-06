@@ -12,8 +12,9 @@ import { validatePhoneNumber } from "../../utils/method";
 import { Flex } from "@/track/components/shared/drivers-header/drivers-header-styled";
 
 import useApiMutation from "@/hooks/useApiMutation";
-import { useImageHandler } from "@/track/hooks/use-debauce";
-
+import api from "@/api";
+import { useImageUpload } from "@/track/hooks/use-debauce";
+import { useMutation } from "react-query";
 
 interface CompanyData {
   [key: string]: number | boolean | string;
@@ -22,83 +23,39 @@ interface CompanyData {
 export const TabCompany = () => {
   const companyMutation = useApiMutation("/company", { hideMessage: true });
 
-  const { image, handleImageUpload, handleRemoveImage } = useImageHandler();
-  // Append the file with the key 'file'import axios from "axios";
-
-
-  // const submitImage = async (imageUrl: string) => {
-  //   try {
-  //     const formData = new FormData();
-
-  //     // Rasm URL'sini FormData'ga qo'shamiz
-  //     formData.append("file", imageUrl); // Rasm URL'sini qo'shish
-
-  //     // So‘rovni backend'ga jo‘natamiz
-  //     const backendResponse = await api.post("/company/logo", formData, {
-  //       headers: {
-  //         Authorization: `Bearer ${companyId}`, // Kerakli header
-  //         "Content-Type": "multipart/form-data", // Mavjud bo'lishi kerak
-  //       },
-  //     });
-
-  //     // Konsolda backend javobini ko'rsatamiz
-  //     console.log("backendResponse:", backendResponse);
-
-  //     if (backendResponse.data.success) {
-  //       // Yuklangan rasmning to'liq URL manzilini yarating
-  //       const uploadedImageUrl = `https://unityapi.roundedteam.uz/public/uploads/companyLogos/${backendResponse.data.data}`;
-  //       console.log("Rasm yuklandi:", uploadedImageUrl);
-
-  //       // Rasmdan foydalangan holda img tegini yarating yoki ko'rsating
-  //       const img = document.createElement("img");
-  //       img.src = uploadedImageUrl;
-  //       img.alt = "Yuklangan Rasm";
-  //       img.width = 200; // O'lchamini kerakli qiymatda o'zgartiring
-  //       document.body.appendChild(img);
-  //     } else {
-  //       console.error(
-  //         "Yuklashda xatolik yuz berdi:",
-  //         backendResponse.data.message
-  //       );
-  //     }
-  //   } catch (error) {
-  //     console.error("Rasm yuklashda xatolik:", error);
-  //   }
-  // };
-  // const [selectedImage, setSelectedImage] = useState<string | null>(null);
-
-  // // Rasm tanlash uchun funksiya
-  // const handleImageUpload = () => {
-  //   const fileInput = document.createElement("input");
-  //   fileInput.type = "file";
-  //   fileInput.accept = "image/*";
-
-  //   fileInput.onchange = () => {
-  //     const file = fileInput.files?.[0];
-  //     if (file) {
-  //       const reader = new FileReader();
-  //       reader.onload = () => {
-  //         setSelectedImage(reader.result as string);
-  //       };
-  //       reader.readAsDataURL(file);
-  //     }
-  //   };
-
-  //   fileInput.click();
-  // };
-
-  // // Rasmni olib tashlash uchun funksiya
-  // const handleRemoveImage = () => {
-  //   setSelectedImage(null);
-  // };
-
-  // Example: Buni buttonga ishlatish
+  const { image, file, handleImageUpload, handleRemoveImage } =
+    useImageUpload();
 
   const [form] = Form.useForm();
+
+  const submitImage = async (file: File | null) => {
+    if (!file) throw new Error("No file selected");
+
+    const formData = new FormData();
+    formData.append("image", file);
+
+    const response = await api.post("/company/logo", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
+    return response.data;
+  };
 
   const handleReset = () => {
     form.resetFields(); // Formani tozalash
   };
+  const mutation = useMutation(() => submitImage(file), {
+    onSuccess: (res) => {
+      console.log(res);
+      alert("Image uploaded successfully!");
+    },
+    onError: (err: any) => {
+      console.error(err);
+      alert(`Error uploading image: ${err.message}`);
+    },
+  });
 
   const submit = async (data: CompanyData) => {
     const CompanyData = {
@@ -360,11 +317,7 @@ export const TabCompany = () => {
         <Note placeholder="Note" />
       </Form.Item>
       <Flex $justify="end" $gap={"20px"} onClick={handleReset}>
-        <DefaultBtn
-        
-        >
-          cancel
-        </DefaultBtn>
+        <DefaultBtn onClick={() => mutation.mutate()}>cancel</DefaultBtn>
         <PrimaryBtn
           padding="15px 40px"
           htmlType="submit"

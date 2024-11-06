@@ -136,7 +136,7 @@ const mapHistoryLogs = (data: IHistoryLog[]): IHistoryLog[] => {
 
 const mapTableData = (data: any[]) => {
   return data?.map((item, i: number) => {
-    const fullName = `${i} ${item.firstName} ${item.lastName}`;
+    const fullName = `${i+1} ${item.firstName} ${item.lastName}`;
     // console.log(item);
 
     return {

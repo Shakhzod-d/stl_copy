@@ -16,7 +16,8 @@ export const TableElement = styled.table`
 export const TableHeader = styled.th`
   padding: 10px;
   text-align: left;
-  color: ${({ theme }) => theme.clr};
+  font-weight: 500;
+  color: #5d5e5f;
 `;
 
 export const TableRow = styled.tr`
@@ -37,6 +38,7 @@ export const TableData = styled.td<{ color: string | number }>`
   // background: #ddd;
   border-bottom: 6px solid ${(props) => props.theme.mainBg};
   text-align: left;
+  font-size: 16px;
   color: ${({ color }) => color};
   position: relative;
   cursor: pointer;
@@ -136,18 +138,20 @@ export const StatusBadge = styled.span<{
   padding: 5px 10px;
   border-radius: 5px;
   color: ${({ $status }) =>
-    $status == "Intermediate" || $status == "Power Off" || $status == "Power On"
+    $status === "Intermediate" ||
+    $status === "Power Off" ||
+    $status === "Power On"
       ? "#8C8C9B"
       : "#fff"};
   background-color: ${({ $status }) =>
-    $status === "DR" || $status === "ON"
+    $status === "dr" || $status === "on"
       ? "#28a745"
-      : $status === "SB"
+      : $status === "sb"
       ? "#ffc107"
-      : $status == "" ||
-        $status == "Intermediate" ||
-        $status == "Power Off" ||
-        $status == "Power On"
+      : $status === "" ||
+        $status === "Intermediate" ||
+        $status === "Power Off" ||
+        $status === "Power On"
       ? "#fff"
       : "#6c757d"};
 `;
@@ -161,7 +165,7 @@ export const HoverBox = styled.div`
     position: absolute;
     border-left: 30px solid transparent;
     border-right: 30px solid transparent;
-    border-bottom: 30px solid ${({ theme }) => theme.white}; 
+    border-bottom: 30px solid ${({ theme }) => theme.white};
     transform: rotate(180deg);
     border-radius: 20px;
     margin: 20px;

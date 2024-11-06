@@ -18,8 +18,8 @@ export const Drivers = () => {
     <InfoCard $active={active}>
       {active ? (
         <>
-          <Text $mb="60px">Drivers</Text>
-          <ActiveCard>
+          <Text $mb="60px"  size={16} $font="600">Drivers</Text>
+          <ActiveCard $active={active}>
             <Item>
               <FaPowerOff
                 color="#b0b0b9"
