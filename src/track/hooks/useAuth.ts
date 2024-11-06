@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { getLocalStorage, removeLocalStorage } from "@/utils/localStorage";
 import { getUserData } from "@/api/calls/authCall";
-import { AxiosError, AxiosResponse } from "axios";
-import { Obj, ObjType } from "../types/helper.type";
+import {  AxiosResponse } from "axios";
+
 import { historyPush, setUserData } from "@/utils";
 import { IUserData } from "@/types/user.type";
+import { setCompany } from "../utils/dispatch";
 
 export const useAuth = () => {
   const [loading, setLoading] = useState(true);
@@ -30,6 +31,7 @@ export const useAuth = () => {
         removeLocalStorage("roleId");
         removeLocalStorage("companyId");
         setIsAuth(false);
+        setCompany(false);
       } finally {
         setLoading(false);
       }
@@ -40,17 +42,16 @@ export const useAuth = () => {
   return { loading, isAuth };
 };
 const errMessage = ["Unauthorized 1", "Unauthorized"];
-export const useErrAuth = () => {
-  const errFun = (err: AxiosError) => {
-    if (errMessage.includes(err.message)) {
-      removeLocalStorage("token");
-      removeLocalStorage("roleId");
-      removeLocalStorage("company");
-      removeLocalStorage("companyId");
-      return historyPush("/login");
-    } else {
-      return console.log(err.message);
-    }
-  };
-  return { errFun };
+
+export const errFun = (err: any) => {
+  if (errMessage.includes(err.message)) {
+    removeLocalStorage("token");
+    setCompany(false);
+    removeLocalStorage("roleId");
+    removeLocalStorage("company");
+    removeLocalStorage("companyId");
+    return historyPush("/login");
+  } else {
+    return console.log(err.message);
+  }
 };

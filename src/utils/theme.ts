@@ -13,11 +13,13 @@ export const lightTheme = {
   customBtn: "#f3f3f4",
   formSelect: "#fff",
   textAriaBg: "#F9F9FA",
+  selectClr: " #5D5E5F",
 };
 
 export const darkTheme = {
   body: "#19223f",
   clr: "#fff",
+  selectClr: " #fff",
   mainBg: "#000",
   white: "#19223f",
   clrGray: "#fff",

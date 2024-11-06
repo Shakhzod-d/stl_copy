@@ -10,7 +10,7 @@ export const Main = styled.main`
   gap: 5px;
 `;
 export const FromWrapper = styled.section`
-  width: 100%;
+  width: 50%;
   background: #f3f3f4;
   border-radius: 20px;
   display: flex;
@@ -55,4 +55,16 @@ export const Description = styled.p`
   span {
     color: #fc973a;
   }
+`;
+
+export const Image = styled.div`
+  width: 50% !important;
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: url(${"assets/images/loginBg.png"});
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 `;

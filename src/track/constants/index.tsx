@@ -25,12 +25,13 @@ export const Text = styled.p<{
 }>`
   font-weight: ${({ $font }) => $font};
   font-size: ${({ size }) => `${size}px`};
-  letter-spacing: -0.03em;
+  // letter-spacing: -0.03em;
   color: ${({ theme }) => theme.clr};
   color: ${({ color }) => color};
   display: flex;
   margin-bottom: ${({ $mb }) => $mb};
   line-height: ${({ $line }) => $line};
+
 `;
 
 export const driversData = [
@@ -372,7 +373,7 @@ export const InfoCard = styled.div<{
   $minW?: string;
 }>`
   width: 100%;
-  border-radius: 15px;
+  border-radius: 10px;
   ${({ $active }) =>
     !$active &&
     `
@@ -382,7 +383,7 @@ export const InfoCard = styled.div<{
   align-items:center;
   
   `}
-  padding: ${({ $active }) => ($active ? "10px" : "10px 8px")};
+  padding: ${({ $active }) => ($active ? "25px" : "10px 8px")};
 
   min-width: ${({ $minW = "300px" }) => $minW};
   height: ${({ $active }) => ($active ? "244px" : "50px")};

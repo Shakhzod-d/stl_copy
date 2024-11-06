@@ -69,6 +69,7 @@ export const ResText = styled.p<{ $clr?: string }>`
 export const ResValue = styled.p`
   font-size: 15px;
   font-weight: 500;
+  margin-top:2px;
   color: ${({ theme }) => theme.clr};
   @media (max-width: 1685px) {
     font-size: 13px;

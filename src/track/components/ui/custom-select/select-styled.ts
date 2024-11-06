@@ -11,7 +11,7 @@ export const StyledSelect = styled(Select)<Props>`
   // background: ${(props) => props.theme.white} !important;
   .ant-select-selector {
     position: absolute;
-    left:1px;
+    left: 1px;
     border-radius: 10px !important;
     width: ${({ width = "268px" }) => width} !important;
     height: ${({ height = 47 }) => `${height}px`} !important;
@@ -28,12 +28,14 @@ export const StyledSelect = styled(Select)<Props>`
     width: 15px !important;
     height: 12px !important;
     overflow: hidden !important;
-    fill: ${({ theme }) => theme.clr} !important;
+    // fill: ${({ theme }) => theme.clr} !important;
     background: ${(props) => props.theme.white} !important;
 
-    color: ${({ theme }) => theme.clr} !important;
-    font-size: 15px !important;
+    // color: ${({ theme }) => theme.selectClr} !important;
+    color: red !important;
+    font-size: 14px !important;
     height: 10px;
+    font-weight: 400;
   }
 
   .ant-select-dropdown {

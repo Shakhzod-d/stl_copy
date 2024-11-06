@@ -22,7 +22,7 @@ export const OverviewCard = () => {
     <InfoCard $active={active}>
       {active ? (
         <>
-          <Text $font="590" $mb="42px" >
+          <Text $font="600" size={16} $mb="42px" >
             Overview
           </Text>
 

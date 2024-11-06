@@ -104,7 +104,8 @@ export const Sidebar = () => {
     (state: RootState) => state.booleans.sidebarActive
   );
 
-  const exitFun = () => {
+   const exitFun = () => {
+    
     removeLocalStorage("company");
     removeLocalStorage("companyId");
     setCompany(false);
@@ -169,38 +170,20 @@ export const Sidebar = () => {
           </PageBtn>
         )}
 
-        {!companyData ? (
-          <PageBtn
-            onClick={() => setBtnActive(0)}
-            to={"/company"}
-            $active={active}
-          >
-            <HiOutlineBuildingLibrary />
+        <PageBtn
+          onClick={exitFun}
+          to={"/company"}
+          $active={active}
+        >
+          <HiOutlineBuildingLibrary />
 
-            {active && (
-              <>
-                <p>Company</p>{" "}
-                <p style={{ marginLeft: "50px" }}>{data?.data.data.length}</p>
-              </>
-            )}
-          </PageBtn>
-        ) : (
-          <User
-            className="light user-profile"
-            $background="#FFF"
-            color="#000"
-            onClick={exitFun}
-          >
-            <CompanyIcon>
-              <p>{String(companyData?.companyName).slice(0, 1)}</p>
-            </CompanyIcon>
-            {active && (
-              <div>
-                <h2>{companyData?.companyName}</h2>
-              </div>
-            )}
-          </User>
-        )}
+          {active && (
+            <>
+              <p>Company</p>{" "}
+              <p style={{ marginLeft: "50px" }}>{data?.data.data.length}</p>
+            </>
+          )}
+        </PageBtn>
 
         <Description>Menu</Description>
         {sidebarData.map((item) => {

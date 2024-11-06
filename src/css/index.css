@@ -4,9 +4,7 @@
   box-sizing: border-box;
   font-family: "SF Pro Display";
 }
-p {
-  margin: 0;
-}
+
 ::-webkit-scrollbar {
   width: 0;
   height: 0;
@@ -42,6 +40,7 @@ body {
 .activeClassName {
   color: blue;
   flex-direction: column;
+
 }
 .hover_container {
   position: absolute;
