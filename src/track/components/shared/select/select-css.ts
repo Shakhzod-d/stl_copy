@@ -7,7 +7,7 @@ export const Container = styled.div<{ $w?: string }>`
   // border: 1px solid red;
   margin: 0;
 `;
-export const StyleSelect = styled.div`
+export const StyleSelect = styled.div<{ $active: boolean }>`
   width: 100%;
   height: 47px;
   padding-left: 15px;
@@ -19,17 +19,18 @@ export const StyleSelect = styled.div`
   justify-content: space-between;
   align-items: center;
   cursor: pointer;
-
+  ${({ $active }) => ($active ? "border :1px solid #FC973A" : "")};
   user-select: none;
+  color: ${({ theme }) => theme.clr};
 `;
 
 export const OptionContainer = styled.div<{ $active: boolean; $w?: string }>`
   width: ${({ $w = "200px" }) => $w};
-  box-shadow: 0px 10px 60px 0px #0000001a;
+  box-shadow: ${({ theme }) => theme.selectShadow};
   backdrop-filter: blur(80px);
 
   padding: 10px;
-  background: ${({ theme }) => theme.white};
+  background: ${({ theme }) => theme.selectOptionBg};
   display: flex;
   flex-direction: column;
   gap: 5px;

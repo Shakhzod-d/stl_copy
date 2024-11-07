@@ -3,6 +3,7 @@ import {
   Block,
   BtnContainer,
   Flex,
+  Status,
   StyleButton,
   Text,
 } from "./drivers-header-styled";
@@ -34,7 +35,7 @@ export const DriversHeader = ({ fullName, phone }: DriverData) => {
     (state: RootState) => state.company.weekData
   );
   const week_data = arrData.slice().reverse();
-  const [activeBtn, setActiveBtn] = useState(week_data.length-1);
+  const [activeBtn, setActiveBtn] = useState(week_data.length - 1);
   // const dark = useSelector((state: RootState) => state.booleans.darkMode);
 
   const {
@@ -55,7 +56,7 @@ export const DriversHeader = ({ fullName, phone }: DriverData) => {
   const companyId = getLocalStorage("companyId");
   return (
     <div>
-      <Flex $justify="space-between">
+      <Flex $justify="space-between" $m="0 0 15px 0">
         <Flex $gap={"16px"} $align="center">
           <Link to={`/main/logs/drivers`}>
             <Block display="flex" content="center">
@@ -63,48 +64,43 @@ export const DriversHeader = ({ fullName, phone }: DriverData) => {
             </Block>
           </Link>
           <Block display="flex" content="center" $gap={64}>
-            <div>
+            <Flex $gap="17px" $align={"center"}>
               <Text size={20} $font={500}>
                 {fullName}
               </Text>
               <Text size={13} color="#babac1">
                 Phone No: {phone}
               </Text>
-            </div>
+            </Flex>
+
             <Flex $gap={"16px"} $align="center">
-              <Button type="primary" style={{ background: "#FC973A" }}>
-                Sleep
-              </Button>
+              <Status>
+                <p>Sleep</p>
+              </Status>
               <BsAndroid2 size={24} color="#BABAC1" />
-              {/* <img src={ptIcon} alt="" /> */}
+              <img src={"/assets/icons/pt.svg"} alt="" />
             </Flex>
           </Block>
-          <Flex $gap={"6px"}>
-            <Block display="block" width={200}>
-              <div>
-                <Text size={13} color="#babac1">
-                  Worked hours:
-                </Text>
-                <Text $font={700}>No Working hours</Text>
-              </div>
+          <Flex $gap={"6px"} $align="center">
+            <Block display="flex" width={248} $gap={5}>
+              <Text size={15} color="#babac1">
+                Worked hours:
+              </Text>
+              <Text $font={700}>No Working hours</Text>
             </Block>
-            <Block display="block" width={200}>
-              <div>
-                <Text size={13} color="#babac1">
-                  Certified:
-                </Text>
-                <Text $font={700} color="red">
-                  No
-                </Text>
-              </div>
+            <Block display="flex" width={200} $gap={5}>
+              <Text size={15} color="#babac1">
+                Certified:
+              </Text>
+              <Text $font={700} color="red">
+                No
+              </Text>
             </Block>
-            <Block display="block" width={200}>
-              <div>
-                <Text size={10} color="#babac1">
-                  Violations:
-                </Text>
-                <Text $font={700}>No</Text>
-              </div>
+            <Block display="flex" width={200} $gap={5}>
+              <Text size={15} color="#babac1">
+                Violations:
+              </Text>
+              <Text $font={700}>No</Text>
             </Block>
           </Flex>
         </Flex>

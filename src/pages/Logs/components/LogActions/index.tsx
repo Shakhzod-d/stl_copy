@@ -1,9 +1,7 @@
 import React from "react";
 
-
 import moment from "moment";
 import { useLogsInnerContext } from "../LogsInner.context";
-
 
 import {
   Block,
@@ -18,15 +16,8 @@ interface ILogActions {}
 
 const LogActions: React.FC<ILogActions> = ({}) => {
   const {
-    state: {
-
-      time: initialTime,
-  
-    },
-    actions: {
-      setTime,
-    
-    },
+    state: { time: initialTime },
+    actions: { setTime },
   } = useLogsInnerContext();
 
   const onDateChange = (type: "prev" | "next") => {
@@ -39,19 +30,15 @@ const LogActions: React.FC<ILogActions> = ({}) => {
     return moment(time).format("DD-MM-YYYY");
   }
 
-  
-
   const dark = useSelector((state: RootState) => state.booleans.darkMode);
   return (
-    <div className="log-actions">
-      <div className="log-left-actions">
+    // <div className="log-actions">
+      // <div className="log-left-actions">
         <Flex $gap="6px">
           <Block display="flex" width={200}>
-            <div>
-              <Text size={15} color="#babac1">
-                {dataPiker(initialTime)}
-              </Text>
-            </div>
+            <Text size={15} color="#babac1">
+              {dataPiker(initialTime)}
+            </Text>
           </Block>
           <Block
             display="flex"
@@ -68,8 +55,8 @@ const LogActions: React.FC<ILogActions> = ({}) => {
             <IoIosArrowForward color={dark ? "#fff" : "#000"} />
           </Block>
         </Flex>
-      </div>
-    </div>
+      // </div>
+    // </div>.
   );
 };
 

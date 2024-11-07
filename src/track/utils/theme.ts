@@ -25,9 +25,9 @@ export const darkTheme = {
   selectGray: "gray",
   tableTopColor: "#fff",
   inputBg: "transparent",
-  btnActive: "#fff",
+  btnActive: "#373737",
   btnActiveClr: "#000",
-  customBtn: "#222a4387",
+  customBtn: "#303030",
   FormSelect: "#7c7c80d6",
   textAriaBg: "#7c7c80d6",
 };

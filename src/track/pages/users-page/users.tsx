@@ -54,14 +54,13 @@ export const Users = () => {
           <FaPlus size={18} />
         </AddBtn>
       </Flex>
-      {isLoading && <PageLoad h="calc(100vh - 400px)" />}
-      {isLoading || (
-        <InfoTable
-          header={usersTableHeader}
-          data={filteredData}
-          editData={editData}
-        />
-      )}
+
+      <InfoTable
+        header={usersTableHeader}
+        data={filteredData}
+        editData={editData}
+        isLoading={isLoading}
+      />
     </Main>
   );
 };

@@ -155,7 +155,7 @@ export interface InfoTableData {
   id: string | number;
   name: {
     label: string;
-    img: string |undefined;
+    img: string | undefined;
     data?: CompaniesArr[];
   };
   // Allows other properties, but excludes `id` and `name` from the dynamic type
@@ -164,4 +164,19 @@ export interface InfoTableData {
     | string
     | number
     | { label: string; img: string; data?: CompaniesArr[] };
+}
+
+export interface DashboardData {
+  _id: string;
+  driverId: string;
+  companyId: string;
+  date: number;
+  violation: string;
+  done: boolean;
+  logId: null | string;
+  status: null | string;
+  cycle: number;
+  firstName: null | string;
+  lastName: null | string;
+  companyName: null | string;
 }

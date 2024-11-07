@@ -3,6 +3,8 @@ import { Flex } from "../drivers-header/drivers-header-styled";
 import { Card, CardsTop, CustomFlex, Img } from "./info-table-styled";
 
 import { Text } from "@/track/constants";
+import { NoData, NotFound } from "../custom-table/custom-styled";
+import { BsClipboardData } from "react-icons/bs";
 
 interface Header {
   header: string;
@@ -14,6 +16,7 @@ interface Prop<T> {
   data: InfoTableData[];
   editData?: (id: string) => void;
   onClick?: (id: string) => void;
+  isLoading?: boolean;
 }
 
 interface TableData {
@@ -33,6 +36,7 @@ export const InfoTable = ({
   data,
   editData,
   onClick,
+  isLoading,
 }: Prop<CompanyData | UserData>) => {
   const edit = (id: string, event: React.MouseEvent) => {
     // Stops event propagation when Edit button is clicked
@@ -97,6 +101,17 @@ export const InfoTable = ({
           })}
         </Card>
       ))}
+      {data.length === 0 && (
+        <NoData>
+          {isLoading && <img src="/assets/icons/load.svg" alt="" width={100} />}
+          {!isLoading && (
+            <NotFound>
+              <BsClipboardData size={30} />
+              <Text size={30}>No Data</Text>
+            </NotFound>
+          )}
+        </NoData>
+      )}
     </>
   );
 };

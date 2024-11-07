@@ -136,7 +136,7 @@ const mapHistoryLogs = (data: IHistoryLog[]): IHistoryLog[] => {
 
 const mapTableData = (data: any[]) => {
   return data?.map((item, i: number) => {
-    const fullName = `${i+1} ${item.firstName} ${item.lastName}`;
+    const fullName = `${i + 1} ${item.firstName} ${item.lastName}`;
     // console.log(item);
 
     return {
@@ -153,6 +153,7 @@ const mapTableData = (data: any[]) => {
       cycle: formatTime(item.cycle ? item.cycle.cycle : 0),
       recap: "00:00",
       updated: "13 weeks ago",
+      Date: item.violations[0].date,
     };
   });
 };

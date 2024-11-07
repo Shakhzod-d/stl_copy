@@ -9,8 +9,9 @@ import { InnerTable, LogsFormData } from "@/types/log.type";
 import { Checkbox } from "antd";
 import { MdModeEdit } from "react-icons/md";
 import { BsThreeDotsVertical } from "react-icons/bs";
+import { DashboardData } from "../types";
+import moment from "moment";
 function calculateDaysBetweenDates(startDate: string): number {
-
   const start = new Date(startDate);
   const endDate = new Date();
 
@@ -158,20 +159,22 @@ export function companyDrivers(data: DriversGet[] = []) {
   return { drivers, logDrivers };
 }
 
-export const dashboardData = (data: ObjType[] | []) => {
-  data.map((item, i) => {
+export const dashboardData = (data: DashboardData[] | []) => {
+  const result = data.map((item, i) => {
+    const eld = item.done ? "Connected" : "Not connected";
+    const formattedDate = moment.unix(item.date).format("MMM D, YYYY");
     return {
       key: i,
       name: `${item.firstName} ${item.lastName}`,
       violations: item.violation,
-      date: "May 3, 2014",
-      eld: "Connected",
+      date: formattedDate,
+      eld,
       cycle: formatTime(Number(item.cycle)),
       company: item.companyName,
       updated: "3 minutes ago",
     };
   });
-  return data;
+  return result;
 };
 
 export const innerTable = (data: InnerTable[]) => {
