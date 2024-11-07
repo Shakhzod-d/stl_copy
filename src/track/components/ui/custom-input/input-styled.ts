@@ -9,13 +9,15 @@ export const StyledInput = styled(Input)<{ $width?: string; $margin?: string }>`
   background-color: ${({ theme }) => theme.inputBg} !important;
   color: ${({ theme }) => theme.clr} !important;
   margin: ${({ $margin }) => $margin} !important;
-  
+  border: none !important;
   // Focus, active, and hover background color
-  &:focus, &:active, &:hover {
+  &:focus,
+  &:active,
+  &:hover {
     background-color: ${({ theme }) => theme.inputBg} !important;
     color: ${({ theme }) => theme.clr} !important;
   }
-  
+
   // Extra targeting with a CSS selector for the input inside if needed
   & .ant-input {
     background-color: ${({ theme }) => theme.inputBg} !important;

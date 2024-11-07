@@ -10,12 +10,13 @@ export const Block = styled.div<{
   max-width: ${({ width }) =>
     `${width}px`} !important; /* ma-width to'g'ri yozildi */
   border-radius: 10px;
+
   padding: 15px 20px;
   background: ${({ theme }) => theme.white};
   // background: #fdfdfd;
   display: ${({ display }) => display};
   align-items: center;
-  height: 75px;
+  height: 59px;
   gap: ${({ $gap = 0 }) => `${$gap}px`};
   justify-content: ${({ content }) => content};
   color ${({ theme }) => theme.clr};
@@ -45,16 +46,16 @@ export const StyleButton = styled(Button)<{ active: string }>`
   height: 57px;
 
   background: ${({ active, theme }) =>
-    active == "true" ? theme.btnActive : theme.white} !important;
+    active === "true" ? theme.btnActive : theme.white} !important;
   color: ${({ theme, active }) =>
-    active == "true" ? theme.btnActiveClr : theme.clr} !important;
+    active === "true" ? theme.btnActiveClr : theme.clr} !important;
   border: none;
   &:hover {
     background: ${({ active, theme }) =>
-      active == "true" ? "#19223F" : "#fdfdfd"} !important;
+      active === "true" ? "#19223F" : "#fdfdfd"} !important;
     opacity: 0.8;
     color: ${({ theme, active }) =>
-      active == "true" ? "#FFF" : "#000"} !important;
+      active === "true" ? "#FFF" : "#000"} !important;
   }
 `;
 export const BtnContainer = styled.div`
@@ -98,4 +99,19 @@ export const StyleFlex = styled.div`
   @media (max-width: 1500px) {
     flex-wrap: wrap;
   }
+`;
+
+export const Status = styled.div`
+  width: 50px;
+  height: 24px;
+  border-radius: 5px;
+  background: #fc973a;
+  color: #000;
+  & p {
+    font-size: 12px;
+    color: #212121;
+  }
+  display: flex;
+  justify-content: center;
+  align-items:center
 `;

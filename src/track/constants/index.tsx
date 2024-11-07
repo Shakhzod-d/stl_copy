@@ -31,7 +31,6 @@ export const Text = styled.p<{
   display: flex;
   margin-bottom: ${({ $mb }) => $mb};
   line-height: ${({ $line }) => $line};
-
 `;
 
 export const driversData = [
@@ -138,6 +137,7 @@ export const CustomButton = styled(Button)<{
   height: ${({ height }) => height};
   color: ${({ color }) => color};
   margin-bottom: ${({ mb }) => mb};
+  border-radius: 10px;
   &:hover {
     background: ${({ $background }) => $background}!important;
     opacity: 0.7;
@@ -356,15 +356,15 @@ export const TransparentButton = styled(Button)<{
   display: ${({ display }) => display || "flex"};
 
   &:hover {
-    background-color: ${({ active }) =>
-      active === "true" ? "#19223F" : "#fff"}!important;
-    border: 1px solid #f3f3f3;
+    background-color: ${({ active, theme }) =>
+      active === "true" ? theme.white : "#fff"}!important;
+    // border: 1px solid #f3f3f3;
 
     color: #fc973a !important;
   }
   &.active {
     background-color: ${({ active, $background, theme }) =>
-      active === "true" ? theme.btnActive : $background || theme.white};
+      active === "true" ? theme.btnActive : $background || theme.btnActive};
   }
 `;
 export const InfoCard = styled.div<{

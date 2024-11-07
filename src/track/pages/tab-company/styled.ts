@@ -33,7 +33,7 @@ export const AddBtn = styled(Button)`
   padding: 6px 7px !important;
   width: 55px !important;
   height: 30px !important;
-  background: #adadb8;
+  background: #373737;
   color: #fff;
 `;
 export const UploadBtn = styled.div`
@@ -42,12 +42,13 @@ export const UploadBtn = styled.div`
   padding: 25px 20px;
   max-width: 812px;
   height: 69px;
-  background: ${({ theme }) => theme.selectGray};
+  background: ${({ theme }) => theme.selectBg};
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 5px;
   margin-bottom: 20px;
+  border: none !important;
   color: ${({ theme }) => theme.clr};
 `;
 
@@ -58,7 +59,7 @@ export const Note = styled.textarea`
   max-width: 1635px;
   color: ${({ theme }) => theme.clr};
   height: 119px;
-  background: ${({ theme }) => theme.selectGray};
+  background: ${({ theme }) => theme.selectBg};
   border: none;
   outline: none;
   margin-bottom: 20px;

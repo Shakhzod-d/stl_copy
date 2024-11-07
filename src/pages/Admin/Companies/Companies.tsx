@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import {historyPush, setLocalStorage } from "@/utils";
+import { historyPush, setLocalStorage } from "@/utils";
 
 import useApi from "@/hooks/useApi";
 
@@ -35,9 +35,10 @@ const Companies: React.FC = () => {
 
   const mapData = (data: ICompanyData[]): CompanyData[] => {
     return data.map((item) => {
-      const image :string |undefined=
-        item?.logo ? item?.logo : "/assets/images/user-logo.png";
-        
+      const image: string | undefined = item?.logo
+        ? item?.logo
+        : "/assets/images/user-logo.png";
+
       return {
         id: item._id,
         name: {
@@ -116,16 +117,13 @@ const Companies: React.FC = () => {
       </Top>
 
       <div>
-        {isLoading ? (
-          <PageLoad h="calc(100vh - 400px)" />
-        ) : (
-          <InfoTable
-            header={companyTableHeader}
-            data={filteredData}
-            editData={modalActive}
-            onClick={CompanyHandler}
-          />
-        )}
+        <InfoTable
+          header={companyTableHeader}
+          data={filteredData}
+          editData={modalActive}
+          onClick={CompanyHandler}
+          isLoading={isLoading}
+        />
       </div>
     </Main>
   );

@@ -57,7 +57,7 @@ export const PageBtn = styled(NavLink)<{ $active?: boolean; $p?: string }>`
   align-items: center;
   p {
     font-weight: 500;
-    font-size: 17px;
+    font-size: 15px;
   }
   &.active {
     background-color: #fff;

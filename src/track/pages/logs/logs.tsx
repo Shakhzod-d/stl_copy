@@ -23,13 +23,8 @@ const Logs: React.FC<Props> = ({ children }) => {
       <Flex $justify="space-between">
         <Flex $gap={"5px"} style={{ marginBottom: "20px" }}>
           {LogsTabPages.map((item) => (
-            <NavLink
-              to={item.to}
-              key={item.key}
-              
-            >
+            <NavLink to={item.to} key={item.key}>
               <TransparentButton
-                
                 width="120px"
                 active={String(pathname.endsWith(item.to))}
                 padding="0 25px"

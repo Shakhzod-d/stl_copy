@@ -51,9 +51,9 @@ const LogsInner: React.FC = () => {
 
   const dispatch = useDispatch<AppDispatch>();
   const driverId = getLocalStorage("driverId");
-  const { data } = useApi(`/mainInfo?driverId=${driverId}&date=1730368800`);
-  // console.log(data);
+  const driverDate = logData?.violation[0].date;
 
+  const { data } = useApi(`/mainInfo?driverId=${driverId}&date=${driverDate}`);
 
   const logsFormData: FormData[] | [] = LogsFormMap(
     data?.data ? data.data : {}

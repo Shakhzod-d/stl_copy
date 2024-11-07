@@ -178,3 +178,19 @@ export const HoverBox = styled.div`
     box-shadow: 0 10px 60px 0 rgba(0, 0, 0, 0.1);
   }
 `;
+
+export const NoData = styled.div`
+  width: 100%;
+  height: 10rem;
+  background: ${({ theme }) => theme.white};
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const NotFound = styled.div`
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+`;

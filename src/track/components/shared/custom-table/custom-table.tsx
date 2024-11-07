@@ -5,6 +5,8 @@ import {
   BorderRBottom,
   BorderRTop,
   HoverBox,
+  NoData,
+  NotFound,
   StatusBadge,
   TableContainer,
   TableData,
@@ -20,6 +22,7 @@ import { message, Pagination } from "antd";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
+import { BsClipboardData } from "react-icons/bs";
 
 export type CustomObject = Record<string, string | number | JSX.Element>;
 
@@ -31,7 +34,7 @@ interface TableColumn {
 
 interface TableProps {
   columns: TableColumn[];
-  data: CustomObject[];
+  data: any[];
   itemColor?: string;
   colorId?: number | string;
   onClick?: (id: string) => void;
@@ -40,6 +43,7 @@ interface TableProps {
   pTotal?: number;
   font?: string;
   fontId?: number;
+  isLoading?: boolean;
 }
 
 const status = ["sb", "off", "dr", "on"];
@@ -53,6 +57,7 @@ export const CustomTable = (props: TableProps) => {
     pTotal,
     font,
     fontId,
+    isLoading,
   } = props;
   const [PopupActive, setPopupActive] = useState<
     number | null | string | undefined
@@ -87,7 +92,7 @@ export const CustomTable = (props: TableProps) => {
     let color: string = dark ? "#f9f9f9" : "#000";
 
     if (title === "updated" || title === "location_date") return "#3DA8D5";
-    if (title === "warnings" || title === "error") return "red";
+    if (title === "warnings" || title === "error" ||title ==="violations") return "red";
 
     switch (text) {
       case "connected":
@@ -96,10 +101,10 @@ export const CustomTable = (props: TableProps) => {
       case "not connected":
         color = "red";
         break;
-      case "form & signature":
+      case "No Signature!":
         color = "#FC973A";
         break;
-      case "violation":
+      case "No Form":
         color = "red";
         break;
       default:
@@ -198,6 +203,17 @@ export const CustomTable = (props: TableProps) => {
           })}
         </tbody>
       </TableElement>
+      {data.length === 0 && (
+        <NoData>
+          {isLoading && <img src="/assets/icons/load.svg" alt="" width={100} />}
+          {!isLoading && (
+            <NotFound>
+              <BsClipboardData size={30} />
+              <Text size={30}>No Data</Text>
+            </NotFound>
+          )}
+        </NoData>
+      )}
       {pagination && <Pagination total={pTotal} defaultCurrent={1} />}
     </TableContainer>
   );

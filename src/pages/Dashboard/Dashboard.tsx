@@ -39,6 +39,8 @@ import { dashboardProgressActive } from "@/store/slices/booleans-slice";
 import { autoRefresh } from "@/track/utils/method";
 import { Flex } from "@/track/components/shared/drivers-header/drivers-header-styled";
 import { Select } from "@/track/components/shared/select";
+import { dashboardData } from "@/track/utils/mapData";
+import useApi from "@/hooks/useApi";
 // import useApi from "../../hooks/useApi";
 // import { dashboardData } from "../../utils/mapData";
 
@@ -61,20 +63,21 @@ export const Dashboard = () => {
     { value: "active", label: "Actice" },
     { value: "completed", label: "Completed" },
   ];
-  // const { data, isLoading } = useApi("/main/violations", {
-  //   page: 1,
-  //   limit: 10,
-  // });
-  // console.log(data);
-  // const filerData = dashboardData(data ? data?.data?.data : []);
-  // console.log(filerData);
+  const { data, isLoading } = useApi("/main/violations", {
+    page: 1,
+    limit: 1000,
+  });
 
-  useEffect(() => {}, []);
+  const filerData = dashboardData(data ? data?.data?.data : []);
+
   const dispatch = useDispatch();
 
   function onChange(event: unknown) {
+    // console.log(event);
+
     setSelectEvent(event);
   }
+
   const reloadStatus: number =
     getLocalStorage("autoReload") !== null
       ? Number(getLocalStorage("autoReload"))
@@ -91,6 +94,7 @@ export const Dashboard = () => {
       autoRefresh(reloadStatus);
     }
   }, []);
+  const refreshDefault = refreshSelect[reloadStatus];
   return (
     <Main>
       <Navbar title="Dashboard" />
@@ -103,7 +107,8 @@ export const Dashboard = () => {
         <Flex $gap={"5px"}>
           <Select
             option={refreshSelect}
-            dValue={refreshSelect[0]}
+            dValue={refreshDefault}
+            onChange={refreshHandler}
             optionW="220px"
             font="600"
             w="170px"
@@ -183,7 +188,7 @@ export const Dashboard = () => {
                 { value: "date", label: "Date" },
               ]}
               placeholder="Order By"
-              // change={onChange}
+              onChange={onChange}
             />
           </div>
           <div style={{ width: "100%" }}>
@@ -199,7 +204,11 @@ export const Dashboard = () => {
       </SelectWrapper>
 
       {selectEvent === "order" ? (
-        <CustomTable columns={dashboardTableHeader} data={dataSource} />
+        <CustomTable
+          columns={dashboardTableHeader}
+          data={filerData}
+          isLoading={isLoading}
+        />
       ) : (
         <OrderTable
           data={selectEvent === "company" ? companyTable : dateTable}

@@ -44,7 +44,7 @@ const dark = useSelector((state: RootState) => state.booleans.darkMode);
         $p={padding}
         $clr={dark ?"#fff": clr}
         $pClr={dark? "#fff": pClr}
-        $bg={dark ?"#7c7c80d6": bg}
+        $bg={dark ?"#373737": bg}
         $h={h}
         type={type}
       />

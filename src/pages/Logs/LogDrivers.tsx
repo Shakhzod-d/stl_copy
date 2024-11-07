@@ -1,9 +1,8 @@
-
 import useMomentZone from "@/hooks/useMomentZone";
 
 import { historyPush, setLocalStorage } from "@/utils";
 import moment from "moment-timezone";
-import React  from "react";
+import React from "react";
 import {
   NumberParam,
   StringParam,
@@ -14,7 +13,7 @@ import { useDriversData } from "./services/useDriversData";
 
 import { PageLoad, TimeContainer } from "@/track/components/ui";
 import { CustomTable } from "@/track/components/shared";
-import {  LogsDriverDataHeader } from "@/track/constants";
+import { LogsDriverDataHeader } from "@/track/constants";
 import { useWeekData } from "@/track/hooks/use-data-piker";
 import { useDispatch } from "react-redux";
 import { WeekData } from "@/track/components/shared/drivers-header/drivers-header";
@@ -24,28 +23,21 @@ const LogDrivers: React.FC = () => {
   const momentZone = useMomentZone();
   const dispatch = useDispatch();
 
-
-  const [location,] = useQueryParam(
+  const [location] = useQueryParam(
     "location",
     withDefault(StringParam, undefined)
   );
-  const [search,] = useQueryParam(
-    "name",
-    withDefault(StringParam, undefined)
-  );
-  const [time, ] = useQueryParam(
+  const [search] = useQueryParam("name", withDefault(StringParam, undefined));
+  const [time] = useQueryParam(
     "time",
     withDefault(NumberParam, momentZone().startOf("day").valueOf())
   );
 
-  const {  isLoading, tableData, } =
-    useDriversData({
-      search,
-      location,
-      time,
-    });
-
-
+  const { isLoading, tableData } = useDriversData({
+    search,
+    location,
+    time,
+  });
 
   const date = moment(time).format("LLLL");
   const weekData: WeekData[] = useWeekData(date);
