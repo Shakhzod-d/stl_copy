@@ -23,7 +23,7 @@ const MapTrip: React.FC = () => {
   
     L.marker([41.2995, 69.2401], { icon: customIcon })
       .addTo(map)
-      .bindPopup("This is a marker with a custom icon!")
+      // .bindPopup("This is a marker with a custom icon!")
       .openPopup();
   }, []);
 
