@@ -14,7 +14,7 @@ export const TableElement = styled.table`
 `;
 
 export const TableHeader = styled.th`
-  padding: 10px;
+  padding: 10px 25px;
   text-align: left;
   font-weight: 500;
   color: #5d5e5f;

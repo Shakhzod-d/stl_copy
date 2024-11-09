@@ -42,7 +42,7 @@ export const StyleButton = styled(Button)<{ active: string }>`
   border-radius: 10px;
   padding: 20px;
   width: 100%;
-  max-width: 192px;
+  // max-width: 192px;
   height: 57px;
 
   background: ${({ active, theme }) =>

@@ -31,6 +31,13 @@ import { historyPush, removeLocalStorage } from "@/utils";
 import { setCompany } from "@/track/utils/dispatch";
 import useApi from "@/hooks/useApi";
 import { BiLogOut } from "react-icons/bi";
+import {
+  CompanyICon,
+  DashboardIcon,
+  EldIcon,
+  FileIcon,
+  ReportIcon,
+} from "@/utils/icons";
 
 export const Sidebar = () => {
   const [btnActive, setBtnActive] = useState<number>(0);
@@ -39,7 +46,7 @@ export const Sidebar = () => {
   const items = [
     {
       key: 1,
-      icon: <FaPowerOff />,
+      icon: <EldIcon />,
       label: "ELD",
       page: [
         {
@@ -56,7 +63,7 @@ export const Sidebar = () => {
     },
     {
       key: 2,
-      icon: <MdOutlineReportProblem />,
+      icon: <ReportIcon />,
       label: "Reports",
       page: [
         {
@@ -68,12 +75,12 @@ export const Sidebar = () => {
     },
     {
       key: 3,
-      icon: <VscFileSubmodule />,
+      icon: <FileIcon />,
       label: "Notification",
     },
     {
       key: 4,
-      icon: <VscFileSubmodule />,
+      icon: <FileIcon />,
       label: "Fleet manager",
       page: [
         {
@@ -104,8 +111,7 @@ export const Sidebar = () => {
     (state: RootState) => state.booleans.sidebarActive
   );
 
-   const exitFun = () => {
-    
+  const exitFun = () => {
     removeLocalStorage("company");
     removeLocalStorage("companyId");
     setCompany(false);
@@ -164,18 +170,14 @@ export const Sidebar = () => {
             to={`/main/dashboard`}
             $active={active}
           >
-            <PiChartLineFill />
+            <DashboardIcon />
 
             {active && <p>Dashboard</p>}
           </PageBtn>
         )}
 
-        <PageBtn
-          onClick={exitFun}
-          to={"/company"}
-          $active={active}
-        >
-          <HiOutlineBuildingLibrary />
+        <PageBtn onClick={exitFun} to={"/company"} $active={active}>
+          <CompanyICon />
 
           {active && (
             <>
@@ -188,7 +190,7 @@ export const Sidebar = () => {
         <Description>Menu</Description>
         {sidebarData.map((item) => {
           const Icon = () => item.icon;
-          if (item.key == 3) {
+          if (item.key === 3) {
             return (
               <PageBtn
                 key={item.key}
@@ -199,7 +201,9 @@ export const Sidebar = () => {
               >
                 <BtnWrap>
                   <Icon />
-                  {active && <p style={{fontSize:"0.938rem"}}>{item.label}</p>}
+                  {active && (
+                    <p style={{ fontSize: "0.938rem" }}>{item.label}</p>
+                  )}
                 </BtnWrap>
 
                 {!active ||
@@ -246,6 +250,7 @@ export const Sidebar = () => {
             to={"/users"}
             $active={active}
           >
+            <FileIcon />
             <p>Users</p>
           </PageBtn>
         )}

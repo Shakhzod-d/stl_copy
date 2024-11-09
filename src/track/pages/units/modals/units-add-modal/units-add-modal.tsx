@@ -28,6 +28,7 @@ import {
 import { Flex } from "@/track/components/shared/drivers-header/drivers-header-styled";
 import { FormInput, FormSelect } from "@/track/components/ui";
 import { DefaultBtn, PrimaryBtn } from "../../units-styled";
+import { Select } from "@/track/components/shared/select";
 // import useApiMutation from "../../../hooks/useApiMutation";
 // import { errorMessage, successMessage } from "../../../utils/message";
 interface Prop {
@@ -97,8 +98,10 @@ export const UnitsAddModal = ({ open, setOpen, refetch }: Prop) => {
                 },
               ]}
             />
-            <FormSelect
+            <Select
               placeholder={"Makes"}
+              bg="#373737"
+              
               rules={[
                 {
                   required: true,
@@ -106,9 +109,10 @@ export const UnitsAddModal = ({ open, setOpen, refetch }: Prop) => {
                 },
               ]}
               // pClr="#000"
-              data={makesState}
+              option={makesState}
               h={"60px"}
               name="make"
+              w="100%"
             />
           </Flex>
 
@@ -199,6 +203,7 @@ export const UnitsAddModal = ({ open, setOpen, refetch }: Prop) => {
             <FormInput
               placeholder="Type"
               name="vin"
+              
               rules={[
                 {
                   required: true,
