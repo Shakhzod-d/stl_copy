@@ -16,17 +16,28 @@ const Logs: React.FC<Props> = ({ children }) => {
   useEffect(() => {
     if (pathname.length <= 6) historyPush("/map");
   }, [pathname.length]);
+  const boolean = (id: number, path: string): string => {
+    let result = "";
 
+    if (id === 1 && pathname.startsWith("/main/logs/inner")) {
+      result = "true";
+    } else if (pathname.endsWith(path)) {
+      result = "true";
+    } else {
+      result = "false";
+    }
+    return result;
+  };
   return (
     <Main>
       <Navbar title="Logs" />
       <Flex $justify="space-between">
         <Flex $gap={"5px"} style={{ marginBottom: "20px" }}>
-          {LogsTabPages.map((item) => (
+          {LogsTabPages.map((item, i) => (
             <NavLink to={item.to} key={item.key}>
               <TransparentButton
                 width="120px"
-                active={String(pathname.endsWith(item.to))}
+                active={boolean(i, item.to)}
                 padding="0 25px"
               >
                 {item.label}

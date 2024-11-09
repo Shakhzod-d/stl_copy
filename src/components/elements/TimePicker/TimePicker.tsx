@@ -1,6 +1,9 @@
 import React from "react";
 import { TimePicker as AntdTimePicker } from "antd";
 import { Moment } from "moment-timezone";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store";
+import { Text } from "@/track/constants";
 declare type EventValue<DateType> = DateType | null;
 declare type RangeValue<DateType> =
   | [EventValue<DateType>, EventValue<DateType>]
@@ -33,9 +36,10 @@ const TimePicker: React.FC<ITimePicker> = ({
   onChange,
   style = {},
 }) => {
+  const dark = useSelector((state: RootState) => state.booleans.darkMode);
   return (
     <div className={`text-field-wrapper`}>
-      {label && <label>{label}</label>}
+      {label && <Text>{label}</Text>}
       {range ? (
         <AntdTimePicker.RangePicker
           className={className}
@@ -49,12 +53,14 @@ const TimePicker: React.FC<ITimePicker> = ({
           autoComplete={autoComplete}
           format="HH:mm:ss"
           allowClear={false}
-          style={style}
+          // style={style}
+          style={{ background:dark ?"#373737":"" }}
         />
       ) : (
         <AntdTimePicker
           defaultValue={defaultValue}
           className={className}
+          style={{ background: "red" }}
           // dateRender={moment(23141)}
           value={value}
           onChange={onChange}

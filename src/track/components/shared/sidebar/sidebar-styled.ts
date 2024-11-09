@@ -62,6 +62,10 @@ export const PageBtn = styled(NavLink)<{ $active?: boolean; $p?: string }>`
   &.active {
     background-color: #fff;
     color: #000;
+
+    svg path {
+      fill: #000;
+    }
   }
 `;
 export const Exit = styled(Button)`

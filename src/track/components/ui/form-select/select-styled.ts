@@ -19,26 +19,30 @@ export const StyledSelect = styled(Select)<{
     height: ${({ $h = "60px" }) => $h} !important;
     width: ${({ $w = "100%" }) => $w} !important;
     padding-top: 15px !important;
-    background-color: ${({ $bg = "#f9f9fa" }) => $bg} !important;
     border: none !important;
     color: ${({ theme }) => theme.clr} !important;
   }
 
   .ant-select-dropdown {
-    background-color: ${({ theme }) => theme.selectGray} !important;
+    background-color: blue !important; /* Blue background */
+    border-radius: 10px !important; /* Rounded corners for dropdown */
+    padding: 8px; /* Padding inside dropdown */
 
     .ant-select-item-option {
+      background-color: transparent !important;
       color: ${({ theme }) => theme.clr} !important;
+      border-radius: 10px; /* Rounded corners for each option */
+      margin: 4px 0; /* Spacing between options */
+      padding: 8px 12px; /* Padding inside each option */
 
       &:hover {
         background-color: #f0f0f0 !important;
         color: #000 !important;
       }
 
-      /* Faol yoki tanlangan element uchun rang */
       &.ant-select-item-option-active,
       &.ant-select-item-option-selected {
-        background-color: blue !important;
+        background-color: darkblue !important; /* Dark blue for selected option */
         color: white !important;
         font-weight: bold !important;
       }
@@ -56,23 +60,43 @@ export const StyledSelect = styled(Select)<{
 
 export const GlobalStyle = createGlobalStyle`
   .ant-select-dropdown {
-    background-color: ${({ theme }) => theme.selectGray} !important;
+    background-color: #2B2B2B !important;
+    border-radius: 10px !important;
+    border:none !important;
+    box-shadow: 0px 30px 100px 0px #00000080 !important;
+
   }
 
   .ant-select-item-option {
-    color: ${({ theme }) => theme.clr} !important;
+      width: 100%;
+  height: 49px !important;
+  background: #373737;
+  border-radius: 10px !important;
+  padding-left: 15px !important;
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  cursor: pointer !important;
+  font-size: 30px !important;
+  color: ${({ theme }) => theme.clr} !important;
+  user-select: none !important;
+  margin-bottom: 5px !important;
+  text-align:center !important;
+  &:hover {
+    background: ${({ theme }) => theme.selectHover};
+    opacity: 0.8;
   }
+    &:hover {
+      background-color: #f0f0f0 !important;
+      color: #000 !important;
+    }
 
-  .ant-select-item-option:hover {
-    background-color: #f0f0f0 !important;
-    color: #000 !important;
-  }
-
-  /* Faol (tanlangan) holat */
-  .ant-select-item-option-selected, .ant-select-item-option-active {
-    background-color: blue !important;
-    color: #fff !important;
-    font-weight: bold !important;
+    &.ant-select-item-option-active,
+    &.ant-select-item-option-selected {
+      background-color: darkblue !important;
+   color: ${({ theme }) => theme.clr} !important;
+      font-weight: bold !important;
+    }
   }
 
   .ant-select-selection-placeholder {

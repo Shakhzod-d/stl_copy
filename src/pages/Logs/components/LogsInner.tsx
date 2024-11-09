@@ -24,7 +24,7 @@ import { setWeekData } from "@/store/slices/company-slice";
 import { TripPlanner } from "@/track/components/shared";
 import useApi from "@/hooks/useApi";
 import { getLocalStorage } from "@/utils";
-import { FormData, LogsFormData } from "@/types/log.type";
+import { FormData,  } from "@/types/log.type";
 
 const LogsInner: React.FC = () => {
   const {
@@ -92,11 +92,11 @@ const LogsInner: React.FC = () => {
     setLogs(data);
   };
   return (
-    <Main>
-      <div
+    <>
+      {/* <div
         className=""
         style={{ pointerEvents: disableActions ? "none" : "all" }}
-      >
+      > */}
         <DriversHeader fullName={driverFullName} phone={driverPhone} />
         <Diagrams
           filterDrawStatus={filterDrawStatus(logs)}
@@ -125,12 +125,12 @@ const LogsInner: React.FC = () => {
             onClick={handleEditClick}
           />
         </div>
-      </div>
+      {/* </div> */}
 
       <DriversForm LogForm={logsFormData ? logsFormData : []} />
 
       <TripPlanner />
-    </Main>
+    </>
   );
 };
 

@@ -2,19 +2,23 @@ import { Form } from "antd";
 import styled from "styled-components";
 export const Container = styled.div<{ $w?: string }>`
   width: ${({ $w = "200px" }) => $w} !important;
-  max-width: 300px;
+  // max-width: 300px;
   position: relative;
   // border: 1px solid red;
   margin: 0;
 `;
-export const StyleSelect = styled.div<{ $active: boolean }>`
+export const StyleSelect = styled.div<{
+  $active: boolean;
+  bg?: string;
+  h?: string;
+}>`
   width: 100%;
-  height: 47px;
+  height: ${({ h = "47px" }) => h};
   padding-left: 15px;
   border-radius: 10px;
   padding-right: 10px;
   // margin-bottom: 10px;
-  background: ${({ theme }) => theme.white};
+  background: ${({ theme, bg = theme.white }) => bg};
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -24,19 +28,21 @@ export const StyleSelect = styled.div<{ $active: boolean }>`
   color: ${({ theme }) => theme.clr};
 `;
 
-export const OptionContainer = styled.div<{ $active: boolean; $w?: string }>`
+export const OptionContainer = styled.div<{ $active: boolean; $w?: string ,h?:string}>`
   width: ${({ $w = "200px" }) => $w};
   box-shadow: ${({ theme }) => theme.selectShadow};
   backdrop-filter: blur(80px);
-
+  // height:100%;
+  max-height: 300px;
+  overflow: auto;
   padding: 10px;
   background: ${({ theme }) => theme.selectOptionBg};
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
+  // display: flex;
+  // flex-direction: column;
+  // gap: 5px;
   user-select: none;
   position: absolute;
-  top: 50px;
+  top: ${({h})=>h ==="60px"?"63px":"50px"};
   left: 0;
   border-radius: 10px;
   transition: 0.2s all;
@@ -58,7 +64,7 @@ export const OptionContainer = styled.div<{ $active: boolean; $w?: string }>`
 
 export const Option = styled.div<{ $active: boolean; $clr?: string }>`
   width: 100%;
-  height: 49px;
+  height: 49px !important;
   background: ${({ $active, theme }) => ($active ? "blue" : theme.selectHover)};
   border-radius: 10px;
   padding-left: 15px;
@@ -69,6 +75,7 @@ export const Option = styled.div<{ $active: boolean; $clr?: string }>`
   font-size: 16px;
   color: ${({ theme, $active, $clr = theme.clr }) => ($active ? "#fff" : $clr)};
   user-select: none;
+  margin-bottom: 5px;
   &:hover {
     background: ${({ theme }) => theme.selectHover};
     opacity: 0.8;

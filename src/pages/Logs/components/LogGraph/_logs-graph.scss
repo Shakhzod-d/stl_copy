@@ -354,7 +354,8 @@
         align-items: flex-end;
         span {
           @extend %regular-14;
-          color: #686868;
+          font-size: 16px;
+          color: #5d5e5f;
         }
       }
     }
@@ -365,7 +366,7 @@
     text-align: end;
     span {
       font-family: Roboto;
-      font-size: 18px;
+      font-size: 16px;
       font-weight: 700;
       line-height: 28px;
       color: #686868;

@@ -6,6 +6,7 @@ import {
   Path,
 } from "react-hook-form";
 import { Input, InputProps } from "antd";
+import { Text } from "@/track/constants";
 
 interface Props<T extends FieldValues = any> extends InputProps {
   control: Control<T>;
@@ -35,7 +36,7 @@ function TextField<T extends FieldValues>({
         <div
           className={`text-field-wrapper ${error ? "error" : ""} ${className}`}
         >
-          {label && <label>{label}</label>}
+          {label && <Text>{label}</Text>}
           <Input
             value={value}
             onChange={onChange}

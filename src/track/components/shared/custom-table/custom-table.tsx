@@ -92,14 +92,15 @@ export const CustomTable = (props: TableProps) => {
     let color: string = dark ? "#f9f9f9" : "#000";
 
     if (title === "updated" || title === "location_date") return "#3DA8D5";
-    if (title === "warnings" || title === "error" ||title ==="violations") return "red";
+    if (title === "warnings" || title === "error" || title === "violations")
+      return "#FF6F61";
 
     switch (text) {
       case "connected":
         color = "#32BE61";
         break;
       case "not connected":
-        color = "red";
+        color = "#FF6F61";
         break;
       case "No Signature!":
         color = "#FC973A";
