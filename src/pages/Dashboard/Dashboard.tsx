@@ -109,9 +109,9 @@ export const Dashboard = () => {
             option={refreshSelect}
             dValue={refreshDefault}
             onChange={refreshHandler}
-            optionW="220px"
+            optionW="200px"
             font="600"
-            w="170px"
+            w="200px"
             // placeholder="Auto Refresh off"
             // change={refreshHandler}
           />

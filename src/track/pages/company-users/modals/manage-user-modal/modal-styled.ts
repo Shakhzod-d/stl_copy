@@ -5,23 +5,19 @@ export const TabBtn = styled(Button)<{ $active: boolean }>`
   border-radius: 10px;
   padding: 15px 20px;
   height: 49px;
-  background: ${({ $active }) => ($active ? " #19223f" : "#F3F3F4")};
+  background: ${({ $active, theme }) =>
+    $active ? theme.btnActive : "#F3F3F4"} !important;
   color: ${({ $active }) => ($active ? " #fff" : "#000")};
+  border: none;
   &:hover {
-    background: ${({ $active }) =>
-      $active ? " #19223f" : "#F3F3F4"} !important;
+    background: ${({ theme, $active }) =>
+      $active ? theme.btnActive : "#F3F3F4"} !important;
     opacity: 0.9;
     color: ${({ $active }) => ($active ? " #fff" : "#000")} !important;
   }
 `;
 
-// export const CustomFlex = styled(Flex)`
-//   margin: 30px 0;
-// `;
 
-// export const StyleFlex = styled(Flex)`
-//   margin-bottom: 10px;
-// `;
 
 export const CustomInput = styled(Input)<{ $margin?: string }>`
   border-radius: 10px;
@@ -58,8 +54,8 @@ export const Btn = styled(Button)<{ $type?: string }>`
   width: 200px;
   height: 59px;
   min-width: 200px;
-  color: ${({ $type }) => ($type == "add" ? "#FFF" : "#000")};
-  background: ${({ $type }) => ($type == "add" ? "#FC973A" : "#f3f3f4")};
+  color: ${({ $type }) => ($type === "add" ? "#FFF" : "#000")};
+  background: ${({ $type }) => ($type === "add" ? "#FC973A" : "#f3f3f4")};
   &:hover {
     background: ${({ $type }) => ($type ? " #FC973A" : "#F3F3F4")} !important;
     opacity: 0.9;

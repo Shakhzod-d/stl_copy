@@ -28,7 +28,11 @@ export const StyleSelect = styled.div<{
   color: ${({ theme }) => theme.clr};
 `;
 
-export const OptionContainer = styled.div<{ $active: boolean; $w?: string ,h?:string}>`
+export const OptionContainer = styled.div<{
+  $active: boolean;
+  $w?: string;
+  h?: string;
+}>`
   width: ${({ $w = "200px" }) => $w};
   box-shadow: ${({ theme }) => theme.selectShadow};
   backdrop-filter: blur(80px);
@@ -42,7 +46,7 @@ export const OptionContainer = styled.div<{ $active: boolean; $w?: string ,h?:st
   // gap: 5px;
   user-select: none;
   position: absolute;
-  top: ${({h})=>h ==="60px"?"63px":"50px"};
+  top: ${({ h }) => h};
   left: 0;
   border-radius: 10px;
   transition: 0.2s all;
@@ -53,7 +57,7 @@ export const OptionContainer = styled.div<{ $active: boolean; $w?: string ,h?:st
   ${({ $active }) =>
     $active
       ? `
-  z-index: 999;
+  z-index: 99999;
   
   transform: translateY(0);
   opacity: 1;
@@ -65,7 +69,8 @@ export const OptionContainer = styled.div<{ $active: boolean; $w?: string ,h?:st
 export const Option = styled.div<{ $active: boolean; $clr?: string }>`
   width: 100%;
   height: 49px !important;
-  background: ${({ $active, theme }) => ($active ? "blue" : theme.selectHover)};
+  background: ${({ $active, theme }) =>
+    $active ? "#FC973A" : theme.selectHover};
   border-radius: 10px;
   padding-left: 15px;
   display: flex;

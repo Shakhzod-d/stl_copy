@@ -9,48 +9,30 @@ export const Item = styled(Form.Item)`
 export const StyledSelect = styled(Select)<{
   $w?: string;
   $h?: string;
-  $clr?: string;
-  $pClr?: string;
   $bg?: string;
+  $border?: string;
+  $activeBorder?: string;
+  $pClr?: string;
+  $clr?: string;
 }>`
+  width: ${({ $w = "200px" }) => $w};
+
   .ant-select-selector {
+    width: 100%;
+    height: ${({ $h = "47px" }) => $h};
     border-radius: 10px !important;
-    background: ${({ $bg = "#f9f9f9" }) => $bg} !important;
-    height: ${({ $h = "60px" }) => $h} !important;
-    width: ${({ $w = "100%" }) => $w} !important;
-    padding-top: 15px !important;
-    border: none !important;
+    background: ${({ theme, $bg = theme.white }) => $bg} !important;
+    padding-left: 15px;
+    padding-right: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: ${({ $border = "none" }) => $border} !important;
+    cursor: pointer;
+    user-select: none;
     color: ${({ theme }) => theme.clr} !important;
-  }
-
-  .ant-select-dropdown {
-    background-color: blue !important; /* Blue background */
-    border-radius: 10px !important; /* Rounded corners for dropdown */
-    padding: 8px; /* Padding inside dropdown */
-
-    .ant-select-item-option {
-      background-color: transparent !important;
-      color: ${({ theme }) => theme.clr} !important;
-      border-radius: 10px; /* Rounded corners for each option */
-      margin: 4px 0; /* Spacing between options */
-      padding: 8px 12px; /* Padding inside each option */
-
-      &:hover {
-        background-color: #f0f0f0 !important;
-        color: #000 !important;
-      }
-
-      &.ant-select-item-option-active,
-      &.ant-select-item-option-selected {
-        background-color: darkblue !important; /* Dark blue for selected option */
-        color: white !important;
-        font-weight: bold !important;
-      }
-    }
-  }
-
-  .ant-select-selection-placeholder {
-    color: ${({ theme, $pClr = theme.clr }) => $pClr} !important;
+    ${({ $activeBorder }) =>
+      $activeBorder ? `border: 1px solid ${$activeBorder} !important;` : ""};
   }
 
   .ant-select-arrow svg {
@@ -60,46 +42,39 @@ export const StyledSelect = styled(Select)<{
 
 export const GlobalStyle = createGlobalStyle`
   .ant-select-dropdown {
-    background-color: #2B2B2B !important;
+    background-color: ${({ theme }) => theme.selectOptionBg} !important;
     border-radius: 10px !important;
-    border:none !important;
-    box-shadow: 0px 30px 100px 0px #00000080 !important;
-
+    box-shadow: ${({ theme }) => theme.selectShadow} !important;
+    padding: 10px !important;
+    padding-bottom: 40px !important; /* Extra space for the last option */
+    border: none !important;
+    overflow-y: auto !important;
   }
 
   .ant-select-item-option {
-      width: 100%;
-  height: 49px !important;
-  background: #373737;
-  border-radius: 10px !important;
-  padding-left: 15px !important;
-  display: flex !important;
-  justify-content: space-between !important;
-  align-items: center !important;
-  cursor: pointer !important;
-  font-size: 30px !important;
-  color: ${({ theme }) => theme.clr} !important;
-  user-select: none !important;
-  margin-bottom: 5px !important;
-  text-align:center !important;
-  &:hover {
-    background: ${({ theme }) => theme.selectHover};
-    opacity: 0.8;
-  }
+    width: 100%;
+    height: 49px !important;
+    background: ${({ theme }) => theme.selectHover} !important;
+    border-radius: 10px !important;
+    padding-left: 15px;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    cursor: pointer !important;
+    font-size: 16px !important;
+    color: ${({ theme }) => theme.clr} !important;
+    user-select: none;
+    margin-bottom: 5px !important;
+    
     &:hover {
-      background-color: #f0f0f0 !important;
-      color: #000 !important;
+      background: ${({ theme }) => theme.selectHover};
+      opacity: 0.8;
     }
 
-    &.ant-select-item-option-active,
     &.ant-select-item-option-selected {
-      background-color: darkblue !important;
-   color: ${({ theme }) => theme.clr} !important;
+      background-color: #FC973A !important;
+      color: white !important;
       font-weight: bold !important;
     }
-  }
-
-  .ant-select-selection-placeholder {
-    color: ${({ theme }) => theme.clr} !important;
   }
 `;

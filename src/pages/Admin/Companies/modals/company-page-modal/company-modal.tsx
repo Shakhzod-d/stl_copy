@@ -20,6 +20,7 @@ interface Props {
 }
 export const CompanyModal = ({ setOpen, open }: Props) => {
   const [tabId, setTabId] = useState(1);
+
   return (
     <CustomModal
       open={open}

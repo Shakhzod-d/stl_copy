@@ -78,11 +78,13 @@ export const Flex = styled.div<{
   $vertical?: boolean;
   $m?: string;
   $w?: string;
+  $h?: string;
 }>`
   width: ${({ $w }) => $w};
   display: flex;
   ${({ $vertical }) => ($vertical ? "flex-direction: column" : "")}
   justify-content: ${({ $justify = "start" }) => $justify};
+  height: ${({ $h }) => $h};
   align-items: ${({ $align = "start" }) => $align};
   gap: ${({ $gap = "0" }) => $gap};
   flex-wrap: ${({ $wrap }) => $wrap};
@@ -113,5 +115,5 @@ export const Status = styled.div`
   }
   display: flex;
   justify-content: center;
-  align-items:center
+  align-items: center;
 `;

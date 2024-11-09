@@ -346,7 +346,7 @@ export const TransparentButton = styled(Button)<{
       ? theme.btnActive
       : $background || theme.white} !important;
   color: ${({ active, color, theme }) =>
-    active === "true" ? theme.btnActiveClr : color || theme.clr} !important;
+    active === "true" ? "#fff" : color || theme.clr} !important;
   font-size: 16px;
   font-weight: 500;
   letter-spacing: -0.5px;
@@ -356,8 +356,7 @@ export const TransparentButton = styled(Button)<{
   display: ${({ display }) => display || "flex"};
 
   &:hover {
-    background-color: ${({ active, theme }) =>
-      active === "true" ? theme.white : "#fff"}!important;
+    background-color: ${({ active, theme }) => theme.btnActive}!important;
     // border: 1px solid #f3f3f3;
 
     color: #fc973a !important;
@@ -403,7 +402,7 @@ export const Box = styled.div`
   border-radius: 5px;
   padding: 10px 20px;
   // width: 200px;
-  height: 38px;
+  // height: 38px;
   min-width: 200px;
   background: ${({ theme }) => theme.white};
   color: #8c8c9b;
@@ -1256,7 +1255,7 @@ export const usersTableHeader = [
   { header: "Name", accessor: "name" },
   { header: "Updated", accessor: "updated" },
   { header: "Status", accessor: "status" },
-  { header: "Carrier", accessor: "carrier" },
+
   { header: "Role", accessor: "role" },
   { header: "", accessor: "edit" },
 ];
@@ -1266,16 +1265,14 @@ export const usersTableData = [
     id: "11",
     name: {
       label: "Annette Black",
-      img: "/company-logo.png",
+      img: "/assets/images/user.png",
       data: [{ id: 1, text: "support@asritsolutions.com" }],
     },
     updated: { label: "3 week ago" },
     status: {
       label: "Active",
     },
-    carrier: {
-      label: "ASAP Transportation INC",
-    },
+
     role: {
       label: "Driver",
     },
@@ -1606,6 +1603,119 @@ export const permissionModal = [
     ],
   },
 ];
+export const userpermission = [
+  {
+    id: 1,
+    options: [
+      {
+        id: 1,
+        title: "All",
+        buttons: [
+          { id: 1, text: "All", isActive: false },
+
+          { id: 2, text: "View", isActive: true },
+        ],
+      },
+      {
+        id: 2,
+        title: "Users",
+        buttons: [
+          { id: 1, text: "Edit", isActive: false },
+          { id: 2, text: "Add", isActive: false },
+          { id: 1, text: "View", isActive: true },
+        ],
+      },
+      {
+        id: 3,
+        title: "Terminals",
+        buttons: [
+          { id: 1, text: "Edit", isActive: false },
+          { id: 2, text: "Add", isActive: false },
+          { id: 3, text: "View", isActive: true },
+        ],
+      },
+    ],
+  },
+  {
+    id: 2,
+    options: [
+      {
+        id: 1,
+        title: "Vehicle",
+        buttons: [
+          { id: 1, text: "Edit", isActive: false },
+          { id: 2, text: "Add", isActive: false },
+          { id: 3, text: "View", isActive: true },
+        ],
+      },
+      {
+        id: 2,
+        title: "Documents",
+        buttons: [
+          { id: 1, text: "Edit", isActive: false },
+          { id: 2, text: "Add", isActive: false },
+          { id: 1, text: "View", isActive: true },
+        ],
+      },
+      {
+        id: 3,
+        title: "Driv",
+        buttons: [
+          { id: 1, text: "Edit", isActive: false },
+          { id: 2, text: "Add", isActive: false },
+          { id: 3, text: "View", isActive: true },
+        ],
+      },
+    ],
+  },
+  {
+    id: 3,
+    options: [
+      {
+        id: 1,
+        title: "Logs",
+        buttons: [
+          { id: 1, text: "Edit", isActive: false },
+          { id: 2, text: "Add", isActive: false },
+          { id: 3, text: "View", isActive: true },
+        ],
+      },
+      {
+        id: 2,
+        title: "FMCSA",
+        buttons: [
+          { id: 1, text: "Add", isActive: false },
+
+          { id: 1, text: "View", isActive: true },
+        ],
+      },
+    ],
+  },
+  {
+    id: 3,
+    options: [
+      {
+        id: 1,
+        title: "Driver",
+        buttons: [
+          { id: 1, text: "Edit", isActive: false },
+          { id: 2, text: "Add", isActive: false },
+          { id: 3, text: "View", isActive: true },
+        ],
+      },
+      {
+        id: 2,
+        title: "Notifications",
+        buttons: [
+          { id: 1, text: "Edit", isActive: false },
+
+          { id: 1, text: "View", isActive: true },
+        ],
+      },
+    ],
+  },
+];
+
 export const companySettingsModal = [
   {
     id: 1,

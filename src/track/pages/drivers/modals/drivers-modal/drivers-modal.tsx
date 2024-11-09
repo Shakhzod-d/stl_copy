@@ -1,6 +1,7 @@
 import useApiMutation from "@/hooks/useApiMutation";
 import { RootState } from "@/store";
 import { Flex } from "@/track/components/shared/drivers-header/drivers-header-styled";
+import { Select } from "@/track/components/shared/select";
 import { FormInput, FormSelect } from "@/track/components/ui";
 import { CustomModal, stateSelect } from "@/track/constants";
 import {
@@ -31,7 +32,7 @@ export const DriversModal = ({ open, setOpen, refetch }: Prop) => {
     form.resetFields(); // Formani tozalash
     setOpen(false);
   };
-
+  const dark = useSelector((state: RootState) => state.booleans.darkMode);
   const vehicleId = useSelector(
     (state: RootState) => state.booleans.driverSelect
   );
@@ -57,6 +58,7 @@ export const DriversModal = ({ open, setOpen, refetch }: Prop) => {
       },
     });
   };
+  const selectBg = dark ? "#373737" : "#F9F9FA";
   return (
     <CustomModal
       centered
@@ -126,10 +128,12 @@ export const DriversModal = ({ open, setOpen, refetch }: Prop) => {
               h="70px"
               rules={[{ validator: validatePhoneNumber }]}
             />
-            <FormSelect
+            <Select
               placeholder="Vehicle Id"
+              bg={selectBg}
+              w="100%"
               h="70px"
-              data={vehicleId}
+              option={vehicleId}
               // width="50%"
               name="vehicleId"
               rules={[
@@ -146,9 +150,11 @@ export const DriversModal = ({ open, setOpen, refetch }: Prop) => {
             />
           </Flex>
           <Flex $gap={"10px"} $w="100%">
-            <FormSelect
+            <Select
               placeholder="Driver's License Issuing State*"
-              data={stateSelect}
+              option={stateSelect}
+              bg={selectBg}
+              w="100%"
               name="driverLicenseIssuingState"
               h="70px"
               rules={[
@@ -166,22 +172,27 @@ export const DriversModal = ({ open, setOpen, refetch }: Prop) => {
                 { required: true, message: "Please homeTerminalAddress " },
               ]}
             />
-            <FormSelect
+            <Select
+              bg={selectBg}
+              w="100%"
               placeholder={"CO Driver"}
-              data={[{ value: "default", label: "CO Driver" }]}
+              option={[{ value: "default", label: "CO Driver" }]}
               h="70px"
             />
-            <FormSelect
+            <Select
+              bg={selectBg}
+              w="100%"
               placeholder={"Colors"}
-              data={[{ value: "default", label: "Colors" }]}
-              width=""
+              option={[{ value: "default", label: "Colors" }]}
               h="70px"
             />
           </Flex>
           <Flex $gap={"10px"} $w="100%">
-            <FormSelect
+            <Select
+              bg={selectBg}
+              w="100%"
               placeholder={"Address 1"}
-              data={[{ value: "default", label: "Address 1" }]}
+              option={[{ value: "default", label: "Address 1" }]}
               h="70px"
             />
             <FormInput placeholder="Address 2" h="70px" />

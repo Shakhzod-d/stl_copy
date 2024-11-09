@@ -64,5 +64,6 @@ export const CustomFlex = styled.div`
 export const Img = styled.img`
   width: 35px;
   height: 35px;
+  background: transparent;
   border-radius:50%;
 `;

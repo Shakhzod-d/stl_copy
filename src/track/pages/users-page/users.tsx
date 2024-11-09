@@ -36,7 +36,7 @@ export const Users = () => {
 
   const editData = (id: string) => {
     setOpen(true);
-    console.log(id);
+   
   };
   return (
     <Main>

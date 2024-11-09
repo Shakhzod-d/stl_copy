@@ -15,12 +15,12 @@ import { Rules } from "@/track/types/helper.type";
 
 interface SelectOption {
   id?: number;
-  value: string | number;
+  value: string | number | any;
   label: string | number;
 }
 
 interface Props {
-  option: SelectOption[];
+  option: [] | SelectOption[];
   placeholder?: string;
   dValue?: SelectOption;
   w?: string;
@@ -52,6 +52,7 @@ export const Select = (props: Props) => {
     bg,
     h,
     rules,
+    name,
   } = props;
   const [active, setActive] = useState(false);
 
@@ -65,10 +66,10 @@ export const Select = (props: Props) => {
   };
 
   // Calculate the default or initial value
-  const initialValue = dValue ? dValue : placeholder ? placeholder : undefined;
+  const initialValue = dValue ? dValue : undefined;
 
   // Set initial state for defaultValue, with error handling for invalid values
-  const [defaultValue, setDValue] = useState<SelectOption | string | undefined>(
+  const [defaultValue, setDValue] = useState<SelectOption | undefined>(
     isValidInitialValue(initialValue) ? initialValue : undefined
   );
 
@@ -97,52 +98,40 @@ export const Select = (props: Props) => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
-
+  const [test, setTest] = useState<string | undefined>(undefined);
   // Handle onChange and update selected value
-  const onClickFun = (e: unknown) => {
-    const value = option.find((item) => item.value === e);
-    setDValue(value);
-    setActive(false);
-    if (onChange) {
-      onChange(e);
+  const onClickFun = (value: string | number | unknown) => {
+    const selectedOption = option.find((item) => item.value === value);
+    if (selectedOption) {
+      setDValue(selectedOption); // Selectning default qiymatini yangilaydi
+      setTest(selectedOption.value.toString()); // Error sinovi uchun test state o'rnatiladi
+      setActive(false);
+      if (onChange) {
+        onChange(selectedOption);
+      }
     }
   };
 
-  // Form item with validation for the initial value
   return (
-    <Item
-      initialValue={
-        isValidInitialValue(defaultValue) ? defaultValue : undefined
-      }
-      rules={rules}
-      name="select"
-    >
+    <Item key={test} initialValue={test} rules={rules} name={name}>
       <Container $w={w} ref={selectRef}>
         <StyleSelect onClick={toggleSelect} $active={active} bg={bg} h={h}>
           <Text $font={font} color={dark ? "#fff" : clr}>
-            {typeof defaultValue === "string"
-              ? defaultValue
-              : defaultValue?.label || placeholder}
+            {defaultValue ? defaultValue.label : placeholder}
           </Text>
           <IoIosArrowDown color={dark ? "#fff" : "#000"} />
         </StyleSelect>
         <OptionContainer $active={active} $w={optionW || w} h={h}>
-          {option.map((item) => {
-            const isActive =
-              typeof defaultValue !== "string"
-                ? defaultValue?.value === item.value
-                : false;
-            return (
-              <Option
-                $clr={dark ? "#fff" : clr}
-                onClick={() => onClickFun(item.value)}
-                key={item.id}
-                $active={isActive}
-              >
-                {item.label}
-              </Option>
-            );
-          })}
+          {option.map((item) => (
+            <Option
+              $clr={dark ? "#fff" : clr}
+              onClick={() => onClickFun(item.value)}
+              key={item.id}
+              $active={defaultValue?.value === item.value}
+            >
+              {item.label}
+            </Option>
+          ))}
         </OptionContainer>
       </Container>
     </Item>

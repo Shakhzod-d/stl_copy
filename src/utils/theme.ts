@@ -18,6 +18,7 @@ export const lightTheme = {
   selectShadow: "0px 10px 60px 0px #0000001a",
   selectOptionBg: "#fff",
   selectBg: "#fff",
+  blueBtn: "#fff",
 };
 
 export const darkTheme = {
@@ -31,13 +32,14 @@ export const darkTheme = {
   selectGray: "gray",
   tableTopColor: "#fff",
   inputBg: "#303030",
-  btnActive: "#fff",
+  btnActive: "#373737",
   btnActiveClr: "#373737",
   customBtn: "#303030",
   FormSelect: "#7c7c80d6",
-  textAriaBg: "#7c7c80d6",
+  textAriaBg: "#373737",
   selectHover: "rgba(255, 255, 255, 0.1)",
   selectShadow: "0px 30px 100px 0px #00000080",
   selectOptionBg: "#2B2B2B",
   selectBg: "#373737",
+  blueBtn: "#212121",
 };
