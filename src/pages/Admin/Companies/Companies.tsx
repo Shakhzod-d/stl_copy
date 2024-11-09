@@ -37,7 +37,7 @@ const Companies: React.FC = () => {
     return data.map((item) => {
       const image: string | undefined = item?.logo
         ? item?.logo
-        : "/assets/images/user-logo.png";
+        : "/assets/images/company.png";
 
       return {
         id: item._id,
@@ -123,6 +123,7 @@ const Companies: React.FC = () => {
           editData={modalActive}
           onClick={CompanyHandler}
           isLoading={isLoading}
+          
         />
       </div>
     </Main>

@@ -9,6 +9,10 @@ import { Dispatch, SetStateAction, useState } from "react";
 import { Title } from "../../users-styled";
 import { DefaultBtn, PrimaryBtn } from "@/track/pages/units/units-styled";
 import { editUserModalBtns } from "@/track/utils";
+import { RootState } from "@/store";
+import { useSelector } from "react-redux";
+import { Select } from "@/track/components/shared/select";
+import { TabBtn } from "@/track/pages/company-users/modals/manage-user-modal/modal-styled";
 
 interface Props {
   setOpen: Dispatch<SetStateAction<boolean>>;
@@ -16,7 +20,8 @@ interface Props {
 }
 export const UserEditModal = ({ setOpen, open }: Props) => {
   const [activeBtn, setActiveBtn] = useState<number>(1);
-
+  const dark = useSelector((state: RootState) => state.booleans.darkMode);
+  const selectBg = dark ? "#373737" : "#F9F9FA";
   return (
     <CustomModal
       width={"100%"}
@@ -31,13 +36,13 @@ export const UserEditModal = ({ setOpen, open }: Props) => {
 
           <Flex $gap={"10px"}>
             {editUserModalBtns.map((item) => (
-              <TransparentButton
+              <TabBtn
                 key={item.id}
-                active={String(activeBtn === item.id)}
+                $active={activeBtn === item.id}
                 onClick={() => setActiveBtn(item.id)}
               >
                 {item.text}
-              </TransparentButton>
+              </TabBtn>
             ))}
           </Flex>
         </Flex>
@@ -45,15 +50,16 @@ export const UserEditModal = ({ setOpen, open }: Props) => {
         {activeBtn === 1 ? (
           <>
             <Flex $gap={"10px"} $w="100%">
-              <FormSelect
+              <Select
                 placeholder="status"
-                data={[
+                option={[
                   { value: "status", label: "Reseller" },
                   { value: "active", label: "Actice" },
                   { value: "completed", label: "Completed" },
                 ]}
-                width="100%"
-                h={"70px"}
+                bg={selectBg}
+                w="100%"
+                h="70px"
               />
 
               <FormInput placeholder="Phone" width="100%" h="70px" />
@@ -67,33 +73,38 @@ export const UserEditModal = ({ setOpen, open }: Props) => {
             </Flex>
 
             <Flex $gap={"10px"} $w="100%">
-              <FormSelect
+              <Select
                 placeholder="status"
-                data={[
+                option={[
                   { value: "status", label: "Status" },
                   { value: "active", label: "Actice" },
                   { value: "completed", label: "Completed" },
                 ]}
-                // width="50%"
-                h={"70px"}
+                bg={selectBg}
+                w="100%"
+                h="70px"
               />
-              <FormSelect
+              <Select
                 placeholder="status"
-                data={[
+                option={[
                   { value: "status", label: "Two-factures" },
                   { value: "active", label: "Actice" },
                   { value: "completed", label: "Completed" },
                 ]}
-                h={"70px"}
+                bg={selectBg}
+                w="100%"
+                h="70px"
               />
-              <FormSelect
+              <Select
                 placeholder="status"
-                data={[
+                option={[
                   { value: "status", label: "Role" },
                   { value: "active", label: "Actice" },
                   { value: "completed", label: "Completed" },
                 ]}
-                h={"70px"}
+                bg={selectBg}
+                w="100%"
+                h="70px"
               />
             </Flex>
           </>

@@ -10,9 +10,9 @@ import useApi from "@/hooks/useApi";
 
 import { companyDrivers } from "../../utils/mapData";
 
-
 export const Drivers = () => {
   const [open, setOpen] = useState(false);
+  const [active, setActive] = useState(1);
 
   const { data, isLoading, refetch } = useApi("/drivers", {
     page: 1,
@@ -35,8 +35,8 @@ export const Drivers = () => {
         </TopContainer>
 
         <BtnWrap>
-          <ActiveBtn>Vehicle</ActiveBtn>
-          <DefaultBtn>Deactivated</DefaultBtn>
+          <ActiveBtn $active={active === 1} onClick={()=>setActive(1)}>Vehicle</ActiveBtn>
+          <DefaultBtn $active={active === 2}onClick={()=>setActive(2)}>Deactivated</DefaultBtn>
         </BtnWrap>
         {isLoading ? (
           <PageLoad h="calc(100vh - 400px)" />

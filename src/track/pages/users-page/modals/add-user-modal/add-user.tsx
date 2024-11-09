@@ -1,13 +1,16 @@
 import useApiMutation from "@/hooks/useApiMutation";
+import { RootState } from "@/store";
 import { Flex } from "@/track/components/shared/drivers-header/drivers-header-styled";
+import { Select } from "@/track/components/shared/select";
 import { FormInput, FormSelect } from "@/track/components/ui";
 import { CustomModal, Text } from "@/track/constants";
-import { DefaultBtn } from "@/track/pages/drivers/styled";
-import { PrimaryBtn } from "@/track/pages/units/units-styled";
+
+import { DefaultBtn, PrimaryBtn } from "@/track/pages/units/units-styled";
 import { errorMessage, getLocalStorage, successMessage } from "@/utils";
 import { Form } from "antd";
 
 import { Dispatch, SetStateAction } from "react";
+import { useSelector } from "react-redux";
 
 interface Props {
   open: boolean;
@@ -16,7 +19,7 @@ interface Props {
 }
 export const AddUser = ({ open, setOpen, refetch }: Props) => {
   const UserMutation = useApiMutation("/user", { hideMessage: true });
-
+  const dark = useSelector((state: RootState) => state.booleans.darkMode);
   const roleSelectOption = [
     { value: "superAdmin", label: "superAdmin" },
     { value: "serviceAdmin", label: "serviceAdmin" },
@@ -52,6 +55,7 @@ export const AddUser = ({ open, setOpen, refetch }: Props) => {
       },
     });
   };
+  const selectBg = dark ? "#373737" : "#F9F9FA";
   return (
     <CustomModal width={"70%"} open={open} onCancel={() => setOpen(false)}>
       <Text $mb="20px" size={30}>
@@ -80,11 +84,14 @@ export const AddUser = ({ open, setOpen, refetch }: Props) => {
               placeholder="lastName"
               width="100%"
             />
-            <FormSelect
+            <Select
               name="role"
               rules={[{ required: true, message: "Please input your Role!" }]}
               placeholder="Role"
-              data={roleSelectOption}
+              option={roleSelectOption}
+              bg={selectBg}
+              w="100%"
+              h="60px"
             />
           </Flex>
 

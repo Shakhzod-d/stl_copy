@@ -1,4 +1,4 @@
-  import { Form } from "antd";
+import { Form } from "antd";
 import { ModalCheckBox, ModalTextArea, ModalTitle } from "./styled";
 // import { DefaultBtn, PrimaryBtn } from "../../../pages/units/units-styled";
 // import { FormInput, FormSelect } from "../../ui";
@@ -29,6 +29,8 @@ import { Flex } from "@/track/components/shared/drivers-header/drivers-header-st
 import { FormInput, FormSelect } from "@/track/components/ui";
 import { DefaultBtn, PrimaryBtn } from "../../units-styled";
 import { Select } from "@/track/components/shared/select";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store";
 // import useApiMutation from "../../../hooks/useApiMutation";
 // import { errorMessage, successMessage } from "../../../utils/message";
 interface Prop {
@@ -43,12 +45,15 @@ interface Data {
 export const UnitsAddModal = ({ open, setOpen, refetch }: Prop) => {
   const unitsMutation = useApiMutation("/vehicle", { hideMessage: true });
 
+  const dark = useSelector((state: RootState) => state.booleans.darkMode);
+
   const [form] = Form.useForm();
 
   const handleReset = () => {
     form.resetFields(); // Formani tozalash
     setOpen(false);
   };
+
   const validateLength = (_: RuleObject, value: string) => {
     if (value && value.length === 17) {
       return Promise.resolve();
@@ -73,6 +78,7 @@ export const UnitsAddModal = ({ open, setOpen, refetch }: Prop) => {
       },
     });
   };
+  const selectBg = dark ? "#373737" : "#F9F9FA";
   //--------------submit end
   return (
     <CustomModal
@@ -84,9 +90,9 @@ export const UnitsAddModal = ({ open, setOpen, refetch }: Prop) => {
     >
       <ModalTitle>Create Vehicle</ModalTitle>
 
-      <Flex $vertical={true} $gap={"10px"} $w="100%">
+      <Flex $vertical={true}  $w="100%">
         <Form onFinish={submit} form={form} style={{ width: "100%" }}>
-          <Flex $justify="space-between" $gap="10px" $w="100%">
+          <Flex $justify="space-between" $gap="10px" $w="100%" $m={"0"}>
             <FormInput
               placeholder="Vehicle ID"
               // name="vehicle_id"
@@ -100,8 +106,7 @@ export const UnitsAddModal = ({ open, setOpen, refetch }: Prop) => {
             />
             <Select
               placeholder={"Makes"}
-              bg="#373737"
-              
+              bg={selectBg}
               rules={[
                 {
                   required: true,
@@ -117,7 +122,9 @@ export const UnitsAddModal = ({ open, setOpen, refetch }: Prop) => {
           </Flex>
 
           <Flex $justify="space-between" $gap="10px" $w="100%">
-            <FormSelect
+            <Select
+              bg={selectBg}
+              w="100%"
               placeholder={"Models"}
               rules={[
                 {
@@ -125,7 +132,7 @@ export const UnitsAddModal = ({ open, setOpen, refetch }: Prop) => {
                   message: "Please input your Models",
                 },
               ]}
-              data={models}
+              option={models}
               h={"60px"}
               name="model"
             />
@@ -142,10 +149,12 @@ export const UnitsAddModal = ({ open, setOpen, refetch }: Prop) => {
             />
           </Flex>
 
-          <Flex $justify="space-between" $gap="10px" $w="100%">
-            <FormSelect
+          <Flex $justify="space-between" $gap="10px" $w="100%" $m="0 0 10px 0">
+            <Select
               placeholder={"License Plate Issuing State"}
-              data={stateSelect}
+              bg={selectBg}
+              w="100%"
+              option={stateSelect}
               h={"60px"}
               // name="licensec_state"
               // rules={[
@@ -155,9 +164,11 @@ export const UnitsAddModal = ({ open, setOpen, refetch }: Prop) => {
               //   },
               // ]}
             />
-            <FormSelect
+            <Select
+              bg={selectBg}
+              w="100%"
               placeholder={"Year"}
-              data={yearState}
+              option={yearState}
               h={"60px"}
               name="year"
               rules={[
@@ -170,9 +181,11 @@ export const UnitsAddModal = ({ open, setOpen, refetch }: Prop) => {
           </Flex>
 
           <Flex $w="100%">
-            <FormSelect
+            <Select
+             bg={selectBg}
+              w="100%"
               placeholder={"fuel type"}
-              data={fuelType}
+              option={fuelType}
               h={"60px"}
               name="fuelType"
               rules={[
@@ -203,7 +216,6 @@ export const UnitsAddModal = ({ open, setOpen, refetch }: Prop) => {
             <FormInput
               placeholder="Type"
               name="vin"
-              
               rules={[
                 {
                   required: true,

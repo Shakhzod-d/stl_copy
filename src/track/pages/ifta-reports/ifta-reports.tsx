@@ -11,6 +11,7 @@ import {
 import { CustomSelect, Navbar } from "../../components/ui";
 import { CustomTable } from "../../components/shared";
 import { Flex } from "@/track/components/shared/drivers-header/drivers-header-styled";
+import { Select } from "@/track/components/shared/select";
 
 export const IftaReports = () => {
   const [activeBtn, setActiveBtn] = useState<number>(1);
@@ -24,12 +25,12 @@ export const IftaReports = () => {
       <Flex $justify="space-between" $align="center">
         <Flex $gap={"10px"}>
           {IftaReportSelectData.map((item) => (
-            <CustomSelect
+            <Select
               key={item.id}
               placeholder={item.defaultValue}
               option={item.options}
-              width="185px"
-              height={50}
+              w="185px"
+              h={"50px"}
               // color="#000"
             />
           ))}
@@ -44,7 +45,7 @@ export const IftaReports = () => {
         {IftaReportButtons.map((item) => (
           <TransparentButton
             key={item.id}
-            active={(activeBtn == item.id).toString()}
+            active={(activeBtn === item.id).toString()}
             onClick={() => setActiveBtn(item.id)}
           >
             {item.text}

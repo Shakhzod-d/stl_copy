@@ -44,9 +44,11 @@ export const TransparentButton = styled(Button)<{
   padding: ${({ padding }) => (padding ? padding : "15px 35px")};
   border-radius: ${({ border }) => border || "10px"};
   background-color: ${({ active, $background, theme }) =>
-    active == "true" ? theme.btnActive : $background || theme.white} !important;
+    active === "true"
+      ? theme.btnActive
+      : $background || theme.white} !important;
   color: ${({ active, color, theme }) =>
-    active == "true" ? theme.btnActiveClr : color || theme.clr} !important;
+    active === "true" ? "#fff" : color || theme.clr} !important;
   font-size: 16px;
   font-weight: 500;
   letter-spacing: -0.5px;
@@ -56,10 +58,9 @@ export const TransparentButton = styled(Button)<{
   display: ${({ display }) => display || "flex"};
 
   &:hover {
-    background-color: ${({ active }) =>
-      active == "true" ? "#19223F" : "#fff"}!important;
-    border: 1px solid #f3f3f3;
-    color: #fc903a !important;
+    background-color: ${({ theme, active }) => theme.btnActive}!important;
+    // border: 1px solid #f3f3f3;
+    // color: #fc903a !important;
   }
 `;
 

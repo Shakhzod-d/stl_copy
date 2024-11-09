@@ -360,12 +360,14 @@ export const InfoCard = styled.div<{
 
 export const Box = styled.div`
   border-radius: 5px;
-  padding: 10px 20px;
+  padding: 0 20px;
   // width: 200px;
   height: 38px;
   min-width: 200px;
   background: ${({ theme }) => theme.white};
   color: #8c8c9b;
+  display: flex;
+  align-items: center;
 `;
 
 export const btnArr = [
@@ -1241,7 +1243,7 @@ export const usersTableHeader = [
   { header: "Name", accessor: "name" },
   { header: "Updated", accessor: "updated" },
   { header: "Status", accessor: "status" },
-  { header: "Carrier", accessor: "carrier" },
+  // { header: "Carrier", accessor: "carrier" },
   { header: "Role", accessor: "role" },
   { header: "", accessor: "edit" },
 ];
