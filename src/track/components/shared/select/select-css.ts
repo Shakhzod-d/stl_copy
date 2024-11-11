@@ -57,7 +57,7 @@ export const OptionContainer = styled.div<{
   ${({ $active }) =>
     $active
       ? `
-  z-index: 99999;
+  z-index: 999;
   
   transform: translateY(0);
   opacity: 1;

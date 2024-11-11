@@ -10,7 +10,7 @@ export const Header = styled.header`
   padding: 20px 0;
   position: sticky;
   background: ${(props) => props.theme.mainBg};
-  z-index: 999;
+  z-index: 1000;
   top: 0;
 `;
 

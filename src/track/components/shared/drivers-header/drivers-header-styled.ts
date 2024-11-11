@@ -6,6 +6,7 @@ export const Block = styled.div<{
   $gap?: number;
   content?: string;
   width?: number;
+  $disabled?: boolean;
 }>`
   max-width: ${({ width }) =>
     `${width}px`} !important; /* ma-width to'g'ri yozildi */
@@ -20,7 +21,8 @@ export const Block = styled.div<{
   gap: ${({ $gap = 0 }) => `${$gap}px`};
   justify-content: ${({ content }) => content};
   color ${({ theme }) => theme.clr};
-  cursor:pointer;
+  cursor:${({ $disabled }) => ($disabled ? "no-drop" : "pointer")};
+  ${({ $disabled }) => ($disabled ? "opacity:0.8" : "")}
 `;
 
 export const Div = styled.div<{ $w?: string }>`
@@ -47,15 +49,13 @@ export const StyleButton = styled(Button)<{ active: string }>`
 
   background: ${({ active, theme }) =>
     active === "true" ? theme.btnActive : theme.white} !important;
-  color: ${({ theme, active }) =>
-    active === "true" ? theme.btnActiveClr : theme.clr} !important;
+  color: ${({ theme, active }) => theme.clr} !important;
   border: none;
   &:hover {
     background: ${({ active, theme }) =>
-      active === "true" ? "#19223F" : "#fdfdfd"} !important;
+      active === "true" ? theme.blueBtn : theme.btnActive} !important;
     opacity: 0.8;
-    color: ${({ theme, active }) =>
-      active === "true" ? "#FFF" : "#000"} !important;
+    color: ${({ theme, active }) => theme.clr} !important;
   }
 `;
 export const BtnContainer = styled.div`

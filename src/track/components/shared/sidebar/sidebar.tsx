@@ -1,7 +1,6 @@
 import {
   ArrowBtn,
   BtnWrap,
-  CompanyIcon,
   Description,
   PageActive,
   PageBtn,
@@ -12,15 +11,8 @@ import {
   User,
 } from "./sidebar-styled";
 
-import { PiChartLineFill } from "react-icons/pi";
-import { HiOutlineBuildingLibrary } from "react-icons/hi2";
-import { FaPowerOff } from "react-icons/fa";
-import {
-  MdOutlineKeyboardDoubleArrowRight,
-  MdOutlineReportProblem,
-} from "react-icons/md";
-import { VscFileSubmodule } from "react-icons/vsc";
-import { useState } from "react";
+import { MdOutlineKeyboardDoubleArrowRight } from "react-icons/md";
+import React, { useCallback, useState } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store";
@@ -39,7 +31,7 @@ import {
   ReportIcon,
 } from "@/utils/icons";
 
-export const Sidebar = () => {
+export const Sidebar = React.memo(() => {
   const [btnActive, setBtnActive] = useState<number>(0);
   const companyData = useSelector((state: RootState) => state.company.company);
 
@@ -111,12 +103,12 @@ export const Sidebar = () => {
     (state: RootState) => state.booleans.sidebarActive
   );
 
-  const exitFun = () => {
+  const exitFun = useCallback(() => {
     removeLocalStorage("company");
     removeLocalStorage("companyId");
     setCompany(false);
     historyPush("/company");
-  };
+  }, []);
   const userData = useSelector((state: RootState) => state.auth.userData);
 
   const companyPage = ["Fleet manager", "ELD", "Reports"];
@@ -141,14 +133,14 @@ export const Sidebar = () => {
     }
   };
   const userFullName = `${userData?.firstName}  ${userData?.lastName}`;
-  const logoutFun = () => {
+  const logoutFun = useCallback(() => {
     removeLocalStorage("token");
     removeLocalStorage("roleId");
     removeLocalStorage("company");
     removeLocalStorage("companyId");
     sessionStorage.clear();
     window.location.reload();
-  };
+  }, []);
   const userImage =
     userData?.image === null ? "/assets/images/user-logo.png" : userData?.image;
   return (
@@ -278,4 +270,4 @@ export const Sidebar = () => {
       </User>
     </SidebarContainer>
   );
-};
+});

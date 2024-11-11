@@ -1,4 +1,3 @@
-import { Button } from "antd";
 import {
   Block,
   BtnContainer,
@@ -9,19 +8,14 @@ import {
 } from "./drivers-header-styled";
 import { BiLeftArrow } from "react-icons/bi";
 import { BsAndroid2 } from "react-icons/bs";
-// import ptIcon from "../../../assets/icons/pt.svg";
 
 import { useState } from "react";
-import { DriversWeek } from "@/track/constants";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-// import { RootState } from "../../../store/store";
-import { getLocalStorage } from "@/utils/localStorage";
 import { RootState } from "@/store";
 import LogActions from "@/pages/Logs/components/LogActions";
 import { useLogsInnerContext } from "@/pages/Logs/components/LogsInner.context";
 import moment from "moment";
-import { useWeekData } from "@/track/hooks/use-data-piker";
 interface DriverData {
   fullName: string | undefined;
   phone?: string;
@@ -36,7 +30,6 @@ export const DriversHeader = ({ fullName, phone }: DriverData) => {
   );
   const week_data = arrData.slice().reverse();
   const [activeBtn, setActiveBtn] = useState(week_data.length - 1);
-  // const dark = useSelector((state: RootState) => state.booleans.darkMode);
 
   const {
     state: { time: initialTime },
@@ -44,16 +37,11 @@ export const DriversHeader = ({ fullName, phone }: DriverData) => {
   } = useLogsInnerContext();
   const onDateChange = (value: number, i: number) => {
     if (i !== activeBtn) {
-      //     setCurrentLog(null); // TODO: uncomment to delete current log
       setTime(moment(value).valueOf());
       setActiveBtn(i);
     }
   };
-  const date = moment(initialTime).format("LLLL");
 
-  // console.log(arrData.slice().reverse());
-
-  const companyId = getLocalStorage("companyId");
   return (
     <div>
       <Flex $justify="space-between" $m="0 0 15px 0">

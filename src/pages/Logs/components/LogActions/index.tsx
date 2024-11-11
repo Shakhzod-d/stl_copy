@@ -31,31 +31,34 @@ const LogActions: React.FC<ILogActions> = ({}) => {
   }
 
   const dark = useSelector((state: RootState) => state.booleans.darkMode);
+  const date = new Date(),
+    day = new Date(initialTime),
+    disabled = date.getDate() === day.getDate();
+
   return (
-    // <div className="log-actions">
-      // <div className="log-left-actions">
-        <Flex $gap="6px">
-          <Block display="flex" width={200}>
-            <Text size={15} color="#babac1">
-              {dataPiker(initialTime)}
-            </Text>
-          </Block>
-          <Block
-            display="flex"
-            content="center"
-            onClick={() => onDateChange("prev")}
-          >
-            <IoIosArrowBack color={dark ? "#fff" : "#000"} />
-          </Block>
-          <Block
-            display="flex"
-            content="center"
-            onClick={() => onDateChange("next")}
-          >
-            <IoIosArrowForward color={dark ? "#fff" : "#000"} />
-          </Block>
-        </Flex>
-      // </div>
+    <Flex $gap="6px">
+      <Block display="flex" width={200}>
+        <Text size={15} color="#babac1">
+          {dataPiker(initialTime)}
+        </Text>
+      </Block>
+      <Block
+        display="flex"
+        content="center"
+        onClick={() => onDateChange("prev")}
+      >
+        <IoIosArrowBack color={dark ? "#fff" : "#000"} />
+      </Block>
+      <Block
+        display="flex"
+        content="center"
+        $disabled={disabled}
+        onClick={() => (!disabled ? onDateChange("next") : null)}
+      >
+        <IoIosArrowForward color={dark ? "#fff" : "#000"} />
+      </Block>
+    </Flex>
+    // </div>
     // </div>.
   );
 };

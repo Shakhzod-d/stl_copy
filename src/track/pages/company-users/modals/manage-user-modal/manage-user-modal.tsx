@@ -1,6 +1,6 @@
 // import { CustomModal, Text } from "../../../utils/constants";
 import { Btn, TabBtn } from "./modal-styled";
-import { useState, Dispatch, SetStateAction } from "react";
+import React, { useState, Dispatch, SetStateAction } from "react";
 import { Information } from "./information";
 import { Permission } from "./permission";
 import { CustomModal, Text } from "@/track/constants";
@@ -14,8 +14,9 @@ interface Props {
   setOpen: Dispatch<SetStateAction<boolean>>;
   open: boolean;
 }
-export const ManageUserModal = ({ setOpen, open }: Props) => {
+export const ManageUserModal = React.memo(({ setOpen, open }: Props) => {
   const [tabId, setTabId] = useState(1);
+
   return (
     <CustomModal
       width={"1300px"}
@@ -52,4 +53,4 @@ export const ManageUserModal = ({ setOpen, open }: Props) => {
       </Flex>
     </CustomModal>
   );
-};
+});

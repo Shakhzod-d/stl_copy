@@ -49,6 +49,12 @@ export const driversData = [
     action: "",
   },
 ];
+export const refreshSelect = [
+  { value: "off", label: "Auto Refresh off" },
+  { value: 30000, label: "1 minute" },
+  { value: 300000, label: "5 minute" },
+  { value: 600000, label: "10 minute" },
+];
 
 export const driverColumns = [
   {

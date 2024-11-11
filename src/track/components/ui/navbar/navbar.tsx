@@ -32,6 +32,7 @@ export const Navbar = ({ title, search = true }: Props) => {
     dispatch(setCompanyData(false));
     historyPush("/company");
   };
+
   return (
     <Header>
       <Title>{title}</Title>
