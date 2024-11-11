@@ -1,6 +1,5 @@
 import { CustomTable, ViolationsChart } from "@/track/components/shared";
 import {
-  CustomSelect,
   Drivers,
   Navbar,
   OverviewCard,
@@ -13,7 +12,6 @@ import { IoIosArrowDown } from "react-icons/io";
 import { Radio } from "antd";
 import {
   dashboardTableHeader,
-  dataSource,
   Reload,
   companyTable,
   Text,
@@ -21,6 +19,7 @@ import {
   dateTable,
   dateTableElement,
   Main,
+  refreshSelect,
 } from "@/track/constants";
 
 import {
@@ -33,7 +32,7 @@ import {
   CustomRadio,
 } from "./dashboard-styled";
 import { OrderTable } from "@/track/components/shared/order-table";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { RootState } from "@/store";
 import { dashboardProgressActive } from "@/store/slices/booleans-slice";
 import { autoRefresh } from "@/track/utils/method";
@@ -41,15 +40,9 @@ import { Flex } from "@/track/components/shared/drivers-header/drivers-header-st
 import { Select } from "@/track/components/shared/select";
 import { dashboardData } from "@/track/utils/mapData";
 import useApi from "@/hooks/useApi";
-// import useApi from "../../hooks/useApi";
-// import { dashboardData } from "../../utils/mapData";
 
-export const refreshSelect = [
-  { value: "off", label: "Auto Refresh off" },
-  { value: 30000, label: "1 minute" },
-  { value: 300000, label: "5 minute" },
-  { value: 600000, label: "10 minute" },
-];
+
+
 export const Dashboard = () => {
   const active = useSelector(
     (state: RootState) => state.booleans.dashboardProgress
@@ -82,12 +75,12 @@ export const Dashboard = () => {
     getLocalStorage("autoReload") !== null
       ? Number(getLocalStorage("autoReload"))
       : 0;
-  const refreshHandler = (e: number | string | unknown) => {
+  const refreshHandler = useCallback((e: number | string | unknown) => {
     let reload = e === 30000 ? 1 : e === 300000 ? 2 : e === 600000 ? 3 : 0;
 
     setLocalStorage("autoReload", reload);
     autoRefresh(e !== "off" ? Number(reload) : 0);
-  };
+  },[]);
 
   useEffect(() => {
     if (Boolean(reloadStatus)) {

@@ -26,22 +26,10 @@
 
 @import "./classes";
 
-// layout
-// @import "../layouts/AppLayout/layout";
-// @import "../layouts/AdminLayout/admin-layout";
-// @import "../layouts/MainLayout/main-layout";
-// pages
-
-@import "../pages/Profile/profile";
 @import "../pages/Drivers/drivers";
-@import "../pages/Vehicles/vehicles";
-// @import "../pages/Dashboard/dashboard";
 @import "../pages/Logs/logs";
 @import "../pages/Logs/components/LogActions/actions";
 @import "../pages/Logs/components/LogCorrection/logsCorrection";
-@import "../pages/LogsByDriver/logs-by-driver";
-@import "../pages/Trackings/trackings";
-@import "../pages/Users/users";
-@import "../pages/IftaReports/ifta-reports";
-@import "../pages/Reports/DriverReports/driver-reports";
+// @import "../pages/LogsByDriver/logs-by-driver";
+// @import "../pages/IftaReports/ifta-reports";
 @import "../pages/Logs/components/MultiDayGraph/container/multi-logs";

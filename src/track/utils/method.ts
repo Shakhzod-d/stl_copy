@@ -1,7 +1,7 @@
 import api from "@/api";
-import { refreshSelect } from "@/pages/Dashboard/Dashboard";
 
 import { removeLocalStorage } from "@/utils/localStorage";
+import { refreshSelect } from "../constants";
 
 export function validatePhoneNumber<T>(_: T, value: string) {
   const cleanedValue = value.replace(/\D/g, ""); // Faqat raqamlarni qoldiramiz

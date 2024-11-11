@@ -12,9 +12,7 @@ import { validatePhoneNumber } from "../../utils/method";
 import { Flex } from "@/track/components/shared/drivers-header/drivers-header-styled";
 
 import useApiMutation from "@/hooks/useApiMutation";
-import api from "@/api";
-import { useImageUpload } from "@/track/hooks/use-debauce";
-import { useMutation } from "react-query";
+import { useRef, useState } from "react";
 
 interface CompanyData {
   [key: string]: number | boolean | string;
@@ -22,40 +20,31 @@ interface CompanyData {
 
 export const TabCompany = () => {
   const companyMutation = useApiMutation("/company", { hideMessage: true });
+  const logoMutation = useApiMutation("/company/logo", { hideMessage: true });
 
-  const { image, file, handleImageUpload, handleRemoveImage } =
-    useImageUpload();
+  // const { image, file, handleImageUpload, handleRemoveImage } =
+  //   useImageUpload();
 
   const [form] = Form.useForm();
 
-  const submitImage = async (file: File | null) => {
-    if (!file) throw new Error("No file selected");
+  // const submitImage = async (file: File | null) => {
+  //   if (!file) throw new Error("No file selected");
 
-    const formData = new FormData();
-    formData.append("image", file);
+  //   const formData = new FormData();
+  //   formData.append("image", file);
 
-    const response = await api.post("/company/logo", formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
+  //   const response = await api.post("/company/logo", formData, {
+  //     headers: {
+  //       "Content-Type": "multipart/form-data",
+  //     },
+  //   });
 
-    return response.data;
-  };
+  //   return response.data;
+  // };
 
   const handleReset = () => {
     form.resetFields(); // Formani tozalash
   };
-  const mutation = useMutation(() => submitImage(file), {
-    onSuccess: (res) => {
-      console.log(res);
-      alert("Image uploaded successfully!");
-    },
-    onError: (err: any) => {
-      console.error(err);
-      alert(`Error uploading image: ${err.message}`);
-    },
-  });
 
   const submit = async (data: CompanyData) => {
     const CompanyData = {
@@ -75,7 +64,38 @@ export const TabCompany = () => {
       },
     });
   };
+  const formData = new FormData();
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const handleButtonClick = () => {
+    // Yashirin inputni bosish
+    fileInputRef.current?.click();
+  };
+  const onChangeFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      formData.append("file", file);
 
+      // Rasm preview uchun URL oling
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImagePreview(reader.result as string); // Buni preview sifatida qo'ying
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const submitPhoto = () => {
+    logoMutation.mutate(formData, {
+      // formData obyektini to'liq yuborish
+      onSuccess: (res: unknown) => {
+        console.log(res);
+      },
+      onError: (err) => {
+        console.log(err);
+      },
+    });
+  };
   return (
     <Form style={{ maxWidth: "100%" }} onFinish={submit} form={form}>
       <StyleFlex>
@@ -269,40 +289,28 @@ export const TabCompany = () => {
           />
         </Div>
       </StyleFlex>
-      <UploadBtn onClick={handleImageUpload}>
-        {image && (
-          <div style={{ position: "relative", display: "inline-block" }}>
-            <img
-              src={image}
-              alt="Tanlangan rasm"
-              style={{
-                width: "70px",
-                height: "70px",
-                objectFit: "cover",
-                borderRadius: "8px",
-                border: "1px solid #ddd",
-              }}
-            />
-            <button
-              onClick={handleRemoveImage}
-              style={{
-                position: "absolute",
-                top: "5px",
-                right: "5px",
-                backgroundColor: "red",
-                color: "white",
-                border: "none",
-                padding: "1px 5px",
-                cursor: "pointer",
-                borderRadius: "50%",
-              }}
-            >
-              ✕
-            </button>
-          </div>
-        )}
+      <UploadBtn onClick={handleButtonClick}>
         <TiDownload />
         <Text> Upload company logo</Text>
+        {imagePreview ? (
+          <img
+            src={imagePreview}
+            alt="Tanlangan fayl"
+            style={{
+              width: "50px",
+              height: "50px",
+            }}
+          />
+        ) : (
+         ""
+        )}
+        <input
+          type="file"
+          onChange={onChangeFile}
+          name="file_upload"
+          style={{ display: "none" }}
+          ref={fileInputRef}
+        />
       </UploadBtn>
 
       <Form.Item
@@ -317,7 +325,7 @@ export const TabCompany = () => {
         <Note placeholder="Note" />
       </Form.Item>
       <Flex $justify="end" $gap={"20px"} onClick={handleReset}>
-        <DefaultBtn onClick={() => mutation.mutate()}>cancel</DefaultBtn>
+        <DefaultBtn onClick={submitPhoto}>cancel</DefaultBtn>
         <PrimaryBtn
           padding="15px 40px"
           htmlType="submit"

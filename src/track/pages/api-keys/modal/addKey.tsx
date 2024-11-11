@@ -10,7 +10,12 @@ interface Props {
 }
 export const AddKey = ({ open, setOpen }: Props) => {
   return (
-    <CustomModal width={"800px"} style={{ padding: "25px" }} open={open} onCancel={()=>setOpen(false)}>
+    <CustomModal
+      width={"800px"}
+      style={{ padding: "25px" }}
+      open={open}
+      onCancel={() => setOpen(false)}
+    >
       <Text size={30} $mb="25px">
         Generate API Key
       </Text>

@@ -7,10 +7,18 @@ import {
   setModalActive,
   setModalAnimated,
 } from "@/store/slices/booleans-slice";
+import { useRef } from "react";
 
 export const NotificationModal = () => {
-  const dark = useSelector((state: RootState) => state.booleans.darkMode);
-  const dispatch = useDispatch();
+  const dark = useSelector((state: RootState) => state.booleans.darkMode),
+    modalBox = useRef<HTMLDivElement>(null),
+    dispatch = useDispatch(),
+    close = (e: any) => {
+      if (e.target !== modalBox.current) {
+        closeModal();
+      }
+    };
+
   const modalAnimated = useSelector(
     (state: RootState) => state.booleans.modalAnimated
   );
@@ -23,8 +31,8 @@ export const NotificationModal = () => {
   };
   return (
     <>
-      <ModalWrapper>
-        <Modal $modalActive={modalAnimated}>
+      <ModalWrapper className="modal-wrapper" onClick={close}>
+        <Modal $modalActive={modalAnimated} ref={modalBox}>
           <BsX
             size={30}
             color={dark ? "#fff" : "#000"}
