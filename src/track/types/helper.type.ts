@@ -18,5 +18,5 @@ export interface Rules {
 }
 
 export interface Obj {
-  [key: string]: string | number | boolean  ;
+  [key: string]: string | number | boolean ;
 }

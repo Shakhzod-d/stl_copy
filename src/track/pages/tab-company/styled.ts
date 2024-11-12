@@ -37,6 +37,7 @@ export const AddBtn = styled(Button)`
   color: #fff;
 `;
 export const UploadBtn = styled.div`
+  width: 100%;
   border: 1px solid #d3d3df;
   border-radius: 10px;
   padding: 25px 20px;
@@ -66,4 +67,27 @@ export const Note = styled.textarea`
   &::placeholder {
     color: ${({ theme }) => theme.clr};
   }
+`;
+
+export const ImgContainer = styled.div`
+  position: relative;
+  display: flex;
+  gap: 20px;
+  align-items: center;
+`;
+
+export const DeleteImg = styled.div`
+  width: 20px;
+  height: 20px;
+  
+  border-radius: 50%;
+  background: red;
+  display: flex;
+  justify-content: center;
+  align-items: start;
+  color: white;
+  cursor: pointer;
+  position: absolute;
+  left: 0;
+  top: 0;
 `;

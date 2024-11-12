@@ -60,7 +60,7 @@ export const TransparentButton = styled(Button)<{
   &:hover {
     background-color: ${({ theme, active }) => theme.btnActive}!important;
     // border: 1px solid #f3f3f3;
-    // color: #fc903a !important;
+    color: #fff !important;
   }
 `;
 
