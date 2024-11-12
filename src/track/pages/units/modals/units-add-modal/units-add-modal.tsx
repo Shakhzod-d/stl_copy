@@ -92,7 +92,7 @@ export const UnitsAddModal = ({ open, setOpen, refetch }: Prop) => {
 
       <Flex $vertical={true}  $w="100%">
         <Form onFinish={submit} form={form} style={{ width: "100%" }}>
-          <Flex $justify="space-between" $gap="10px" $w="100%" $m={"0"}>
+          <Flex $justify="space-between" $gap="10px" $w="100%" $m={"0 0 10px 0"}>
             <FormInput
               placeholder="Vehicle ID"
               // name="vehicle_id"
@@ -121,7 +121,7 @@ export const UnitsAddModal = ({ open, setOpen, refetch }: Prop) => {
             />
           </Flex>
 
-          <Flex $justify="space-between" $gap="10px" $w="100%">
+          <Flex $justify="space-between" $gap="10px" $w="100%" $m="0 0 10px 0">
             <Select
               bg={selectBg}
               w="100%"
@@ -209,11 +209,12 @@ export const UnitsAddModal = ({ open, setOpen, refetch }: Prop) => {
             <ModalTextArea placeholder="Notes" />
           </Form.Item>
 
-          <Flex $vertical={true}>
+          <Flex $vertical={true} $m=" 0 0 20px 0">
             <ModalCheckBox>
               <Text>Enter Vin Manually</Text>
             </ModalCheckBox>
             <FormInput
+            
               placeholder="Type"
               name="vin"
               rules={[
@@ -228,7 +229,7 @@ export const UnitsAddModal = ({ open, setOpen, refetch }: Prop) => {
             />
           </Flex>
 
-          <Flex $vertical={true}>
+          <Flex $vertical={true} $m="0 0 45px 0">
             <ModalCheckBox>
               <Text>Get Automatically from ELD ( recommended )</Text>
             </ModalCheckBox>

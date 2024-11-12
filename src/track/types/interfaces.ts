@@ -180,3 +180,8 @@ export interface DashboardData {
   lastName: null | string;
   companyName: null | string;
 }
+
+export interface DriverCount {
+  status: string;
+  count: number;
+}

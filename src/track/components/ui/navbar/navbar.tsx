@@ -12,13 +12,14 @@ import { CompanyIcon, User } from "../../shared/sidebar/sidebar-styled";
 
 import { historyPush } from "@/utils";
 import { setCompanyData } from "@/store/slices/company-slice";
+import { memo } from "react";
 // import { setModal } from "@/track/utils/dispatch";
 
 interface Props {
   title: string;
   search?: boolean;
 }
-export const Navbar = ({ title, search = true }: Props) => {
+export const Navbar = memo(({ title, search = true }: Props) => {
   const dispatch = useDispatch();
   const dark = useSelector((state: RootState) => state.booleans.darkMode);
   const CompanyData = useSelector((state: RootState) => state.company.company);
@@ -68,4 +69,4 @@ export const Navbar = ({ title, search = true }: Props) => {
       </Flex>
     </Header>
   );
-};
+});

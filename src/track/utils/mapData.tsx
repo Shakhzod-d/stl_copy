@@ -1,5 +1,5 @@
 import { HiPhone } from "react-icons/hi2";
-import { ObjType } from "../types/helper.type";
+import { Obj, ObjType } from "../types/helper.type";
 
 import { useDate } from "@/track/hooks/useDate";
 import { IoMdMail } from "react-icons/io";
@@ -8,9 +8,12 @@ import { formatTime } from "./method";
 import { InnerTable, LogsFormData } from "@/types/log.type";
 import { Checkbox } from "antd";
 import { MdModeEdit } from "react-icons/md";
-import { BsThreeDotsVertical } from "react-icons/bs";
-import { DashboardData } from "../types";
+import { BsThreeDotsVertical, BsTruck } from "react-icons/bs";
+import { DashboardData, DriverCount } from "../types";
 import moment from "moment";
+import { FaPowerOff } from "react-icons/fa";
+import { GrUserAdmin } from "react-icons/gr";
+import { TbMoonStars } from "react-icons/tb";
 function calculateDaysBetweenDates(startDate: string): number {
   const start = new Date(startDate);
   const endDate = new Date();
@@ -213,4 +216,72 @@ export const LogsFormMap = (data: LogsFormData) => {
     { id: 6, title: "Shipping docs", value: "N/A 11194RY9P" },
     { id: 7, title: "Signature", value: "Signed" },
   ];
+};
+
+export const driversCount = (data: any[] | DriverCount[] | []) => {
+  // {status: 'dr', count: 0}
+  // 1
+  // :
+  // {status: 'on', count: 0}
+  // 2
+  // :
+  // {status: 'off', count: 11}
+  // 3
+  // :
+  // {status: 'sb', count: 1}
+  const activeClr: Obj = {
+      off: "#5D5E5F",
+      on: "#3DA8D5",
+      dr: "#32BE61",
+      sb: "#FC973A",
+    },
+    statusText: Obj = {
+      off: "Off duty",
+      dr: "Driving",
+      on: "On duty",
+      sb: "Sleeping",
+    },
+    icons: any = {
+      off: (
+        <FaPowerOff
+          color="#b0b0b9"
+          style={{ width: "48px", height: "48px", marginBottom: "15px" }}
+        />
+      ),
+      on: (
+        <GrUserAdmin
+          color="#3DA8D5"
+          style={{ width: "48px", height: "48px", marginBottom: "15px" }}
+        />
+      ),
+      dr: (
+        <BsTruck
+          color="#32BE61"
+          style={{ width: "48px", height: "48px", marginBottom: "15px" }}
+        />
+      ),
+      sb: (
+        <TbMoonStars
+          color="#FC973A"
+          style={{ width: "48px", height: "48px", marginBottom: "15px" }}
+        />
+      ),
+    },
+    activeData = data.map((item, i) => {
+      return {
+        id: i,
+        text: statusText[item.status],
+        count: item.count,
+        color: activeClr[item.status],
+        icon: icons[item.status],
+      };
+    });
+  const filterData = data.map((item, i) => {
+    return {
+      id: i,
+      text: `${statusText[item.status]} ${item.count}`,
+      color: activeClr[item.status],
+    };
+  });
+  return { activeData, filterData };
 };

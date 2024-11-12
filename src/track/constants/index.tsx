@@ -365,7 +365,7 @@ export const TransparentButton = styled(Button)<{
     background-color: ${({ active, theme }) => theme.btnActive}!important;
     // border: 1px solid #f3f3f3;
 
-    color: #fc973a !important;
+    color: #fff !important;
   }
   &.active {
     background-color: ${({ active, $background, theme }) =>
