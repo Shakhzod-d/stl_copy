@@ -22,7 +22,7 @@ export function Violation() {
 
   return (
     <>
-      <TimeContainer setUnixTime={setDay} />
+      <TimeContainer setUnix={setDay} />
       <CustomTable
         columns={violationTabHeader}
         data={filterData}

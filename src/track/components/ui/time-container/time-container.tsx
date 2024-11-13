@@ -4,30 +4,30 @@ import { Flex } from "../../shared/drivers-header/drivers-header-styled";
 import moment from "moment";
 import { Dispatch, SetStateAction, useState } from "react";
 interface Props {
-  setUnixTime?: Dispatch<SetStateAction<number>>;
+  setUnix?: Dispatch<SetStateAction<any>>;
 }
-export const TimeContainer = ({ setUnixTime }: Props) => {
+export const TimeContainer = ({ setUnix }: Props) => {
   const [dayControl, setDayControl] = useState(0);
+
+
   function getUnixTimestamp(date: Date): number {
-    return Math.floor(date.getTime() / 1000);
+    return Math.floor(date.getTime() / 1000); 
   }
 
-  const today = new Date();
+  const today = new Date(); 
 
+ 
   function formatUnixDate(unixTimestamp: number, daysToShift: number): string {
-    const day: any = moment.unix(unixTimestamp).add(daysToShift, "days").unix(); // `daysToShift` musbat bo‘lsa oldinga, manfiy bo‘lsa orqaga suradi
+    const day = moment.unix(unixTimestamp).add(daysToShift, "days");
+    setUnix?.(day.unix()); 
 
-    setUnixTime?.(day._i);
-    return moment
-      .unix(unixTimestamp)
-      .add(daysToShift, "days") // `daysToShift` musbat bo‘lsa oldinga, manfiy bo‘lsa orqaga suradi
-      .format("DD-MM-YYYY");
+    return day.format("DD-MM-YYYY"); 
   }
-  const day = getUnixTimestamp(today); // Masalan, 1780999 kabi qiymat qaytaradi
-  const date: any = moment.unix(day).add(dayControl, "days").unix();
 
-  const formattedDate = formatUnixDate(day, dayControl);
-  const addBtnBool = today.getDate() === new Date(date * 1000).getDate();
+  const day = getUnixTimestamp(today); 
+  const shiftedDate = moment.unix(day).add(dayControl, "days").unix(); 
+  const formattedDate = formatUnixDate(day, dayControl); 
+  const addBtnBool = today.getDate() === new Date(shiftedDate * 1000).getDate(); 
 
   return (
     <Between>
