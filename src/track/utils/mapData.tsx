@@ -285,3 +285,17 @@ export const driversCount = (data: any[] | DriverCount[] | []) => {
   });
   return { activeData, filterData };
 };
+
+export const violationsPageData = (data: any[] | []) => {
+  return data.map((item) => {
+    return {
+      driver: `${item.driver.firstName} ${item.driver.lastName}`,
+      error: item.Violations.violation,
+      status: item.driver.currentStatus,
+      start: item.Violations.log.start,
+      address: item.driver.address1,
+      odometer: item.Violations.log.odometer,
+      hours: item.Violations.log.engineHours,
+    };
+  });
+};
