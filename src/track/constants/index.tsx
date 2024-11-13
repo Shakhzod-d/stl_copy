@@ -276,14 +276,15 @@ export const Between = styled.div`
   align-items: center;
 `;
 
-export const SmallBox = styled.div`
+export const SmallBox = styled.div<{ $disabled?: boolean }>`
   border-radius: 5px 0 0 5px;
   padding: 10px 15px;
   width: 42px;
   height: 38px;
   background: ${({ theme }) => theme.white};
   color: #8c8c9b;
-  cursor: pointer;
+  ${({ $disabled }) => ($disabled ? "opacity:0.8" : "")};
+  cursor:${({ $disabled }) => ($disabled ? "no-drop" : "pointer")};
 `;
 export const transferBtns = [
   { id: 1, text: "Map" },

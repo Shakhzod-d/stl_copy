@@ -32,10 +32,10 @@ const App: React.FC = () => {
     getLocalStorage("company");
   const dark = useSelector((state: RootState) => state.booleans.darkMode);
   useEffect(() => {
-    if (!company && pathname == "/") {
+    if (!company && pathname === "/") {
       historyPush("/company");
     }
-    if (company && pathname == "/") {
+    if (company && pathname === "/") {
       historyPush(`/main/dashboard`);
     }
   }, [pathname]);

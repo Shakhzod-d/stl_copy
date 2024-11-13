@@ -23,5 +23,5 @@ export const Title = styled.h2`
 `;
 export const Icon = styled.div`
   cursor: pointer;
-  color: ${(props) => props.theme.clr};
+  color: ${({ theme }) => theme.clr};
 `;
