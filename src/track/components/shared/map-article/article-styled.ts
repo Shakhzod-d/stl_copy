@@ -37,7 +37,7 @@ export const Status = styled.div<{ $statusBg: string }>`
       ? "#8C8C9B"
       : "#32BE61"};
 
-  color: #fff;
+  color: ${({ theme }) => theme.blueBtn};
   font-size: 12px;
 `;
 export const Title = styled.h3`
