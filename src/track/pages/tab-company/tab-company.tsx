@@ -99,8 +99,6 @@ export const TabCompany = () => {
       ...data,
       zip: Number(data.zip),
       logo: null,
-      companyId,
-      roleId,
     };
 
     if (imagePreview && formData.current.has("file")) {
@@ -110,8 +108,6 @@ export const TabCompany = () => {
           const updatedCompanyData = {
             ...preparedData,
             logo: res.data,
-            companyId,
-            roleId,
           };
           submitCompanyData(updatedCompanyData); // `companyMutation`ni chaqirish
         },

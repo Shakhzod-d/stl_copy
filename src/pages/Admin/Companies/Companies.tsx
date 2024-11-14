@@ -29,14 +29,16 @@ const Companies: React.FC = () => {
 
   const [searchTerm, setSearchTerm] = useState<string>("");
   const { data, isLoading } = useApi<IPageData<ICompanyData[]>>(
-    "/main/allcompany",
+    "/companies",
     { page: 1, limit: 10000 }
   );
 
   const mapData = (data: ICompanyData[]): CompanyData[] => {
+    console.log(data);
+
     return data.map((item) => {
       const image: string | undefined = item?.logo
-        ? item?.logo
+        ? `https://unityapi.roundedteam.uz/public/uploads/companyLogos/${item?.logo}`
         : "/assets/images/company.png";
 
       return {
@@ -123,7 +125,6 @@ const Companies: React.FC = () => {
           editData={modalActive}
           onClick={CompanyHandler}
           isLoading={isLoading}
-          
         />
       </div>
     </Main>
