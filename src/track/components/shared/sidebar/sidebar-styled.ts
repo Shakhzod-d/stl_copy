@@ -83,7 +83,6 @@ export const Exit = styled(Button)`
 export const TabBtn = styled.div<{ $active?: boolean }>`
   border-radius: 10px;
   width: ${({ $active }) => ($active ? "220px" : "100%")};
-  // min-height: 70px;
   transition: max-width 0.4s ease, width 0.3s ease;
   background: rgba(255, 255, 255, 0.1);
   margin-bottom: 10px;
@@ -113,18 +112,28 @@ export const BtnWrap = styled.div`
 export const PageActive = styled(NavLink)`
   display: block;
   padding: 15px 20px;
-
   color: white;
   width: 100%;
-  // height: 49px;
-  transition: all 0.3s;
-  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  animation: fadeInSlideDown 0.5s ease forwards;
+
   &:hover {
     background: rgba(255, 255, 255, 0.05);
   }
 
   &.active {
     background: rgba(255, 255, 255, 0.1);
+  }
+
+
+  @keyframes fadeInSlideDown {
+    to {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0); 
+    }
   }
 `;
 export const User = styled.div<{ $background?: string; color?: string }>`
