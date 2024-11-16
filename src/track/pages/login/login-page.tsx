@@ -69,6 +69,7 @@ export const Login = () => {
         <StyledForm autoComplete="off" onFinish={onFinish}>
           <Label htmlFor="">Login</Label>
           <Form.Item
+            style={{ marginBottom: "10px" }}
             name={"email"}
             rules={[
               {
@@ -87,6 +88,7 @@ export const Login = () => {
           <Form.Item
             name={"password"}
             rules={[{ required: true, message: "Please input your password!" }]}
+            style={{ margin: 0 }}
           >
             <StyledInput
               placeholder="Enter password"
@@ -94,7 +96,7 @@ export const Login = () => {
               style={{ marginBottom: "20px" }}
             />
           </Form.Item>
-          <Form.Item>
+          <Form.Item style={{ marginBottom: "20px" }}>
             <Button
               htmlType="submit"
               type="primary"
@@ -104,7 +106,6 @@ export const Login = () => {
                 background: "#FC973A",
                 color: "#fff",
                 height: "60px",
-                marginBottom: "5px",
                 borderRadius: "6px",
               }}
             >
