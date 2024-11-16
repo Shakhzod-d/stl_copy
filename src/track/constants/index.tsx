@@ -284,7 +284,7 @@ export const SmallBox = styled.div<{ $disabled?: boolean }>`
   background: ${({ theme }) => theme.white};
   color: #8c8c9b;
   ${({ $disabled }) => ($disabled ? "opacity:0.8" : "")};
-  cursor:${({ $disabled }) => ($disabled ? "no-drop" : "pointer")};
+  cursor: ${({ $disabled }) => ($disabled ? "no-drop" : "pointer")};
 `;
 export const transferBtns = [
   { id: 1, text: "Map" },
@@ -361,6 +361,7 @@ export const TransparentButton = styled(Button)<{
   height: ${({ height }) => (height ? height : "50px")};
   border: 1px solid transparent;
   display: ${({ display }) => display || "flex"};
+  gap:10px;
 
   &:hover {
     background-color: ${({ active, theme }) => theme.btnActive}!important;

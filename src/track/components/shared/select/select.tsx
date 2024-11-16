@@ -122,7 +122,7 @@ export const Select = (props: Props) => {
           <IoIosArrowDown color={dark ? "#fff" : "#000"} />
         </StyleSelect>
         <OptionContainer $active={active} $w={optionW || w} h={h}>
-          {option.map((item,i) => (
+          {option.map((item, i) => (
             <Option
               $clr={dark ? "#fff" : clr}
               onClick={() => onClickFun(item.value)}

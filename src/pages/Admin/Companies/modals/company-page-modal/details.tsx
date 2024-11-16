@@ -52,8 +52,10 @@ export const Details = () => {
           h="70px"
           w="100%"
           bg={selectBg}
+          clr="#5D5E5F"
         />
         <Select
+          clr="#5D5E5F"
           option={country}
           w="100%"
           bg={selectBg}
@@ -69,6 +71,7 @@ export const Details = () => {
       </StyleFlex>
       <StyleFlex>
         <Select
+          clr="#5D5E5F"
           placeholder="State"
           option={state}
           w="100%"
@@ -76,6 +79,7 @@ export const Details = () => {
           bg={selectBg}
         />
         <Select
+          clr="#5D5E5F"
           option={status}
           w="100%"
           placeholder="Status"

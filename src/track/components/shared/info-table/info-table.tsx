@@ -23,6 +23,7 @@ interface TableData {
   id: number | string;
   icon?: JSX.Element | string | null;
   text: string;
+  type: string;
 }
 
 interface RowData {
@@ -89,7 +90,13 @@ export const InfoTable = ({
                       <Text
                         $font="400"
                         size={14}
-                        color={c.text === "Active" ? "red" : undefined}
+                        color={
+                          c.type === "company"
+                            ? "#8C8C9B"
+                            : c.type === "contact"
+                            ? "#5D5E5F"
+                            : "undefined"
+                        }
                       >
                         {c.text}
                       </Text>

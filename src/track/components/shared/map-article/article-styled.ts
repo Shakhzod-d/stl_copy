@@ -50,6 +50,7 @@ export const Title = styled.h3`
 export const TruckNum = styled.p`
   font-weight: 500;
   font-size: 12px;
+  margin-left: 22px;
   color: ${({ theme }) => theme.clrGray2};
 `;
 
@@ -59,7 +60,7 @@ export const Description = styled.span`
   letter-spacing: -0.04em;
   display: flex;
   gap: 10px;
-  margin: 15px 0 0 20px;
+  margin: 15px 0 0 0;
   color: ${({ theme }) => theme.clrGray2};
   p {
     color: #3da8d5;
