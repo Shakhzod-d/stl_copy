@@ -19,7 +19,7 @@ export const StyleFlex = styled.div`
   margin-bottom: 10px;
   display: flex;
   gap: 6px;
-  align-items: center;
+  align-items: start;
 `;
 export const Div = styled.div`
   width: 100%;
@@ -79,7 +79,7 @@ export const ImgContainer = styled.div`
 export const DeleteImg = styled.div`
   width: 20px;
   height: 20px;
-  
+
   border-radius: 50%;
   background: red;
   display: flex;

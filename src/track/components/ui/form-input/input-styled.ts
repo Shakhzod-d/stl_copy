@@ -34,7 +34,7 @@ export const StyledInput = styled(Input)<{
     background: ${({ $bg = "#f9f9fa" }) => $bg} !important;
   }
   &::placeholder {
-    color: ${({ $pClr = "#000" }) => $pClr} !important;
+    color: ${({ $pClr = "#5D5E5F" }) => $pClr} !important;
   }
   &.ant-input {
     background-color: ${({ $bg = "#f9f9fa" }) => $bg} !important;

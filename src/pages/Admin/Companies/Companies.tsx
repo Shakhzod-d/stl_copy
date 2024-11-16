@@ -28,10 +28,10 @@ const Companies: React.FC = () => {
   const [open, setOpen] = useState(false);
 
   const [searchTerm, setSearchTerm] = useState<string>("");
-  const { data, isLoading } = useApi<IPageData<ICompanyData[]>>(
-    "/companies",
-    { page: 1, limit: 10000 }
-  );
+  const { data, isLoading } = useApi<IPageData<ICompanyData[]>>("/companies", {
+    page: 1,
+    limit: 10000,
+  });
 
   const mapData = (data: ICompanyData[]): CompanyData[] => {
     console.log(data);
@@ -47,8 +47,13 @@ const Companies: React.FC = () => {
           label: item.companyName,
           img: image,
           data: [
-            { id: 1, text: "9328382389", icon: <HiPhone /> },
-            { id: 2, text: "support@asritsolutions.com", icon: <IoMdMail /> },
+            { id: 1, text: "9328382389", icon: <HiPhone />, type: "company" },
+            {
+              id: 2,
+              text: "support@asritsolutions.com",
+              icon: <IoMdMail />,
+              type: "company",
+            },
           ],
         },
         status: { label: "Active" },
@@ -59,16 +64,27 @@ const Companies: React.FC = () => {
               id: 1,
               text: "Farmon Muhammadiyev (Owner)",
               icon: <RiUser3Fill />,
+              type: "contact",
             },
-            { id: 2, text: " (318) 818-0000", icon: <HiPhone /> },
-            { id: 3, text: "zavajan96@gmail.com", icon: <IoMdMail /> },
+            {
+              id: 2,
+              text: " (318) 818-0000",
+              icon: <HiPhone />,
+              type: "contact",
+            },
+            {
+              id: 3,
+              text: "zavajan96@gmail.com",
+              icon: <IoMdMail />,
+              type: "contact",
+            },
           ],
         },
         created: {
           label: "",
           data: [
-            { id: 1, text: "Created: Apr 3rd 2023", icon: "" },
-            { id: 2, text: "Edited: Apr 3rd 2023", icon: "" },
+            { id: 1, text: "Created: Apr 3rd 2023", icon: "", type: "time" },
+            { id: 2, text: "Edited: Apr 3rd 2023", icon: "", type: "time" },
           ],
         },
         edit: { label: "Edit" },
