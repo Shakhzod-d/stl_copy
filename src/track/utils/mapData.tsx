@@ -267,7 +267,8 @@ export const driversCount = (data: any[] | DriverCount[] | []) => {
         />
       ),
     },
-    activeData = data.map((item, i) => {
+    // @ts-ignore
+    activeData = data?.statusCount.map((item, i) => {
       return {
         id: i,
         text: statusText[item.status],
