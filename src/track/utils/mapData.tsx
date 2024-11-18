@@ -218,7 +218,7 @@ export const LogsFormMap = (data: LogsFormData) => {
   ];
 };
 
-export const driversCount = (data: any[] | DriverCount[] | []) => {
+export const driversCount = (data: any | DriverCount[] | []) => {
   // {status: 'dr', count: 0}
   // 1
   // :
@@ -267,23 +267,28 @@ export const driversCount = (data: any[] | DriverCount[] | []) => {
         />
       ),
     },
-    // @ts-ignore
-    activeData = data?.statusCount.map((item, i) => {
+
+    activeData = data?.statusCount?.map(
+      (item: { status: string; count: number }, i:number) => {
+        return {
+          id: i,
+          text: statusText[item.status],
+          count: item.count,
+          color: activeClr[item.status],
+          icon: icons[item.status],
+        };
+      }
+    );
+  const filterData = data?.statusCount?.map(
+    (item: { status: string; count: number }, i: number) => {
+
       return {
         id: i,
-        text: statusText[item.status],
-        count: item.count,
+        text: `${statusText[item.status]} ${item.count}`,
         color: activeClr[item.status],
-        icon: icons[item.status],
       };
-    });
-  const filterData = data.map((item, i) => {
-    return {
-      id: i,
-      text: `${statusText[item.status]} ${item.count}`,
-      color: activeClr[item.status],
-    };
-  });
+    }
+  );
   return { activeData, filterData };
 };
 
