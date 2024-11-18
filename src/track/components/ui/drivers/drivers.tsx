@@ -26,12 +26,10 @@ export const Drivers = memo(() => {
     limit: 1000,
   });
 
-  // console.log("data", data ? data?.data : []);
-  // const { activeData = [], filterData = [] } = driversCount(
-  //   data ? data?.data : []
-  // );
+  const { activeData , filterData  } = driversCount(
+    data ? data?.data : []
+  );
   
-  // MUST FIX HERE
   return (
     <InfoCard $active={active}>
       {active ? (
