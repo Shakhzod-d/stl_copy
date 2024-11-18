@@ -4,9 +4,17 @@ import { RootState } from "@/store";
 
 import { ResText, ResTitle } from "../overview-card/overview-styled";
 import { Text, InfoCard } from "@/track/constants";
-import { memo } from "react";
+import { ReactNode, memo } from "react";
 import useApi from "@/hooks/useApi";
 import { driversCount } from "@/track/utils/mapData";
+
+interface activeDataTypes {
+  id: number;
+  text: string;
+  count?: number;
+  color: string;
+  icon: null;
+}
 
 export const Drivers = memo(() => {
   const active = useSelector(
@@ -28,7 +36,7 @@ export const Drivers = memo(() => {
             Drivers
           </Text>
           <ActiveCard $active={active}>
-            {activeData.map((item) => {
+            {activeData?.map((item: activeDataTypes) => {
               const Icon = () => item.icon;
               return (
                 <Item key={item.id}>
@@ -44,7 +52,7 @@ export const Drivers = memo(() => {
         <ActiveCard>
           <ResTitle>Drivers</ResTitle>
           <ActiveCard>
-            {filterData.map((item) => (
+            {filterData?.map((item: activeDataTypes) => (
               <ResText $clr={String(item.color)} key={item.id}>
                 {item.text}
               </ResText>
