@@ -26,8 +26,12 @@ export const Drivers = memo(() => {
     limit: 1000,
   });
 
-  const { activeData, filterData } = driversCount(data ? data?.data : []);
-
+  // console.log("data", data ? data?.data : []);
+  // const { activeData = [], filterData = [] } = driversCount(
+  //   data ? data?.data : []
+  // );
+  
+  // MUST FIX HERE
   return (
     <InfoCard $active={active}>
       {active ? (
@@ -36,7 +40,9 @@ export const Drivers = memo(() => {
             Drivers
           </Text>
           <ActiveCard $active={active}>
+
             {activeData?.map((item: activeDataTypes) => {
+         
               const Icon = () => item.icon;
               return (
                 <Item key={item.id}>
@@ -52,7 +58,9 @@ export const Drivers = memo(() => {
         <ActiveCard>
           <ResTitle>Drivers</ResTitle>
           <ActiveCard>
+
             {filterData?.map((item: activeDataTypes) => (
+
               <ResText $clr={String(item.color)} key={item.id}>
                 {item.text}
               </ResText>
