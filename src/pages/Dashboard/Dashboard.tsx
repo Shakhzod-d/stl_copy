@@ -1,9 +1,9 @@
-import { CustomTable, ViolationsChart } from "@/track/components/shared";
 import {
-  Drivers,
-  Navbar,
-  OverviewCard,
-} from "@/track/components/ui";
+  CustomTable,
+  TimePickerModal,
+  ViolationsChart,
+} from "@/track/components/shared";
+import { Drivers, Navbar, OverviewCard } from "@/track/components/ui";
 import { getLocalStorage, setLocalStorage } from "../../utils/index";
 import { useDispatch, useSelector } from "react-redux";
 import { BiCalendarStar } from "react-icons/bi";
@@ -40,9 +40,8 @@ import { Select } from "@/track/components/shared/select";
 import { dashboardData } from "@/track/utils/mapData";
 import useApi from "@/hooks/useApi";
 
-
-
 export const Dashboard = () => {
+  const [open, setOpen] = useState(false);
   const active = useSelector(
     (state: RootState) => state.booleans.dashboardProgress
   );
@@ -79,7 +78,7 @@ export const Dashboard = () => {
 
     setLocalStorage("autoReload", reload);
     autoRefresh(e !== "off" ? Number(reload) : 0);
-  },[]);
+  }, []);
 
   useEffect(() => {
     if (Boolean(reloadStatus)) {
@@ -91,9 +90,10 @@ export const Dashboard = () => {
     <Main>
       <Navbar title="Dashboard" />
       <Day>
-        <Flex $gap={"20px"}>
+        <Flex $gap={"20px"} style={{ position: "relative" }}>
+          {open && <TimePickerModal setOpen={setOpen} /> }
           <CustomBtn>
-            <BiCalendarStar size={30} />
+            <BiCalendarStar size={30} onClick={() => setOpen(true)} />
           </CustomBtn>
         </Flex>
         <Flex $gap={"5px"}>
