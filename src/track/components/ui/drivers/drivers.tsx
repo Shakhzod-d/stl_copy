@@ -15,21 +15,18 @@ interface activeDataTypes {
   color: string;
   icon: null;
 }
-
-export const Drivers = memo(() => {
+interface Props {
+  data: any;
+}
+export const Drivers = memo(({ data }: Props) => {
   const active = useSelector(
     (state: RootState) => state.booleans.dashboardProgress
   );
 
-  const { data } = useApi("/count", {
-    page: 1,
-    limit: 1000,
-  });
+ 
 
-  const { activeData , filterData  } = driversCount(
-    data ? data?.data : []
-  );
-  
+  const { activeData, filterData } = driversCount(data ? data?.data : []);
+
   return (
     <InfoCard $active={active}>
       {active ? (
@@ -38,9 +35,7 @@ export const Drivers = memo(() => {
             Drivers
           </Text>
           <ActiveCard $active={active}>
-
             {activeData?.map((item: activeDataTypes) => {
-         
               const Icon = () => item.icon;
               return (
                 <Item key={item.id}>
@@ -56,9 +51,7 @@ export const Drivers = memo(() => {
         <ActiveCard>
           <ResTitle>Drivers</ResTitle>
           <ActiveCard>
-
             {filterData?.map((item: activeDataTypes) => (
-
               <ResText $clr={String(item.color)} key={item.id}>
                 {item.text}
               </ResText>

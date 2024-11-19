@@ -166,19 +166,33 @@ export interface InfoTableData {
     | { label: string; img: string; data?: CompaniesArr[] };
 }
 
-export interface DashboardData {
+export interface ViolationsData {
   _id: string;
+  isDeleted: boolean;
   driverId: string;
   companyId: string;
   date: number;
   violation: string;
   done: boolean;
-  logId: null | string;
-  status: null | string;
+  logId: string | null | number;
+  status: string | null | number;
   cycle: number;
-  firstName: null | string;
-  lastName: null | string;
-  companyName: null | string;
+  __v: number;
+  createdAt: string;
+  updatedAt: string;
+}
+export interface DriverData {
+  firstName: string;
+  lastName: string;
+  lastUpdated: string;
+  companyName: string;
+  eldConnection: boolean;
+  cycle: number;
+}
+export interface DashboardData {
+  driverInfo: DriverData;
+  driverId: string;
+  violations: ViolationsData[];
 }
 
 export interface DriverCount {

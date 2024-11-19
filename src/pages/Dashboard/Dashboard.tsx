@@ -54,12 +54,16 @@ export const Dashboard = () => {
     { value: "active", label: "Actice" },
     { value: "completed", label: "Completed" },
   ];
-  const { data, isLoading } = useApi("/main/violations", {
-    page: 1,
-    limit: 1000,
-  });
+  const { data: DashboardData, isLoading: dashboardTableLoad } = useApi(
+    "/driversInfo",
+    {
+      page: 1,
+      limit: 1000,
+    }
+  );
+  const { data: driversCount } = useApi("/count");
 
-  const filerData = dashboardData(data ? data?.data?.data : []);
+  const filerData = dashboardData(DashboardData ? DashboardData?.data : []);
 
   const dispatch = useDispatch();
 
@@ -91,7 +95,7 @@ export const Dashboard = () => {
       <Navbar title="Dashboard" />
       <Day>
         <Flex $gap={"20px"} style={{ position: "relative" }}>
-          {open && <TimePickerModal setOpen={setOpen} /> }
+          {open && <TimePickerModal setOpen={setOpen} />}
           <CustomBtn>
             <BiCalendarStar size={30} onClick={() => setOpen(true)} />
           </CustomBtn>
@@ -112,9 +116,19 @@ export const Dashboard = () => {
       </Day>
 
       <CardWrapper $width={sidebarActive}>
-        <Drivers />
+        <Drivers data={driversCount} />
         <ViolationsChart />
-        <OverviewCard />
+        <OverviewCard
+          activeVehicles={
+            driversCount?.data ? driversCount?.data.activeVehicles : 0
+          }
+          activeDrivers={
+            driversCount?.data ? driversCount?.data.activeDrivers : 0
+          }
+          inspection={
+            driversCount?.data ? driversCount?.data.inspectionsCount : 0
+          }
+        />
         <CustomBtn onClick={() => dispatch(dashboardProgressActive())}>
           <ArrowIcon $active={active}>
             <IoIosArrowDown />
@@ -199,7 +213,7 @@ export const Dashboard = () => {
         <CustomTable
           columns={dashboardTableHeader}
           data={filerData}
-          isLoading={isLoading}
+          isLoading={dashboardTableLoad}
         />
       ) : (
         <OrderTable
