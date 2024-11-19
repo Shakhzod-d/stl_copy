@@ -19,6 +19,7 @@ export { InfoTable } from "./info-table";
 // export { ManageUserModal } from "./manage-user-modal";
 // export { CompanyModal } from "./company-page-modal";
 export { Map } from "./map";
+export {TimePickerModal} from "./time-picker";
 // export { TrackingMap } from "./tracking-map";
 // export { AddUser } from "./add-user-modal";
 // export { UnitsAddModal } from "./units-add-modal";
