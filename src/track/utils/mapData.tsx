@@ -162,19 +162,61 @@ export function companyDrivers(data: DriversGet[] = []) {
   return { drivers, logDrivers };
 }
 
+function timeAgo(inputDate: string): string {
+  const now = new Date();
+  const date = new Date(inputDate);
+
+  const seconds = Math.floor((now.getTime() - date.getTime()) / 1000);
+
+  if (seconds < 60) {
+    return `${seconds} seconds ago`;
+  }
+
+  const minutes = Math.floor(seconds / 60);
+  if (minutes < 60) {
+    return `${minutes} minutes ago`;
+  }
+
+  const hours = Math.floor(minutes / 60);
+  if (hours < 24) {
+    return `${hours} hours ago`;
+  }
+
+  const days = Math.floor(hours / 24);
+  if (days < 7) {
+    return `${days} days ago`;
+  }
+
+  const weeks = Math.floor(days / 7);
+  if (weeks < 4) {
+    return `${weeks} week${weeks > 1 ? "s" : ""} ago`;
+  }
+
+  const months = Math.floor(days / 30); // Taxminan o'rtacha oy uzunligi
+  if (months < 12) {
+    return `${months} month${months > 1 ? "s" : ""} ago`;
+  }
+
+  const years = Math.floor(days / 365); // Taxminiy yil uzunligi
+  return `${years} year${years > 1 ? "s" : ""} ago`;
+}
+
 export const dashboardData = (data: DashboardData[] | []) => {
   const result = data.map((item, i) => {
-    const eld = item.done ? "Connected" : "Not connected";
-    const formattedDate = moment.unix(item.date).format("MMM D, YYYY");
+    const eld = item.driverInfo.eldConnection ? "Connected" : "Not connected",
+      update = timeAgo(item.violations[0].updatedAt);
+    const formattedDate = moment
+      .unix(item.violations[0].date)
+      .format("MMM D, YYYY");
     return {
       key: i,
-      name: `${item.firstName} ${item.lastName}`,
-      violations: item.violation,
+      name: `${item.driverInfo.firstName} ${item.driverInfo.lastName}`,
+      violations: item.violations[0].violation,
       date: formattedDate,
       eld,
-      cycle: formatTime(Number(item.cycle)),
-      company: item.companyName,
-      updated: "3 minutes ago",
+      cycle: formatTime(Number(item.driverInfo.cycle)),
+      company: item.driverInfo.companyName,
+      updated: update,
     };
   });
   return result;
@@ -183,6 +225,7 @@ export const dashboardData = (data: DashboardData[] | []) => {
 export const innerTable = (data: InnerTable[]) => {
   const result = data.map((item, i) => {
     const start = formattedTime(item.start);
+
     return {
       _id: i + 1,
       id: item._id,
@@ -267,9 +310,8 @@ export const driversCount = (data: any | DriverCount[] | []) => {
         />
       ),
     },
-
     activeData = data?.statusCount?.map(
-      (item: { status: string; count: number }, i:number) => {
+      (item: { status: string; count: number }, i: number) => {
         return {
           id: i,
           text: statusText[item.status],
@@ -281,7 +323,6 @@ export const driversCount = (data: any | DriverCount[] | []) => {
     );
   const filterData = data?.statusCount?.map(
     (item: { status: string; count: number }, i: number) => {
-
       return {
         id: i,
         text: `${statusText[item.status]} ${item.count}`,
