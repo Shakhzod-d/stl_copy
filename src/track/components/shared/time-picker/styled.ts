@@ -85,7 +85,8 @@ export const Div = styled.div`
 
 export const Modal = styled.div`
   position: absolute;
-  right: 60px;
+  top: 55px;
+  left: 0;
   z-index: 999;
   max-width: 361px;
   display: flex;

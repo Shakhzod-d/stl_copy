@@ -120,7 +120,7 @@ export const TimePickerModal = ({ setOpen }: Props) => {
           <MdRestartAlt />
         </DefaultBtn>
 
-        <PrimaryBtn width="220px" height="50px">
+        <PrimaryBtn width="220px" height="50px" onClick={()=>setOpen(false)}>
           Apply
         </PrimaryBtn>
       </Flex>
