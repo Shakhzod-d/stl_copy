@@ -16,25 +16,25 @@ export const TimePickerModal = ({ setOpen }: Props) => {
 
   const selectRef = useRef<HTMLDivElement>(null);
 
-    const closeSelect = () => {
-      setOpen(false);
+  const closeSelect = () => {
+    setOpen(false);
+  };
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        selectRef.current &&
+        !selectRef.current.contains(event.target as Node)
+      ) {
+        closeSelect();
+      }
     };
-   useEffect(() => {
-     const handleClickOutside = (event: MouseEvent) => {
-       if (
-         selectRef.current &&
-         !selectRef.current.contains(event.target as Node)
-       ) {
-         closeSelect();
-       }
-     };
 
-     document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
 
-     return () => {
-       document.removeEventListener("mousedown", handleClickOutside);
-     };
-   }, []);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   return (
     <Modal ref={selectRef}>
@@ -49,7 +49,7 @@ export const TimePickerModal = ({ setOpen }: Props) => {
             width={"65px"}
             height={"34px"}
             padding="6px 11px"
-            $background={"#f9f9fa"}
+            style={{ background: "#F9F9FA", borderRadius: "6px" }}
           />
 
           <Div>
@@ -59,6 +59,7 @@ export const TimePickerModal = ({ setOpen }: Props) => {
               height="34px"
               $background={startActiveBtn != 1 ? "#F9F9FA" : "#F3F3F4"}
               onClick={() => setStartActiveBtn(1)}
+              color={"#212121"}
             >
               AM
             </TransparentButton>
@@ -68,6 +69,7 @@ export const TimePickerModal = ({ setOpen }: Props) => {
               height="34px"
               $background={startActiveBtn != 2 ? "#F9F9FA" : "#F3F3F4"}
               onClick={() => setStartActiveBtn(2)}
+              color={"#212121"}
             >
               PM
             </TransparentButton>
@@ -84,7 +86,7 @@ export const TimePickerModal = ({ setOpen }: Props) => {
             width={"65px"}
             height={"34px"}
             padding="6px 11px"
-            $background={"#f9f9fa"}
+            style={{ background: "#F9F9FA", borderRadius: "6px" }}
           />
 
           <Div>
@@ -94,6 +96,7 @@ export const TimePickerModal = ({ setOpen }: Props) => {
               height="34px"
               $background={finishActiveBtn != 1 ? "#F9F9FA" : "#F3F3F4"}
               onClick={() => setFinishActiveBtn(1)}
+              color={"#212121"}
             >
               AM
             </TransparentButton>
@@ -103,6 +106,7 @@ export const TimePickerModal = ({ setOpen }: Props) => {
               height="34px"
               $background={finishActiveBtn != 2 ? "#F9F9FA" : "#F3F3F4"}
               onClick={() => setFinishActiveBtn(2)}
+              color={"#212121"}
             >
               PM
             </TransparentButton>
@@ -120,7 +124,7 @@ export const TimePickerModal = ({ setOpen }: Props) => {
           <MdRestartAlt />
         </DefaultBtn>
 
-        <PrimaryBtn width="220px" height="50px" onClick={()=>setOpen(false)}>
+        <PrimaryBtn width="220px" height="50px" onClick={() => setOpen(false)}>
           Apply
         </PrimaryBtn>
       </Flex>
