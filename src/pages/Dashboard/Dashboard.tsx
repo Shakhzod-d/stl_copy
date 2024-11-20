@@ -91,9 +91,9 @@ export const Dashboard = () => {
       <Navbar title="Dashboard" />
       <Day>
         <Flex $gap={"20px"} style={{ position: "relative" }}>
-          {open && <TimePickerModal setOpen={setOpen} /> }
-          <CustomBtn>
-            <BiCalendarStar size={30} onClick={() => setOpen(true)} />
+          {open && <TimePickerModal setOpen={setOpen} />}
+          <CustomBtn onClick={() => setOpen(true)}>
+            <BiCalendarStar size={30} />
           </CustomBtn>
         </Flex>
         <Flex $gap={"5px"}>
