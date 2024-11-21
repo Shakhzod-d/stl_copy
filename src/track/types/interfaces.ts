@@ -58,7 +58,7 @@ export interface ILog {
   hasCycle?: false;
   hasFlag?: false;
   isDeleted?: false;
-  isEnded?: true;
+  isEnded?: boolean;
   isFirst?: false;
   location: { lat: number; lng: number; name: string; _id?: string };
   notes: string;
@@ -198,4 +198,103 @@ export interface DashboardData {
 export interface DriverCount {
   status: string;
   count: number;
+}
+
+export interface DriersByLogsType {
+  _id: string;
+  isDeleted: boolean;
+  driverId: string;
+  start: number;
+  end: number;
+  duration: number;
+  status: string;
+  engineHours: number;
+  odometer: number;
+  distance: number;
+  document: string;
+  notes: string;
+  trailer: string;
+  companyId: string;
+  vehicleId: string;
+  vehicleUnit: string;
+  coDriverId: string;
+  location: {
+    lat: number;
+    lng: number;
+    name: string;
+    _id: string;
+  };
+  hasFlag: boolean;
+  hasCycle: boolean;
+  isFirst: boolean;
+  isEnded: boolean;
+  origin: string;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+  date: number;
+  EldLocation: any;
+  cycle: {
+    break: number;
+    drive: number;
+    shift: any | number;
+    cycle: number;
+  };
+  violations:
+    | [
+        {
+          _id: string;
+          driverId: string;
+          __v: any;
+          companyId: string;
+          createdAt: string;
+          cycle: number;
+          date: string;
+          done: boolean;
+          isDeleted: boolean;
+          logId: any;
+          status: any;
+          updatedAt: string;
+          violation: string;
+        }
+      ]
+    | [];
+}
+
+export interface MapsType {
+  _id: number;
+  firstName: string;
+  lastName: string;
+  email: string;
+  currentStatus: string;
+  vehicleUnit: number | string;
+  device: {
+    _id: string;
+    time: number;
+    vehicleId: string;
+    systemTime: number;
+    state: string;
+    distance: number;
+    odometer: number;
+    engHours: number;
+    speed: number;
+    location: {
+      lat: number;
+      lng: number;
+      name: string;
+      time: number;
+      _id: number;
+    };
+  } | null;
+  mobile: {
+    _id: string;
+    time: number;
+    vehicleId: string;
+    battery: number;
+    bluetooth: boolean;
+    eldConnection: boolean;
+    gpsPermission: true;
+    location: boolean;
+    systemTime: number;
+  } | null;
 }

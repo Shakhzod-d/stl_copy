@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { getLocalStorage } from "@/utils/localStorage";
 import { WeekData } from "@/track/components/shared/drivers-header/drivers-header";
 export interface Data {
-  [key: string]: string | number | boolean | null;
+  [key: string]: any ;
 }
 interface State {
   company: Data | false | null;

@@ -30,6 +30,7 @@ import {
   FileIcon,
   ReportIcon,
 } from "@/utils/icons";
+import { cp } from "fs";
 
 export const Sidebar = React.memo(() => {
   const [btnActive, setBtnActive] = useState<number>(0);
@@ -167,17 +168,18 @@ export const Sidebar = React.memo(() => {
             {active && <p>Dashboard</p>}
           </PageBtn>
         )}
+        {userData && userData?.role?.roleName !== "companyAdmin" && (
+          <PageBtn onClick={exitFun} to={"/company"} $active={active}>
+            <CompanyICon />
 
-        <PageBtn onClick={exitFun} to={"/company"} $active={active}>
-          <CompanyICon />
-
-          {active && (
-            <>
-              <p>Company</p>{" "}
-              <p style={{ marginLeft: "50px" }}>{data?.data.data.length}</p>
-            </>
-          )}
-        </PageBtn>
+            {active && (
+              <>
+                <p>Company</p>{" "}
+                <p style={{ marginLeft: "50px" }}>{data?.data.data.length}</p>
+              </>
+            )}
+          </PageBtn>
+        )}
 
         <Description>Menu</Description>
         {sidebarData.map((item) => {

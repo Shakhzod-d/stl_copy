@@ -19,6 +19,7 @@ export const Drivers = () => {
     limit: 1000,
   });
 
+
   const drivers = companyDrivers(data ? data?.data?.data : []);
   return (
     <>
@@ -35,8 +36,12 @@ export const Drivers = () => {
         </TopContainer>
 
         <BtnWrap>
-          <ActiveBtn $active={active === 1} onClick={()=>setActive(1)}>Vehicle</ActiveBtn>
-          <DefaultBtn $active={active === 2}onClick={()=>setActive(2)}>Deactivated</DefaultBtn>
+          <ActiveBtn $active={active === 1} onClick={() => setActive(1)}>
+            Vehicle
+          </ActiveBtn>
+          <DefaultBtn $active={active === 2} onClick={() => setActive(2)}>
+            Deactivated
+          </DefaultBtn>
         </BtnWrap>
         {isLoading ? (
           <PageLoad h="calc(100vh - 400px)" />

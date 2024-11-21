@@ -9,11 +9,17 @@ import { InnerTable, LogsFormData } from "@/types/log.type";
 import { Checkbox } from "antd";
 import { MdModeEdit } from "react-icons/md";
 import { BsThreeDotsVertical, BsTruck } from "react-icons/bs";
-import { DashboardData, DriverCount } from "../types";
+import {
+  DashboardData,
+  DriersByLogsType,
+  DriverCount,
+  MapsType,
+} from "../types";
 import moment from "moment";
 import { FaPowerOff } from "react-icons/fa";
 import { GrUserAdmin } from "react-icons/gr";
 import { TbMoonStars } from "react-icons/tb";
+import { Select } from "../components/shared/custom-select";
 function calculateDaysBetweenDates(startDate: string): number {
   const start = new Date(startDate);
   const endDate = new Date();
@@ -115,7 +121,6 @@ interface Cycle {
 }
 
 interface DriversGet {
-  _id: string;
   firstName: string;
   lastName: string;
   username: string;
@@ -123,6 +128,7 @@ interface DriversGet {
   deviceInfo: string;
   status: string;
   cycle?: Cycle;
+  _id?: string;
 }
 
 export function companyDrivers(data: DriversGet[] = []) {
@@ -136,7 +142,7 @@ export function companyDrivers(data: DriversGet[] = []) {
       vehicle: item.vehicleUnit,
       app_version: "4.6.7",
       activated: "2024-03-02",
-      device_info: item.deviceInfo,
+      // device_info: item.deviceInfo,
       action: "",
     };
   });
@@ -158,8 +164,14 @@ export function companyDrivers(data: DriversGet[] = []) {
       updated: "13 weeks ago",
     };
   });
+  const LogsByDriver = data.map((item) => {
+    return {
+      driver: item.firstName + " " + item.lastName,
+      driverId: item?._id,
+    };
+  });
 
-  return { drivers, logDrivers };
+  return { drivers, logDrivers, LogsByDriver };
 }
 
 function timeAgo(inputDate: string): string {
@@ -343,6 +355,45 @@ export const violationsPageData = (data: any[] | []) => {
       address: item.driver.address1,
       odometer: item.Violations.log.odometer,
       hours: item.Violations.log.engineHours,
+    };
+  });
+};
+
+// export const driverLogsMap(data:)
+
+export const LogsByDriverMap = (data: DriersByLogsType[] | []) => {
+  return data.map((item, i) => {
+    const date = new Date(item.date * 1000);
+    return {
+      id: i + 1,
+      date: `${date.getDay()}/${date.getMonth()}/${date.getFullYear()}`,
+      truckNo: item.vehicleUnit,
+      status: item.status,
+      location: item.location.name,
+      warnings: "",
+      break: formatTime(item.cycle ? item.cycle.break : 0),
+      drive: formatTime(item.cycle ? item.cycle.drive : 0),
+      shift: formatTime(item.cycle ? item.cycle.shift : 0),
+      cycle: formatTime(item.cycle ? item.cycle.cycle : 0),
+      recap: "00:00",
+      updated: timeAgo(item.updatedAt),
+    };
+  });
+};
+
+export const MapsData = (data: MapsType[] | []) => {
+  data.map((item, i) => {
+    return {
+      id: i + 1,
+      name: item.device ? item.device.location.name : "",
+      lat: item.device ? item.device.location.lat : 0, // Qarshi
+      lng: item.device ? item.device.location.lng : 0,
+      address: item.device?.location,
+      status: "61 mph",
+      destination: "Samarqand, Uzbekistan",
+      destLat: 39.6542, // Samarqand
+      destLng: 66.9597,
+      progress: 20, // 20% of the route completed
     };
   });
 };

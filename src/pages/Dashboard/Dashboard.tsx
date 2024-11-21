@@ -77,11 +77,22 @@ export const Dashboard = () => {
     getLocalStorage("autoReload") !== null
       ? Number(getLocalStorage("autoReload"))
       : 0;
-  const refreshHandler = useCallback((e: number | string | unknown) => {
-    let reload = e === 30000 ? 1 : e === 300000 ? 2 : e === 600000 ? 3 : 0;
+  interface ReloadData {
+    value: number | string;
+    label: string;
+  }
+  const refreshHandler = useCallback((e: ReloadData) => {
+    let reload =
+      e.value === 30000
+        ? 1
+        : e.value === 300000
+        ? 2
+        : e.value === 600000
+        ? 3
+        : 0;
 
     setLocalStorage("autoReload", reload);
-    autoRefresh(e !== "off" ? Number(reload) : 0);
+    autoRefresh(e.value !== "off" ? Number(reload) : 0);
   }, []);
 
   useEffect(() => {
@@ -99,8 +110,6 @@ export const Dashboard = () => {
 
           <CustomBtn onClick={() => setOpen(true)}>
             <BiCalendarStar size={30} />
-
-        
           </CustomBtn>
         </Flex>
         <Flex $gap={"5px"}>
@@ -112,7 +121,7 @@ export const Dashboard = () => {
             font="600"
             w="200px"
             // placeholder="Auto Refresh off"
-            // change={refreshHandler}
+            // onChange={refreshHandler}
           />
         </Flex>
         <CustomBtn onClick={Reload}>Refresh</CustomBtn>

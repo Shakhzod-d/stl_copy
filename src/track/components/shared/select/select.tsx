@@ -34,7 +34,7 @@ interface Props {
   pClr?: string;
   font?: string;
   rules?: Rules[];
-  onChange?: (e: unknown) => void;
+  onChange?: (e: any) => void;
 }
 // Your other imports remain the same...
 
