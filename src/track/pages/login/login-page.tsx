@@ -22,6 +22,8 @@ import {
   StyledInput,
 } from "@/track/pages/login/login-styled";
 import { AxiosError } from "axios";
+import { Company } from "@/track/utils/method";
+import { setCompany } from "@/track/utils/dispatch";
 
 export const Login = () => {
   const [messageApi, contextHolder] = message.useMessage();
@@ -38,14 +40,20 @@ export const Login = () => {
     const data = values as LoginData;
 
     loginMutation.mutate(data, {
-      onSuccess: (res: ILoginData) => {
+      onSuccess: async (res: ILoginData) => {
         setLoading(false);
-        const { data } = res;
-        setLocalStorage("token", data?.token);
+        const { data: userData } = res;
+        setLocalStorage("token", userData?.token);
 
-        setUserData(data);
-        setLocalStorage("roleId", data?.role?.roleId);
-        // setLocalStorage("companyId", "66fcf8f52ccf4ba8e6b32c36");
+        setUserData(userData);
+        setLocalStorage("roleId", userData?.role?.roleId);
+        if (userData.role.roleName === "companyAdmin") {
+          const company = await Company(userData.companyId);
+          setLocalStorage("company", JSON.stringify(company));
+          setCompany(company);
+          setLocalStorage("companyId", userData.companyId);
+          return historyPush("/");
+        }
         if (!getLocalStorage("company")) {
           historyPush("/company");
         } else {

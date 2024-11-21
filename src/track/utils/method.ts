@@ -13,7 +13,7 @@ export function validatePhoneNumber<T>(_: T, value: string) {
   return Promise.resolve();
 }
 
-export const Company = async (id: string) => {
+export const Company = async (id: string|null) => {
   const { data } = await api.get(`/company/${id}`);
   return data;
 };

@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Map, MapArticle } from "../../components/shared";
 import { ArticleMapItem } from "@/track/constants";
 import { Wrapper } from "./logs-map-styled";
+import useApi from "@/hooks/useApi";
 // import { RootState } from "../../store/store";
 const truckData = [
   {
@@ -93,6 +94,10 @@ const truckData = [
 
 export function LogsMap() {
   const [active, setActive] = useState<number>(1);
+
+  const { data } = useApi("/map?search=unity");
+  console.log(data);
+
   return (
     <Wrapper>
       <MapArticle
@@ -102,7 +107,7 @@ export function LogsMap() {
         active={active}
         setActive={setActive}
       />
-      <Map mapData={truckData} activeId={active}  height="calc(100vh - 195px)"/>
+      <Map mapData={truckData} activeId={active} height="calc(100vh - 195px)" />
     </Wrapper>
   );
 }
