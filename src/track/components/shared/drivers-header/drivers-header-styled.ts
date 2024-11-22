@@ -49,7 +49,8 @@ export const StyleButton = styled(Button)<{ active: string }>`
 
   background: ${({ active, theme }) =>
     active === "true" ? theme.btnActive : theme.white} !important;
-  color: ${({ theme, active }) => theme.clr} !important;
+  color: ${({ theme, active }) =>
+    active === "true" ? "#fff" : theme.clr} !important;
   border: none;
   &:hover {
     background: ${({ active, theme }) =>
