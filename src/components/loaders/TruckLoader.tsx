@@ -5,7 +5,7 @@ import { Spin } from "antd";
 const TruckLoader: React.FC = () => {
      return (
           <div className="loader-wrapper">
-               <Spin size="large" />
+               <Spin size="small" />
           </div>
      );
 

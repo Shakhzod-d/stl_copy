@@ -33,6 +33,7 @@ export const Navbar = memo(({ title, search = true }: Props) => {
     dispatch(setCompanyData(false));
     historyPush("/company");
   };
+  console.log(CompanyData);
 
   return (
     <Header>
@@ -54,7 +55,17 @@ export const Navbar = memo(({ title, search = true }: Props) => {
           >
             <CompanyIcon>
               <p>
-                {CompanyData && String(CompanyData?.companyName).slice(0, 1)}
+                {CompanyData?.logo ? (
+                  <img
+                    src={
+                      "https://unityapi.roundedteam.uz/public/uploads/companyLogos/" +
+                      CompanyData?.logo
+                    }
+                    alt="logo"
+                  />
+                ) : (
+                  String(CompanyData?.companyName).slice(0, 1)
+                )}
               </p>
             </CompanyIcon>
 

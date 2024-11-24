@@ -3,7 +3,6 @@
   padding: 0;
   box-sizing: border-box;
   font-family: "SF Pro Display";
-
 }
 
 ::-webkit-scrollbar {
@@ -16,7 +15,6 @@
   src: url("/public/fonts/SFPRODISPLAYMEDIUM.OTF");
   src: url("/public/fonts/SFPRODISPLAYREGULAR.OTF");
 }
-
 
 @keyframes modal {
   0% {
@@ -125,6 +123,10 @@ a {
   font-size: 16px;
   font-weight: 400;
   line-height: 2;
+}
+
+.ant-modal-mask ,.ant-modal-wrap{
+  z-index: 9999 !important;
 }
 
 pp {

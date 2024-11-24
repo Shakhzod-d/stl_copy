@@ -147,16 +147,18 @@ export const StatusBadge = styled.span<{
       ? "#8C8C9B"
       : "#fff"};
   background-color: ${({ $status }) =>
-    $status === "dr" || $status === "on"
-      ? "#28a745"
+    $status === "dr"
+      ? "#32BE61"
+      : $status === "on"
+      ? "#3DA8D5"
       : $status === "sb"
-      ? "#ffc107"
+      ? "#FC973A"
       : $status === "" ||
         $status === "Intermediate" ||
         $status === "Power Off" ||
         $status === "Power On"
       ? "#fff"
-      : "#6c757d"};
+      : "#8C8C9B"};
 `;
 
 export const HoverBox = styled.div`
