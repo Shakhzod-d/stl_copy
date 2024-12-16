@@ -7,9 +7,10 @@ interface Props {
   title: string;
   value: number;
   color: string;
+  drivers: number;
 }
 
-export const ProgressBar: FC<Props> = ({ title, value, color }) => {
+export const ProgressBar: FC<Props> = ({ title, value, color, drivers }) => {
   const dark = useSelector((state: RootState) => state.booleans.darkMode);
   return (
     <ProgressWrapper>
@@ -21,7 +22,7 @@ export const ProgressBar: FC<Props> = ({ title, value, color }) => {
         gapDegree={70}
         strokeColor={color}
         strokeWidth={15}
-        format={(percent = 0) => `${percent / 10} (${percent}%)`}
+        // format={(percent = 0) => `7 (${percent}%)`}
         showInfo={false}
       />
       <ValueWrapper>
@@ -29,7 +30,7 @@ export const ProgressBar: FC<Props> = ({ title, value, color }) => {
           <Title>{title}</Title>
         </div>
 
-        <Value>{`${value / 10} (${value}%)`}</Value>
+        <Value>{`${drivers} (${value}%)`}</Value>
       </ValueWrapper>
     </ProgressWrapper>
   );

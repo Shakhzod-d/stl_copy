@@ -64,6 +64,7 @@ export const Dashboard = () => {
   const { data: driversCount } = useApi("/count");
 
   const filerData = dashboardData(DashboardData ? DashboardData?.data : []);
+  console.log(driversCount);
 
   const dispatch = useDispatch();
 
@@ -129,7 +130,7 @@ export const Dashboard = () => {
 
       <CardWrapper $width={sidebarActive}>
         <Drivers data={driversCount} />
-        <ViolationsChart />
+        <ViolationsChart data={driversCount} />
         <OverviewCard
           activeVehicles={
             driversCount?.data ? driversCount?.data.activeVehicles : 0
