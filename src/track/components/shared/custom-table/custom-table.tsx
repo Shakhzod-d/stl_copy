@@ -8,6 +8,7 @@ import {
   NoData,
   NotFound,
   StatusBadge,
+  StyledPagination,
   TableContainer,
   TableData,
   TableElement,
@@ -35,8 +36,8 @@ interface TableColumn {
 interface TableProps {
   columns: TableColumn[];
   data: any[];
-  itemColor?: string;
-  colorId?: number | string;
+  itemColor?: { id: number; clr: string }[];
+  colorId?: number[];
   onClick?: (id: string) => void;
   copyId?: number;
   pagination?: true | false;
@@ -58,6 +59,8 @@ export const CustomTable = (props: TableProps) => {
     font,
     fontId,
     isLoading,
+    itemColor,
+    colorId,
   } = props;
   const [PopupActive, setPopupActive] = useState<
     number | null | string | undefined
@@ -88,7 +91,7 @@ export const CustomTable = (props: TableProps) => {
       setPopupActive(index);
     }
   }
-  function colorFun<T>(text: T, title: T): string {
+  function colorFun<T>(text: T, title: T, id: T): string {
     let color: string = dark ? "#f9f9f9" : "#000";
 
     if (title === "updated" || title === "location_date") return "#3DA8D5";
@@ -112,6 +115,12 @@ export const CustomTable = (props: TableProps) => {
         color = dark ? "#f9f9f9" : "#000";
         break;
     }
+    itemColor &&
+      itemColor.map((item) => {
+        if (item.id === id) {
+          color = item.clr;
+        }
+      });
 
     return color;
   }
@@ -150,7 +159,8 @@ export const CustomTable = (props: TableProps) => {
                     key={column.accessor}
                     color={colorFun(
                       row[column?.accessor]?.valueOf().toString().toLowerCase(),
-                      column.accessor.toLowerCase()
+                      column.accessor.toLowerCase(),
+                      column.id
                     )}
                     onClick={() => tableDataHandler(ID, column.accessor)}
                   >
@@ -215,7 +225,7 @@ export const CustomTable = (props: TableProps) => {
           )}
         </NoData>
       )}
-      {pagination && <Pagination total={pTotal} defaultCurrent={1} />}
+      {pagination && <StyledPagination total={50} defaultCurrent={1}  style={{color:"red"}}/>}
     </TableContainer>
   );
 };

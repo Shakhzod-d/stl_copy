@@ -43,7 +43,7 @@ export function Trackings() {
 
       {active && (
         <Div ref={mapRef} style={{ overflowX: "auto" }}>
-          <Map mapData={truckData} activeId={1} height="700px" />
+          <Map objData={{ lat: 34.0522, lng: -118.2437 }} height="700px" />
         </Div>
       )}
     </Wrapper>

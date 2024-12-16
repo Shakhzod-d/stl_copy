@@ -21,12 +21,20 @@ import { CompanyData } from "@/track/types";
 import { Company } from "@/track/utils/method";
 import { setCompany, setPageLoading } from "@/track/utils/dispatch";
 import { useErrAuth } from "@/hooks/useAuth";
-import { CompanyModal } from "./modals/company-page-modal";
+import { CompanyModal } from "./components/company-page-modal";
 import { useDebounce } from "@/track/hooks/use-debauce";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  setEditCompany,
+  setLoggerCompanyData,
+  setRole,
+} from "@/store/slices/company-slice";
+import { RootState } from "@/store";
 
 const Companies: React.FC = () => {
   const [open, setOpen] = useState(false);
 
+  const dispatch = useDispatch();
   const [searchTerm, setSearchTerm] = useState<string>("");
   const { data, isLoading } = useApi<IPageData<ICompanyData[]>>("/companies", {
     page: 1,
@@ -34,8 +42,6 @@ const Companies: React.FC = () => {
   });
 
   const mapData = (data: ICompanyData[]): CompanyData[] => {
-    console.log(data);
-
     return data.map((item) => {
       const image: string | undefined = item?.logo
         ? `https://unityapi.roundedteam.uz/public/uploads/companyLogos/${item?.logo}`
@@ -91,20 +97,41 @@ const Companies: React.FC = () => {
       };
     });
   };
-  const modalActive = (id: string) => {
-    setOpen(true);
+  const modalActive = async (id: string) => {
+    ModalFun("edit", id);
   };
+
+  const ModalFun = async (role: "add" | "edit", id: string = "") => {
+    if (role === "edit") {
+      const company = await Company(id);
+      dispatch(setEditCompany(company));
+      setOpen(true);
+    } else {
+      dispatch(setEditCompany(false));
+      setOpen(true);
+    }
+    // setModalRole(role);
+    // dispatch(setRole(role));
+  };
+
   const { errFun } = useErrAuth();
+  const userData = useSelector((state: RootState) => state.auth.userData);
   const CompanyHandler = async (id: string) => {
     try {
       setPageLoading(true);
       const data = await Company(id);
-      // sessionStorage.setItem("companyId", id);
-      // sessionStorage.setItem("company", JSON.stringify(data));
-      setLocalStorage("companyId", id);
-      setLocalStorage("company", JSON.stringify(data));
-      setCompany(data);
-      await historyPush(`/`);
+      if (userData?.role.roleName === "logger") {
+        dispatch(setLoggerCompanyData(data));
+        historyPush("/info-company");
+        // sessionStorage.setItem("companyId", id);
+      } else {
+        // sessionStorage.setItem("company", JSON.stringify(data));
+        setLocalStorage("companyId", id);
+        setLocalStorage("company", JSON.stringify(data));
+        setCompany(data);
+
+        await historyPush(`/`);
+      }
     } catch (err) {
       return errFun(err);
     } finally {
@@ -121,6 +148,7 @@ const Companies: React.FC = () => {
   return (
     <Main>
       <CompanyModal open={open} setOpen={setOpen} />
+
       <Navbar title="Company" search={false} />
       <Top>
         <CustomInput
@@ -129,7 +157,7 @@ const Companies: React.FC = () => {
             setSearchTerm(e.target.value)
           }
         />
-        <AddBtn>
+        <AddBtn onClick={() => ModalFun("add")}>
           <FaPlus size={18} />
         </AddBtn>
       </Top>

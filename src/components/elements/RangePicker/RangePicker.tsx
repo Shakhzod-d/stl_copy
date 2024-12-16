@@ -37,41 +37,50 @@
 
 // export default RangePicker;
 
-import React, { useState } from "react";
-import styled, { ThemeProvider, createGlobalStyle } from "styled-components";
-import { DatePicker, Switch } from "antd";
+import styled, { createGlobalStyle } from "styled-components";
+import { DatePicker } from "antd";
 import "antd/dist/antd.css";
-import {
-  ArrowDownOutlined,
-  ArrowRightOutlined,
-  SwapRightOutlined,
-} from "@ant-design/icons";
-import { ArrowIcon } from "@/pages/Dashboard/dashboard-styled";
 
 const { RangePicker } = DatePicker;
 
 // Global style (Ant Design styles override for dark mode)
-const GlobalStyle = createGlobalStyle`
+export const GlobalStyle = createGlobalStyle<{ bg?: number }>`
+  .ant-picker {
+    margin: 0;
+    background: ${({ theme, bg = 1 }) =>
+      bg === 1
+        ? theme.white
+        : bg === 2
+        ? theme.textAriaBg
+        : theme.secondaryBg}; /* 3 xil rangni boshqarish */
+    color: ${({ theme }) => theme.clr};
+    border: none !important;
+    border-radius: 10px !important;
+    box-shadow: none !important;
+    outline: none !important;
+    display: inline-flex;
+    width: auto;
+  }
 
-.ant-picker {
-  margin:0;
-  min-width:200px !important;
-background: ${({ theme }) => theme.white};
-  color: #8c8c9b;
-  border:none;
-    border-radius:10px !important;
-  }
   .ant-picker-input > input {
-    // color: ${({ theme }) => theme.textColor};
-    color: #8c8c9b;
-    border-radius:10px !important;
+    color: #8c8c9b !important;
+    background: transparent !important;
+    border: none !important;
+    outline: none !important;
+    width: auto !important;
+    text-align: center;
   }
-  .ant-picker:hover {
-    border-color: ${({ theme }) => theme.pickerHoverBorder};
+
+  .ant-picker:hover,
+  .ant-picker-focused,
+  .ant-picker:focus {
+    border: none !important;
+    box-shadow: none !important;
   }
+
   .ant-picker-panel-container {
-  color: red !important;
-  background: ${({ theme }) => theme.white};
+    color: ${({ theme }) => theme.clr};
+    background: ${({ theme }) => theme.white};
   }
 `;
 

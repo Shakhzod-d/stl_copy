@@ -11,7 +11,7 @@ import { FaPlus } from "react-icons/fa6";
 import { historyPush } from "@/utils";
 import { Flex } from "@/track/components/shared/drivers-header/drivers-header-styled";
 import { ManageUserModal } from "../company-users/modals/manage-user-modal";
-import { AddKey } from "../api-keys/modal/addKey";
+import { AddKey } from "../api-keys/_components/addKey";
 interface Props {
   children: ReactNode;
 }

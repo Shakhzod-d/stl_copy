@@ -37,12 +37,13 @@ export interface IftaReportColumns {
   melis: string;
 }
 export interface ArticleProps {
-  id: number;
-  title: string;
-  text: string;
-  status: string;
   desc: string;
-  time?: string;
+  id: number;
+  lat: number;
+  lng: number;
+  text: string;
+  title: string;
+  status: string;
 }
 
 export interface ILog {

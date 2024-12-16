@@ -21,6 +21,9 @@ import api from "@/api";
 import { useLocation, useParams } from "react-router-dom";
 import { Button, Modal } from "antd";
 import Report from "@/pages/Logs/components/LogActions/components/Report";
+import { setLogEdit } from "@/store/slices/booleans-slice";
+import { useDispatch } from "react-redux";
+import { CorrectionModal } from "@/track/pages/logs/modals/correction";
 
 export const Diagrams = ({
   data: logs = [],
@@ -111,12 +114,13 @@ export const Diagrams = ({
     },
   } = useLogsInnerContext();
   const [isVisibleHistoryLog, setIsVisibleHistoryLog] = useState(false);
+  const [correction, setCorrection] = useState(false);
   const [isVisibleReport, setIsVisibleReport] = useState(false);
   const [renderReport, setRenderReport] = useState<boolean>(false);
   let componentRef = useRef() as React.MutableRefObject<HTMLInputElement>;
   // const [renderReport, setRenderReport] = useState<boolean>(false);
   const [data, setReportData] = useState<any>();
-
+  const dispatch = useDispatch();
   const handleSetData = (res: any) => {
     setReportData(res?.report);
     setLogs(res?.logs);
@@ -139,6 +143,10 @@ export const Diagrams = ({
   };
 
   const whenSomethingIsLoading = !!isFetching;
+  const duplicateFun = () => {
+    dispatch(setLogEdit());
+    // onInsertDutyStatus();
+  };
   return (
     <>
       <Wrapper>
@@ -171,43 +179,54 @@ export const Diagrams = ({
             <CustomButton>EHF</CustomButton>
           </Flex> */}
           <Flex $gap="6px">
-            {!currentLog ? (
-              <>
-                <CustomButton
-                  disabled={whenSomethingIsLoading}
-                  onClick={() => upDateReport()}
-                >
-                  Report
-                </CustomButton>
-                <CustomButton
-                  disabled={whenSomethingIsLoading}
-                  onClick={() => setIsVisibleHistoryLog(true)}
-                  className="log-btn"
-                >
-                  {/* History */}
-                  Certify
-                </CustomButton>
-                <CustomButton
-                  disabled={whenSomethingIsLoading}
-                  className="log-btn"
-                  onClick={() => setIsVisibleInsertInfoLog(true)}
-                >
-                  Duplicate
-                </CustomButton>
-                <CustomButton
-                  disabled={whenSomethingIsLoading}
-                  className="log-btn"
-                  // onClick={() => setCurrentLog(logs[0])}
-                >
-                  {/* correction */}
-                  Al check
-                </CustomButton>
-                <CustomButton>Correction</CustomButton>
-                <CustomButton>Current Location</CustomButton>
-                <CustomButton>EHF</CustomButton>
-              </>
-            ) : (
-              <>
+            {/* {!currentLog ? ( */}
+            <>
+              <CustomButton
+                disabled={whenSomethingIsLoading}
+                className="log-btn"
+                // onClick={() => setCurrentLog(logs[0])}
+              >
+                {/* correction */}
+                Al check
+              </CustomButton>
+              <CustomButton>Time</CustomButton>
+              {/* <CustomButton
+                    disabled={whenSomethingIsLoading}
+                    onClick={() => upDateReport()}
+                  >
+                    Report
+                  </CustomButton> */}
+              <CustomButton
+                disabled={whenSomethingIsLoading}
+                onClick={() => setIsVisibleHistoryLog(true)}
+                className="log-btn"
+              >
+                {/* History */}
+                Certify
+              </CustomButton>
+              <CustomButton
+                // disabled={whenSomethingIsLoading}
+                className="log-btn"
+                // onClick={() => setIsVisibleInsertInfoLog(true)}
+                onClick={onInsertDutyStatus}
+                disabled={whenSomethingIsLoading || isAlreadyClicked}
+              >
+                Duplicate
+              </CustomButton>
+              {currentLog && (
+                <>
+                  <CustomButton onClick={() => onCancel()}>Cancel</CustomButton>
+                  <CustomButton onClick={duplicateFun}>ok</CustomButton>
+                </>
+              )}
+              <CustomButton onClick={() => setCorrection(true)}>
+                Correction
+              </CustomButton>
+              <CustomButton>Current Location</CustomButton>
+              <CustomButton>EHF</CustomButton>
+            </>
+            {/* ) : ( */}
+            {/* <>
                 <CustomButton
                   disabled={whenSomethingIsLoading}
                   className="log-btn"
@@ -227,7 +246,7 @@ export const Diagrams = ({
                 <CustomButton
                   disabled={whenSomethingIsLoading || isAlreadyClicked}
                   className="log-btn"
-                  onClick={onInsertDutyStatus}
+                  onClick={duplicateFun}
                 >
                   Duplicate
                 </CustomButton>
@@ -272,8 +291,8 @@ export const Diagrams = ({
                 <CustomButton>Correction</CustomButton>
                 <CustomButton>Current Location</CustomButton>
                 <CustomButton>EHF</CustomButton>
-              </>
-            )}
+              </> */}
+            {/* )} */}
           </Flex>
         </Flex>
 
@@ -317,11 +336,12 @@ export const Diagrams = ({
           <Report
             isPrinting={true}
             logs={logs}
-            initialTime={initialTime / 1000}
+            initialTime={initialTime}
             reportData={data}
           />
         </div>
       </Modal>
+      <CorrectionModal setOpen={setCorrection} open={correction} />
     </>
   );
 };

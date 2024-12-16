@@ -2,6 +2,7 @@ import {
   ArrowBtn,
   BtnWrap,
   Description,
+  LogoutBtn,
   PageActive,
   PageBtn,
   SidebarContainer,
@@ -17,7 +18,6 @@ import React, { useCallback, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store";
 import { sidebarToggle } from "@/store/slices/booleans-slice";
-import { Text } from "@/track/constants";
 import { Link } from "react-router-dom";
 import { historyPush, removeLocalStorage } from "@/utils";
 import { setCompany } from "@/track/utils/dispatch";
@@ -30,7 +30,8 @@ import {
   FileIcon,
   ReportIcon,
 } from "@/utils/icons";
-import { cp } from "fs";
+
+import { Text } from "@/track/constants";
 
 export const Sidebar = React.memo(() => {
   const [btnActive, setBtnActive] = useState<number>(0);
@@ -66,11 +67,7 @@ export const Sidebar = React.memo(() => {
         },
       ],
     },
-    {
-      key: 3,
-      icon: <FileIcon />,
-      label: "Notification",
-    },
+
     {
       key: 4,
       icon: <FileIcon />,
@@ -157,19 +154,18 @@ export const Sidebar = React.memo(() => {
         </ArrowBtn>
       </StyleFlex>
       <div style={{ flex: "1" }}>
-        {companyData && (
-          <PageBtn
-            onClick={() => setBtnActive(0)}
-            to={`/main/dashboard`}
-            $active={active}
-          >
-            <DashboardIcon />
+        <PageBtn
+          onClick={() => setBtnActive(0)}
+          to={`/main/dashboard`}
+          $active={active}
+        >
+          <DashboardIcon />
 
-            {active && <p>Dashboard</p>}
-          </PageBtn>
-        )}
-        {userData && userData?.role?.roleName !== "companyAdmin" && (
-          <PageBtn onClick={exitFun} to={"/company"} $active={active}>
+          {active && <p>Dashboard</p>}
+        </PageBtn>
+
+        {!companyData && (
+          <PageBtn to={"/company"} $active={active}>
             <CompanyICon />
 
             {active && (
@@ -181,38 +177,11 @@ export const Sidebar = React.memo(() => {
           </PageBtn>
         )}
 
-        <Description>Menu</Description>
-        {sidebarData.map((item) => {
-          const Icon = () => item.icon;
-          if (item.key === 3) {
-            return (
-              <PageBtn
-                key={item.key}
-                onClick={() => tabBtnFun(item.key)}
-                $active={active}
-                $p="0"
-                to={`/main/notification`}
-              >
-                <BtnWrap>
-                  <Icon />
-                  {active && (
-                    <p style={{ fontSize: "0.938rem" }}>{item.label}</p>
-                  )}
-                </BtnWrap>
+        {companyData && <Description>Menu</Description>}
+        {companyData &&
+          sidebarData.map((item) => {
+            const Icon = () => item.icon;
 
-                {!active ||
-                  (btnActive === item.key &&
-                    item.page?.map((i) => {
-                      return (
-                        <PageActive key={i.id} to={i.url}>
-                          {/* <TbDeviceSdCard /> */}
-                          {active && <p>{i.text}</p>}
-                        </PageActive>
-                      );
-                    }))}
-              </PageBtn>
-            );
-          } else {
             return (
               <TabBtn
                 key={item.key}
@@ -236,9 +205,8 @@ export const Sidebar = React.memo(() => {
                     }))}
               </TabBtn>
             );
-          }
-        })}
-        {!companyData && (
+          })}
+        {userData?.role.roleName === "superAdmin" && !companyData ? (
           <PageBtn
             onClick={() => setBtnActive(0)}
             to={"/users"}
@@ -247,14 +215,37 @@ export const Sidebar = React.memo(() => {
             <FileIcon />
             <p>Users</p>
           </PageBtn>
+        ) : userData?.role.roleName === "logger" ? (
+          <PageBtn
+            onClick={() => setBtnActive(0)}
+            to={"/reports"}
+            $active={active}
+          >
+            <ReportIcon />
+            <p>Reports</p>
+          </PageBtn>
+        ) : (
+          ""
         )}
+        {userData?.role.roleName === "logger" ||
+          (userData?.role.roleName === "superAdmin" && !companyData ? (
+            <PageBtn
+              onClick={() => setBtnActive(0)}
+              to={"/notification"}
+              $active={active}
+            >
+              <FileIcon />
+              <p>Notification</p>
+            </PageBtn>
+          ) : (
+            ""
+          ))}
       </div>
-      <TabBtn onClick={logoutFun}>
-        <BtnWrap>
-          <BiLogOut />
-          {active && <p>Logout</p>}
-        </BtnWrap>
-      </TabBtn>
+
+      <LogoutBtn onClick={logoutFun}>
+        <BiLogOut size={20} />
+        {active && <p>Log aut</p>}
+      </LogoutBtn>
       <User className="user-profile">
         <img src={userImage} alt="user" className="user-img" />
         {active && (

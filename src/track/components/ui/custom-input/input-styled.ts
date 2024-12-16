@@ -1,26 +1,55 @@
 import styled from "styled-components";
 import { Input } from "antd";
 
-export const StyledInput = styled(Input)<{ $width?: string; $margin?: string }>`
+export const StyledInput = styled(Input)<{
+  $width?: string;
+  $margin?: string;
+  $h?: string;
+}>`
   border-radius: 10px !important;
   padding: 10px 15px !important;
   width: ${({ $width = "270px" }) => $width} !important;
-  height: 44px !important;
+  height: ${({ $h = "44px" }) => $h} !important;
   background-color: ${({ theme }) => theme.inputBg} !important;
   color: ${({ theme }) => theme.clr} !important;
   margin: ${({ $margin }) => $margin} !important;
   border: none !important;
-  // Focus, active, and hover background color
+  background-color: transparent;
+
+  // Focus, active, and hover background color removal
   &:focus,
-  &:active,
-  &:hover {
+  &:hover,
+  &:active {
     background-color: ${({ theme }) => theme.inputBg} !important;
     color: ${({ theme }) => theme.clr} !important;
+    border: none !important;
+    box-shadow: none !important; // Remove Ant Design's shadow
+    outline: none !important; // Remove focus outline
   }
 
-  // Extra targeting with a CSS selector for the input inside if needed
-  & .ant-input {
+  // Ant Design's internal hover and focus removal
+
+    &.ant-input:hover,
+    &.ant-input:focus,
+  &.ant-input:active {
     background-color: ${({ theme }) => theme.inputBg} !important;
     color: ${({ theme }) => theme.clr} !important;
+    border: none !important;
+    box-shadow: none !important;
+    outline: none !important;
+    }
+    
+    // Disable Ant Design's default behavior
+    .ant-input {
+      background-color: ${({ theme }) => theme.inputBg} !important;
+    &:hover,
+    &:focus,
+    &:active {
+      background-color: ${({ theme }) => theme.inputBg} !important;
+      color: ${({ theme }) => theme.clr} !important;
+      border: none !important;
+      box-shadow: none !important;
+      outline: none !important;
+    }
   }
 `;

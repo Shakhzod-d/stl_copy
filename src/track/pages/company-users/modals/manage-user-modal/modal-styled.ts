@@ -17,8 +17,6 @@ export const TabBtn = styled(Button)<{ $active: boolean }>`
   }
 `;
 
-
-
 export const CustomInput = styled(Input)<{ $margin?: string }>`
   border-radius: 10px;
   padding: 20px !important;
@@ -36,7 +34,7 @@ export const CustomInput = styled(Input)<{ $margin?: string }>`
 export const TextAria = styled.textarea`
   border-radius: 10px;
   padding: 25px 20px;
-  width: 1250px;
+  width: 100%;
   height: 150px;
   background: ${({ theme }) => theme.textAriaBg};
   color: ${({ theme }) => theme.clr};

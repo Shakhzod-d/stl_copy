@@ -44,21 +44,16 @@ export const Login = () => {
         setLoading(false);
         const { data: userData } = res;
         setLocalStorage("token", userData?.token);
-
         setUserData(userData);
         setLocalStorage("roleId", userData?.role?.roleId);
+
         if (userData.role.roleName === "companyAdmin") {
           const company = await Company(userData.companyId);
           setLocalStorage("company", JSON.stringify(company));
           setCompany(company);
           setLocalStorage("companyId", userData.companyId);
-          return historyPush("/");
         }
-        if (!getLocalStorage("company")) {
-          historyPush("/company");
-        } else {
-          historyPush("/");
-        }
+        return historyPush("/main/dashboard");
       },
       onError: (err: AxiosError) => {
         errorMessage(err?.message);

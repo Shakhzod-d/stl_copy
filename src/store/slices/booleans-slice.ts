@@ -14,6 +14,7 @@ interface Bool {
   pageLoading: boolean;
   modal: boolean;
   modalAnimated: boolean;
+  logEdit: boolean;
 }
 const dark_mode =
   getLocalStorage("darkMode") === "false" ||
@@ -30,6 +31,7 @@ const initialState: Bool = {
   pageLoading: false,
   modal: false,
   modalAnimated: false,
+  logEdit: false,
 };
 
 const booleanSlice = createSlice({
@@ -60,6 +62,9 @@ const booleanSlice = createSlice({
     setModalAnimated: (state, action: PayloadAction<boolean>) => {
       state.modalAnimated = action.payload;
     },
+    setLogEdit: (state) => {
+      state.logEdit = !state.logEdit;
+    },
   },
 });
 
@@ -72,6 +77,7 @@ export const {
   setPageLoad,
   setModalActive,
   setModalAnimated,
+  setLogEdit,
 } = booleanSlice.actions;
 
 export default booleanSlice.reducer;

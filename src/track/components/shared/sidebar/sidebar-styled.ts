@@ -107,6 +107,7 @@ export const BtnWrap = styled.div`
   gap: 10px;
   height: 48px;
   align-items: center;
+  justify-content: start;
   font-size: 14px;
 `;
 export const PageActive = styled(NavLink)`
@@ -127,12 +128,11 @@ export const PageActive = styled(NavLink)`
     background: rgba(255, 255, 255, 0.1);
   }
 
-
   @keyframes fadeInSlideDown {
     to {
       opacity: 1;
       visibility: visible;
-      transform: translateY(0); 
+      transform: translateY(0);
     }
   }
 `;
@@ -192,4 +192,19 @@ export const CompanyIcon = styled.div`
   p {
     color: #fff;
   }
+`;
+
+export const LogoutBtn = styled.button`
+  max-width: 220px;
+  height: 48px;
+  background: #ffffff1a;
+  border-radius: 10px;
+  border: none;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: start;
+  gap: 10px;
+  align-items: center;
+  padding-left: 20px;
+  color: #fff;
 `;

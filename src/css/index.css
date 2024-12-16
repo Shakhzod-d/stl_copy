@@ -38,6 +38,7 @@
 .activeClassName {
   color: blue;
   flex-direction: column;
+
 }
 .hover_container {
   position: absolute;
@@ -51,7 +52,7 @@
   z-index: 9999;
   bottom: 80px;
   left: -20px;
-
+background: transparent;
   display: flex;
   flex-direction: column;
   gap: 10px;

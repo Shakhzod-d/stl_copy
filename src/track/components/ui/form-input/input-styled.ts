@@ -6,7 +6,7 @@ export const Item = styled(Form.Item)`
   width: 100%;
   background: ${({ theme }) => theme.formSelect};
   border-radius: 10px;
-  // margin: 0;
+  margin: 0;
 `;
 
 export const StyledInput = styled(Input)<{

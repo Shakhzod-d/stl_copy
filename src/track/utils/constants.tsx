@@ -159,32 +159,137 @@ export const unitsButtons = [
 
 export const IftaReportColData = [
   {
-    header: "Vehicle",
-    accessor: "vehicle",
+    header: "Type",
+    accessor: "type",
     id: 1,
   },
   {
-    header: "State",
-    accessor: "state",
+    header: "Name",
+    accessor: "name",
     id: 2,
   },
   {
-    header: "Melis",
-    accessor: "melis",
+    header: "Created time",
+    accessor: "time",
     id: 3,
+  },
+  {
+    header: "Resipient",
+    accessor: "resipient",
+    id: 4,
+  },
+  {
+    header: "Status",
+    accessor: "status",
+    id: 5,
+  },
+  {
+    header: "Download csv",
+    accessor: "download_csv",
+    id: 6,
+  },
+  {
+    header: "Download",
+    accessor: "download",
+    id: 7,
+  },
+  {
+    header: "Delete",
+    accessor: "delete",
+    id: 8,
   },
 ];
 
 export const IftaReportData = [
   {
-    vehicle: "143",
-    state: "AD",
-    melis: "43",
+    type: "IFTA by Vehicle",
+    name: "7 vehicles - 2023-10-01 - 2023-12-31",
+    time: "2023-10-01 - 2023-12-31",
+    resipient: "info@mail.com",
+    status: "Done",
+    download_csv: "Download csv",
+    download: "Download",
+    delete: <img src="/assets/images/delete.png" width={16} height={16} />,
   },
   {
-    vehicle: "143",
-    state: "AD",
-    melis: "43",
+    type: "IFTA by Vehicle",
+    name: "7 vehicles - 2023-10-01 - 2023-12-31",
+    time: "2023-10-01 - 2023-12-31",
+    resipient: "info@mail.com",
+    status: "Done",
+    download_csv: "Download csv",
+    download: "Download",
+    delete: <img src="/assets/images/delete.png" width={16} height={16} />,
+  },
+  {
+    type: "IFTA by Vehicle",
+    name: "7 vehicles - 2023-10-01 - 2023-12-31",
+    time: "2023-10-01 - 2023-12-31",
+    resipient: "info@mail.com",
+    status: "Done",
+    download_csv: "Download csv",
+    download: "Download",
+    delete: <img src="/assets/images/delete.png" width={16} height={16} />,
+  },
+  {
+    type: "IFTA by Vehicle",
+    name: "7 vehicles - 2023-10-01 - 2023-12-31",
+    time: "2023-10-01 - 2023-12-31",
+    resipient: "info@mail.com",
+    status: "Done",
+    download_csv: "Download csv",
+    download: "Download",
+    delete: <img src="/assets/images/delete.png" width={16} height={16} />,
+  },
+  {
+    type: "IFTA by Vehicle",
+    name: "7 vehicles - 2023-10-01 - 2023-12-31",
+    time: "2023-10-01 - 2023-12-31",
+    resipient: "info@mail.com",
+    status: "Done",
+    download_csv: "Download csv",
+    download: "Download",
+    delete: <img src="/assets/images/delete.png" width={16} height={16} />,
+  },
+  {
+    type: "IFTA by Vehicle",
+    name: "7 vehicles - 2023-10-01 - 2023-12-31",
+    time: "2023-10-01 - 2023-12-31",
+    resipient: "info@mail.com",
+    status: "Done",
+    download_csv: "Download csv",
+    download: "Download",
+    delete: <img src="/assets/images/delete.png" width={16} height={16} />,
+  },
+  {
+    type: "IFTA by Vehicle",
+    name: "7 vehicles - 2023-10-01 - 2023-12-31",
+    time: "2023-10-01 - 2023-12-31",
+    resipient: "info@mail.com",
+    status: "Done",
+    download_csv: "Download csv",
+    download: "Download",
+    delete: <img src="/assets/images/delete.png" width={16} height={16} />,
+  },
+  {
+    type: "IFTA by Vehicle",
+    name: "7 vehicles - 2023-10-01 - 2023-12-31",
+    time: "2023-10-01 - 2023-12-31",
+    resipient: "info@mail.com",
+    status: "Done",
+    download_csv: "Download csv",
+    download: "Download",
+    delete: <img src="/assets/images/delete.png" width={16} height={16} />,
+  },
+  {
+    type: "IFTA by Vehicle",
+    name: "7 vehicles - 2023-10-01 - 2023-12-31",
+    time: "2023-10-01 - 2023-12-31",
+    resipient: "info@mail.com",
+    status: "Done",
+    download_csv: "Download csv",
+    download: "Download",
+    delete: <img src="/assets/images/delete.png" width={16} height={16} />,
   },
 ];
 
@@ -304,6 +409,7 @@ export const transferData = Array(3).fill({
 export const Main = styled.main`
   border-radius: 20px;
   padding: 0 20px 20px 20px;
+  // border: 1px solid red;
   width: 100%;
   height: calc(100vh - 15px);
   background: ${(props) => props.theme.mainBg};
@@ -316,6 +422,7 @@ export const Main = styled.main`
 export const OutletWrapper = styled.div`
   padding: 10px;
   width: 100%;
+  // border: 1px solid red;
 `;
 const expandAnimation = keyframes`
   from {
@@ -1976,3 +2083,43 @@ export const Data = [
   { title: "Cycle" },
   { title: "Updated" },
 ];
+
+export const EditLog = {
+  date: 1647457200,
+  driverId: "6707d10ce91290665289fc67",
+  log: [
+    {
+      _id: "6364c0f9ec4ea009fcd9ae50",
+      isDeleted: false,
+      driverId: 89,
+      start: 1647457200,
+      end: 1647460570,
+      duration: -3370,
+      status: "off",
+      engineHours: 0,
+      odometer: 42,
+      document: "Prava",
+      notes: "ok",
+      trailer: "mersedes",
+      service: "super servise",
+      company: "ok",
+      vehicleId: 42,
+      coDriverId: 42,
+      location: {
+        lat: 0,
+        long: 0,
+        name: null,
+        _id: "6364c0f9ec4ea009fcd9ae51",
+      },
+      createdAt: "2022-11-04T07:36:25.749Z",
+      updatedAt: "2022-11-04T07:36:25.749Z",
+      __v: 0,
+    },
+  ],
+  historyLog: {
+    user: "Iqboljon;",
+    time: 1667050140,
+    afterLogs: [],
+    beforeLogs: [],
+  },
+};
