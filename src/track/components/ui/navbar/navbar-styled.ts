@@ -12,6 +12,7 @@ export const Header = styled.header`
   background: ${(props) => props.theme.mainBg};
   z-index: 1000;
   top: 0;
+
 `;
 
 export const Title = styled.h2`

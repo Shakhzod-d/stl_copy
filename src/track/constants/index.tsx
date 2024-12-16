@@ -152,6 +152,7 @@ export const CustomButton = styled(Button)<{
 `;
 
 export const CustomModal = styled(Modal)`
+
   .ant-modal-close-x {
     color: ${({ theme }) =>
       theme.clr}!important; // X tugmasi rangini qizil qilish
@@ -361,7 +362,7 @@ export const TransparentButton = styled(Button)<{
   height: ${({ height }) => (height ? height : "50px")};
   border: 1px solid transparent;
   display: ${({ display }) => display || "flex"};
-  gap:10px;
+  gap: 10px;
 
   &:hover {
     background-color: ${({ active, theme }) => theme.btnActive}!important;
@@ -1264,7 +1265,9 @@ export const usersTableHeader = [
   { header: "Updated", accessor: "updated" },
   { header: "Status", accessor: "status" },
 
-  { header: "Role", accessor: "role" },
+  { header: "", accessor: "role" },
+  { header: "", accessor: "edit" },
+  { header: "", accessor: "edit" },
   { header: "", accessor: "edit" },
 ];
 
@@ -1281,9 +1284,7 @@ export const usersTableData = [
       label: "Active",
     },
 
-    role: {
-      label: "Driver",
-    },
+   
     edit: { label: "Edit" },
   },
 ];

@@ -6,7 +6,7 @@ interface Props {
 export const PageLoad = ({ bg ,h}: Props) => {
   return (
     <Wrapper $bg={bg} $h={h}>
-      <img src="/assets/icons/load.svg" alt="sasa" />
+      <img src="/assets/icons/load.svg" alt="sasa" width={150}/>
     </Wrapper>
   );
 };

@@ -12,7 +12,6 @@ import { setCompanyTimeZone } from "@/store/slices/logSlice";
 import { DriversHeader } from "@/track/components/shared/drivers-header";
 import { Diagrams } from "@/track/components/shared/diagrams";
 import { CustomTable } from "@/track/components/shared/custom-table";
-import { driversTableHeader, Main } from "@/track/constants";
 import { DriversForm } from "@/track/components/shared/drivers-form";
 
 import { innerTable, LogsFormMap } from "@/track/utils/mapData";
@@ -24,7 +23,11 @@ import { setWeekData } from "@/store/slices/company-slice";
 import { TripPlanner } from "@/track/components/shared";
 import useApi from "@/hooks/useApi";
 import { getLocalStorage } from "@/utils";
-import { FormData,  } from "@/types/log.type";
+import { FormData } from "@/types/log.type";
+import { driversTableHeader } from "@/track/constants";
+import { EditLog } from "@/track/utils/constants";
+import api from "@/api";
+import { Button } from "antd";
 
 const LogsInner: React.FC = () => {
   const {
@@ -49,9 +52,52 @@ const LogsInner: React.FC = () => {
     },
   } = useLogsInnerContext();
 
+  // ---------------------TIME CONVERTER
+
+  async function getStartDayWithZone(unix: number | null, zone: any | null) {
+    try {
+      let timezone = zone;
+      let midnight: number;
+
+      const myMap = new Map([
+        ["Eastern Time", "America/New_York"],
+        ["Central Time", "America/Chicago"],
+        ["Mountain Time", "America/Denver"],
+        ["Pacific Time", "America/Los_Angeles"],
+        ["Alaska Time", "America/Anchorage"],
+        ["Hawaii-Aleutian Time", "Pacific/Honolulu"],
+      ]);
+
+      let zone2 = myMap.get(timezone);
+      // console.log(")))))))))))))))))))))))))))))))))0 : ", zone2)
+      midnight = moment
+        .tz(zone2 ? zone2 : "")
+        .startOf("day")
+        .unix(); /// hozirgi vaqt time zona orqali olish unixsiz;
+      // console.log(")))))))))))))))))))))))))))))))))1 : ", midnight)
+
+      if (unix) {
+        midnight = moment
+          .unix(unix)
+          .tz(zone2 ? zone2 : "")
+          .startOf("day")
+          .unix();
+      }
+      // console.log(")))))))))))))))))))))))))))))))))2 : ", midnight)
+
+      // console.log("midnight : ", midnight)
+      return await Number(midnight);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  const logsTime = getStartDayWithZone(time, driverData?.data?.companyTimeZone);
+
+  // ---------------------TIME CONVERTER
   const dispatch = useDispatch<AppDispatch>();
   const driverId = getLocalStorage("driverId");
-  const driverDate = logData?.violation[0].date;
+  const driverDate = logData?.violation[0]?.date;
 
   const { data } = useApi(`/mainInfo?driverId=${driverId}&date=${driverDate}`);
 
@@ -91,40 +137,46 @@ const LogsInner: React.FC = () => {
     const data = innerTable(logs ? logs : []);
     setLogs(data);
   };
+
+  const dataSubmit = () => {
+    console.log(1);
+
+    api.put("/interlog", EditLog);
+  };
   return (
     <>
       {/* <div
         className=""
         style={{ pointerEvents: disableActions ? "none" : "all" }}
       > */}
-        <DriversHeader fullName={driverFullName} phone={driverPhone} />
-        <Diagrams
-          filterDrawStatus={filterDrawStatus(logs)}
-          data={filterDrawStatus(logs)}
-          setHoveredId={setHoveredId}
-          hoveredId={hoveredId}
-          currentLog={currentLog}
-          setCurrentLog={setCurrentLog}
-          afterRangeChange={afterRangeChange}
-          isFetching={isFetching}
-          initialTime={time / 1000}
-          cycle={logData?.cycle}
-        />
+      <DriversHeader fullName={driverFullName} phone={driverPhone} />
+      <Diagrams
+        filterDrawStatus={filterDrawStatus(logs)}
+        data={filterDrawStatus(logs)}
+        setHoveredId={setHoveredId}
+        hoveredId={hoveredId}
+        currentLog={currentLog}
+        setCurrentLog={setCurrentLog}
+        afterRangeChange={afterRangeChange}
+        isFetching={isFetching}
+        initialTime={time / 1000}
+        cycle={logData?.cycle}
+      />
 
-        {(isFetching || disableActions) && <TruckLoader />}
-        <div>
-          <div id="box">
-            {currentLog && (
-              <LogCorrection handleCloseEditing={() => setCurrentLog(null)} />
-            )}
-          </div>
-          <CustomTable
-            data={TableLog}
-            columns={driversTableHeader}
-            copyId={5}
-            onClick={handleEditClick}
-          />
+      {(isFetching || disableActions) && <TruckLoader />}
+      <div>
+        <div id="box">
+          {currentLog && (
+            <LogCorrection handleCloseEditing={() => setCurrentLog(null)} />
+          )}
         </div>
+        <CustomTable
+          data={TableLog}
+          columns={driversTableHeader}
+          copyId={5}
+          onClick={handleEditClick}
+        />
+      </div>
       {/* </div> */}
 
       <DriversForm LogForm={logsFormData ? logsFormData : []} />

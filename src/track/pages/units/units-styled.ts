@@ -20,12 +20,13 @@ export const PrimaryBtn = styled(Button)<{
   font-size: 16px;
   font-weight: 500;
   letter-spacing: -0.5px;
-
+  border: none;
   padding: ${({ padding }) => padding || "20px 35px"};
   width: ${({ width }) => width || ""};
   height: ${({ height }) => height || "100%"};
   background: ${({ $background }) => $background || "#fc973a"} !important;
   &:hover {
+    background: ${({ $background }) => $background || "#fc973a"} !important;
     color: #fff !important;
   }
 `;

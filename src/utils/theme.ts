@@ -19,6 +19,7 @@ export const lightTheme = {
   selectOptionBg: "#fff",
   selectBg: "#fff",
   blueBtn: "#fff",
+  chatClr:"#2D2E2F"
 };
 
 export const darkTheme = {
@@ -42,4 +43,5 @@ export const darkTheme = {
   selectOptionBg: "#2B2B2B",
   selectBg: "#373737",
   blueBtn: "#212121",
+  chatClr:"#fff"
 };

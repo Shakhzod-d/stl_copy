@@ -1,3 +1,4 @@
+import { Pagination } from "antd";
 import styled from "styled-components";
 
 export const TableContainer = styled.div`
@@ -28,7 +29,7 @@ export const TableRow = styled.tr`
   position: relative;
   font-weight: 400;
   height: 77px;
-
+  text-align: left;
   &:not(:last-child) {
     margin-bottom: 10px;
   }
@@ -193,4 +194,58 @@ export const NotFound = styled.div`
   display: flex;
   gap: 1rem;
   align-items: center;
+`;
+
+export const StyledPagination = styled(Pagination)`
+  display: flex;
+  margin-top: 15px;
+  .ant-pagination-prev,
+  .ant-pagination-next {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px !important; /* Rounded prev/next buttons */
+    width: 42px !important;
+    height: 42px !important;
+    background-color: transparent !important;
+    transition: all 0.3s;
+    border: none !important;
+
+    &:hover {
+      background-color: #fc973a !important; /* Hover background */
+      color: #fff !important; /* Hover text color */
+    }
+
+    .ant-pagination-item-link {
+      width: 100%;
+      height: 100%;
+      border-radius: 10px !important; /* Rounded arrows */
+      color: ${({ theme }) => theme.clr || "#000"} !important; /* Arrow color */
+      background-color: ${({ theme }) => theme.white || "#fff"} !important;
+      border: none;
+    }
+  }
+
+  .ant-pagination-item {
+    border-radius: 10px !important; /* Rounded items */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 42px !important;
+    height: 42px !important;
+    transition: all 0.3s;
+    border: none;
+    background-color: ${({ theme }) => theme.white || "#fff"} !important;
+    color: ${({ theme }) => theme.clr} !important;
+
+    &:hover {
+      background-color: #e6e6e6 !important; /* Hover background */
+    }
+  }
+
+  .ant-pagination-item-active {
+    background-color: #dbdbdb !important; /* Active background */
+    color: red !important; /* Active text color */
+    border: none !important;
+  }
 `;

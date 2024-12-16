@@ -32,19 +32,22 @@ export const FormInput = (prop: Props) => {
     h,
     change,
     disabled,
+    value,
   } = prop;
-const dark = useSelector((state: RootState) => state.booleans.darkMode);
+  const dark = useSelector((state: RootState) => state.booleans.darkMode);
+
   return (
     <Item name={name} rules={rules ? rules : []}>
       <StyledInput
         onChange={change}
         disabled={disabled}
         placeholder={placeholder}
+        defaultValue={value}
         $w={width}
         $p={padding}
-        $clr={dark ?"#fff": clr}
-        $pClr={dark? "#fff": pClr}
-        $bg={dark ?"#373737": bg}
+        $clr={dark ? "#fff" : clr}
+        $pClr={dark ? "#fff" : pClr}
+        $bg={dark ? "#373737" : bg}
         $h={h}
         type={type}
       />

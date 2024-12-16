@@ -382,18 +382,18 @@ export const LogsByDriverMap = (data: DriersByLogsType[] | []) => {
 };
 
 export const MapsData = (data: MapsType[] | []) => {
-  data.map((item, i) => {
+  return data.map((item, i) => {
     return {
-      id: i + 1,
-      name: item.device ? item.device.location.name : "",
-      lat: item.device ? item.device.location.lat : 0, // Qarshi
+      id: i,
+      title: `${item.firstName} ${item.lastName}`,
+      text: item.device ? item.device.location.name : "",
+      lat: item.device ? item.device.location.lat : 0,
       lng: item.device ? item.device.location.lng : 0,
-      address: item.device?.location,
-      status: "61 mph",
-      destination: "Samarqand, Uzbekistan",
-      destLat: 39.6542, // Samarqand
-      destLng: 66.9597,
-      progress: 20, // 20% of the route completed
+      desc: "Started: 03-11-2024, 02:13 EDT",
+      status:
+        item?.device?.speed && item.device.speed > 0
+          ? `${item.device?.speed}mph`
+          : item.currentStatus,
     };
   });
 };

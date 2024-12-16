@@ -21,10 +21,10 @@ export const AddUser = ({ open, setOpen, refetch }: Props) => {
   const UserMutation = useApiMutation("/user", { hideMessage: true });
   const dark = useSelector((state: RootState) => state.booleans.darkMode);
   const roleSelectOption = [
-    { value: "superAdmin", label: "superAdmin" },
-    { value: "serviceAdmin", label: "serviceAdmin" },
-    { value: "loggerAdmin", label: "loggerAdmin" },
-    { value: "companyAdmin", label: "companyAdmin" },
+    { value: "Manager", label: "Manager" },
+
+    { value: "Finance", label: "Finance" },
+    { value: "Logbook Specialist", label: "Logbook Specialist" },
   ];
   interface User {
     [key: string]: string;
@@ -65,6 +65,23 @@ export const AddUser = ({ open, setOpen, refetch }: Props) => {
       <Form onFinish={submit}>
         <Flex $gap={"20px"} $vertical={true}>
           <Flex $gap={"20px"} $w="100%">
+            <Select
+              name="role"
+              rules={[{ required: true, message: "Please input your Role!" }]}
+              placeholder="Role"
+              option={roleSelectOption}
+              bg={selectBg}
+              w="100%"
+              h="60px"
+            />
+            <FormInput
+              name="phone"
+              rules={[{ required: true, message: "Please input your phone!" }]}
+              placeholder="Phone"
+              width="100%"
+            />
+          </Flex>
+          <Flex $gap={"20px"} $w="100%">
             <FormInput
               name="firstName"
               rules={[
@@ -84,24 +101,7 @@ export const AddUser = ({ open, setOpen, refetch }: Props) => {
               placeholder="lastName"
               width="100%"
             />
-            <Select
-              name="role"
-              rules={[{ required: true, message: "Please input your Role!" }]}
-              placeholder="Role"
-              option={roleSelectOption}
-              bg={selectBg}
-              w="100%"
-              h="60px"
-            />
-          </Flex>
 
-          <Flex $gap={"20px"} $w="100%">
-            <FormInput
-              name="phone"
-              rules={[{ required: true, message: "Please input your phone!" }]}
-              placeholder="Phone"
-              width="100%"
-            />
             <FormInput
               name="email"
               rules={[
@@ -126,6 +126,15 @@ export const AddUser = ({ open, setOpen, refetch }: Props) => {
               type="password"
             />
           </Flex>
+          <Select
+            name="status"
+            // rules={[{ required: true, message: "Please input your Role!" }]}
+            placeholder="Status"
+            option={[]}
+            bg={selectBg}
+            w="100%"
+            h="60px"
+          />
           <Flex $justify="end" $gap={"20px"} $w="100%">
             <DefaultBtn
               style={{ width: "200px", height: "55px" }}

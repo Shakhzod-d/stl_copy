@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 
 import { Route, Switch, useLocation } from "react-router-dom";
 
@@ -26,7 +26,8 @@ export enum RoleNames {
 }
 const App: React.FC = () => {
   const { pathname } = useLocation();
-
+  const userData = useSelector((state: RootState) => state.auth.userData);
+  const modal = useSelector((state: RootState) => state.booleans.modal);
   const company =
     useSelector((state: RootState) => state.company.company) ||
     getLocalStorage("company");
@@ -39,11 +40,11 @@ const App: React.FC = () => {
       historyPush(`/main/dashboard`);
     }
   }, [pathname]);
-  const filteredRoutes = routes.filter((item) => item.admin === "app");
-  const modal = useSelector((state: RootState) => state.booleans.modal);
-  const filterRout = company
-    ? routes.filter((item) => item.admin === "company")
-    : filteredRoutes;
+
+  const FilterRoutes = routes.filter((item) =>
+    item.admin.includes(userData ? userData?.role.roleName : "")
+  );
+
   return (
     <ThemeProvider theme={dark ? darkTheme : lightTheme}>
       <Body>
@@ -55,7 +56,7 @@ const App: React.FC = () => {
               <Switch>
                 {" "}
                 {/* Place Switch inside the Layout for proper route nesting */}
-                {filterRout.map((item, i) => {
+                {FilterRoutes.map((item, i) => {
                   const Component = item.component;
 
                   if (item.route) {

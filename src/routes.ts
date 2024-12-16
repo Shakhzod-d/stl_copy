@@ -33,107 +33,114 @@ import { Drivers } from "./track/pages/drivers";
 import { TabCompany } from "./track/pages/tab-company";
 import { CompanyUsers } from "./track/pages/company-users";
 import { Notification } from "./track/pages/notification/notification";
-
+import { FinanceReports } from "./track/pages/finance-role/reports/reports";
+import { InfoCompany } from "./track/pages/finance-role/info-company/info-company";
 // Result pages
 const routes = [
   {
     path: "/company",
-    admin: "app",
+    admin: ["superAdmin", "logger"],
     component: AdminCompanies,
   },
 
   {
     path: "/users",
     component: Users,
-    admin: "app",
+    admin: ["superAdmin", "logger"],
   },
 
   {
     path: "/main/dashboard",
     component: Dashboard,
-    admin: "company",
+    admin: ["superAdmin", "logger", "companyAdmin"],
   },
 
   {
     path: "/main/logs",
     component: Logs,
-    admin: "company",
+    admin: ["companyAdmin", "superAdmin"],
     route: [
       {
         path: "map",
         component: LogsMap,
-        admin: "company",
+        admin: ["companyAdmin", "superAdmin"],
       },
       {
         path: "drivers",
         component: LogDrivers,
         // component: LogsDrivers,
-        admin: "company",
+        admin: ["companyAdmin", "superAdmin"],
       },
       {
         path: "log",
         component: LogsLog,
-        admin: "company",
+        admin: ["companyAdmin", "superAdmin"],
       },
       {
         path: "violation",
         component: Violation,
-        admin: "company",
+        admin: ["companyAdmin", "superAdmin"],
       },
       {
-        path: "tracking",
+        path: "q",
         component: Trackings,
-        admin: "company",
+        admin: ["companyAdmin", "superAdmin"],
       },
 
       {
         path: "inner/:id",
         component: LogsInner,
-        admin: "company",
+        admin: ["companyAdmin", "superAdmin"],
       },
     ],
   },
   {
     path: "/main/transfer",
     component: Transfer,
-    admin: "company",
+    admin: ["companyAdmin", "superAdmin"],
+  },
+  {
+    path: "/notification",
+    component: Notification,
+    admin: ["companyAdmin", "superAdmin"],
   },
   {
     path: "/main/notification",
     component: Notification,
-    admin: "company",
-  },
-  {
-    path: "/main/notification",
-    component: Notification,
-    admin: "app",
+    admin: ["superAdmin"],
   },
   {
     path: "/main/ifta-reports",
     component: IftaReports,
-    admin: "company",
+    admin: ["companyAdmin",'superAdmin'],
   },
   {
     path: "/main/units",
     component: Units,
-    admin: "company",
+    admin: ["companyAdmin",'superAdmin'],
   },
   {
     path: "/main/drivers",
     component: Drivers,
-    admin: "company",
+    admin: ["companyAdmin",'superAdmin'],
   },
   {
     path: "/main/manage-company",
     component: ManageCompany,
-    admin: "company",
+    admin: ["companyAdmin",'superAdmin'],
     route: [
-      { path: "company", component: TabCompany, admin: "company" },
-      { path: "users", component: CompanyUsers, admin: "company" },
-      { path: "keys", component: ApiKeys, admin: "company" },
-      { path: "histories", component: Histories, admin: "company" },
+      { path: "company", component: TabCompany, admin: ["companyAdmin",'superAdmin'] },
+      { path: "users", component: CompanyUsers, admin: ["companyAdmin",'superAdmin'] },
+      { path: "keys", component: ApiKeys, admin: ["companyAdmin",'superAdmin'] },
+      { path: "histories", component: Histories, admin: ["companyAdmin",'superAdmin'] },
     ],
   },
+  {
+    path: "/reports",
+    component: FinanceReports,
+    admin: ["logger"],
+  },
+  { path: "/info-company", component: InfoCompany, admin: ["logger"] },
 ];
 
 export default routes;

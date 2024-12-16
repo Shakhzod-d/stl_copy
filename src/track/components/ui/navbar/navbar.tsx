@@ -23,15 +23,18 @@ export const Navbar = memo(({ title, search = true }: Props) => {
   const dispatch = useDispatch();
   const dark = useSelector((state: RootState) => state.booleans.darkMode);
   const CompanyData = useSelector((state: RootState) => state.company.company);
+  const userData = useSelector((state: RootState) => state.auth.userData);
   const darkMode = () => {
     setLocalStorage("darkMode", !dark);
     dispatch(setDarkMode());
   };
   const exitFun = () => {
-    removeLocalStorage("company");
-    removeLocalStorage("companyId");
-    dispatch(setCompanyData(false));
-    historyPush("/company");
+    if (userData?.role.roleName === "superAdmin") {
+      removeLocalStorage("company");
+      removeLocalStorage("companyId");
+      dispatch(setCompanyData(false));
+      historyPush("/company");
+    }
   };
 
   return (
