@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { getLocalStorage } from "@/utils/localStorage";
+import { companyDriverEditData } from "@/types/company.type";
 
 export interface SelectData {
   value: string | unknown;
@@ -15,6 +16,7 @@ interface Bool {
   modal: boolean;
   modalAnimated: boolean;
   logEdit: boolean;
+  editDriverModal: companyDriverEditData;
 }
 const dark_mode =
   getLocalStorage("darkMode") === "false" ||
@@ -32,6 +34,7 @@ const initialState: Bool = {
   modal: false,
   modalAnimated: false,
   logEdit: false,
+  editDriverModal: { open: false, role: "add" },
 };
 
 const booleanSlice = createSlice({
@@ -65,6 +68,12 @@ const booleanSlice = createSlice({
     setLogEdit: (state) => {
       state.logEdit = !state.logEdit;
     },
+    SetEditDriverModal: (
+      state,
+      action: PayloadAction<companyDriverEditData>
+    ) => {
+      state.editDriverModal = action.payload;
+    },
   },
 });
 
@@ -78,6 +87,7 @@ export const {
   setModalActive,
   setModalAnimated,
   setLogEdit,
+  SetEditDriverModal,
 } = booleanSlice.actions;
 
 export default booleanSlice.reducer;

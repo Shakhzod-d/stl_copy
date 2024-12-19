@@ -35,6 +35,7 @@ interface Props {
   font?: string;
   rules?: Rules[];
   onChange?: (e: any) => void;
+  disabled?: boolean;
 }
 // Your other imports remain the same...
 
@@ -53,6 +54,7 @@ export const Select = (props: Props) => {
     h,
     rules,
     name,
+    disabled,
   } = props;
   const [active, setActive] = useState(false);
 
@@ -115,7 +117,16 @@ export const Select = (props: Props) => {
   return (
     <Item key={test} initialValue={test} rules={rules} name={name}>
       <Container $w={w} ref={selectRef}>
-        <StyleSelect onClick={toggleSelect} $active={active} bg={bg} h={h}>
+        <StyleSelect
+          onClick={!disabled ? toggleSelect : undefined}
+          $active={active}
+          bg={bg}
+          h={h}
+          style={{
+            opacity: disabled ? "0.7" : "",
+            cursor: disabled ? "not-allowed" : "",
+          }}
+        >
           <Text $font={font} color={dark ? "#fff" : clr}>
             {defaultValue ? defaultValue.label : placeholder}
           </Text>

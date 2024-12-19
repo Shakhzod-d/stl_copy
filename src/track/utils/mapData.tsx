@@ -56,7 +56,7 @@ export const mapUserData = (data: any[]) => {
     }
     const daysBetween = calculateDaysBetweenDates(String(item.updatedAt));
     return {
-      _id: item._id,
+      id: item._id,
       name: {
         label: `${item.firstName} ${item.lastName}`,
         img: image,
@@ -129,6 +129,8 @@ interface DriversGet {
   status: string;
   cycle?: Cycle;
   _id?: string;
+  email?: string;
+  isActive?: boolean;
 }
 
 export function companyDrivers(data: DriversGet[] = []) {
@@ -170,8 +172,54 @@ export function companyDrivers(data: DriversGet[] = []) {
       driverId: item?._id,
     };
   });
+  const coDriver = data.map((item) => {
+    return {
+      value: item._id,
+      label: item.firstName + " " + item.lastName,
+    };
+  });
 
-  return { drivers, logDrivers, LogsByDriver };
+  const companyDriver = data.map((item) => {
+    return {
+      id: item._id,
+      name: {
+        label: item.firstName + " " + item.lastName,
+        img: "/assets/images/user.png",
+        data: [{ id: 1, text: item.email }],
+      },
+      updated: { label: "3 week ago" },
+      status: {
+        label: item.isActive ? "Active" : "noActive",
+      },
+
+      edit: { label: "Edit" },
+    };
+  });
+
+  return { drivers, logDrivers, LogsByDriver, coDriver, companyDriver };
+}
+
+export function companyUserInitialValue(
+  data: any,
+  role: "driver" | "employer"
+) {
+  if (role === "driver") {
+    return {
+      coDriverId: data?.coDriverId,
+      driverLicense: data?.driverLicense,
+      driverLicenseIssuingState: data?.driverLicenseIssuingState,
+      email: data?.email,
+      firstName: data?.firstName,
+      homeTerminalAddress: data?.homeTerminalAddress,
+      lastName: data?.lastName,
+      notes: data?.notes,
+      organization: "Unity",
+      password: data?.password,
+      phone: data?.phone,
+      username: data?.username,
+      vehicleId: data?.vehicleId,
+    };
+  }
 }
 
 function timeAgo(inputDate: string): string {

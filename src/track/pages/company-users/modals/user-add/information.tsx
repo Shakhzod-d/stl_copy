@@ -1,27 +1,28 @@
-
 // import { TextAria } from "./modal-styled";
-import { FormInput,  } from "@/track/components/ui";
+import { FormInput } from "@/track/components/ui";
 
 import { Flex } from "@/track/components/shared/drivers-header/drivers-header-styled";
 import { Select } from "@/track/components/shared/select";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
-
-
-
+import { log } from "node:console";
 
 export const Information = () => {
   const dark = useSelector((state: RootState) => state.booleans.darkMode);
   const selectBg = dark ? "#373737" : "#F9F9FA";
+  const selectChange = (e: any) => {
+    console.log(e);
+  };
   return (
     <>
       <Flex $gap={"6px"} $m="0 0 10px 0">
         <Select
-          option={[{ value: "Employer", label: "Employer" }]}
+          option={[]}
           w="100%"
           h="60px"
           bg={selectBg}
           placeholder="Employer"
+          // onChange={selectChange}
         />
         <Select
           w="100%"
@@ -44,3 +45,5 @@ export const Information = () => {
     </>
   );
 };
+
+;

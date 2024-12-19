@@ -152,7 +152,6 @@ export const CustomButton = styled(Button)<{
 `;
 
 export const CustomModal = styled(Modal)`
-
   .ant-modal-close-x {
     color: ${({ theme }) =>
       theme.clr}!important; // X tugmasi rangini qizil qilish
@@ -1284,7 +1283,6 @@ export const usersTableData = [
       label: "Active",
     },
 
-   
     edit: { label: "Edit" },
   },
 ];
@@ -1479,106 +1477,87 @@ export const permissionModal = [
     options: [
       {
         id: 1,
-        title: "Vehicle",
+        title: "All",
         buttons: [
-          { id: 1, text: "Edit", isActive: false },
-          { id: 1, text: "Add", isActive: false },
-          { id: 1, text: "View", isActive: true },
+          { id: 1, text: "All", isActive: false, name: "allUpdate" },
+          { id: 2, text: "View", isActive: true, name: "allleGet" },
         ],
       },
       {
         id: 2,
-        title: "Driv",
+        title: "Users",
         buttons: [
-          { id: 1, text: "Add", isActive: false },
+          { id: 1, text: "Edit", isActive: false, name: "usersUpdate" },
+          { id: 2, text: "Add", isActive: false, name: "userCreate" },
 
-          { id: 4, text: "View", isActive: true },
+          { id: 3, text: "View", isActive: true, name: "usersGet" },
         ],
       },
       {
         id: 3,
-        title: "A. EHF",
+        title: "Terminals",
         buttons: [
-          { id: 1, text: "Three", isActive: false },
-          { id: 2, text: "False", isActive: false },
-        ],
-      },
-      {
-        id: 4,
-        title: "A.Split",
-        buttons: [
-          { id: 1, text: "Three", isActive: false },
-          { id: 2, text: "False", isActive: false },
+          { id: 1, text: "Edit", isActive: false, name: "terminalsUpdate" },
+          { id: 2, text: "Add", isActive: false, name: "terminalsCreate" },
+
+          { id: 3, text: "View", isActive: true, name: "terminalsGet" },
         ],
       },
     ],
   },
+
   {
     id: 2,
     options: [
       {
         id: 1,
-        title: "Carrier",
-        buttons: [{ id: 4, text: "View", isActive: true }],
-      },
-      {
-        id: 2,
-        title: "Terminals",
-        buttons: [{ id: 1, text: "View", isActive: true }],
-      },
-      {
-        id: 3,
-        title: "A. PTI",
+        title: "Vehicle",
         buttons: [
-          { id: 1, text: "Thee", isActive: false },
-          { id: 2, text: "False", isActive: false },
+          { id: 1, text: "Edit", isActive: false, name: "vehicleUpdate" },
+          { id: 2, text: "Add", isActive: false, name: "vehicleCreate" },
+
+          { id: 3, text: "View", isActive: true, name: "vehicleGet" },
         ],
       },
       {
-        id: 4,
-        title: "A.Shift",
+        id: 2,
+        title: "Documents",
         buttons: [
-          { id: 1, text: "Thee", isActive: false },
-          { id: 2, text: "False", isActive: false },
+          { id: 1, text: "Edit", isActive: false, name: "documetUpdate" },
+          { id: 2, text: "Add", isActive: false, name: "documetCreate" },
+          { id: 3, text: "View", isActive: true, name: "documetGet" },
+        ],
+      },
+      {
+        id: 3,
+        title: "Driv",
+        buttons: [
+          { id: 1, text: "Edit", isActive: false, name: "drivUpdate" },
+          { id: 2, text: "Add", isActive: false, name: "drivCreate" },
+          { id: 3, text: "View", isActive: true, name: "drivtGet" },
         ],
       },
     ],
   },
   {
     id: 3,
-    title: "",
     options: [
       {
         id: 1,
-        title: "Logs",
+        title: "Driver",
         buttons: [
-          { id: 1, text: "Edit", isActive: false },
-          { id: 2, text: "Add", isActive: false },
-          { id: 1, text: "View", isActive: true },
+          { id: 1, text: "Edit", isActive: false, name: "driverUpdate" },
+          { id: 2, text: "Add", isActive: false, name: "driverCreate" },
+
+          { id: 3, text: "View", isActive: true, name: "driverGet" },
         ],
       },
       {
         id: 2,
-        title: "A.time",
+        title: "Notifications",
         buttons: [
-          { id: 1, text: "Thee", isActive: false },
-          { id: 2, text: "False", isActive: false },
-        ],
-      },
-      {
-        id: 3,
-        title: "A. Certify",
-        buttons: [
-          { id: 1, text: "Thee", isActive: false },
-          { id: 2, text: "False", isActive: false },
-        ],
-      },
-      {
-        id: 4,
-        title: "A. DFM",
-        buttons: [
-          { id: 1, text: "Thee", isActive: false },
-          { id: 2, text: "False", isActive: false },
+          { id: 1, text: "Edit", isActive: false, name: "notificationsUpdate" },
+          { id: 2, text: "View", isActive: true, name: "notificationsGet" },
         ],
       },
     ],
@@ -1589,28 +1568,51 @@ export const permissionModal = [
     options: [
       {
         id: 1,
-        title: "Locations",
-        buttons: [{ id: 1, text: "Add", isActive: false }],
-      },
-
-      {
-        id: 3,
-        title: "A. Normalizer",
+        title: "Logs",
         buttons: [
-          { id: 1, text: "Thee", isActive: false },
-          { id: 2, text: "False", isActive: false },
+          { id: 1, text: "Edit", isActive: false, name: "logUpdate" },
+          { id: 2, text: "Add", isActive: false, name: "logCreate" },
+          { id: 3, text: "View", isActive: true, name: "logGet" },
         ],
       },
       {
-        id: 4,
-        title: "A. Break",
+        id: 2,
+        title: "FMCSA",
         buttons: [
-          { id: 1, text: "Thee", isActive: false },
-          { id: 2, text: "False", isActive: false },
+          { id: 1, text: "Add", isActive: false, name: "fmcsaCreate" },
+          { id: 2, text: "View", isActive: true, name: "fmcsaGet" },
         ],
       },
     ],
   },
+  // {
+  //   id: 4,
+  //   title: "",
+  //   options: [
+  //     {
+  //       id: 1,
+  //       title: "Locations",
+  //       buttons: [{ id: 1, text: "Add", isActive: false }],
+  //     },
+
+  //     {
+  //       id: 3,
+  //       title: "A. Normalizer",
+  //       buttons: [
+  //         { id: 1, text: "Thee", isActive: false },
+  //         { id: 2, text: "False", isActive: false },
+  //       ],
+  //     },
+  //     {
+  //       id: 4,
+  //       title: "A. Break",
+  //       buttons: [
+  //         { id: 1, text: "Thee", isActive: false },
+  //         { id: 2, text: "False", isActive: false },
+  //       ],
+  //     },
+  //   ],
+  // },
 ];
 export const userpermission = [
   {

@@ -82,7 +82,7 @@ const routes = [
         admin: ["companyAdmin", "superAdmin"],
       },
       {
-        path: "q",
+        path: "tracking",
         component: Trackings,
         admin: ["companyAdmin", "superAdmin"],
       },

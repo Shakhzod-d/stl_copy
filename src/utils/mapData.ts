@@ -153,7 +153,7 @@ const mapTableData = (data: any[]) => {
       cycle: formatTime(item.cycle ? item.cycle.cycle : 0),
       recap: "00:00",
       updated: "13 weeks ago",
-      Date: item.violations[0].date,
+      Date: item.violations[0]?.date,
     };
   });
 };

@@ -2,7 +2,7 @@ import useApiMutation from "@/hooks/useApiMutation";
 import { RootState } from "@/store";
 import { Flex } from "@/track/components/shared/drivers-header/drivers-header-styled";
 import { Select } from "@/track/components/shared/select";
-import { FormInput, FormSelect } from "@/track/components/ui";
+import { FormInput, } from "@/track/components/ui";
 import { CustomModal, stateSelect } from "@/track/constants";
 import {
   DefaultBtn,
@@ -33,6 +33,7 @@ export const DriversModal = ({ open, setOpen, refetch }: Prop) => {
     setOpen(false);
   };
   const dark = useSelector((state: RootState) => state.booleans.darkMode);
+  
   const vehicleId = useSelector(
     (state: RootState) => state.booleans.driverSelect
   );
