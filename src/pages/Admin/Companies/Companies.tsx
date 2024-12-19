@@ -168,7 +168,7 @@ const Companies: React.FC = () => {
           data={filteredData}
           editData={modalActive}
           onClick={CompanyHandler}
-          // isLoading={isLoading}
+          isLoading={isLoading}
         />
       </div>
     </Main>
