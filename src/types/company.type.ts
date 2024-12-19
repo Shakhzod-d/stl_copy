@@ -30,3 +30,11 @@ export interface CompanyForm {
   note: string;
   state: string;
 }
+
+export interface companyDriverEditData {
+  role: string;
+  open: boolean;
+  id?: string;
+  userRole?: string;
+  refetch?: () => void;
+}

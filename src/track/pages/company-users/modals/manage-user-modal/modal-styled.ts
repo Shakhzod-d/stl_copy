@@ -1,5 +1,5 @@
-import { Button, Input } from "antd";
-import styled from "styled-components";
+import { Button, Checkbox, Input, Radio, Tabs } from "antd";
+import styled, { createGlobalStyle } from "styled-components";
 
 export const TabBtn = styled(Button)<{ $active: boolean }>`
   border-radius: 10px;
@@ -58,5 +58,89 @@ export const Btn = styled(Button)<{ $type?: string }>`
     background: ${({ $type }) => ($type ? " #FC973A" : "#F3F3F4")} !important;
     opacity: 0.9;
     color: ${({ $type }) => ($type ? " #fff" : "#000")} !important;
+  }
+`;
+
+export const StyledCheckbox = styled(Checkbox)<{ checked: boolean }>`
+  && {
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: ${({ checked, theme }) =>
+      checked ? "#FC973A" : theme.textAriaBg};
+    color: ${({ checked }) => (checked ? "#FFF" : "#5D5E5F")};
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 400;
+
+    .ant-checkbox-inner {
+      display: none; /* Checkbox ichidagi default square ni yo'q qilish */
+    }
+
+    &:hover {
+      border-color: #fc973a;
+    }
+  }
+`;
+
+export const StyledTabs = styled(Tabs)`
+  && .ant-tabs-nav {
+    margin: 0 !important;
+    padding: 0 !important;
+    display: flex !important;
+    justify-content: flex-end !important; /* O'ng tomonga chiqarish */
+    border-bottom: none !important; /* Default chiziqni o'chirish */
+
+    .ant-tabs-tab {
+      background-color: #f5f6fa !important; /* Tab tugmalar orqa foni */
+      color: #1f2645 !important; /* Matn rangi */
+      border-radius: 8px !important; /* Chekka radius */
+      margin: 0 8px !important; /* Tab orasida bo'shliq */
+      padding: 6px 12px !important;
+
+      &:hover {
+        background-color: #e0e0e0 !important; /* Hover uchun rang */
+      }
+    }
+
+    .ant-tabs-tab-active {
+      background-color: #1f2645 !important; /* Aktiv tab foni */
+      color: #ffffff !important; /* Aktiv tab matn rangi */
+    }
+  }
+
+  && .ant-tabs-ink-bar {
+    display: none !important; /* Pastdagi default chiziqni yashirish */
+  }
+`;
+
+export const GlobalStyles = createGlobalStyle`
+  .ant-tabs-nav {
+    margin: 0 !important;
+    display: flex !important;
+    justify-content: flex-end !important; /* Tab tugmalarini o'ng tomonga chiqarish */
+    border-bottom: none !important; /* Uzun pastki chiziqni olib tashlash */
+  }
+
+  .ant-tabs-tab {
+    background-color: #f5f6fa !important;
+    color: #1f2645 !important;
+    border-radius: 8px !important;
+    margin: 0 5px !important; /* Orasidagi bo'shliq */
+    padding: 6px 12px !important;
+
+    &:hover {
+      background-color: #e0e0e0 !important;
+    }
+  }
+
+  .ant-tabs-tab-active {
+    background-color: #1f2645 !important;
+    color: #ffffff !important;
+  }
+
+  .ant-tabs-ink-bar {
+    display: none !important; /* Aktiv tab pastidagi chiziq */
   }
 `;

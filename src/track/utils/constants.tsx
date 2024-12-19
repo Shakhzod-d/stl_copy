@@ -1351,7 +1351,8 @@ export const usersTableHeader = [
   { header: "Updated", accessor: "updated" },
   { header: "Status", accessor: "status" },
   // { header: "Carrier", accessor: "carrier" },
-  { header: "Role", accessor: "role" },
+  { header: "", accessor: "role" },
+  { header: "", accessor: "role" },
   { header: "", accessor: "edit" },
 ];
 

@@ -12,12 +12,18 @@ import { historyPush } from "@/utils";
 import { Flex } from "@/track/components/shared/drivers-header/drivers-header-styled";
 import { ManageUserModal } from "../company-users/modals/manage-user-modal";
 import { AddKey } from "../api-keys/_components/addKey";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/store";
+import { SetEditDriverModal } from "@/store/slices/booleans-slice";
 interface Props {
   children: ReactNode;
 }
 export const ManageCompany: React.FC<Props> = ({ children }) => {
   const { pathname } = useLocation();
-  const [open, setOpen] = useState(false);
+  const dispatch = useDispatch();
+  const driverModal: any = useSelector(
+    (state: RootState) => state.booleans.editDriverModal
+  );
   const [keysModal, setKeysModal] = useState(false);
   useEffect(() => {
     if (String(pathname.endsWith("/company")))
@@ -26,7 +32,7 @@ export const ManageCompany: React.FC<Props> = ({ children }) => {
 
   return (
     <Main>
-      <ManageUserModal open={open} setOpen={setOpen} />
+      <ManageUserModal modalData={driverModal} />
       {keysModal && <AddKey open={keysModal} setOpen={setKeysModal} />}
       <Navbar title="Manage Company" />
       {/* <DriversStatistics /> */}
@@ -45,7 +51,12 @@ export const ManageCompany: React.FC<Props> = ({ children }) => {
           ))}
         </Flex>
         {pathname === "/main/manage-company/users" && (
-          <AddBtn type="primary" onClick={() => setOpen(true)}>
+          <AddBtn
+            type="primary"
+            onClick={() =>
+              dispatch(SetEditDriverModal({ role: "add", open: true ,userRole:'employer'}))
+            }
+          >
             <FaPlus /> Add
           </AddBtn>
         )}

@@ -13,7 +13,7 @@ interface Header {
 
 interface Prop<T> {
   header: Header[];
-  data: InfoTableData[];
+  data: any[] | [];
   editData?: (id: string) => void;
   onClick?: (id: string) => void;
   isLoading?: boolean;

@@ -54,13 +54,8 @@ export const Dashboard = () => {
     { value: "active", label: "Actice" },
     { value: "completed", label: "Completed" },
   ];
-  const { data: DashboardData, isLoading: dashboardTableLoad } = useApi(
-    "/driversInfo",
-    {
-      page: 1,
-      limit: 1000,
-    }
-  );
+  const { data: DashboardData, isLoading: dashboardTableLoad } =
+    useApi("/driversInfo");
   const { data: driversCount } = useApi("/count");
 
   const filerData = dashboardData(DashboardData ? DashboardData?.data : []);
