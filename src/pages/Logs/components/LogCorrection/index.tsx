@@ -76,7 +76,7 @@ interface ILogCorrection {
   // setLogs: ISetState<ILog[]>;
 }
 
-const LogCorrection: React.FC<ILogCorrection> = ({ handleCloseEditing }) => {
+const   LogCorrection: React.FC<ILogCorrection> = ({ handleCloseEditing }) => {
   const {
     state: { currentLog, logs, time },
     actions: { onChangeStatus, onCancel, onTimeChange, setLogs },
@@ -145,7 +145,7 @@ const LogCorrection: React.FC<ILogCorrection> = ({ handleCloseEditing }) => {
         beforeLogs: [],
       },
     };
-    api.put("/interlog", logEdit);
+    api.post("/logs", logEdit);
 
     // handleCloseEditing();
     // //  console.log(moment(formData.fromTo[1]).format("HH:mm:ss"));

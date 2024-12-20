@@ -13,6 +13,7 @@ export const TabCompany = () => {
   const companyData: any = useSelector(
     (state: RootState) => state.company.company
   );
+  console.log(companyData);
 
   const [show, setShow] = useState(true);
 

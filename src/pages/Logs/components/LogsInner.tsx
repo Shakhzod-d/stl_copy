@@ -141,7 +141,7 @@ const LogsInner: React.FC = () => {
   const dataSubmit = () => {
     console.log(1);
 
-    api.put("/interlog", EditLog);
+    api.put("/log", EditLog);
   };
   return (
     <>

@@ -12,6 +12,7 @@ interface State {
   modalRole: "add" | "edit";
   loggerCompanyData: Data;
   editCompany: Data | false;
+  userRefetch: any;
 }
 const boolean = Boolean(getLocalStorage("company"));
 const companyData = getLocalStorage("company");
@@ -24,6 +25,7 @@ const initialState: State = {
   modalRole: "add",
   loggerCompanyData: [],
   editCompany: false,
+  userRefetch: null,
 };
 export const companySlice = createSlice({
   name: "companySlice",
@@ -41,8 +43,9 @@ export const companySlice = createSlice({
     setLoggerCompanyData: (state, action: PayloadAction<Data>) => {
       state.loggerCompanyData = action.payload;
     },
-    setEditCompany: (state, action: PayloadAction<Data | false>) => {
-      state.editCompany = action.payload;
+
+    setRefetch: (state, action: PayloadAction<any>) => {
+      state.userRefetch = action.payload;
     },
   },
 });
@@ -52,6 +55,7 @@ export const {
   setWeekData,
   setRole,
   setLoggerCompanyData,
-  setEditCompany,
+
+  setRefetch,
 } = companySlice.actions;
 export default companySlice.reducer;

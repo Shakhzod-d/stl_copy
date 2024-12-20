@@ -3,6 +3,8 @@ import { Select } from "@/track/components/shared/select";
 import { Box, Text } from "@/track/constants";
 import { CalendarBox } from "./style";
 import { CustomTable } from "@/track/components/shared";
+import useApi from "@/hooks/useApi";
+import moment from "moment";
 const header = [
   {
     header: "No",
@@ -30,7 +32,7 @@ const header = [
     id: 4,
   },
 ];
-const data = [
+const dataTable = [
   {
     no: 1,
     driverName: "Jorge Martínez",
@@ -53,7 +55,26 @@ const data = [
     date: "02-08-2024 09:21:05 pm",
   },
 ];
+
+const historyMapData = (data: any[] | []) => {
+  return data.map((item, i) => {
+    return {
+      no: i + 1,
+      driverName: item?.driverFullName ? item?.driverFullName : "",
+      editedBy: item?.userFullName ? item?.userFullName : "",
+      type: item?.type,
+      date: moment(item.date).format("DD-MM-YYYY hh:mm:ss A"),
+    };
+  });
+};
 export const Histories = () => {
+  const { data, isLoading, refetch } = useApi("/history", {
+    page: 1,
+    limit: 10000,
+  });
+  const tableData = historyMapData(data ? data?.data?.data : []);
+  console.log(tableData);
+
   return (
     <div>
       <Flex $justify="space-between" $align="center">
@@ -88,7 +109,13 @@ export const Histories = () => {
           />
         </Flex>
       </Flex>
-      <CustomTable columns={header} data={data} fontId={2} font="600"/>
+      <CustomTable
+        columns={header}
+        data={tableData}
+        fontId={2}
+        font="600"
+        isLoading={isLoading}
+      />
     </div>
   );
 };
