@@ -9,13 +9,7 @@ import { RiUser3Fill } from "react-icons/ri";
 import { IoMdMail } from "react-icons/io";
 import { BsThreeDotsVertical } from "react-icons/bs";
 
-export const manageCompanyButtons = [
-  { id: 1, text: "Company" },
-  { id: 2, text: "Profile" },
-  { id: 3, text: "Users" },
-  { id: 4, text: "Api keys" },
-  { id: 5, text: "Histories" },
-];
+
 export const Text = styled.p<{
   size?: number;
   $font?: string;

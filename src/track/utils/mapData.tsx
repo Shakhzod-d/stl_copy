@@ -210,6 +210,7 @@ export function companyUserInitialValue(
       driverLicenseIssuingState: data?.driverLicenseIssuingState,
       email: data?.email,
       firstName: data?.firstName,
+      role: data?.firstName,
       homeTerminalAddress: data?.homeTerminalAddress,
       lastName: data?.lastName,
       notes: data?.notes,

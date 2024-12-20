@@ -9,13 +9,6 @@ import { RiUser3Fill } from "react-icons/ri";
 import { IoMdMail } from "react-icons/io";
 import { BsThreeDotsVertical } from "react-icons/bs";
 
-export const manageCompanyButtons = [
-  { id: 1, text: "Company" },
-  { id: 2, text: "Profile" },
-  { id: 3, text: "Users" },
-  { id: 4, text: "Api keys" },
-  { id: 5, text: "Histories" },
-];
 export const Text = styled.p<{
   size?: number;
   $font?: string;
@@ -1351,8 +1344,8 @@ export const usersTableHeader = [
   { header: "Updated", accessor: "updated" },
   { header: "Status", accessor: "status" },
   // { header: "Carrier", accessor: "carrier" },
-  { header: "", accessor: "role" },
-  { header: "", accessor: "role" },
+  { header: "", accessor: "" },
+  { header: "", accessor: "" },
   { header: "", accessor: "edit" },
 ];
 
@@ -1730,99 +1723,6 @@ export const dashboardTableHeader = [
   { header: "Updated", accessor: "updated", id: 7 },
 ];
 
-export const dataSource = [
-  {
-    key: 1,
-    name: "Donald Lee",
-    violations: "Form & Signature",
-    date: "May 3, 2014",
-    eld: "Connected",
-    cycle: "5:51",
-    company: "Unity Eld Llc",
-    updated: "3 minutes ago",
-  },
-  {
-    key: 2,
-    name: "Ibrahim Mohammed",
-    violations: "Violation",
-    date: "November 23, 2006",
-    eld: "Connected",
-    cycle: "1:52",
-    company: "Unity Eld Llc",
-    updated: "3 minutes ago",
-  },
-  {
-    key: 3,
-    name: "Đường Vy",
-    violations: "Violation",
-    date: "October 5, 2012",
-    eld: "Not connected",
-    cycle: "2:45",
-    company: "Unity Eld Llc",
-    updated: "3 minutes ago",
-  },
-  {
-    key: 4,
-    name: "Hugo Nagy",
-    violations: "Form & Signature",
-    date: "January 18, 2018",
-    eld: "Connected",
-    cycle: "7:45",
-    company: "Unity Eld Llc",
-    updated: "3 minutes ago",
-  },
-  {
-    key: 5,
-    name: "Jahari Mambwe",
-    violations: "Violation",
-    date: "February 27, 2022",
-    eld: "Not connected",
-    cycle: "1:18",
-    company: "Unity Eld Llc",
-    updated: "3 minutes ago",
-  },
-  {
-    key: 6,
-    name: "Ryan Lee",
-    violations: "Form & Signature",
-    date: "July 3, 2011",
-    eld: "Connected",
-    cycle: "7:01",
-    company: "Unity Eld Llc",
-    updated: "3 minutes ago",
-  },
-  {
-    key: 7,
-    name: "Amy Gray",
-    violations: "Form & Signature",
-    date: "August 13, 2013",
-    eld: "Connected",
-    cycle: "4:40",
-    company: "Unity Eld Llc",
-    updated: "3 minutes ago",
-  },
-  {
-    key: 8,
-    name: "Amy Gray",
-    violations: "Form & Signature",
-    date: "August 13, 2013",
-    eld: "Connected",
-    cycle: "4:40",
-    company: "Unity Eld Llc",
-    updated: "3 minutes ago",
-  },
-  {
-    key: 9,
-    name: "Amy Gray",
-    violations: "Form & Signature",
-    date: "August 13, 2013",
-    eld: "Connected",
-    cycle: "4:40",
-    company: "Unity Eld Llc",
-    updated: "3 minutes ago",
-  },
-];
-
 export const trackingHeader = [
   { header: "No", accessor: "no", id: 1 },
   { header: "Driver", accessor: "driver", id: 2 },
@@ -1848,111 +1748,6 @@ export const trackingData = [
     status: "off",
     location: "54, Oak St, New York, Florida ",
     location_date: " 2024-01-20 00:08",
-  },
-];
-
-export const companyTable = [
-  {
-    company: "Unity Eld LIc",
-    name: "Name",
-    violations: "Donald Lee",
-    date: "May 3, 2014",
-    connection: "Connected",
-    cycle: "5:51",
-    update: "3 minutes ago",
-  },
-  {
-    company: "Unity Eld LIc",
-    name: "Name",
-    violations: "Donald Lee",
-    date: "May 3, 2014",
-    connection: "Connected",
-    cycle: "5:51",
-    update: "3 minutes ago",
-  },
-  {
-    company: "Unity Eld LIc",
-    name: "Name",
-    violations: "Donald Lee",
-    date: "May 3, 2014",
-    connection: "Connected",
-    cycle: "5:51",
-    update: "3 minutes ago",
-  },
-  {
-    company: "Unity Eld LIc",
-    name: "Name",
-    violations: "Donald Lee",
-    date: "May 3, 2014",
-    connection: "Connected",
-    cycle: "5:51",
-    update: "3 minutes ago",
-  },
-  {
-    company: "Unity Eld LIc",
-    name: "Name",
-    violations: "Donald Lee",
-    date: "May 3, 2014",
-    connection: "Connected",
-    cycle: "5:51",
-    update: "3 minutes ago",
-  },
-  {
-    company: "Unity Eld LIc",
-    name: "Name",
-    violations: "Donald Lee",
-    date: "May 3, 2014",
-    connection: "Connected",
-    cycle: "5:51",
-    update: "3 minutes ago",
-  },
-  {
-    company: "Unity Eld LIc",
-    name: "Name",
-    violations: "Donald Lee",
-    date: "May 3, 2014",
-    connection: "Connected",
-    cycle: "5:51",
-    update: "3 minutes ago",
-  },
-];
-
-export const companyTableElement = [
-  {
-    company: "Bakht For Amir Inc",
-    name: "Donald Lee",
-    violations: "Form & Signature",
-    date: "May 3, 2014",
-    connection: "Connected",
-    cycle: "5:51",
-    update: "3 minutes ago",
-  },
-  {
-    company: "Bakht For Amir Inc",
-    name: "Donald Lee",
-    violations: "Form & Signature",
-    date: "May 3, 2014",
-    connection: "Connected",
-    cycle: "5:51",
-    update: "3 minutes ago",
-  },
-  {
-    company: "Bakht For Amir Inc",
-    name: "Donald Lee",
-    violations: "Form & Signature",
-    date: "May 3, 2014",
-    connection: "Connected",
-    cycle: "5:51",
-    update: "3 minutes ago",
-  },
-  {
-    company: "Bakht For Amir Inc",
-    name: "Donald Lee",
-    violations: "Form & Signature",
-    date: "May 3, 2014",
-    connection: "Connected",
-    cycle: "5:51",
-    update: "3 minutes ago",
   },
 ];
 
@@ -2124,3 +1919,85 @@ export const EditLog = {
     beforeLogs: [],
   },
 };
+
+//  --------- COMPANY DATA
+
+export const companyState = [
+  { label: "AL", value: "AL" },
+  { label: "AK", value: "AK" },
+  { label: "AZ", value: "AZ" },
+  { label: "AR", value: "AR" },
+  { label: "CA", value: "CA" },
+  { label: "CO", value: "CO" },
+  { label: "CT", value: "CT" },
+  { label: "DE", value: "DE" },
+  { label: "FL", value: "FL" },
+  { label: "GA", value: "GA" },
+  { label: "HI", value: "HI" },
+  { label: "ID", value: "ID" },
+  { label: "IL", value: "IL" },
+  { label: "IN", value: "IN" },
+  { label: "IA", value: "IA" },
+  { label: "KS", value: "KS" },
+  { label: "KY", value: "KY" },
+  { label: "LA", value: "LA" },
+  { label: "ME", value: "ME" },
+  { label: "MD", value: "MD" },
+  { label: "MA", value: "MA" },
+  { label: "MI", value: "MI" },
+  { label: "MN", value: "MN" },
+  { label: "MS", value: "MS" },
+  { label: "MO", value: "MO" },
+  { label: "MT", value: "MT" },
+  { label: "NE", value: "NE" },
+  { label: "NV", value: "NV" },
+  { label: "NH", value: "NH" },
+  { label: "NJ", value: "NJ" },
+  { label: "NM", value: "NM" },
+  { label: "NY", value: "NY" },
+  { label: "NC", value: "NC" },
+  { label: "ND", value: "ND" },
+  { label: "OH", value: "OH" },
+  { label: "OK", value: "OK" },
+  { label: "OR", value: "OR" },
+  { label: "PA", value: "PA" },
+  { label: "RI", value: "RI" },
+  { label: "SC", value: "SC" },
+  { label: "SD", value: "SD" },
+  { label: "TN", value: "TN" },
+  { label: "TX", value: "TX" },
+  { label: "UT", value: "UT" },
+  { label: "VT", value: "VT" },
+  { label: "VA", value: "VA" },
+  { label: "WA", value: "WA" },
+  { label: "WV", value: "WV" },
+  { label: "WI", value: "WI" },
+  { label: "WY", value: "WY" },
+];
+
+export const companyTimeZone = [
+  { label: "Eastern Time", value: "Eastern Time" },
+  { label: "Central Time", value: "Central Time" },
+  { label: "Mountain Time", value: "Mountain Time" },
+  { label: "Pacific Time", value: "Pacific Time" },
+  { label: "Alaska Time", value: "Alaska Time" },
+  { label: "Hawaii-Aleutian Time", value: "Hawaii-Aleutian Time" },
+];
+
+export const country = [
+  {
+    label: "US",
+    value: "US",
+  },
+  {
+    label: "CA",
+    value: "CA",
+  },
+];
+
+export const DataStatus = [
+  { label: "Active", value: "active" },
+  { label: "On Hold", value: "onHold" },
+  { label: "Inactive", value: "inActive" },
+  { label: "Suspended", value: "suspended" },
+];

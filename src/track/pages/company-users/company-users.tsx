@@ -9,6 +9,7 @@ import useApi from "@/hooks/useApi";
 import { companyDrivers, mapUserData } from "@/track/utils/mapData";
 import { useDispatch } from "react-redux";
 import { SetEditDriverModal } from "@/store/slices/booleans-slice";
+import { setRefetch } from "@/store/slices/company-slice";
 
 export const CompanyUsers = () => {
   const [tab, setTab] = useState(1);
@@ -29,7 +30,7 @@ export const CompanyUsers = () => {
   const drivers = companyDrivers(data ? data?.data?.data : []);
   const users = mapUserData(user ? user?.data?.data : []);
 
-  // dispatch(setCoDriver(filterDriver));
+  dispatch(setRefetch(userRefetch));
   const editData = (id: string) => {
     if (tab === 2) {
       dispatch(

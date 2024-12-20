@@ -8,13 +8,16 @@ import { Flex } from "@/track/components/shared/drivers-header/drivers-header-st
 import { Form } from "antd";
 import useApiMutation from "@/hooks/useApiMutation";
 import { errorMessage, successMessage } from "@/track/utils/message";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { SetEditDriverModal } from "@/store/slices/booleans-slice";
 import { companyDriverEditData } from "@/types/company.type";
 import useApi from "@/hooks/useApi";
 import { companyUserInitialValue } from "@/track/utils/mapData";
 import useApiMutationID from "@/hooks/useApiMutationID";
 import { log } from "console";
+import { getLocalStorage } from "@/utils";
+import { RootState } from "@/store";
+
 const btnArr = [
   { id: 1, label: "Base information" },
   { id: 2, label: "Permission" },
@@ -37,12 +40,14 @@ const filterItems = (
 };
 
 export const errMessageFun = (data: any[]) => {
-  return data.map((item) => (` ${' '+item+' '}  `))
+  return data.map((item) => ` ${" " + item + " "}  `);
 };
 
 export const ManageUserModal = React.memo(({ modalData }: Props) => {
   const [form] = Form.useForm();
-
+  const userRefetch = useSelector(
+    (state: RootState) => state.company.userRefetch
+  );
   const { data: editData, isLoading } = useApi(
     modalData.userRole === "driver"
       ? `/driver/${modalData.id}`
@@ -70,15 +75,19 @@ export const ManageUserModal = React.memo(({ modalData }: Props) => {
   //   ------------------------------------------------------------------------ MUTATIONS
 
   const roleMutation = useApiMutation("/role/create", { hideMessage: true });
-  const userMutation = useApiMutation("/user", { hideMessage: true });
+  const userMutation = useApiMutation("/users", { hideMessage: true });
   const driversMutation = useApiMutation("/driver", { hideMessage: true });
   const { mutate: updateMutate, isLoading: updateLoading } = useApiMutationID(
     "PUT",
     `/driver`
   );
+  const { mutate: userMutate, isLoading: userUpdateLoading } = useApiMutationID(
+    "PUT",
+    `/user`
+  );
 
   //   ------------------------------------------------------------------------ MUTATIONS
-
+  const companyId = getLocalStorage("companyId");
   const submit = (data: any) => {
     if (modalData.role !== "edit") {
       const user = filterItems(data, (key, value) => typeof value === "string");
@@ -113,12 +122,13 @@ export const ManageUserModal = React.memo(({ modalData }: Props) => {
               phone: user.phone,
               email: user.email,
               password: user.password,
+              companyId: companyId,
             };
 
             userMutation.mutate(userData, {
               onSuccess: (res) => {
                 successMessage("user created");
-                modalData.refetch && modalData.refetch();
+                userRefetch();
                 onCancelFun();
               },
               onError: (res) => {
@@ -140,24 +150,48 @@ export const ManageUserModal = React.memo(({ modalData }: Props) => {
           },
           onError: (err) => {
             console.log(err);
-            const err_message = err.message + " "+ errMessageFun(err.data);
+            const err_message = err.message + " " + errMessageFun(err.data);
             errorMessage(err_message);
           },
         });
+      
       }
     } else {
       const id = modalData.id;
-      if (id)
-        updateMutate(
-          { id, data },
-          {
-            onSuccess: () => {
-              modalData.refetch && modalData.refetch();
-              onCancelFun();
-              // successMessage("driver update added");
-            },
-          }
-        );
+      console.log(id);
+      const userData = filterItems(
+        data,
+        (key, value) => typeof value === "string"
+      );
+      const userUpdateData = {
+        ...data,
+        companyId: companyId,
+      };
+      console.log(userUpdateData);
+
+        if (modalData.userRole === "driver") {
+          updateMutate(
+            { id, data },
+            {
+              onSuccess: () => {
+                modalData.refetch && modalData.refetch();
+                onCancelFun();
+                // successMessage("driver update added");
+              },
+            }
+          );
+        } else {
+          userMutate(
+            { id, userData },
+            {
+              onSuccess: () => {
+                modalData.refetch && modalData.refetch();
+                onCancelFun();
+                // successMessage("driver update added");
+              },
+            }
+          );
+        }
     }
   };
 
@@ -217,7 +251,8 @@ export const ManageUserModal = React.memo(({ modalData }: Props) => {
                 driversMutation.isLoading ||
                 userMutation.isLoading ||
                 roleMutation.isLoading ||
-                updateLoading
+                updateLoading ||
+                userUpdateLoading
               }
             >
               Add

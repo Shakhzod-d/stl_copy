@@ -1,7 +1,7 @@
 // import { Btn, TabBtn } from "../manage-user-modal/modal-styled";
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useRef, useState } from "react";
 
-import { companySettingsModal, CustomModal } from "@/track/constants";
+import { companySettingsModal, CustomModal, Text } from "@/track/constants";
 import {
   Btn,
   TabBtn,
@@ -15,43 +15,24 @@ import { EditModalBtn, FormInput } from "@/track/components/ui";
 import { Form } from "antd";
 
 import { useSelector } from "react-redux";
-import { CompanyForm } from "@/types/company.type";
 import useApiMutation from "@/hooks/useApiMutation";
 import { errorMessage, successMessage } from "@/track/utils/message";
+import { CompanyData } from "@/track/types";
+import {
+  DeleteImg,
+  ImgContainer,
+  UploadBtn,
+} from "@/track/pages/tab-company/styled";
+import { TiDownload } from "react-icons/ti";
+import {
+  companyState,
+  companyTimeZone,
+  country,
+  DataStatus,
+} from "@/track/utils/constants";
+import { validatePhoneNumber } from "@/track/utils/method";
+import { AxiosResponse } from "axios";
 
-const timezone = [
-  {
-    label: "Eastern Standard Time (EST)",
-    value: "Eastern Standard Time (EST)",
-  },
-  { label: "Central Standard Time(CST)", value: "Central Standard Time(CST)" },
-  {
-    label: "Mountain Standard Time (MST)",
-    value: "Mountain Standard Time (MST)",
-  },
-  {
-    label: "Pacific Standard Time (PST)",
-    value: "Pacific Standard Time (PST)",
-  },
-];
-const country = [
-  {
-    label: "US",
-    value: "US",
-  },
-  {
-    label: "CA",
-    value: "CA",
-  },
-];
-
-const status = [
-  { label: "Active", value: "active" },
-  { label: "On Hold", value: "On Hold" },
-  { label: "Inactive", value: "Inactive" },
-  { label: "Suspended", value: "Suspended" },
-];
-const state = [{ value: "ny", label: "NY" }];
 const btnArr = [
   { id: 1, label: "Details" },
   { id: 2, label: "settings" },
@@ -59,48 +40,77 @@ const btnArr = [
 interface Props {
   setOpen: Dispatch<SetStateAction<boolean>>;
   open: boolean;
+  role: "add" | "edit";
+  id?: string | null;
+  refetch: () => void;
 }
 
-// companyAddress: "New York";
-// companyName: "Saturn LLC 3";
-// createdAt: "2024-10-01T05:59:33.544Z";
-// driversCount: 0;
-// homeTerminalAddress: "Farg'ona";
-// homeTerminalTimezone: "Hawaii-Aleutian Time";
-// isActive: true;
-// phone: "+998900590103";
-// serviceId: "643b9e2e96e9eec7c146a56f";
-// trucksCount: 3;
-// updatedAt: "2024-11-09T17:25:41.003Z";
-// usdot: "usdot";
-// _id: "66fb8fc51cd8d940cd31408e";
-
-export const CompanyModal = ({ setOpen, open }: Props) => {
-  const [tabId, setTabId] = useState(1);
-  const companyMutation = useApiMutation("/company", { hideMessage: true });
+export const CompanyModal = ({ setOpen, open, role ,refetch}: Props) => {
   const dark = useSelector((state: RootState) => state.booleans.darkMode);
-
-  const editCompany: any = useSelector(
-    (state: RootState) => state.company.editCompany
-  );
-
+  const [tabId, setTabId] = useState(1);
   const selectBg = dark ? "#373737" : "#F9F9FA";
   const [form] = Form.useForm();
-  const handleReset = () => {
-    form.resetFields();
-    setOpen(false); // Formani tozalash
-    // removeImage(); // Rasmni ham tozalash
-  };
-  const submit = (data: CompanyForm) => {
-    const preparedData: any = {
-      ...data,
-      zip: Number(data.zip),
-    };
 
-    companyMutation.mutate(preparedData, {
+  // ------------- MUTATIONS
+  const companyMutation = useApiMutation("/company", { hideMessage: true });
+  const logoMutation = useApiMutation("/company/logo", { hideMessage: true });
+
+  // -------- lOGO UPLOAD
+  const handleReset = () => {
+    form.resetFields(); // Formani tozalash
+    removeImage();
+    setOpen(false); // Rasmni ham tozalash
+  };
+
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [fileName, setFileName] = useState<string | null>(null);
+  const formData = useRef(new FormData());
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleButtonClick = () => {
+    fileInputRef.current?.click();
+  };
+
+  const onChangeFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const fileExtension = file.name.split(".").pop()?.toLowerCase();
+      const allowedExtensions = ["jpg", "jpeg", "png", "svg"];
+
+      // Fayl kengaytmasini tekshirish
+      if (fileExtension && allowedExtensions.includes(fileExtension)) {
+        formData.current.set("file", file); // formData ni yangilash
+        setFileName(file.name);
+        setImagePreview(null); // Avvalgi preview ni tozalash
+
+        // Rasm preview uchun URL oling
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          setImagePreview(reader.result as string); // Preview sifatida qo'shish
+        };
+        reader.readAsDataURL(file);
+      } else {
+        // Noto'g'ri format uchun xato xabari
+        errorMessage(
+          "Faqat .jpg, .jpeg, .png yoki .svg formatdagi faylni yuklang."
+        );
+      }
+    }
+  };
+
+  const removeImage = () => {
+    // Preview va fayl nomini tozalash
+    setImagePreview(null);
+    setFileName(null);
+    formData.current.delete("file"); // formData dan ham olib tashlash
+  };
+  //  ---  SUBMIT DATA
+  const submitCompanyData = (CompanyData: CompanyData) => {
+    companyMutation.mutate(CompanyData, {
       onSuccess: () => {
         successMessage("Company added");
         handleReset(); // Formani va rasmni tozalash
+        refetch()
       },
       onError: (err) => {
         errorMessage(err?.data?.error || "validation error");
@@ -108,11 +118,40 @@ export const CompanyModal = ({ setOpen, open }: Props) => {
     });
   };
 
+  const submit = async (data: CompanyData) => {
+    const preparedData: any = {
+      ...data,
+      zip: Number(data.zip),
+      logo: null,
+    };
+
+    if (imagePreview && formData.current.has("file")) {
+      // Agar `imagePreview` mavjud bo'lsa, `logoMutation`ni ishga tushirish
+      logoMutation.mutate(formData.current, {
+        onSuccess: (res: AxiosResponse) => {
+          const updatedCompanyData = {
+            ...preparedData,
+            logo: res.data,
+          };
+          submitCompanyData(updatedCompanyData); // `companyMutation`ni chaqirish
+        },
+        onError: (err) => {
+          console.log(err);
+          // `logoMutation` muvaffaqiyatsiz bo'lsa ham `companyMutation`ni chaqirish
+          submitCompanyData(preparedData);
+        },
+      });
+    } else {
+      // Agar `imagePreview` mavjud bo'lmasa, to'g'ridan-to'g'ri `companyMutation`ni chaqirish
+      submitCompanyData(preparedData);
+    }
+  };
+
   return (
     <CustomModal
       open={open}
       width={"1300px"}
-      // onOk={() => setOpen(false)}
+      onOk={() => setOpen(false)}
       onCancel={handleReset}
     >
       <Flex $justify="" $align="center" $m={"0 0 15px 0"}>
@@ -132,7 +171,7 @@ export const CompanyModal = ({ setOpen, open }: Props) => {
       <Form
         onFinish={submit}
         form={form}
-        initialValues={editCompany ? editCompany : undefined}
+        // initialValues={editCompany ? editCompany : undefined}
       >
         {tabId === 1 ? (
           <>
@@ -141,32 +180,16 @@ export const CompanyModal = ({ setOpen, open }: Props) => {
                 placeholder="Account Name"
                 h="60px"
                 name="companyName"
-                // value={
-                //   Boolean(editCompany) ? editCompany?.companyName : undefined
-                // }
               />
-              <FormInput
-                placeholder="DOT"
-                h="60px"
-                name="usdot"
-                // value={editCompany ? editCompany?.usdot : undefined}
-              />
+              <FormInput placeholder="DOT" h="60px" name="usdot" />
               <Select
                 placeholder="Timezone"
-                option={timezone}
+                option={companyTimeZone}
                 h="60px"
                 w="100%"
                 bg={selectBg}
                 clr="#5D5E5F"
                 name="homeTerminalTimezone"
-                // dValue={
-                //   initialValue
-                //     ? timezone.find(
-                //         (item) =>
-                //           item.value === initialValue?.homeTerminalTimezone
-                //       )
-                //     : undefined
-                // }
               />
               <Select
                 clr="#5D5E5F"
@@ -175,65 +198,55 @@ export const CompanyModal = ({ setOpen, open }: Props) => {
                 bg={selectBg}
                 placeholder="Country"
                 h="60px"
-                name="homeTerminalAddress"
-                // dValue={
-                //   initialValue
-                //     ? country.find(
-                //         (item) =>
-                //           item.value === initialValue?.homeTerminalAddress
-                //       )
-                //     : undefined
-                // }
+                name="country"
               />
             </Flex>
             <Flex $gap="10px" $m="0 0 10px 0">
               <FormInput
                 placeholder="Address Line 1"
                 h="60px"
-                name="companyAddress"
-                // value={initialValue ? initialValue?.companyAddress : undefined}
+                name="addressLine1"
               />
-              <FormInput placeholder="Address Line 2" h="60px" />
-              <FormInput placeholder="Contact phone" h="60px" />
-              <FormInput placeholder="City" h="60px" />
+              <FormInput
+                placeholder="Address Line 2"
+                h="60px"
+                name="addressLine2"
+              />
+              <FormInput
+                placeholder="Contact phone"
+                h="60px"
+                name={"phone"}
+                rules={[{ validator: validatePhoneNumber }]}
+                type="tel"
+              />
+              <FormInput placeholder="City" h="60px" name="companyAddress" />
             </Flex>
             <Flex $gap="10px" $m="0 0 10px 0">
               <Select
                 clr="#5D5E5F"
                 placeholder="State"
-                option={state}
+                option={companyState}
                 w="100%"
                 h="60px"
                 bg={selectBg}
                 name="state"
-                // dValue={
-                //   initialValue
-                //     ? state.find((item) => item.value === initialValue?.state)
-                //     : undefined
-                // }
               />
               <Select
                 clr="#5D5E5F"
-                option={status}
+                option={DataStatus}
                 w="100%"
                 placeholder="Status"
                 h="60px"
                 bg={selectBg}
+                name="status"
               />
             </Flex>
             <Flex $gap="10px" $m="0 0 10px 0">
+              <FormInput placeholder="Zip" h="60px" name="zip" type="number" />
               <FormInput
-                placeholder="Zip"
+                placeholder="Terminal Address"
                 h="60px"
-                name="zip"
-                type="number"
-                // value={initialValue ? initialValue.zip : undefined}
-              />
-              <FormInput
-                placeholder="Phone"
-                h="60px"
-                name="phone"
-                // value={initialValue ? initialValue.phone : undefined}
+                name="homeTerminalAddress"
               />
               <FormInput
                 placeholder="Email"
@@ -250,10 +263,41 @@ export const CompanyModal = ({ setOpen, open }: Props) => {
                 // value={initialValue ? initialValue.password : undefined}
               />
             </Flex>
-            <TextAria
-              placeholder="Note"
-              // value={initialValue ? initialValue.note : undefined}
-            />
+
+            <Flex $gap={"20px"} $align="center">
+              <UploadBtn onClick={handleButtonClick}>
+                <>
+                  <TiDownload />
+                  <Text> Upload company logo</Text>
+                </>
+                <input
+                  type="file"
+                  onChange={onChangeFile}
+                  name="file_upload"
+                  style={{ display: "none" }}
+                  ref={fileInputRef}
+                />
+              </UploadBtn>
+              {imagePreview && (
+                <ImgContainer>
+                  <DeleteImg onClick={removeImage}>
+                    <p>x</p>
+                  </DeleteImg>
+                  <img
+                    src={imagePreview}
+                    alt="Tanlangan fayl"
+                    style={{
+                      width: "80px",
+                      height: "80px",
+                    }}
+                  />
+                  <Text>{fileName}</Text>
+                </ImgContainer>
+              )}
+            </Flex>
+            <Form.Item name={"note"}>
+              <TextAria placeholder="Note" />
+            </Form.Item>
           </>
         ) : (
           companySettingsModal?.map((col) => (
@@ -284,7 +328,7 @@ export const CompanyModal = ({ setOpen, open }: Props) => {
               type="primary"
               $type="add"
               htmlType="submit"
-              loading={companyMutation.isLoading}
+              loading={companyMutation.isLoading || logoMutation.isLoading}
             >
               Save
             </Btn>

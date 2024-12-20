@@ -6,7 +6,7 @@ export {
   unitsColumns,
 
   unitsButtons,
-  manageCompanyButtons,
+
   IftaReportButtons,
   IftaReportColData,
   IftaReportData,

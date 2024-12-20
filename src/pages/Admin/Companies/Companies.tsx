@@ -9,7 +9,7 @@ import { ICompanyData } from "@/types/company.type";
 import { IPageData } from "@/types";
 
 import { companyTableHeader, Main } from "@/track/constants";
-import { CustomInput, Navbar, PageLoad } from "@/track/components/ui";
+import { CustomInput, Navbar } from "@/track/components/ui";
 import { AddBtn, Top } from "./company-styled";
 import { FaPlus } from "react-icons/fa";
 import { InfoTable } from "@/track/components/shared";
@@ -24,22 +24,23 @@ import { useErrAuth } from "@/hooks/useAuth";
 import { CompanyModal } from "./components/company-page-modal";
 import { useDebounce } from "@/track/hooks/use-debauce";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  setEditCompany,
-  setLoggerCompanyData,
-  setRole,
-} from "@/store/slices/company-slice";
+import { setLoggerCompanyData, setRole } from "@/store/slices/company-slice";
 import { RootState } from "@/store";
 
 const Companies: React.FC = () => {
   const [open, setOpen] = useState(false);
+  const [modalRole, setModalRole] = useState<"add" | "edit">("add");
+  const [editDataId, setEditDataId] = useState<string | null>("add");
 
   const dispatch = useDispatch();
   const [searchTerm, setSearchTerm] = useState<string>("");
-  const { data, isLoading } = useApi<IPageData<ICompanyData[]>>("/companies", {
-    page: 1,
-    limit: 10000,
-  });
+  const { data, isLoading, refetch } = useApi<IPageData<ICompanyData[]>>(
+    "/companies",
+    {
+      page: 1,
+      limit: 10000,
+    }
+  );
 
   const mapData = (data: ICompanyData[]): CompanyData[] => {
     return data.map((item) => {
@@ -103,11 +104,11 @@ const Companies: React.FC = () => {
 
   const ModalFun = async (role: "add" | "edit", id: string = "") => {
     if (role === "edit") {
-      const company = await Company(id);
-      dispatch(setEditCompany(company));
+      setModalRole("edit");
+      setEditDataId(id);
       setOpen(true);
     } else {
-      dispatch(setEditCompany(false));
+      setModalRole("add");
       setOpen(true);
     }
     // setModalRole(role);
@@ -147,7 +148,13 @@ const Companies: React.FC = () => {
   );
   return (
     <Main>
-      <CompanyModal open={open} setOpen={setOpen} />
+      <CompanyModal
+        open={open}
+        setOpen={setOpen}
+        role={modalRole}
+        id={editDataId}
+        refetch={refetch}
+      />
 
       <Navbar title="Company" search={false} />
       <Top>

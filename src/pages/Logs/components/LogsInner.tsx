@@ -27,7 +27,6 @@ import { FormData } from "@/types/log.type";
 import { driversTableHeader } from "@/track/constants";
 import { EditLog } from "@/track/utils/constants";
 import api from "@/api";
-import { Button } from "antd";
 
 const LogsInner: React.FC = () => {
   const {
@@ -141,7 +140,7 @@ const LogsInner: React.FC = () => {
   const dataSubmit = () => {
     console.log(1);
 
-    api.put("/interlog", EditLog);
+    api.put("/log", EditLog);
   };
   return (
     <>
